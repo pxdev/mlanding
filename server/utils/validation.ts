@@ -59,6 +59,26 @@ export const updateUserSchema = z.object({
   githubUsername: z.string().regex(/^[a-zA-Z0-9-]{1,39}$/).optional().nullable()
 })
 
+// ── Public license validation API (called by self-hosted instances) ──
+
+export const activateLicenseSchema = z.object({
+  key: z.string().min(1).max(100),
+  fingerprint: z.string().min(8).max(128),
+  hostname: z.string().max(255).optional().nullable(),
+  version: z.string().max(40).optional().nullable()
+})
+
+export const heartbeatSchema = z.object({
+  activationToken: z.string().min(8).max(128),
+  fingerprint: z.string().min(8).max(128),
+  version: z.string().max(40).optional().nullable()
+})
+
+export const deactivateSchema = z.object({
+  activationToken: z.string().min(8).max(128),
+  fingerprint: z.string().min(8).max(128)
+})
+
 // ── Helpers ──
 
 export async function validateBody<T>(event: H3Event, schema: z.ZodSchema<T>): Promise<T> {

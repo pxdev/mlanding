@@ -49,7 +49,7 @@ See `.env.example` for the canonical list. Phase-by-phase:
 - `/api/portal/**` *(Phase 2+: customer-facing license endpoints)*
 - `/api/portal/admin/**` *(Phase 2+: operator endpoints)*
 - `/api/webhooks/lemon-squeezy` *(Phase 3)*
-- `/api/v1/license/{activate,heartbeat,deactivate}` *(Phase 5)*
+- `/api/v1/license/{activate,heartbeat,deactivate}` — public, called by self-hosted Momentfy instances
 
 ## Architecture
 
@@ -116,7 +116,7 @@ See `/Users/aamin/.claude/plans/landing-license-portal.md` for the full plan.
 | 2 | ✅ shipped | License model + admin CRUD + audit log |
 | 3 | ✅ shipped | Lemon Squeezy webhook + portal-mediated checkout |
 | 4 | ✅ shipped | GitHub `customers` team invite |
-| 5 | ⏳ planned | License validation API for self-hosted instances |
+| 5 | ✅ shipped | License validation API for self-hosted instances |
 | 6 | ⏳ planned | Polish (emails, search, billing portal link, 2FA) |
 
 ### Phase 3 setup
@@ -129,6 +129,37 @@ After running `pnpm db:migrate` and `pnpm tsx prisma/seed.ts` (which creates the
 4. Set `LEMON_SQUEEZY_API_KEY` and `LEMON_SQUEEZY_STORE_ID` in `.env`.
 
 When a logged-in visitor clicks Buy on `/portal/pricing`, the portal hits LS's `POST /v1/checkouts`, binds the order to their account via `custom_data.account_id`, and 302s to the hosted checkout. On payment, the webhook issues the License (returns plaintext key once via email) and records the Order. Refunds revoke any licenses on that order.
+
+### Phase 5: license validation API
+
+Self-hosted Momentfy instances call back to the portal via three endpoints. None require a session — they're authenticated by the license key (activate) or activation token (heartbeat / deactivate).
+
+```
+POST /api/v1/license/activate
+  body:    { key, fingerprint, hostname?, version? }
+  200:     { activationToken, license: { plan, status, maxActivations, expiresAt } }
+  404:     license not found (or wrong format)
+  403:     { reason: 'revoked' | 'expired' | 'max_activations_reached' }
+  429:     too many activate calls in window (5/min/IP)
+
+POST /api/v1/license/heartbeat
+  body:    { activationToken, fingerprint, version? }
+  200:     { valid: true, license: {...} }
+  401:     activation token unknown / reset by admin
+  403:     { reason: 'revoked' | 'expired' }
+
+POST /api/v1/license/deactivate
+  body:    { activationToken, fingerprint }
+  200:     { ok: true }   (always — idempotent, no info-leak)
+```
+
+**Recommended client behaviour for the self-hosted instance**:
+1. On first boot, prompt operator for the license key during install.
+2. Call `activate` once — store the returned `activationToken` in `PlatformSetting.license.activationToken`.
+3. Background task (hourly) calls `heartbeat`. On `403 revoked` → display banner, optionally degrade non-essential features. On network error → 7-day grace period before degrading.
+4. On uninstall / migration to new server, call `deactivate` to free the slot.
+
+Embedding this client into the main Momentfy app is a separate ticket.
 
 ### Phase 4 setup
 
