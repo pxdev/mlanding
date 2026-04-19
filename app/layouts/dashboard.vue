@@ -4,13 +4,18 @@ const { user, isAdmin, displayName, clear } = useSession()
 const colorMode = useColorMode()
 const isDark = computed(() => colorMode.value === 'dark')
 
-// Phase 1 only ships /dashboard. Billing, profile, and admin pages
-// arrive with phase 2 — re-add their nav entries then.
 const navItems = computed(() => {
   const base = [
     { label: 'Licenses', to: '/dashboard', icon: 'i-lucide-key' }
+    // Billing + Profile arrive with phase 3 (orders + LS customer portal link).
   ]
-  void isAdmin.value
+  if (isAdmin.value) {
+    base.push(
+      { label: 'Customers', to: '/admin/users', icon: 'i-lucide-users' },
+      { label: 'All licenses', to: '/admin/licenses', icon: 'i-lucide-shield' },
+      { label: 'Audit log', to: '/admin/audit', icon: 'i-lucide-list' }
+    )
+  }
   return base
 })
 

@@ -34,6 +34,31 @@ export const changePasswordSchema = z.object({
 export type RegisterInput = z.infer<typeof registerSchema>
 export type LoginInput = z.infer<typeof loginSchema>
 
+// ── Admin: licenses ──
+
+export const issueLicenseSchema = z.object({
+  accountId: z.string().min(1),
+  planId: z.string().min(1),
+  maxActivations: z.number().int().positive().max(100).optional(),
+  notes: z.string().max(2000).optional().nullable(),
+  expiresAt: z.string().datetime().optional().nullable()
+})
+
+export const updateLicenseSchema = z.object({
+  maxActivations: z.number().int().positive().max(100).optional(),
+  notes: z.string().max(2000).optional().nullable(),
+  status: z.enum(['ACTIVE', 'REVOKED', 'EXPIRED']).optional(),
+  revokedReason: z.string().max(500).optional().nullable()
+})
+
+// ── Admin: users ──
+
+export const updateUserSchema = z.object({
+  isActive: z.boolean().optional(),
+  isAdmin: z.boolean().optional(),
+  githubUsername: z.string().regex(/^[a-zA-Z0-9-]{1,39}$/).optional().nullable()
+})
+
 // ── Helpers ──
 
 export async function validateBody<T>(event: H3Event, schema: z.ZodSchema<T>): Promise<T> {

@@ -2,8 +2,11 @@
 // Same Postgres host & credentials as the app, but a separate database
 // (default name: `portal`).
 //
-// Phase 1 scope: account auth + password reset only. License/Order/Activation
-// models will be added in Phase 2.
+// Phases:
+//   1 — Account, PasswordReset
+//   2 — Plan, Order, License, Activation, AuditLog (this file)
+//   3 — extends Order with LS provenance (already modelled below)
+//   4 — RepoInvite (added when GitHub integration ships)
 
 generator client {
   provider = "prisma-client"
@@ -13,6 +16,8 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+// ─── Auth ───────────────────────────────────────────────────────────
 
 model Account {
   id              String          @id @default(cuid())
@@ -31,6 +36,9 @@ model Account {
   updatedAt       DateTime        @updatedAt
 
   passwordResets  PasswordReset[]
+  licenses        License[]
+  orders          Order[]
+  auditLogs       AuditLog[]
 
   @@index([email])
   @@index([githubUsername])
@@ -47,4 +55,144 @@ model PasswordReset {
   createdAt DateTime  @default(now())
 
   @@index([accountId])
+}
+
+// ─── Catalog ────────────────────────────────────────────────────────
+
+model Plan {
+  id                  String   @id @default(cuid())
+  // Used in URLs, e.g. /portal/checkout/self-install
+  slug                String   @unique
+  name                String
+  description         String?
+  // Display-only — Lemon Squeezy is the source of truth for actual price.
+  priceUsdCents       Int
+  // How many concurrent installs a license on this plan allows by default.
+  // Admin can raise per-license afterwards.
+  defaultActivations  Int      @default(1)
+  // Lemon Squeezy variant id this plan maps to (set in Phase 3).
+  lsVariantId         String?
+  isActive            Boolean  @default(true)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  licenses            License[]
+  orders              Order[]
+}
+
+// ─── Sales ──────────────────────────────────────────────────────────
+
+enum OrderStatus {
+  PAID
+  REFUNDED
+  PARTIAL_REFUND
+  PENDING
+}
+
+model Order {
+  id              String        @id @default(cuid())
+  accountId       String
+  account         Account       @relation(fields: [accountId], references: [id])
+  planId          String?
+  plan            Plan?         @relation(fields: [planId], references: [id])
+
+  // Lemon Squeezy provenance (null for manually-issued orders).
+  lsOrderId       String?       @unique
+  lsCustomerId    String?
+  lsOrderNumber   String?
+  lsReceiptUrl    String?
+
+  amountCents     Int
+  currency        String                            // 'USD', 'SAR', etc.
+  status          OrderStatus   @default(PAID)
+  refundedAt      DateTime?
+  refundReason    String?
+  // Last LS webhook payload kept for forensics / replay debugging.
+  rawPayload      Json?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  licenses        License[]
+
+  @@index([accountId])
+  @@index([lsCustomerId])
+}
+
+// ─── Licenses ───────────────────────────────────────────────────────
+
+enum LicenseStatus {
+  ACTIVE
+  REVOKED
+  EXPIRED
+}
+
+model License {
+  id                  String        @id @default(cuid())
+  accountId           String
+  account             Account       @relation(fields: [accountId], references: [id])
+  orderId             String?
+  order               Order?        @relation(fields: [orderId], references: [id])
+  planId              String
+  plan                Plan          @relation(fields: [planId], references: [id])
+
+  // First 8 chars of the formatted key, kept for display: "MFY-A4F2"
+  keyPrefix           String
+  // SHA-256(key + LICENSE_PEPPER); the plaintext key is shown ONCE at issuance.
+  keyHash             String        @unique
+  // Concurrent installs allowed. Default from Plan; admin can raise per license.
+  maxActivations      Int           @default(1)
+  status              LicenseStatus @default(ACTIVE)
+  // Free-form admin-only note (e.g. "VIP — comped trial")
+  notes               String?
+  // null = perpetual (the standard for self-hosted lifetime licenses)
+  expiresAt           DateTime?
+  revokedAt           DateTime?
+  revokedReason       String?
+  issuedAt            DateTime      @default(now())
+  updatedAt           DateTime      @updatedAt
+
+  activations         Activation[]
+
+  @@index([accountId])
+  @@index([keyPrefix])
+  @@index([status])
+}
+
+model Activation {
+  id              String     @id @default(cuid())
+  licenseId       String
+  license         License    @relation(fields: [licenseId], references: [id], onDelete: Cascade)
+  // sha256(machine-id + hostname) — opaque to the portal
+  fingerprint     String
+  hostname        String?
+  ipAddress       String?
+  appVersion      String?
+  // Returned to the instance on activate; presented again on heartbeat.
+  activationToken String     @unique
+  lastSeenAt      DateTime   @default(now())
+  deactivatedAt   DateTime?
+  createdAt       DateTime   @default(now())
+
+  @@unique([licenseId, fingerprint])
+  @@index([licenseId])
+  @@index([fingerprint])
+}
+
+// ─── Audit ──────────────────────────────────────────────────────────
+
+model AuditLog {
+  id          String   @id @default(cuid())
+  // null when the action is performed by the system (webhook, scheduled job).
+  actorId     String?
+  actor       Account? @relation(fields: [actorId], references: [id])
+  // Dot-notation: 'license.issued', 'license.revoked', 'activation.reset', ...
+  action      String
+  targetType  String?  // 'License' | 'Account' | 'Order' | 'Activation'
+  targetId    String?
+  metadata    Json?
+  createdAt   DateTime @default(now())
+
+  @@index([actorId])
+  @@index([targetType, targetId])
+  @@index([createdAt])
 }
