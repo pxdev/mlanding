@@ -32,12 +32,11 @@ const config = useRuntimeConfig()
 
     <UCard v-if="isAdmin">
       <template #header>
-        <h2 class="font-semibold">Operator tools</h2>
+        <h2 class="font-semibold">Operator</h2>
       </template>
-      <div class="space-y-2 text-sm">
-        <NuxtLink to="/admin/users" class="block text-primary hover:underline">→ Manage customers</NuxtLink>
-        <NuxtLink to="/admin/licenses" class="block text-primary hover:underline">→ Browse all licenses</NuxtLink>
-      </div>
+      <p class="text-sm text-gray-500 dark:text-gray-400">
+        You're an admin. Customer management, manual license issuance, and the audit log arrive with phase 2.
+      </p>
     </UCard>
 
     <p class="text-xs text-gray-400">

@@ -69,17 +69,25 @@ function isActive(to: string) {
 
       <!-- Actions -->
       <div class="flex items-center gap-2 ms-auto">
-        <!-- Language switcher -->
-        <UDropdownMenu :items="localeItems">
-          <button
-            class="hidden sm:inline-flex items-center gap-1.5 h-9 px-3 rounded-full text-sm font-semibold text-gray-600 dark:text-gray-400 hover:bg-black/5 dark:hover:bg-white/10 transition"
-            :aria-label="copy.nav.langLabel"
-          >
-            <UIcon name="i-lucide-languages" class="size-4" />
-            <span class="uppercase tracking-wider text-[11px] font-bold">{{ currentLocale?.code }}</span>
-            <UIcon name="i-lucide-chevron-down" class="size-3 opacity-50" />
-          </button>
-        </UDropdownMenu>
+        <!-- Language switcher (UDropdownMenu uses reka-ui Popper which isn't SSR-safe — render client-only) -->
+        <ClientOnly>
+          <UDropdownMenu :items="localeItems">
+            <button
+              class="hidden sm:inline-flex items-center gap-1.5 h-9 px-3 rounded-full text-sm font-semibold text-gray-600 dark:text-gray-400 hover:bg-black/5 dark:hover:bg-white/10 transition"
+              :aria-label="copy.nav.langLabel"
+            >
+              <UIcon name="i-lucide-languages" class="size-4" />
+              <span class="uppercase tracking-wider text-[11px] font-bold">{{ currentLocale?.code }}</span>
+              <UIcon name="i-lucide-chevron-down" class="size-3 opacity-50" />
+            </button>
+          </UDropdownMenu>
+          <template #fallback>
+            <span class="hidden sm:inline-flex items-center gap-1.5 h-9 px-3 rounded-full text-sm font-semibold text-gray-600 dark:text-gray-400">
+              <UIcon name="i-lucide-languages" class="size-4" />
+              <span class="uppercase tracking-wider text-[11px] font-bold">{{ currentLocale?.code }}</span>
+            </span>
+          </template>
+        </ClientOnly>
 
         <button
           class="hidden sm:flex size-9 items-center justify-center rounded-full text-gray-600 dark:text-gray-400 hover:bg-black/5 dark:hover:bg-white/10 transition"
@@ -153,13 +161,15 @@ function isActive(to: string) {
             <!-- Mobile language switcher -->
             <div class="mt-4 pt-4 border-t border-black/5 dark:border-white/10">
               <p class="px-4 text-[11px] font-bold uppercase tracking-wider text-gray-400 mb-2">{{ copy.nav.langLabel }}</p>
-              <UDropdownMenu :items="localeItems" :ui="{ content: 'w-full' }">
-                <button class="w-full flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-medium bg-black/5 dark:bg-white/10">
-                  <UIcon name="i-lucide-languages" class="size-4" />
-                  {{ currentLocale?.name }}
-                  <UIcon name="i-lucide-chevron-down" class="size-3.5 ms-auto opacity-50" />
-                </button>
-              </UDropdownMenu>
+              <ClientOnly>
+                <UDropdownMenu :items="localeItems" :ui="{ content: 'w-full' }">
+                  <button class="w-full flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-medium bg-black/5 dark:bg-white/10">
+                    <UIcon name="i-lucide-languages" class="size-4" />
+                    {{ currentLocale?.name }}
+                    <UIcon name="i-lucide-chevron-down" class="size-3.5 ms-auto opacity-50" />
+                  </button>
+                </UDropdownMenu>
+              </ClientOnly>
             </div>
           </nav>
           <div class="p-4 border-t border-black/5 dark:border-white/10 space-y-2">

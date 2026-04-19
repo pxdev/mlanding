@@ -53,7 +53,7 @@ See `.env.example` for the canonical list. Phase-by-phase:
 
 ## Architecture
 
-- **Framework**: Nuxt 4 (SSR with prerender for marketing pages)
+- **Framework**: Nuxt 4 — marketing pages prerendered to static HTML; auth and dashboard pages render client-side (SPA-style). The `nuxt-auth-utils` session is fetched on hydration and the route middleware redirects unauthenticated visitors. SSR for the auth/dashboard pages is disabled because @nuxt/ui v4's reka-ui primitives (`UFormField`, `UDropdownMenu`) aren't SSR-safe in this version — revisit when reka-ui ships a fix.
 - **i18n**: `@nuxtjs/i18n` — English + Arabic, default `ar`, `no_prefix` strategy
 - **UI**: `@nuxt/ui` v4 + Tailwind v4
 - **Icons**: Lucide, Hugeicons, Simple Icons (via Iconify)

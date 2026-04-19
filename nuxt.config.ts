@@ -14,12 +14,7 @@ export default defineNuxtConfig({
     head: {
       meta: [
         { name: 'viewport', content: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' },
-        { name: 'apple-mobile-web-app-capable', content: 'yes' },
-        { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
         { name: 'theme-color', content: '#000000' }
-      ],
-      link: [
-        { rel: 'manifest', href: '/manifest.webmanifest' }
       ]
     }
   },
@@ -64,34 +59,13 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxtjs/i18n',
     'nuxt-auth-utils',
-    'nuxt-authorization',
-    '@vite-pwa/nuxt' as any
+    'nuxt-authorization'
   ],
 
-  pwa: {
-    registerType: 'prompt',
-    manifest: {
-      name: 'Momentfy',
-      short_name: 'Momentfy',
-      description: 'Booking & Business Management',
-      theme_color: '#000000',
-      background_color: '#ffffff',
-      display: 'standalone',
-      orientation: 'portrait',
-      icons: [
-        { src: '/pwa-192x192.png', sizes: '192x192', type: 'image/png' },
-        { src: '/pwa-512x512.png', sizes: '512x512', type: 'image/png' },
-        { src: '/pwa-512x512.png', sizes: '512x512', type: 'image/png', purpose: 'any maskable' }
-      ]
-    },
-    workbox: {
-      navigateFallback: '/',
-      globPatterns: ['**/*.{js,css,html,png,svg,ico,woff2}']
-    },
-    devOptions: {
-      enabled: false
-    }
-  },
+  // PWA was wired up while this was a marketing-only static site. The portal
+  // now has SSR + auth and isn't an install target — the *main app* is what
+  // gets installed as a PWA. @vite-pwa/nuxt 0.6 also doesn't support Nuxt 4
+  // out of the box, so we drop the module here.
 
   // @nuxtjs/i18n handles only the locale state (active language code, dir,
   // language switcher). Marketing copy is stored in `i18n/locales/{en,ar}/landing.json`
@@ -132,13 +106,15 @@ export default defineNuxtConfig({
         'Permissions-Policy': 'camera=(), microphone=(), geolocation=(self)'
       }
     },
-    // Marketing pages — prerender for speed + SEO
+    // Marketing pages — prerender for speed + SEO. Public, no auth state.
     '/': { prerender: true },
     '/portal/**': { prerender: true },
-    // Auth + portal pages — server-render per request (need session)
-    '/auth/**': { ssr: true },
-    '/dashboard/**': { ssr: true },
-    '/admin/**': { ssr: true }
+    // Auth + portal pages — render client-side. SSR is incompatible with the
+    // current @nuxt/ui v4 / reka-ui combo (PopperRoot + Label fail under SSR).
+    // Auth pages don't need SEO and middleware redirects happen on the client.
+    '/auth/**': { ssr: false },
+    '/dashboard/**': { ssr: false },
+    '/admin/**': { ssr: false }
   },
 
   fonts: {
