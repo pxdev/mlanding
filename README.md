@@ -113,8 +113,19 @@ See `/Users/aamin/.claude/plans/landing-license-portal.md` for the full plan.
 | Phase | Status | What |
 | --- | --- | --- |
 | 1 | ✅ shipped | Prisma + auth + SSR foundation |
-| 2 | ⏳ planned | License model + admin CRUD |
-| 3 | ⏳ planned | Lemon Squeezy webhook + auto-issuance |
+| 2 | ✅ shipped | License model + admin CRUD + audit log |
+| 3 | ✅ shipped | Lemon Squeezy webhook + portal-mediated checkout |
 | 4 | ⏳ planned | GitHub `customers` team invite |
 | 5 | ⏳ planned | License validation API for self-hosted instances |
 | 6 | ⏳ planned | Polish (emails, search, billing portal link, 2FA) |
+
+### Phase 3 setup
+
+After running `pnpm db:migrate` and `pnpm tsx prisma/seed.ts` (which creates the two plans):
+
+1. In Lemon Squeezy, create a one-time product with two variants matching the marketing site's plans (Self-install, Done-for-you).
+2. Open Prisma Studio (`pnpm db:studio`) → `Plan` table → set `lsVariantId` on each row to the matching LS variant id.
+3. In LS dashboard, configure the webhook endpoint: `https://YOUR_PORTAL/api/webhooks/lemon-squeezy`. Set the signing secret to the value of `LEMON_SQUEEZY_WEBHOOK_SECRET` in your env. Subscribe to `order_created` and `order_refunded` at minimum.
+4. Set `LEMON_SQUEEZY_API_KEY` and `LEMON_SQUEEZY_STORE_ID` in `.env`.
+
+When a logged-in visitor clicks Buy on `/portal/pricing`, the portal hits LS's `POST /v1/checkouts`, binds the order to their account via `custom_data.account_id`, and 302s to the hosted checkout. On payment, the webhook issues the License (returns plaintext key once via email) and records the Order. Refunds revoke any licenses on that order.

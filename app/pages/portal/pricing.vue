@@ -3,6 +3,44 @@ definePageMeta({ layout: 'landing' })
 
 const copy = useLandingCopy()
 const { locale } = useI18n()
+const config = useRuntimeConfig()
+const route = useRoute()
+const toast = useToast()
+
+// Marketing copy iterates plans by index; map index → catalog slug here.
+// Keep aligned with prisma/seed.ts.
+const PLAN_SLUGS: readonly string[] = ['self-install', 'we-install']
+
+const checkoutLoading = ref<number | null>(null)
+
+async function startCheckout(idx: number) {
+  const slug = PLAN_SLUGS[idx]
+  if (!slug) return
+
+  // Phase 3 ships the portal-mediated checkout path. If the customer is
+  // signed in, we hit the API to bind their account to the LS order.
+  // If not, send them through register first and bring them back here.
+  const session = useUserSession()
+  if (!session.loggedIn.value) {
+    return navigateTo(`/auth/register?redirect=${encodeURIComponent(route.fullPath)}`)
+  }
+
+  checkoutLoading.value = idx
+  try {
+    const res = await $fetch<{ url: string }>(`/api/portal/checkout/${slug}`, { method: 'POST' })
+    window.location.href = res.url
+  } catch (err: any) {
+    // Fall back to the hosted-checkout URL so a misconfigured plan / LS
+    // outage doesn't block the sale entirely.
+    if (config.public.checkoutUrl) {
+      window.location.href = config.public.checkoutUrl
+      return
+    }
+    toast.add({ title: 'Checkout failed', description: err.statusMessage || err.message, color: 'error' })
+  } finally {
+    checkoutLoading.value = null
+  }
+}
 
 useHead(() => ({
   title: locale.value === 'ar' ? 'الأسعار — Momentfy' : 'Pricing — Momentfy',
@@ -174,21 +212,31 @@ const h1 = computed(() => ({
               </li>
             </ul>
 
-            <!-- CTA -->
-            <NuxtLink to="/portal/download" class="group/cta inline-flex items-center gap-3 text-sm font-bold mt-auto">
+            <!-- CTA — opens Lemon Squeezy hosted checkout, bound to the
+                 portal account when the visitor is signed in. -->
+            <button
+              type="button"
+              class="group/cta inline-flex items-center gap-3 text-sm font-bold mt-auto disabled:opacity-60"
+              :disabled="checkoutLoading !== null"
+              @click="startCheckout(idx)"
+            >
               <span
                 class="size-11 rounded-full flex items-center justify-center transition-transform group-hover/cta:scale-110"
                 :class="p.featured
                   ? 'bg-gradient-to-br from-secondary-500 to-secondary-700 text-white shadow-lg shadow-secondary-500/30'
                   : 'bg-primary text-white dark:bg-white dark:text-primary'"
               >
-                <UIcon name="i-lucide-arrow-right" class="size-4 rtl:rotate-180" />
+                <UIcon
+                  :name="checkoutLoading === idx ? 'i-lucide-loader-circle' : 'i-lucide-arrow-right'"
+                  class="size-4 rtl:rotate-180"
+                  :class="{ 'animate-spin': checkoutLoading === idx }"
+                />
               </span>
               <span class="relative">
                 {{ p.cta }}
                 <span aria-hidden="true" class="absolute -bottom-0.5 inset-x-0 h-px bg-current group-hover/cta:bg-secondary-500 transition-colors" />
               </span>
-            </NuxtLink>
+            </button>
           </div>
         </div>
       </div>
