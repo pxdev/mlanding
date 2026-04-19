@@ -14,6 +14,7 @@ import { verifySignature } from '../../utils/lemon-squeezy'
 import { generateLicenseKey } from '../../utils/license'
 import { auditLog } from '../../utils/audit'
 import { sendEmail, emailLayout } from '../../utils/email'
+import { ensureRepoInvite } from '../../utils/github'
 
 interface LSEvent {
   meta?: {
@@ -156,10 +157,29 @@ async function handleOrderCreated(args: {
     }
   })
 
-  // 4. Send the customer their key. Best-effort — failure is logged but
+  // 4. GitHub repo invite — best-effort. If githubUsername isn't set yet,
+  //    the customer adds it on the profile page later and we trigger from
+  //    there.
+  let inviteStatus: string | null = null
+  if (account.githubUsername) {
+    const r = await ensureRepoInvite({
+      accountId: account.id,
+      githubUsername: account.githubUsername,
+      actorId: null
+    })
+    inviteStatus = r.status
+  }
+
+  // 5. Send the customer their key. Best-effort — failure is logged but
   //    never propagated (the license is already issued and visible in the
   //    dashboard; resending the email is a phase-6 admin tool).
   const dashUrl = process.env.NUXT_PUBLIC_PORTAL_URL || ''
+  const inviteLine = !account.githubUsername
+    ? `<p style="font-size:13px;color:#666">Add your GitHub username on your <a href="${dashUrl}/dashboard/profile">profile page</a> and we'll invite you to the source-code repository team.</p>`
+    : inviteStatus === 'SENT' || inviteStatus === 'ACCEPTED'
+      ? `<p style="font-size:13px;color:#666">We've sent a GitHub invite to <code>${account.githubUsername}</code> for the source-code repository.</p>`
+      : `<p style="font-size:13px;color:#666">We couldn't deliver the GitHub invite to <code>${account.githubUsername}</code>. Please check the username on your <a href="${dashUrl}/dashboard/profile">profile page</a>.</p>`
+
   await sendEmail({
     to: account.email,
     subject: 'Your Momentfy license is ready',
@@ -173,11 +193,11 @@ async function handleOrderCreated(args: {
       <p style="margin:24px 0">
         <a href="${dashUrl}/dashboard/licenses/" style="display:inline-block;padding:10px 18px;background:#111;color:#fff;border-radius:8px;text-decoration:none">Open dashboard</a>
       </p>
-      <p style="font-size:13px;color:#666">If you also gave us your GitHub username, we've added you to the source-code repository team. (Coming with phase 4.)</p>
+      ${inviteLine}
     `)
   })
 
-  return { ok: true, orderId: order.id }
+  return { ok: true, orderId: order.id, inviteStatus }
 }
 
 async function handleOrderRefunded(args: { lsOrderId: string }) {

@@ -115,7 +115,7 @@ See `/Users/aamin/.claude/plans/landing-license-portal.md` for the full plan.
 | 1 | ✅ shipped | Prisma + auth + SSR foundation |
 | 2 | ✅ shipped | License model + admin CRUD + audit log |
 | 3 | ✅ shipped | Lemon Squeezy webhook + portal-mediated checkout |
-| 4 | ⏳ planned | GitHub `customers` team invite |
+| 4 | ✅ shipped | GitHub `customers` team invite |
 | 5 | ⏳ planned | License validation API for self-hosted instances |
 | 6 | ⏳ planned | Polish (emails, search, billing portal link, 2FA) |
 
@@ -129,3 +129,12 @@ After running `pnpm db:migrate` and `pnpm tsx prisma/seed.ts` (which creates the
 4. Set `LEMON_SQUEEZY_API_KEY` and `LEMON_SQUEEZY_STORE_ID` in `.env`.
 
 When a logged-in visitor clicks Buy on `/portal/pricing`, the portal hits LS's `POST /v1/checkouts`, binds the order to their account via `custom_data.account_id`, and 302s to the hosted checkout. On payment, the webhook issues the License (returns plaintext key once via email) and records the Order. Refunds revoke any licenses on that order.
+
+### Phase 4 setup
+
+GitHub team-invite uses Octokit and a single team in your org (default `customers`).
+
+1. In your GitHub org, create a team called `customers` (or set `GITHUB_TEAM_SLUG` to your chosen name).
+2. Give the team **read** access on the source repo.
+3. Generate a PAT with `admin:org` scope (or a fine-grained token with **Members > Read & write** on the org). Set `GITHUB_TOKEN`, `GITHUB_ORG` (and optionally `GITHUB_REPO`) in `.env`.
+4. After phase 3 issues a license, the webhook calls `inviteToCustomersTeam(githubUsername)` if the customer's GitHub username is on file. If not, the customer adds it on `/dashboard/profile` and the invite triggers from there. Failed invites surface in the audit log; admins can retry via `POST /api/portal/admin/invites/:id/retry`.

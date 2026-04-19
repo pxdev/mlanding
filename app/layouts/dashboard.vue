@@ -6,8 +6,9 @@ const isDark = computed(() => colorMode.value === 'dark')
 
 const navItems = computed(() => {
   const base = [
-    { label: 'Licenses', to: '/dashboard', icon: 'i-lucide-key' }
-    // Billing + Profile arrive with phase 3 (orders + LS customer portal link).
+    { label: 'Licenses', to: '/dashboard', icon: 'i-lucide-key' },
+    { label: 'Profile', to: '/dashboard/profile', icon: 'i-lucide-user' }
+    // Billing arrives with phase 6 (LS customer portal link + invoices).
   ]
   if (isAdmin.value) {
     base.push(

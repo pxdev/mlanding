@@ -39,6 +39,7 @@ model Account {
   licenses        License[]
   orders          Order[]
   auditLogs       AuditLog[]
+  repoInvites     RepoInvite[]
 
   @@index([email])
   @@index([githubUsername])
@@ -176,6 +177,33 @@ model Activation {
   @@unique([licenseId, fingerprint])
   @@index([licenseId])
   @@index([fingerprint])
+}
+
+// ─── GitHub access ──────────────────────────────────────────────────
+
+enum InviteStatus {
+  PENDING       // row created, invite not yet sent (e.g. no GH username on file)
+  SENT          // Octokit returned ok; awaiting customer to accept
+  ACCEPTED      // membership confirmed via Octokit poll
+  FAILED        // Octokit returned an error (lastError + attempts populated)
+}
+
+model RepoInvite {
+  id              String       @id @default(cuid())
+  accountId       String
+  account         Account      @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  // Snapshot at invite time — Account.githubUsername may change later.
+  githubUsername  String
+  status          InviteStatus @default(PENDING)
+  attempts        Int          @default(0)
+  lastError       String?
+  sentAt          DateTime?
+  acceptedAt      DateTime?
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  @@unique([accountId, githubUsername])
+  @@index([status])
 }
 
 // ─── Audit ──────────────────────────────────────────────────────────
