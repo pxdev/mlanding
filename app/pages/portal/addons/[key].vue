@@ -1,0 +1,292 @@
+<script setup lang="ts">
+definePageMeta({ layout: 'landing' })
+
+const copy = useLandingCopy()
+const { locale } = useI18n()
+const route = useRoute()
+
+const addonKey = computed(() => String(route.params.key || ''))
+
+// Same visual metadata map as on the home page (icons + gradient + dot + category)
+type AddonCat = 'Compliance' | 'Clinical' | 'Intelligence' | 'Operations' | 'Growth'
+const addonMeta: Record<string, { icon: string; cat: AddonCat; accent: string; iconBg: string; iconText: string; dot: string }> = {
+  zatca:      { icon: 'i-lucide-shield-check',    cat: 'Compliance',   accent: 'from-emerald-500 to-green-600',   iconBg: 'bg-emerald-500/8',  iconText: 'text-emerald-600 dark:text-emerald-400', dot: 'bg-emerald-500' },
+  eta:        { icon: 'i-lucide-file-check',      cat: 'Compliance',   accent: 'from-amber-500 to-yellow-600',    iconBg: 'bg-emerald-500/8',  iconText: 'text-emerald-600 dark:text-emerald-400', dot: 'bg-emerald-500' },
+  ai:         { icon: 'i-lucide-sparkles',        cat: 'Intelligence', accent: 'from-violet-500 to-indigo-600',   iconBg: 'bg-violet-500/8',   iconText: 'text-violet-600 dark:text-violet-400',   dot: 'bg-violet-500' },
+  gcal:       { icon: 'i-lucide-calendar-check',  cat: 'Intelligence', accent: 'from-sky-500 to-blue-600',        iconBg: 'bg-violet-500/8',   iconText: 'text-violet-600 dark:text-violet-400',   dot: 'bg-violet-500' },
+  insurance:  { icon: 'i-lucide-heart-pulse',     cat: 'Clinical',     accent: 'from-red-500 to-rose-600',        iconBg: 'bg-sky-500/8',      iconText: 'text-sky-600 dark:text-sky-400',         dot: 'bg-sky-500' },
+  dental:     { icon: 'i-lucide-tooth',           cat: 'Clinical',     accent: 'from-sky-500 to-cyan-600',        iconBg: 'bg-sky-500/8',      iconText: 'text-sky-600 dark:text-sky-400',         dot: 'bg-sky-500' },
+  imaging:    { icon: 'i-lucide-scan',            cat: 'Clinical',     accent: 'from-slate-500 to-gray-700',      iconBg: 'bg-sky-500/8',      iconText: 'text-sky-600 dark:text-sky-400',         dot: 'bg-sky-500' },
+  labs:       { icon: 'i-lucide-flask-conical',   cat: 'Clinical',     accent: 'from-teal-500 to-emerald-600',    iconBg: 'bg-sky-500/8',      iconText: 'text-sky-600 dark:text-sky-400',         dot: 'bg-sky-500' },
+  rx:         { icon: 'i-lucide-pill',            cat: 'Clinical',     accent: 'from-rose-500 to-pink-600',       iconBg: 'bg-sky-500/8',      iconText: 'text-sky-600 dark:text-sky-400',         dot: 'bg-sky-500' },
+  records:    { icon: 'i-lucide-folder-heart',    cat: 'Clinical',     accent: 'from-fuchsia-500 to-purple-600',  iconBg: 'bg-sky-500/8',      iconText: 'text-sky-600 dark:text-sky-400',         dot: 'bg-sky-500' },
+  resources:  { icon: 'i-lucide-armchair',        cat: 'Operations',   accent: 'from-indigo-500 to-violet-600',   iconBg: 'bg-amber-500/8',    iconText: 'text-amber-600 dark:text-amber-400',     dot: 'bg-amber-500' },
+  attendance: { icon: 'i-lucide-log-in',          cat: 'Operations',   accent: 'from-lime-500 to-emerald-600',    iconBg: 'bg-amber-500/8',    iconText: 'text-amber-600 dark:text-amber-400',     dot: 'bg-amber-500' },
+  boarding:   { icon: 'i-lucide-home',            cat: 'Operations',   accent: 'from-orange-500 to-amber-600',    iconBg: 'bg-amber-500/8',    iconText: 'text-amber-600 dark:text-amber-400',     dot: 'bg-amber-500' },
+  loyalty:    { icon: 'i-lucide-award',           cat: 'Growth',       accent: 'from-amber-500 to-orange-600',    iconBg: 'bg-rose-500/8',     iconText: 'text-rose-600 dark:text-rose-400',       dot: 'bg-rose-500' },
+  events:     { icon: 'i-lucide-calendar-heart',  cat: 'Growth',       accent: 'from-pink-500 to-rose-600',       iconBg: 'bg-rose-500/8',     iconText: 'text-rose-600 dark:text-rose-400',       dot: 'bg-rose-500' },
+  followup:   { icon: 'i-lucide-list-checks',     cat: 'Growth',       accent: 'from-blue-500 to-indigo-600',     iconBg: 'bg-rose-500/8',     iconText: 'text-rose-600 dark:text-rose-400',       dot: 'bg-rose-500' }
+}
+
+const addonItem = computed(() => copy.value.addons.items.find(a => a.key === addonKey.value))
+const detail = computed(() => copy.value.addonDetails[addonKey.value])
+const meta = computed(() => addonMeta[addonKey.value])
+
+const allAddons = computed(() => copy.value.addons.items)
+const addonIndex = computed(() => allAddons.value.findIndex(a => a.key === addonKey.value))
+const totalAddons = computed(() => String(allAddons.value.length).padStart(2, '0'))
+
+const prevAddon = computed(() => addonIndex.value > 0 ? allAddons.value[addonIndex.value - 1] : null)
+const nextAddon = computed(() => addonIndex.value < allAddons.value.length - 1 ? allAddons.value[addonIndex.value + 1] : null)
+
+// Sibling add-ons in the same category
+const siblings = computed(() => {
+  if (!meta.value) return []
+  return allAddons.value.filter(a => a.key !== addonKey.value && addonMeta[a.key]?.cat === meta.value.cat).slice(0, 3)
+})
+
+useHead(() => ({
+  title: addonItem.value ? `${addonItem.value.label} — Momentfy` : 'Add-on — Momentfy',
+  meta: [{
+    name: 'description',
+    content: detail.value?.long || addonItem.value?.desc || 'Momentfy add-on'
+  }]
+}))
+
+onMounted(() => {
+  if (!addonItem.value && typeof window !== 'undefined') {
+    navigateTo('/portal/addons')
+  }
+})
+</script>
+
+<template>
+  <template v-if="addonItem && detail">
+    <!-- ═══ Hero ═══ -->
+    <section class="relative py-20 sm:py-28 overflow-hidden">
+      <div aria-hidden="true" class="absolute inset-0 -z-10">
+        <div class="absolute top-0 start-1/2 -translate-x-1/2 w-[40rem] h-[30rem] blur-[160px] opacity-20 rounded-full bg-gradient-to-br" :class="meta?.accent" />
+      </div>
+
+      <div class="max-w-7xl mx-auto px-5 sm:px-8">
+        <!-- Breadcrumb -->
+        <nav class="flex items-center gap-2 text-xs text-gray-500 mb-10" aria-label="Breadcrumb">
+          <NuxtLink to="/portal/addons" class="hover:text-primary dark:hover:text-white transition-colors uppercase tracking-[0.2em]">{{ copy.ui.breadcrumbAddons }}</NuxtLink>
+          <UIcon name="i-lucide-chevron-right" class="size-3 rtl:rotate-180" />
+          <span class="uppercase tracking-[0.2em] inline-flex items-center gap-1.5">
+            <span class="size-1.5 rounded-full" :class="meta?.dot" />
+            {{ meta?.cat }}
+          </span>
+          <UIcon name="i-lucide-chevron-right" class="size-3 rtl:rotate-180" />
+          <span class="uppercase tracking-[0.2em]">{{ String(addonIndex + 1).padStart(2, '0') }} / {{ totalAddons }}</span>
+        </nav>
+
+        <div class="grid grid-cols-12 gap-6 items-end">
+          <div class="col-span-12 sm:col-span-4 lg:col-span-3">
+            <!-- Big gradient icon tile -->
+            <div class="size-20 rounded-3xl bg-gradient-to-br text-white flex items-center justify-center shadow-2xl mb-8" :class="meta?.accent">
+              <UIcon :name="meta?.icon" class="size-10" />
+            </div>
+            <p class="text-xs uppercase tracking-[0.25em] text-gray-400 mb-2">—— {{ meta?.cat }} {{ copy.ui.addonCategorySuffix }}</p>
+            <p class="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-[0.2em] font-bold text-emerald-600 dark:text-emerald-400">
+              <UIcon name="i-lucide-check-circle-2" class="size-3" />
+              {{ copy.ui.includedInEveryPlan }}
+            </p>
+          </div>
+          <div class="col-span-12 sm:col-span-8 lg:col-span-9">
+            <h1 class="font-black tracking-tight leading-[0.9] text-5xl sm:text-6xl lg:text-7xl xl:text-8xl">
+              <span class="block">{{ addonItem.label }}</span>
+            </h1>
+            <p class="mt-6 text-lg sm:text-xl lg:text-2xl text-gray-600 dark:text-gray-400 leading-relaxed max-w-2xl font-light">
+              {{ addonItem.desc }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ Long description ═══ -->
+    <section class="py-16 sm:py-20 border-t border-black/10 dark:border-white/10">
+      <div class="max-w-7xl mx-auto px-5 sm:px-8">
+        <div class="grid grid-cols-12 gap-6 lg:gap-12">
+          <div class="col-span-12 sm:col-span-4 lg:col-span-3">
+            <p class="text-xs uppercase tracking-[0.25em] text-gray-400">—— {{ copy.ui.whatItDoes }}</p>
+          </div>
+          <div class="col-span-12 sm:col-span-8 lg:col-span-9">
+            <p class="text-xl sm:text-2xl text-gray-700 dark:text-gray-300 leading-relaxed max-w-3xl font-light">{{ detail.long }}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ Bullets — detailed features ═══ -->
+    <section class="py-16 sm:py-20 border-t border-black/10 dark:border-white/10">
+      <div class="max-w-7xl mx-auto px-5 sm:px-8">
+        <div class="grid grid-cols-12 gap-6 lg:gap-12">
+          <div class="col-span-12 lg:col-span-5">
+            <div class="lg:sticky lg:top-28">
+              <p class="text-xs uppercase tracking-[0.25em] text-gray-400 mb-4">—— {{ copy.ui.keyCapabilities }}</p>
+              <h2 class="font-black tracking-tight leading-[0.95] text-4xl sm:text-5xl">{{ copy.ui.everyMovingPart }}</h2>
+            </div>
+          </div>
+          <div class="col-span-12 lg:col-span-7">
+            <ul class="border-t border-black/10 dark:border-white/10">
+              <li v-for="(b, bi) in detail.bullets" :key="b"
+                class="flex items-start gap-4 py-5 border-b border-black/10 dark:border-white/10"
+              >
+                <span class="text-xs tabular-nums text-gray-400 w-6 shrink-0 mt-0.5">{{ String(bi + 1).padStart(2, '0') }}</span>
+                <UIcon name="i-lucide-check" class="size-5 shrink-0 mt-0.5" :class="meta?.iconText" />
+                <span class="text-base sm:text-lg text-gray-800 dark:text-gray-200 leading-relaxed">{{ b }}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ Who for ═══ -->
+    <section class="py-16 sm:py-20 border-t border-black/10 dark:border-white/10">
+      <div class="max-w-7xl mx-auto px-5 sm:px-8">
+        <div class="grid grid-cols-12 gap-6">
+          <div class="col-span-12 sm:col-span-4 lg:col-span-3">
+            <p class="text-xs uppercase tracking-[0.25em] text-gray-400">—— {{ copy.ui.whoItsFor }}</p>
+          </div>
+          <div class="col-span-12 sm:col-span-8 lg:col-span-9">
+            <p class="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight leading-[1.15] max-w-3xl">"{{ detail.whoFor }}"</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ Setup steps ═══ -->
+    <section class="py-16 sm:py-20 border-t border-black/10 dark:border-white/10">
+      <div class="max-w-7xl mx-auto px-5 sm:px-8">
+        <div class="grid grid-cols-12 gap-6 mb-12">
+          <div class="col-span-12 sm:col-span-4 lg:col-span-3">
+            <p class="text-xs uppercase tracking-[0.25em] text-gray-400">—— {{ copy.ui.setupTitle }}</p>
+            <p class="mt-3 text-sm text-gray-500 max-w-[16rem]">{{ copy.ui.setupBody }}</p>
+          </div>
+          <div class="col-span-12 sm:col-span-8 lg:col-span-9">
+            <h2 class="font-black tracking-tight leading-[0.9] text-4xl sm:text-5xl lg:text-6xl">{{ copy.ui.fromDisabledToLive }}</h2>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 md:divide-x md:divide-black/10 md:dark:divide-white/10 rtl:md:divide-x-reverse">
+          <div v-for="(step, si) in detail.setupSteps" :key="step"
+            class="py-6 md:py-0 md:px-6 first:md:ps-0 last:md:pe-0 border-b md:border-b-0 border-black/10 dark:border-white/10 last:border-b-0"
+          >
+            <p class="text-xs tabular-nums text-gray-400 mb-3">{{ String(si + 1).padStart(2, '0') }}</p>
+            <p class="text-base sm:text-lg font-semibold leading-relaxed">{{ step }}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ Integrates with ═══ -->
+    <section v-if="detail.integrates?.length" class="py-16 sm:py-20 border-t border-black/10 dark:border-white/10">
+      <div class="max-w-7xl mx-auto px-5 sm:px-8">
+        <div class="grid grid-cols-12 gap-6">
+          <div class="col-span-12 sm:col-span-4 lg:col-span-3">
+            <p class="text-xs uppercase tracking-[0.25em] text-gray-400">—— {{ copy.ui.integratesWith }}</p>
+            <p class="mt-3 text-sm text-gray-500 max-w-[16rem]">{{ copy.ui.integratesBody }}</p>
+          </div>
+          <div class="col-span-12 sm:col-span-8 lg:col-span-9">
+            <div class="flex flex-wrap gap-x-8 gap-y-3 text-2xl sm:text-3xl font-black tracking-tight">
+              <template v-for="(m, mi) in detail.integrates" :key="m">
+                <span>{{ m }}</span>
+                <span v-if="mi < detail.integrates.length - 1" aria-hidden="true" class="text-gray-300 dark:text-gray-700">·</span>
+              </template>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ Siblings: other add-ons in same chapter ═══ -->
+    <section v-if="siblings.length" class="py-16 sm:py-20 border-t border-black/10 dark:border-white/10">
+      <div class="max-w-7xl mx-auto px-5 sm:px-8">
+        <div class="grid grid-cols-12 gap-6 mb-10">
+          <div class="col-span-12 sm:col-span-4 lg:col-span-3">
+            <p class="text-xs uppercase tracking-[0.25em] text-gray-400">—— {{ copy.ui.moreFromCategoryPrefix }}{{ meta?.cat }}</p>
+          </div>
+          <div class="col-span-12 sm:col-span-8 lg:col-span-9">
+            <h2 class="font-black tracking-tight leading-[0.9] text-4xl sm:text-5xl">{{ copy.ui.exploreTheChapter }}</h2>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-8 border-t border-black/10 dark:border-white/10 pt-10">
+          <NuxtLink v-for="s in siblings" :key="s.key" :to="`/portal/addons/${s.key}`"
+            class="group flex items-start gap-4"
+          >
+            <div class="shrink-0 size-12 flex items-center justify-center rounded-xl transition-all duration-300 group-hover:scale-110" :class="addonMeta[s.key]?.iconBg">
+              <UIcon :name="addonMeta[s.key]?.icon" class="size-5" :class="addonMeta[s.key]?.iconText" />
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-base sm:text-lg font-bold leading-tight">
+                <span class="relative inline-block align-baseline">
+                  {{ s.label }}
+                  <span aria-hidden="true" class="absolute -bottom-0.5 inset-x-0 h-[1.5px] origin-start scale-x-0 group-hover:scale-x-100 transition-transform duration-300" :class="addonMeta[s.key]?.dot" />
+                </span>
+              </h3>
+              <p class="mt-2 text-sm text-gray-600 dark:text-gray-400 leading-relaxed">{{ s.desc }}</p>
+            </div>
+          </NuxtLink>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ Prev / Next pager ═══ -->
+    <section class="py-14 border-t border-black/10 dark:border-white/10">
+      <div class="max-w-7xl mx-auto px-5 sm:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:divide-x md:divide-black/10 md:dark:divide-white/10 rtl:md:divide-x-reverse">
+          <NuxtLink v-if="prevAddon" :to="`/portal/addons/${prevAddon.key}`"
+            class="group flex items-center gap-4 md:pe-10"
+          >
+            <span class="size-10 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-gray-600 dark:text-gray-400 transition-colors group-hover:bg-primary group-hover:text-white">
+              <UIcon name="i-lucide-arrow-left" class="size-4 rtl:rotate-180" />
+            </span>
+            <div class="text-start">
+              <p class="text-[10px] uppercase tracking-[0.25em] text-gray-400">{{ copy.ui.previousAddon }}</p>
+              <p class="text-lg font-black tracking-tight">{{ prevAddon.label }}</p>
+            </div>
+          </NuxtLink>
+          <div v-else />
+
+          <NuxtLink v-if="nextAddon" :to="`/portal/addons/${nextAddon.key}`"
+            class="group flex items-center justify-end gap-4 md:ps-10"
+          >
+            <div class="text-end">
+              <p class="text-[10px] uppercase tracking-[0.25em] text-gray-400">{{ copy.ui.nextAddon }}</p>
+              <p class="text-lg font-black tracking-tight">{{ nextAddon.label }}</p>
+            </div>
+            <span class="size-10 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-gray-600 dark:text-gray-400 transition-colors group-hover:bg-primary group-hover:text-white">
+              <UIcon name="i-lucide-arrow-right" class="size-4 rtl:rotate-180" />
+            </span>
+          </NuxtLink>
+        </div>
+      </div>
+    </section>
+
+    <LandingCTA />
+  </template>
+
+  <!-- Unknown key fallback -->
+  <template v-else>
+    <section class="py-28">
+      <div class="max-w-2xl mx-auto px-5 text-center">
+        <p class="text-xs uppercase tracking-[0.25em] text-gray-400 mb-4">—— {{ copy.ui.addonNotFoundEyebrow }}</p>
+        <h1 class="font-black tracking-tight text-4xl sm:text-5xl mb-4">{{ copy.ui.noAddonWithKey }}</h1>
+        <p class="text-gray-600 dark:text-gray-400 mb-8">{{ copy.ui.checkUrlAddons }}</p>
+        <NuxtLink to="/portal/addons" class="group inline-flex items-center gap-3 text-sm font-bold">
+          <span class="size-11 rounded-full bg-primary text-white dark:bg-white dark:text-primary flex items-center justify-center transition-transform group-hover:scale-110">
+            <UIcon name="i-lucide-arrow-right" class="size-4 rtl:rotate-180" />
+          </span>
+          <span class="relative">
+            {{ copy.ui.browseAllAddons }}
+            <span aria-hidden="true" class="absolute -bottom-0.5 inset-x-0 h-px bg-current group-hover:bg-secondary-500 transition-colors" />
+          </span>
+        </NuxtLink>
+      </div>
+    </section>
+  </template>
+</template>
