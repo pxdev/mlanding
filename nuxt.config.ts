@@ -64,21 +64,14 @@ export default defineNuxtConfig({
     }
   },
 
+  // @nuxtjs/i18n handles only the locale state (active language code, dir,
+  // language switcher). Marketing copy is stored in `i18n/locales/{en,ar}/landing.json`
+  // and imported directly by `useLandingCopy()` — bypassing vue-i18n's message
+  // compiler, which trips on literal `@` in emails and `{...}` placeholders.
   i18n: {
-    langDir: 'locales/',
     locales: [
-      {
-        code: 'ar',
-        name: 'العربية',
-        dir: 'rtl',
-        files: ['ar/landing.json']
-      },
-      {
-        code: 'en',
-        name: 'English',
-        dir: 'ltr',
-        files: ['en/landing.json']
-      }
+      { code: 'ar', name: 'العربية', dir: 'rtl' },
+      { code: 'en', name: 'English', dir: 'ltr' }
     ],
     defaultLocale: 'ar',
     strategy: 'no_prefix',

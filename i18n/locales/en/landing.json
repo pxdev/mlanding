@@ -1,3 +1,3101 @@
 {
-  "landing": {}
+  "landing": {
+    "dir": "ltr",
+    "nav": {
+      "features": "Features",
+      "addons": "Add-ons",
+      "showcase": "Showcase",
+      "pricing": "Pricing",
+      "faq": "FAQ",
+      "docs": "Docs",
+      "signIn": "Sign in",
+      "getCode": "Get the code",
+      "langLabel": "Language"
+    },
+    "hero": {
+      "badge": "Momentfy 1.0 is out — production-ready",
+      "h1a": "The",
+      "highlight": "operating system",
+      "h1b": "for booking businesses.",
+      "sub": "One codebase. Calendar, POS, CRM, inventory, accounting, HR, client portal and AI — in English and Arabic.",
+      "subStrong": "Buy the source. Host it anywhere. Charge what you want.",
+      "primary": "Get the source code",
+      "secondary": "Book a demo",
+      "trust": [
+        "Lifetime license",
+        "Unlimited tenants",
+        "Full source access",
+        "Lifetime updates"
+      ],
+      "chips": {
+        "zatca": {
+          "tag": "ZATCA Phase 2",
+          "msg": "Compliant invoice sent"
+        },
+        "ai": {
+          "tag": "AI Assistant",
+          "msg": "Rebooked 4 clients"
+        }
+      },
+      "chromeUrl": "app.momentfy.io / dashboard",
+      "statsStrip": [
+        {
+          "k": "120+",
+          "v": "dashboard pages"
+        },
+        {
+          "k": "16",
+          "v": "modular add-ons"
+        },
+        {
+          "k": "2",
+          "v": "languages (AR + EN)"
+        },
+        {
+          "k": "100%",
+          "v": "source code included"
+        }
+      ]
+    },
+    "why": {
+      "eyebrow": "Why Momentfy",
+      "h2a": "Not a SaaS you rent.",
+      "h2b": "A codebase you own.",
+      "body": "Most booking platforms grow more expensive as you grow. Momentfy is the opposite: one payment, unlimited everything, deploy wherever you want — and modify any line if you need to.",
+      "items": [
+        {
+          "title": "Source you own",
+          "body": "Full TypeScript codebase — Nuxt 4, Vue 3, Prisma, PostgreSQL. No obfuscation, no vendor lock-in."
+        },
+        {
+          "title": "Self-hosted, SaaS-ready",
+          "body": "Run single-tenant for your own business — or flip a flag and resell it to thousands of tenants."
+        },
+        {
+          "title": "Bilingual, RTL-native",
+          "body": "Arabic (RTL) and English built in from day one. Localized currency, numbers, calendars and receipts."
+        },
+        {
+          "title": "Compliance out of the box",
+          "body": "ZATCA Phase 2, ETA e-invoicing, VAT, audit trail and fixed-asset depreciation — all included."
+        },
+        {
+          "title": "AI baked in",
+          "body": "Vercel AI SDK assistant for booking and client portal. Bring any OpenAI-compatible provider."
+        },
+        {
+          "title": "Offline-ready PWA",
+          "body": "Installable on iOS and Android. Booking and POS keep working when the network blinks."
+        }
+      ]
+    },
+    "modules": {
+      "eyebrow": "Nine core modules",
+      "heading": "Everything a service business runs on.",
+      "sub": "Designed to work together. No integrations, no duct tape. Each module is optional per tenant.",
+      "linkAll": "See every screen",
+      "items": [
+        {
+          "id": "calendar",
+          "label": "Calendar",
+          "blurb": "Drag-and-drop scheduling with drag-to-resize, multi-location, staff lanes, blocked time and resource booking."
+        },
+        {
+          "id": "sales",
+          "label": "Sales & POS",
+          "blurb": "Lightning-fast POS with tickets, recurring invoices, estimates, credit notes, gift cards, expenses and cash register."
+        },
+        {
+          "id": "clients",
+          "label": "Clients & CRM",
+          "blurb": "Rich client profiles, dynamic segments, campaigns, reviews, tickets and an AI-powered follow-up queue."
+        },
+        {
+          "id": "catalogue",
+          "label": "Catalogue",
+          "blurb": "Services, packages, memberships, products, discounts and smart-pricing rules — in one catalogue."
+        },
+        {
+          "id": "inventory",
+          "label": "Inventory",
+          "blurb": "Suppliers, purchase orders, stocktakes, transfers, stock comparison and supplier payments."
+        },
+        {
+          "id": "team",
+          "label": "Team & HR",
+          "blurb": "Members, schedules, attendance, leave, timesheets, blocked times, pay runs and commissions."
+        },
+        {
+          "id": "accounting",
+          "label": "Accounting",
+          "blurb": "Double-entry ledger, chart of accounts, journal, bills, bank reconciliation, fixed assets and audit log."
+        },
+        {
+          "id": "reports",
+          "label": "Reports",
+          "blurb": "P&L, balance sheet, cash flow, VAT, AR/AP aging, commissions, attendance, staff and client KPIs."
+        },
+        {
+          "id": "portal",
+          "label": "Client Portal",
+          "blurb": "Branded PWA per tenant. Clients book, pay invoices, see memberships, loyalty and chat with AI."
+        }
+      ]
+    },
+    "industries": {
+      "eyebrow": "Industries",
+      "heading": "One platform. Every vertical.",
+      "sub": "Toggle the add-ons you need. Ship a tailored product in hours — not months.",
+      "items": [
+        {
+          "id": "salon",
+          "label": "Salons & Spas",
+          "tagline": "Ready out of the box"
+        },
+        {
+          "id": "dental",
+          "label": "Dental Clinics",
+          "tagline": "Ready out of the box"
+        },
+        {
+          "id": "medical",
+          "label": "Medical Clinics",
+          "tagline": "Ready out of the box"
+        },
+        {
+          "id": "barber",
+          "label": "Barber Shops",
+          "tagline": "Ready out of the box"
+        },
+        {
+          "id": "fitness",
+          "label": "Fitness & Studios",
+          "tagline": "Ready out of the box"
+        },
+        {
+          "id": "pet",
+          "label": "Vet & Pet Care",
+          "tagline": "Ready out of the box"
+        },
+        {
+          "id": "therapy",
+          "label": "Therapy & Coaching",
+          "tagline": "Ready out of the box"
+        },
+        {
+          "id": "photo",
+          "label": "Photo & Studios",
+          "tagline": "Ready out of the box"
+        }
+      ]
+    },
+    "addons": {
+      "eyebrow": "16 add-ons",
+      "heading": "Turn it into exactly the product you need.",
+      "sub": "Each tenant picks their modules. From ZATCA compliance to DICOM imaging to AI assistants — all bundled in the source.",
+      "linkAll": "All add-ons",
+      "items": [
+        {
+          "key": "zatca",
+          "label": "ZATCA Phase 2",
+          "desc": "Saudi Arabia e-invoicing with cryptographic stamp, XML signing and reporting."
+        },
+        {
+          "key": "eta",
+          "label": "ETA E-invoicing",
+          "desc": "Egypt Tax Authority compliant invoices and submission flow."
+        },
+        {
+          "key": "ai",
+          "label": "AI Assistant",
+          "desc": "Vercel AI SDK assistant in booking & client portal with OpenAI-compatible providers."
+        },
+        {
+          "key": "gcal",
+          "label": "Google Calendar",
+          "desc": "Two-way sync of appointments and blocked times with staff Google calendars."
+        },
+        {
+          "key": "insurance",
+          "label": "Insurance Classes",
+          "desc": "Insurance classes, coverage rules and claim-ready invoices for clinics."
+        },
+        {
+          "key": "dental",
+          "label": "Dental Chart",
+          "desc": "Pediatric + adult odontograms with surface-level treatment tracking."
+        },
+        {
+          "key": "imaging",
+          "label": "Clinical Imaging",
+          "desc": "DICOM viewer with annotations, attached to client records."
+        },
+        {
+          "key": "labs",
+          "label": "Lab Orders",
+          "desc": "Order lab tests, receive results, publish to client portal."
+        },
+        {
+          "key": "rx",
+          "label": "Prescriptions",
+          "desc": "Prescription authoring with patient-facing download in the portal."
+        },
+        {
+          "key": "records",
+          "label": "Medical Records",
+          "desc": "Structured EMR with SOAP notes, vitals and attachments."
+        },
+        {
+          "key": "resources",
+          "label": "Resources",
+          "desc": "Book rooms, chairs and equipment alongside staff."
+        },
+        {
+          "key": "loyalty",
+          "label": "Loyalty Points",
+          "desc": "Earning rules, redemptions, expiry and portal wallet."
+        },
+        {
+          "key": "followup",
+          "label": "Follow-up Tasks",
+          "desc": "Automated next-touch tasks assigned to members with SLA."
+        },
+        {
+          "key": "events",
+          "label": "Events & Classes",
+          "desc": "Group classes, workshops, capacity and waitlists."
+        },
+        {
+          "key": "attendance",
+          "label": "Client Attendance",
+          "desc": "Track check-ins for gyms, schools and recurring programs."
+        },
+        {
+          "key": "boarding",
+          "label": "Pet Boarding",
+          "desc": "Day-rate boarding for vets & pet resorts."
+        }
+      ]
+    },
+    "addonDetails": {
+      "zatca": {
+        "long": "Saudi Arabia's ZATCA Phase 2 e-invoicing mandate requires every invoice to be cryptographically signed, QR-stamped, and submitted to the Zakat, Tax and Customs Authority in real-time. Momentfy ships the complete flow — CSR, CSID issuance, UBL signing, clearance and reporting — with no external SaaS.",
+        "bullets": [
+          "CSR generation and CSID issuance via ZATCA's production endpoints",
+          "UBL 2.1 XML signing — private keys stay on your server",
+          "QR code stamped on every printed and PDF invoice",
+          "Real-time clearance (B2B) and reporting (B2C) flows",
+          "Retry queue with actionable error surfaces in admin",
+          "Full archival of cleared invoices with submission UUIDs",
+          "Saudi Riyal currency glyph (U+20C1) bundled"
+        ],
+        "whoFor": "Any Saudi-registered business with a Tax Registration Number issuing VAT invoices.",
+        "setupSteps": [
+          "Enter your TRN on the tenant settings page",
+          "Generate a CSR in the admin (one click) and upload it to ZATCA fatoora",
+          "Paste the CSID response back into Momentfy",
+          "Test in sandbox, then flip to production"
+        ],
+        "integrates": [
+          "Sales & POS",
+          "Accounting",
+          "Client Portal"
+        ]
+      },
+      "eta": {
+        "long": "Egypt's ETA (Egyptian Tax Authority) requires every B2B invoice to be mapped to item/customer codes and submitted to their portal within minutes. Momentfy speaks the full ETA schema, validates before submission, and handles corrections.",
+        "bullets": [
+          "Item and customer code mapping with bulk editor",
+          "Pre-submission validation catches schema errors before the round-trip",
+          "Signed submission with status tracking (submitted → accepted → cleared)",
+          "Credit notes and corrections fully supported",
+          "Reconciliation reports aligned to ETA quarterly filings",
+          "Automatic retries on transient ETA API failures"
+        ],
+        "whoFor": "Any Egypt-registered business required to submit ETA e-invoices.",
+        "setupSteps": [
+          "Obtain your ETA client secret and upload to tenant settings",
+          "Map tax rates to ETA tax codes via the settings table",
+          "Map top-level SKUs to ETA item codes (CSV upload)",
+          "Submit a test invoice, verify acceptance, go live"
+        ],
+        "integrates": [
+          "Sales & POS",
+          "Accounting",
+          "Clients & CRM"
+        ]
+      },
+      "ai": {
+        "long": "An AI assistant built on Vercel AI SDK that lives in the client booking flow and the tenant portal. Bring your own OpenAI-compatible endpoint (OpenAI, proxies, local Ollama). The assistant is grounded in your services, hours and policies — no hallucinated appointments.",
+        "bullets": [
+          "In-app chat widget on booking site and client portal",
+          "Grounded on your real services, opening hours, staff, prices",
+          "Can guide a client through booking end-to-end",
+          "Per-tenant brand voice via a custom system prompt",
+          "Configurable provider and model (OpenAI-compatible)",
+          "Cost controls: per-tenant token budget + soft cap",
+          "Usage tracking dashboard in the super-admin panel"
+        ],
+        "whoFor": "Any tenant that wants a 24/7 assistant without hiring extra receptionists.",
+        "setupSteps": [
+          "Enable the AI Assistant add-on from tenant settings",
+          "Paste your OpenAI-compatible API key and endpoint URL",
+          "Set the monthly token budget and a brand system prompt",
+          "Test in the booking site preview, then publish"
+        ],
+        "integrates": [
+          "Client Portal",
+          "Calendar",
+          "Clients & CRM"
+        ]
+      },
+      "gcal": {
+        "long": "Two-way sync between each staff member's Google Calendar and their Momentfy schedule. Appointments booked in Momentfy appear on their Google Calendar instantly; busy blocks from Google are pulled in so nobody gets double-booked.",
+        "bullets": [
+          "Per-staff OAuth — each team member authorises their own calendar",
+          "Outbound: Momentfy appointments → Google events within seconds",
+          "Inbound: busy blocks from Google become blocked-time in Momentfy",
+          "Timezone-aware — safe across DST and travelling staff",
+          "Automatic re-sync if a member revokes and re-grants access",
+          "Works with personal Gmail and Google Workspace calendars"
+        ],
+        "whoFor": "Teams where staff already live in Google Calendar for personal commitments.",
+        "setupSteps": [
+          "Enable the Google Calendar add-on",
+          "Create a Google Cloud project and OAuth client (one-time)",
+          "Paste client ID / secret into tenant settings",
+          "Each staff member clicks 'Connect my calendar' on their profile"
+        ],
+        "integrates": [
+          "Calendar",
+          "Team & HR"
+        ]
+      },
+      "insurance": {
+        "long": "Insurance classes, coverage rules, and claim-ready invoices for clinics that split a single visit between patient and insurer. Every service can have per-class coverage percentages, co-pays, and visit caps.",
+        "bullets": [
+          "Define insurance classes with tiered coverage (e.g. BUPA Gold, Tawuniya Silver)",
+          "Per-service coverage percentages and per-visit caps",
+          "Automatic co-pay calculation at POS checkout",
+          "Claim-ready invoice exports with insurance & patient splits",
+          "Client profile stores insurance class, policy number, validity",
+          "Reports on insurance recovery rate per class"
+        ],
+        "whoFor": "Dental, medical and aesthetics clinics with mixed-insurance patients.",
+        "setupSteps": [
+          "Create insurance classes under Catalogue → Insurance",
+          "Define coverage rules per service (percentage + cap)",
+          "Assign each patient's insurance class in their profile",
+          "Book a visit — co-pay is calculated automatically at POS"
+        ],
+        "integrates": [
+          "Clients & CRM",
+          "Sales & POS",
+          "Accounting"
+        ]
+      },
+      "dental": {
+        "long": "Interactive odontogram for adult and paediatric patients with surface-level tracking. Click any tooth (or surface) to log caries, fillings, crowns, extractions, or watchful waiting. Every chart entry links back to a visit for full audit.",
+        "bullets": [
+          "FDI and Universal numbering schemes — switchable per tenant",
+          "32 adult + 20 paediatric teeth with 5 surfaces each",
+          "Colour-coded statuses: OK, caries, filling, crown, extracted, missing, implant, watch",
+          "Timeline view: see the chart state at every past visit",
+          "Treatment plans: propose, approve, execute across multiple visits",
+          "Printable odontogram attached to the patient's medical record"
+        ],
+        "whoFor": "Dental clinics — general, paediatric, orthodontic.",
+        "setupSteps": [
+          "Enable the Dental Chart add-on",
+          "Choose FDI or Universal numbering in tenant settings",
+          "Open any patient's profile — the chart tab appears",
+          "Click teeth to log procedures during or after the visit"
+        ],
+        "integrates": [
+          "Clients & CRM",
+          "Medical Records",
+          "Calendar"
+        ]
+      },
+      "imaging": {
+        "long": "A built-in DICOM viewer so X-rays, panoramics, and intra-oral images live inside the patient's file — not on a separate computer. Upload a DICOM, view it with proper window/level/zoom/pan, annotate, and attach to a visit.",
+        "bullets": [
+          "DICOM parser that handles .dcm and .dcm.gz inputs",
+          "Window / level / zoom / pan with keyboard shortcuts",
+          "Annotations: arrows, circles, measurements (mm when calibrated)",
+          "Each image attached to a specific patient visit",
+          "Full-screen viewer and multi-image comparison",
+          "Reduced-resolution preview for fast mobile access in portal"
+        ],
+        "whoFor": "Dental and medical clinics that generate DICOM imaging (X-ray, CBCT, ultrasound).",
+        "setupSteps": [
+          "Enable the Clinical Imaging add-on",
+          "Configure the S3 bucket where DICOM files are stored",
+          "Upload images from the patient's profile",
+          "Annotate and attach to the relevant visit"
+        ],
+        "integrates": [
+          "Clients & CRM",
+          "Medical Records"
+        ]
+      },
+      "labs": {
+        "long": "Order clinical lab tests from a visit, receive results back (CSV, PDF, or manually entered), and optionally publish them to the patient's portal. Ships with a configurable lab catalogue and reference-range validation.",
+        "bullets": [
+          "Structured lab test catalogue with reference ranges",
+          "Order from within a visit in one click",
+          "Status tracking: ordered → collected → in-progress → resulted",
+          "Results captured as structured fields with reference flags",
+          "PDF attachment option for the original lab report",
+          "Published results appear in the client portal with trend charts"
+        ],
+        "whoFor": "Clinics that order blood work, microbiology, or path tests through external labs.",
+        "setupSteps": [
+          "Enable the Lab Orders add-on",
+          "Import the lab catalogue CSV (or build one in the admin)",
+          "Order a test during any visit",
+          "Enter or upload the result when it arrives"
+        ],
+        "integrates": [
+          "Clients & CRM",
+          "Medical Records",
+          "Client Portal"
+        ]
+      },
+      "rx": {
+        "long": "Author prescriptions during the visit and download or print them on a branded prescription pad. Patients can access their full prescription history in the client portal.",
+        "bullets": [
+          "Drug catalogue with dosage presets per medication",
+          "Multi-item prescriptions with per-item dose, frequency, duration",
+          "Signed PDF prescription with tenant branding",
+          "Patient download via portal; tenant copy in the visit record",
+          "Repeat-prescription support with automatic reminders",
+          "Audit trail — who wrote it, when, any edits"
+        ],
+        "whoFor": "Any clinic that prescribes — GPs, dentists, specialists.",
+        "setupSteps": [
+          "Enable the Prescriptions add-on",
+          "Upload your prescription-pad letterhead (optional)",
+          "Build or import a drug catalogue",
+          "Write a prescription during any visit"
+        ],
+        "integrates": [
+          "Medical Records",
+          "Client Portal",
+          "Calendar"
+        ]
+      },
+      "records": {
+        "long": "Structured electronic medical records (EMR) with SOAP-style note templates, vitals logging, and allergy/diagnosis tracking. Each visit lives on the patient timeline with full attachment support.",
+        "bullets": [
+          "SOAP note templates (Subjective, Objective, Assessment, Plan)",
+          "Custom note templates per specialty (paediatric, derm, ortho…)",
+          "Vitals captured as structured fields with trend charts",
+          "Allergies and diagnoses tagged with ICD-10 codes",
+          "Attachments: images, PDFs, DICOM links",
+          "Visit timeline: one patient's entire history at a glance"
+        ],
+        "whoFor": "Clinics that want a real EMR without paying for a separate system.",
+        "setupSteps": [
+          "Enable the Medical Records add-on",
+          "Choose or create SOAP templates for your specialties",
+          "Start writing notes during or after each visit",
+          "Tag allergies and diagnoses in the patient profile"
+        ],
+        "integrates": [
+          "Clients & CRM",
+          "Calendar",
+          "Lab Orders",
+          "Prescriptions"
+        ]
+      },
+      "resources": {
+        "long": "Book rooms, chairs, equipment, or any physical asset alongside staff. A haircut needs a chair; a root canal needs a chair + hygienist; a class needs a room. Resources make all of this bookable and conflict-aware.",
+        "bullets": [
+          "Define resource types (room, chair, machine) with quantity per location",
+          "Assign required resources to each service",
+          "Calendar surfaces resource conflicts in real time",
+          "Block resources for maintenance, cleaning, or downtime",
+          "Per-resource utilisation reports",
+          "Resources roll into commission calculations when relevant"
+        ],
+        "whoFor": "Any business where the physical asset matters as much as the staff.",
+        "setupSteps": [
+          "Enable the Resources add-on",
+          "Define resource types per location",
+          "Attach resource requirements to each service in the catalogue",
+          "Book normally — conflicts are caught automatically"
+        ],
+        "integrates": [
+          "Calendar",
+          "Catalogue",
+          "Reports"
+        ]
+      },
+      "attendance": {
+        "long": "Track client check-ins for gyms, schools, and any recurring programme where 'showing up' matters more than 'booking a time slot'. Ships with a kiosk-friendly check-in flow and an optional ETA invoice trigger.",
+        "bullets": [
+          "One-tap check-in via client phone, QR code, or kiosk",
+          "Membership session countdown on every check-in",
+          "Attendance reports per client, class, or month",
+          "Automatic no-show detection for booked but not-checked-in clients",
+          "Optional: trigger an ETA-compliant invoice on check-in",
+          "Exportable attendance registers for schools or HR audits"
+        ],
+        "whoFor": "Gyms, yoga studios, schools, martial-arts clubs, tutoring centres.",
+        "setupSteps": [
+          "Enable the Client Attendance add-on",
+          "Configure the kiosk (tablet + wall mount) or client-app check-in",
+          "Assign check-in credits to each membership",
+          "Let clients check themselves in"
+        ],
+        "integrates": [
+          "Clients & CRM",
+          "Catalogue",
+          "Events & Classes"
+        ]
+      },
+      "boarding": {
+        "long": "Day-rate boarding for vet clinics and pet resorts. Drop-off, pick-up, per-night pricing, special requirements (medications, dietary restrictions), and billing that flows straight into the POS.",
+        "bullets": [
+          "Drop-off / pick-up time tracking with photo upload",
+          "Per-night pricing tiers (standard / medical / VIP)",
+          "Special requirements: meds, diet, grooming schedule",
+          "Occupancy calendar showing which kennels / rooms are free",
+          "Billing auto-generated on pick-up with any extras",
+          "Owner notifications on check-in, daily updates, check-out"
+        ],
+        "whoFor": "Vet clinics, pet resorts, boarding kennels.",
+        "setupSteps": [
+          "Enable the Pet Boarding add-on",
+          "Define your boarding units (kennels, rooms) per location",
+          "Set per-night prices and any add-on services",
+          "Book drop-offs from the calendar; POS invoices on pick-up"
+        ],
+        "integrates": [
+          "Calendar",
+          "Clients & CRM",
+          "Sales & POS"
+        ]
+      },
+      "loyalty": {
+        "long": "Points-based loyalty with earning rules, redemptions, expiry, and a wallet view in the client portal. Turns one-time customers into recurring ones without discounting every visit.",
+        "bullets": [
+          "Earn rules: per service, per spend, per visit, per member segment",
+          "Redemption rules: minimum balance, valid services, expiry window",
+          "Points expiry with automatic clean-up and client notification",
+          "Wallet view in the client portal with full transaction history",
+          "Campaigns: bonus multipliers on targeted segments or days",
+          "Per-tenant loyalty reports: redemption rate, top earners"
+        ],
+        "whoFor": "Any business where repeat visits matter — salons, cafés, clinics.",
+        "setupSteps": [
+          "Enable the Loyalty Points add-on",
+          "Define earn rules in the catalogue (points per service or per unit spent)",
+          "Set redemption rules (minimum, expiry, eligible services)",
+          "Launch — clients accumulate points automatically on every sale"
+        ],
+        "integrates": [
+          "Clients & CRM",
+          "Sales & POS",
+          "Campaigns"
+        ]
+      },
+      "events": {
+        "long": "Group classes, workshops, and scheduled events with capacity, waitlists, and attendee check-in. A yoga class at 7am with 12 seats — Momentfy sells them, confirms them, and checks them in.",
+        "bullets": [
+          "Recurring and one-off events with capacity limits",
+          "Waitlist support with automatic promotion when a seat frees up",
+          "Attendee check-in via kiosk or client app",
+          "Per-event pricing (fixed, free, member-only)",
+          "Reports: fill rate, waitlist conversion, top events",
+          "Event-level reviews published to the public booking page"
+        ],
+        "whoFor": "Fitness studios, cooking schools, workshop hosts, community centres.",
+        "setupSteps": [
+          "Enable the Events & Classes add-on",
+          "Create event templates (Yoga 60, HIIT 45, etc.)",
+          "Schedule recurring slots in the calendar",
+          "Publish to the booking site — clients start signing up"
+        ],
+        "integrates": [
+          "Calendar",
+          "Catalogue",
+          "Client Attendance"
+        ]
+      },
+      "followup": {
+        "long": "An automated queue of follow-up tasks so nothing slips through. 'Call Sarah about her post-op checkup.' 'Ask Karim for a review after his third visit.' Rules generate the tasks; assigned staff close them.",
+        "bullets": [
+          "Rules based on segment, visit outcome, membership expiry, or date",
+          "Tasks assigned to specific staff with SLA timers",
+          "Batch-complete with one click (e.g. \"mark all called\")",
+          "Client-level truncation notice — no spamming the same person",
+          "Per-member queue with status counts and priority",
+          "Reports: average time-to-close, no-response rate, staff ranking"
+        ],
+        "whoFor": "Any operator who says \"we forgot to call them back\".",
+        "setupSteps": [
+          "Enable the Follow-up Tasks add-on",
+          "Create rules (e.g. 'call 2 days after first visit')",
+          "Assign default owners per task type",
+          "Staff process the queue from their dashboard"
+        ],
+        "integrates": [
+          "Clients & CRM",
+          "Calendar",
+          "Campaigns"
+        ]
+      }
+    },
+    "solutionDetails": {
+      "salon": {
+        "title": "Salons & Spas",
+        "tagline": "Color-coded lanes, memberships and loyalty — tuned for the rhythm of a salon.",
+        "icon": "i-lucide-scissors",
+        "accent": "from-pink-500 to-rose-600",
+        "dot": "bg-rose-500",
+        "category": "Industry",
+        "long": "Salons live on rebooks, retail attach-rate and staff commissions. Momentfy's salon setup ships with color-coded staff lanes, membership bundles, gift cards, loyalty points, retail inventory, campaigns and per-stylist commissions — bookable from your branded PWA.",
+        "pains": [
+          "Double-booked chairs and no-shows eating 20% of revenue",
+          "Memberships tracked in spreadsheets that nobody updates",
+          "Commissions calculated by hand every payday",
+          "Loyalty punch-cards that walk out with the client"
+        ],
+        "capabilities": [
+          "Drag-and-drop staff lanes with resource booking",
+          "Memberships, gift cards and package credits in one wallet",
+          "Loyalty points auto-earned at POS, redeemable in portal",
+          "Per-stylist commissions with split and tip handling",
+          "Retail inventory with re-order points and stock moves",
+          "SMS/WhatsApp reminders and review-request campaigns",
+          "Walk-in queue alongside booked appointments",
+          "End-of-day cash register close"
+        ],
+        "stack": [
+          "Calendar",
+          "Sales & POS",
+          "Memberships",
+          "Loyalty Points",
+          "Campaigns",
+          "Clients & CRM",
+          "Inventory",
+          "Reports"
+        ],
+        "stats": [
+          {
+            "k": "No-show drop",
+            "v": "-38%"
+          },
+          {
+            "k": "Rebook rate",
+            "v": "+52%"
+          },
+          {
+            "k": "Checkout time",
+            "v": "< 90s"
+          }
+        ],
+        "whoFor": "Hair, beauty, nails, lash and spa operators running 1–50 chairs across one or many locations.",
+        "useCases": [
+          "Solo stylist accepting online bookings with deposits",
+          "Multi-chair salon with stylist-specific commissions and tips",
+          "Spa chain selling seasonal memberships across branches",
+          "Retail-heavy concept bar upselling products at POS"
+        ],
+        "faq": [
+          {
+            "q": "Can stylists see only their own appointments?",
+            "a": "Yes — role-based views restrict each member's calendar to their lane by default."
+          },
+          {
+            "q": "Do memberships auto-renew?",
+            "a": "Yes. Stripe or Lemon Squeezy handles the card-on-file charge and credit tops up automatically."
+          }
+        ]
+      },
+      "dental": {
+        "title": "Dental Clinics",
+        "tagline": "Odontogram, imaging, prescriptions and insurance — ZATCA-ready.",
+        "icon": "i-lucide-tooth",
+        "accent": "from-sky-500 to-blue-600",
+        "dot": "bg-sky-500",
+        "category": "Industry",
+        "long": "Dental practices need clinical depth without clinical drag. Momentfy ships a pediatric + adult odontogram, treatment plans, DICOM imaging, prescriptions, insurance classes with coverage rules, and ZATCA Phase 2 e-invoicing — all inside one bilingual app.",
+        "pains": [
+          "Paper odontograms lost between visits",
+          "Insurance rejections from missing coverage rules",
+          "X-ray images trapped on a lab PC",
+          "Manual ZATCA invoice uploads every evening"
+        ],
+        "capabilities": [
+          "Odontogram with surface-level treatment tracking (pediatric + adult)",
+          "Treatment plans with phasing and consent capture",
+          "DICOM viewer with annotations attached to the record",
+          "Prescription authoring with patient-facing portal download",
+          "Insurance classes + coverage rules + claim-ready invoices",
+          "ZATCA Phase 2 clearance + QR-stamped receipts",
+          "Chair & resource booking alongside staff",
+          "Lab orders with external-lab status tracking"
+        ],
+        "stack": [
+          "Calendar",
+          "Dental Chart",
+          "Clinical Imaging",
+          "Prescriptions",
+          "Insurance Classes",
+          "Medical Records",
+          "ZATCA",
+          "Client Portal"
+        ],
+        "stats": [
+          {
+            "k": "Chair utilization",
+            "v": "+24%"
+          },
+          {
+            "k": "Insurance recovery",
+            "v": "+31%"
+          },
+          {
+            "k": "Charting time",
+            "v": "-65%"
+          }
+        ],
+        "whoFor": "Solo and multi-doctor dental practices in GCC/MENA needing ZATCA compliance and insurance workflows.",
+        "useCases": [
+          "Two-chair clinic running mixed insurance + cash patients",
+          "Pediatric dentistry tracking deciduous dentition over time",
+          "Orthodontist managing multi-phase treatment plans",
+          "Multi-branch group practice with unified patient records"
+        ],
+        "faq": [
+          {
+            "q": "Can I attach DICOM images to a treatment step?",
+            "a": "Yes — the DICOM viewer links each series to the relevant tooth and treatment step in one click."
+          },
+          {
+            "q": "Are ZATCA cleared invoices retained?",
+            "a": "Forever. Cleared XML + submission UUID are archived and exportable at any time."
+          }
+        ]
+      },
+      "medical": {
+        "title": "Medical Clinics",
+        "tagline": "Structured EMR, lab orders, prescriptions and insurance-ready invoicing.",
+        "icon": "i-lucide-heart-pulse",
+        "accent": "from-red-500 to-orange-500",
+        "dot": "bg-red-500",
+        "category": "Industry",
+        "long": "General practice, GP chains, dermatology, pediatrics — Momentfy gives medical clinics a structured EMR with SOAP notes, vitals capture, lab orders, prescriptions and bilingual portal access, plus ZATCA/ETA invoice clearance.",
+        "pains": [
+          "SOAP notes scattered across paper and email",
+          "Lab results printed and filed manually",
+          "Prescriptions rewritten from scratch every visit",
+          "No way for patients to see their own history"
+        ],
+        "capabilities": [
+          "Structured SOAP notes + vitals capture",
+          "Lab order workflow with external-lab turn-around",
+          "Prescription authoring with refills and templates",
+          "Medical records timeline with attachments",
+          "Insurance-class aware invoicing + coverage rules",
+          "Branded client portal with history download",
+          "Multi-doctor scheduling + per-doctor commissions",
+          "VAT + ZATCA + ETA clearance built in"
+        ],
+        "stack": [
+          "Calendar",
+          "Medical Records",
+          "Lab Orders",
+          "Prescriptions",
+          "Insurance Classes",
+          "Client Portal",
+          "ZATCA",
+          "Reports"
+        ],
+        "stats": [
+          {
+            "k": "Charting time",
+            "v": "-40%"
+          },
+          {
+            "k": "Portal adoption",
+            "v": "72%"
+          },
+          {
+            "k": "Lab turnaround",
+            "v": "-28%"
+          }
+        ],
+        "whoFor": "GP, dermatology, pediatric and specialist clinics with 1–20 doctors.",
+        "useCases": [
+          "GP chain unifying charts across branches",
+          "Dermatology clinic attaching before/after photos to visits",
+          "Pediatric practice tracking growth curves over years",
+          "Specialist running insurance-heavy procedure workflows"
+        ]
+      },
+      "barber": {
+        "title": "Barber Shops",
+        "tagline": "Walk-in queue, fast POS and per-barber commissions — built for volume.",
+        "icon": "i-lucide-user",
+        "accent": "from-stone-500 to-neutral-700",
+        "dot": "bg-stone-500",
+        "category": "Industry",
+        "long": "Barbershops thrive on speed and fairness. Momentfy blends a walk-in queue with booked appointments, tracks per-barber commissions to the cent, and checks clients out in under 90 seconds on any tablet.",
+        "pains": [
+          "Queue mayhem during rush hour",
+          "Commission disputes on tips and products",
+          "Membership cards that nobody remembers",
+          "Checkout lines slower than the haircut"
+        ],
+        "capabilities": [
+          "Walk-in queue that coexists with bookings",
+          "Per-barber commissions with tip tracking",
+          "Fast POS tuned for <90s checkout",
+          "Memberships + package credits in one wallet",
+          "SMS reminders with deposit hold on no-shows",
+          "Staff attendance + leave from the app",
+          "Daily cash-out with z-report",
+          "Retail product sales alongside services"
+        ],
+        "stack": [
+          "Calendar",
+          "Sales & POS",
+          "Memberships",
+          "Commissions",
+          "Loyalty Points",
+          "Campaigns",
+          "Clients & CRM"
+        ],
+        "stats": [
+          {
+            "k": "Avg. ticket",
+            "v": "+18%"
+          },
+          {
+            "k": "Queue wait",
+            "v": "-44%"
+          },
+          {
+            "k": "Commission accuracy",
+            "v": "100%"
+          }
+        ],
+        "whoFor": "Single-shop and multi-chair barbers from classic cuts to modern grooming concepts.",
+        "useCases": [
+          "Walk-in heavy shop running queue on a kiosk tablet",
+          "Multi-chair shop paying tiered commissions",
+          "Grooming concept selling beard-oil retail at POS",
+          "Multi-location chain unifying loyalty across branches"
+        ]
+      },
+      "fitness": {
+        "title": "Fitness & Studios",
+        "tagline": "Group classes, memberships, waitlists and attendance — kiosk-friendly.",
+        "icon": "i-lucide-dumbbell",
+        "accent": "from-lime-500 to-emerald-600",
+        "dot": "bg-emerald-500",
+        "category": "Industry",
+        "long": "Pilates, yoga, crossfit, HIIT, boxing — Momentfy runs the full class-based lifecycle: schedule, enrol, waitlist, track attendance and renew memberships. Kiosk check-in makes the door staff-free.",
+        "pains": [
+          "Manual class-roster spreadsheets",
+          "No-shows taking spots from waitlisted members",
+          "Membership renewals that silently lapse",
+          "Coaches paid for empty slots"
+        ],
+        "capabilities": [
+          "Recurring class schedules with capacity + waitlist",
+          "Member app with self-enrol and cancel windows",
+          "Attendance check-in via kiosk or coach app",
+          "Membership tiers + paused/frozen states",
+          "Drop-in packs and class credits",
+          "Campaigns for re-activation of lapsed members",
+          "Commissions per coach per head",
+          "Reports: fill rate, churn, class profitability"
+        ],
+        "stack": [
+          "Events & Classes",
+          "Memberships",
+          "Client Attendance",
+          "Client Portal",
+          "Campaigns",
+          "Reports",
+          "Sales & POS"
+        ],
+        "stats": [
+          {
+            "k": "Class fill rate",
+            "v": "+26%"
+          },
+          {
+            "k": "Member churn",
+            "v": "-19%"
+          },
+          {
+            "k": "Check-in time",
+            "v": "< 5s"
+          }
+        ],
+        "whoFor": "Group-class studios, boutique gyms and independent coaches running recurring classes.",
+        "useCases": [
+          "Pilates studio selling 10-class packs with expiry",
+          "HIIT gym running waitlists for peak classes",
+          "Martial arts academy tracking kids attendance",
+          "Yoga collective paying coaches per head"
+        ]
+      },
+      "pet": {
+        "title": "Vet & Pet Care",
+        "tagline": "Vet records, vaccination reminders, boarding and day-care billing.",
+        "icon": "i-lucide-paw-print",
+        "accent": "from-amber-500 to-yellow-600",
+        "dot": "bg-amber-500",
+        "category": "Industry",
+        "long": "Vets and pet resorts share one rhythm: recurring visits and long memory. Momentfy stores one record per animal (not per owner), schedules vaccine recalls, prices boarding by day and invoices the owner.",
+        "pains": [
+          "Vaccines missed because nobody called",
+          "Boarding cages booked on a whiteboard",
+          "Multi-pet households with tangled records",
+          "Medication refills that need re-typing"
+        ],
+        "capabilities": [
+          "One record per animal with species-specific fields",
+          "Vaccination schedule with automatic reminders",
+          "Day-rate boarding with occupancy view",
+          "Prescription refills from history",
+          "Multi-pet family grouping with shared billing",
+          "Grooming bookings alongside medical visits",
+          "Portal with vaccine certificates downloadable",
+          "Lab orders and imaging attached to the animal"
+        ],
+        "stack": [
+          "Calendar",
+          "Medical Records",
+          "Pet Boarding",
+          "Prescriptions",
+          "Client Portal",
+          "Sales & POS",
+          "Campaigns"
+        ],
+        "stats": [
+          {
+            "k": "Vaccine recall",
+            "v": "+48%"
+          },
+          {
+            "k": "Boarding utilization",
+            "v": "+33%"
+          },
+          {
+            "k": "Client reviews",
+            "v": "4.9★"
+          }
+        ],
+        "whoFor": "Vet clinics, pet resorts, groomers and mixed-services pet businesses.",
+        "useCases": [
+          "Vet clinic auto-recalling pets 1 year after vaccination",
+          "Pet resort pricing boarding by night + add-ons",
+          "Groomer + vet combined under one brand",
+          "Mobile vet visiting homes with route-based bookings"
+        ]
+      },
+      "therapy": {
+        "title": "Therapy & Coaching",
+        "tagline": "Sessions, intake forms, progress notes and private portal access.",
+        "icon": "i-lucide-brain",
+        "accent": "from-indigo-500 to-violet-600",
+        "dot": "bg-indigo-500",
+        "category": "Industry",
+        "long": "Therapists, coaches and counsellors need calm software that respects confidentiality. Momentfy ships intake forms, private session notes, outcome tracking and a client portal that feels like a journal — not a dashboard.",
+        "pains": [
+          "Intake forms filled on paper then re-typed",
+          "Notes in a Word doc \"just for me\"",
+          "Clients missing sessions without deposit",
+          "No easy way to share homework or worksheets"
+        ],
+        "capabilities": [
+          "Custom intake forms with e-signature",
+          "Session notes with outcome scores over time",
+          "Calendar with buffer time and block-bookings",
+          "Deposit-or-no-booking rule on high-risk slots",
+          "Recurring session packages with pre-paid credits",
+          "Client portal with private messages + homework",
+          "AI Assistant drafting session reminders",
+          "Export-ready records for referrals"
+        ],
+        "stack": [
+          "Calendar",
+          "Medical Records",
+          "Client Portal",
+          "AI Assistant",
+          "Sales & POS",
+          "Campaigns"
+        ],
+        "stats": [
+          {
+            "k": "No-show drop",
+            "v": "-42%"
+          },
+          {
+            "k": "Weekly sessions",
+            "v": "+28%"
+          },
+          {
+            "k": "Session notes time",
+            "v": "-35%"
+          }
+        ],
+        "whoFor": "Therapists, counsellors, psychologists, life coaches and career coaches running 1:1 sessions.",
+        "useCases": [
+          "Solo therapist running weekly CBT sessions",
+          "Coaching collective sharing one brand + split earnings",
+          "Couples counsellor tracking joint sessions",
+          "Career coach selling 6-session packages upfront"
+        ]
+      },
+      "photo": {
+        "title": "Photo Studios",
+        "tagline": "Package pricing, deposit-or-no-booking, gallery delivery and prints.",
+        "icon": "i-lucide-camera",
+        "accent": "from-fuchsia-500 to-purple-600",
+        "dot": "bg-fuchsia-500",
+        "category": "Industry",
+        "long": "Photographers lose money on no-shows and chase balances for weeks. Momentfy packages shoots, enforces deposits at booking, manages equipment blocks, and delivers galleries + prints from the same system that took the booking.",
+        "pains": [
+          "Shoots booked without deposit that ghost on the day",
+          "Equipment clashes across studios",
+          "Edit delivery chased over email",
+          "Print sales outside the invoice flow"
+        ],
+        "capabilities": [
+          "Shoot packages with time + deliverables",
+          "Mandatory deposit at booking with remainder schedule",
+          "Equipment + studio resource booking",
+          "Gallery delivery link inside the client portal",
+          "Print products priced and invoiced through POS",
+          "Reviewed + approved frames tracked per shoot",
+          "Per-photographer commission splits",
+          "Contract + e-sign before confirmation"
+        ],
+        "stack": [
+          "Calendar",
+          "Sales & POS",
+          "Resources",
+          "Client Portal",
+          "Catalogue",
+          "Campaigns"
+        ],
+        "stats": [
+          {
+            "k": "Deposit compliance",
+            "v": "98%"
+          },
+          {
+            "k": "Balance collection",
+            "v": "Day of"
+          },
+          {
+            "k": "Post-shoot upsell",
+            "v": "+22%"
+          }
+        ],
+        "whoFor": "Portrait, wedding, product and studio photographers running package-based shoots.",
+        "useCases": [
+          "Wedding photographer selling 3-tier packages",
+          "Portrait studio shared between two photographers",
+          "Product photography studio invoicing by the hour",
+          "Mobile photographer booking on-location shoots"
+        ]
+      },
+      "nails": {
+        "title": "Nail & Lash Bars",
+        "tagline": "Tech-specific menus, deposits, touch-up rebooks and retail add-ons.",
+        "icon": "i-lucide-sparkles",
+        "accent": "from-rose-400 to-pink-500",
+        "dot": "bg-pink-500",
+        "category": "Industry",
+        "long": "Nail and lash bars run on short, frequent visits with tight touch-up windows. Momentfy lets each tech publish her own menu, enforces a deposit on every booking, and auto-prompts clients to rebook before their set comes off.",
+        "pains": [
+          "Every tech needs a different service menu",
+          "Missed touch-ups = lost repeat revenue",
+          "Late-cancels with no deposit to hold",
+          "Retail (polish, aftercare) sold off the books"
+        ],
+        "capabilities": [
+          "Per-tech service menus + prices",
+          "Deposit enforced at booking (% or fixed)",
+          "Auto-rebook suggestion at set lifespan end",
+          "Retail attach-rate reports per tech",
+          "Loyalty points on visit count not spend",
+          "Instagram gallery linked to service",
+          "Campaigns to lapsed clients with offer",
+          "Tips captured at POS with commission split"
+        ],
+        "stack": [
+          "Calendar",
+          "Sales & POS",
+          "Memberships",
+          "Loyalty Points",
+          "Campaigns",
+          "Catalogue",
+          "Reports"
+        ],
+        "stats": [
+          {
+            "k": "Repeat visit rate",
+            "v": "+34%"
+          },
+          {
+            "k": "Deposit capture",
+            "v": "96%"
+          },
+          {
+            "k": "Retail attach",
+            "v": "+19%"
+          }
+        ],
+        "whoFor": "Nail salons, lash studios, brow bars and multi-tech beauty studios.",
+        "useCases": [
+          "Nail bar with 6 techs each setting own prices",
+          "Lash studio running every-3-week touch-up prompt",
+          "Brow + lash combined studio sharing retail",
+          "Home-based tech taking deposits via PWA"
+        ]
+      },
+      "tattoo": {
+        "title": "Tattoo & Piercing",
+        "tagline": "Artist portfolios, consults, deposits and aftercare tracking.",
+        "icon": "i-lucide-pen-tool",
+        "accent": "from-zinc-600 to-slate-800",
+        "dot": "bg-zinc-700",
+        "category": "Industry",
+        "long": "Tattoo and piercing studios run on artist reputation and protected shop time. Momentfy gives each artist a portfolio-and-booking mini-site, captures consent + medical forms, and takes a non-refundable deposit before a session is ever held.",
+        "pains": [
+          "Sessions booked without deposit get cancelled",
+          "Artists juggle consult scheduling in DMs",
+          "Consent + aftercare forms on paper",
+          "Commission accounting at end of month hell"
+        ],
+        "capabilities": [
+          "Per-artist portfolio + booking link",
+          "Consult-then-session two-stage workflow",
+          "Non-refundable deposit held against session",
+          "Medical + consent forms with e-sign",
+          "Aftercare follow-up campaigns by day 3, 14, 30",
+          "Per-artist commission + chair rental flows",
+          "Age-verified booking checks",
+          "Tip capture with transparent split"
+        ],
+        "stack": [
+          "Calendar",
+          "Sales & POS",
+          "Clients & CRM",
+          "Campaigns",
+          "Resources",
+          "Reports"
+        ],
+        "stats": [
+          {
+            "k": "Deposit compliance",
+            "v": "99%"
+          },
+          {
+            "k": "Rebook rate",
+            "v": "+41%"
+          },
+          {
+            "k": "Commission disputes",
+            "v": "0"
+          }
+        ],
+        "whoFor": "Tattoo studios, piercing bars, and shared-chair artist collectives.",
+        "useCases": [
+          "Studio with resident + guest artists sharing chairs",
+          "Piercing bar taking walk-ins alongside booked slots",
+          "Solo artist running consults before a booking",
+          "Collective with chair rental vs commission mix"
+        ]
+      },
+      "wellness": {
+        "title": "Massage & Wellness",
+        "tagline": "Therapist lanes, packages, resource rooms and recovery programs.",
+        "icon": "i-lucide-flower-2",
+        "accent": "from-teal-400 to-emerald-600",
+        "dot": "bg-teal-500",
+        "category": "Industry",
+        "long": "Massage, physio and wellness studios stack short sessions with tight room turnovers. Momentfy books therapist + room together, sells packages with expiry, and nudges clients toward recurring recovery programs.",
+        "pains": [
+          "Room clashes between therapists",
+          "Packages that expire with unused sessions",
+          "One-off visits that never become programs",
+          "Therapist-specific prices hidden in heads"
+        ],
+        "capabilities": [
+          "Therapist + room dual-resource booking",
+          "Multi-session packages with expiry + rollover",
+          "Program templates (e.g. 8-week recovery)",
+          "Intake forms + outcome tracking",
+          "Retail oils/aftercare through POS",
+          "Membership tiers with unlimited access",
+          "Per-therapist commission splits",
+          "Reports: room utilization, program completion"
+        ],
+        "stack": [
+          "Calendar",
+          "Resources",
+          "Memberships",
+          "Sales & POS",
+          "Medical Records",
+          "Client Portal",
+          "Campaigns"
+        ],
+        "stats": [
+          {
+            "k": "Room utilization",
+            "v": "+37%"
+          },
+          {
+            "k": "Program completion",
+            "v": "82%"
+          },
+          {
+            "k": "Package resell",
+            "v": "+46%"
+          }
+        ],
+        "whoFor": "Massage studios, physios, recovery clinics and integrated wellness spaces.",
+        "useCases": [
+          "Massage studio with 4 therapists + 3 rooms",
+          "Sports physio running 8-week recovery programs",
+          "Cupping + acupuncture wellness lounge",
+          "Corporate on-site chair-massage bookings"
+        ]
+      },
+      "driving": {
+        "title": "Driving Schools",
+        "tagline": "Instructor fleets, vehicle resources, test prep packages and progress.",
+        "icon": "i-lucide-car-front",
+        "accent": "from-cyan-500 to-blue-600",
+        "dot": "bg-cyan-500",
+        "category": "Industry",
+        "long": "Driving schools juggle instructors, cars and student progress toward a test date. Momentfy books instructor + vehicle as one resource, sells test-prep packages, and tracks each student to their pass.",
+        "pains": [
+          "Vehicles double-booked between instructors",
+          "Students losing track of completed lessons",
+          "Test-prep packages sold but not consumed",
+          "Exam day admin done by memory"
+        ],
+        "capabilities": [
+          "Instructor + vehicle combined as one bookable resource",
+          "Student progress toward test date",
+          "Test-prep packages with lesson credits",
+          "Theory module attached to schedule",
+          "Route tracking by lesson skill",
+          "Parent/guardian account for minors",
+          "Automatic reminder + deposit on exam booking",
+          "Instructor commission per lesson type"
+        ],
+        "stack": [
+          "Calendar",
+          "Resources",
+          "Catalogue",
+          "Memberships",
+          "Client Portal",
+          "Reports"
+        ],
+        "stats": [
+          {
+            "k": "Vehicle utilization",
+            "v": "+29%"
+          },
+          {
+            "k": "Package completion",
+            "v": "91%"
+          },
+          {
+            "k": "Pass rate",
+            "v": "+14%"
+          }
+        ],
+        "whoFor": "Driving schools with multi-instructor fleets running lesson + test-prep bundles.",
+        "useCases": [
+          "Driving school with 5 cars + 8 instructors",
+          "Motorcycle training center with multi-day courses",
+          "Corporate driver training contracts",
+          "Specialist truck/bus licensing school"
+        ]
+      },
+      "tutoring": {
+        "title": "Tutoring Centers",
+        "tagline": "Tutor schedules, group classes, term packages and parent portal.",
+        "icon": "i-lucide-graduation-cap",
+        "accent": "from-orange-500 to-amber-600",
+        "dot": "bg-orange-500",
+        "category": "Industry",
+        "long": "Tutoring centers run 1:1 and group sessions across subjects, tutors and terms. Momentfy schedules tutor + room, sells term-long packages, and gives parents a portal to track their child across subjects.",
+        "pains": [
+          "Parents unsure which sessions their child attended",
+          "Tutor availability changing every term",
+          "Group classes filling unevenly",
+          "Progress reports emailed manually"
+        ],
+        "capabilities": [
+          "1:1 + group class scheduling in one calendar",
+          "Term-long packages with pro-rata for late starts",
+          "Parent portal with child attendance + progress",
+          "Tutor availability templates by term",
+          "Outcome tracking per subject",
+          "Waitlists for popular group classes",
+          "Campaigns for new-term enrolment",
+          "Per-tutor commission and per-subject profitability"
+        ],
+        "stack": [
+          "Events & Classes",
+          "Client Attendance",
+          "Memberships",
+          "Client Portal",
+          "Campaigns",
+          "Reports"
+        ],
+        "stats": [
+          {
+            "k": "Parent portal adoption",
+            "v": "81%"
+          },
+          {
+            "k": "Term rebook rate",
+            "v": "+36%"
+          },
+          {
+            "k": "Class fill rate",
+            "v": "+24%"
+          }
+        ],
+        "whoFor": "After-school tutoring centers, language schools and exam-prep academies.",
+        "useCases": [
+          "After-school center running weekly math + english",
+          "Language school selling 12-week term courses",
+          "SAT/IELTS prep academy with group + 1:1 mix",
+          "Music school with instrument-specific tutors"
+        ]
+      },
+      "multi-tenant": {
+        "title": "Multi-location chains",
+        "tagline": "One codebase, many brands, branch-level reporting and central ops.",
+        "icon": "i-lucide-building-2",
+        "accent": "from-slate-500 to-gray-700",
+        "dot": "bg-slate-500",
+        "category": "Business shape",
+        "long": "Chains and franchise operators need central oversight without taking away local speed. Momentfy runs one deployment that serves unlimited tenants — each with its own branding, pricing, staff and reports — rolled up into a central super-admin view.",
+        "pains": [
+          "Each branch on its own spreadsheet",
+          "Consolidated P&L a month late",
+          "Brand pricing drift between locations",
+          "No SKU sharing across branches"
+        ],
+        "capabilities": [
+          "Unlimited tenants on one deployment",
+          "Per-tenant branding, locale, and add-ons",
+          "Shared catalogue with per-branch price overrides",
+          "Central super-admin with cross-tenant reports",
+          "Stock transfers between branches",
+          "Role-based access (HQ, regional, branch)",
+          "Consolidated accounting + inter-branch entries",
+          "Brand-level campaigns with branch opt-in"
+        ],
+        "stack": [
+          "All nine core modules",
+          "Super-Admin panel",
+          "Multi-tenant mode",
+          "Central reporting"
+        ],
+        "stats": [
+          {
+            "k": "Branches per install",
+            "v": "Unlimited"
+          },
+          {
+            "k": "Reporting lag",
+            "v": "Real-time"
+          },
+          {
+            "k": "Onboarding time",
+            "v": "< 1 day"
+          }
+        ],
+        "whoFor": "Franchise operators, multi-brand groups and chain owners running 3+ locations.",
+        "useCases": [
+          "Salon group with 12 branches under one brand",
+          "Clinic network with specialty + GP branches",
+          "Franchise with HQ + independently-owned stores",
+          "Regional gym chain with central membership"
+        ]
+      },
+      "mobile": {
+        "title": "Mobile & on-site teams",
+        "tagline": "Route bookings, on-the-way ETAs and offline check-out in the field.",
+        "icon": "i-lucide-truck",
+        "accent": "from-blue-500 to-indigo-600",
+        "dot": "bg-blue-500",
+        "category": "Business shape",
+        "long": "Field teams — mobile beauty, home physio, on-site IT, at-home grooming — can't afford to lose a session to a patchy network. Momentfy's PWA installs on any phone, routes jobs by address, and completes sales offline, syncing when signal returns.",
+        "pains": [
+          "Calendar not syncing in the field",
+          "Invoice sent hours after the job",
+          "No signal = no payment",
+          "Routes planned by guesswork"
+        ],
+        "capabilities": [
+          "Installable PWA works offline by default",
+          "Route-optimised day plan per team member",
+          "On-the-way ETA sent by SMS automatically",
+          "Offline POS — takes payment later when online",
+          "Mileage + travel-time rules billed automatically",
+          "Client signature capture on device",
+          "Inventory consumed per on-site visit",
+          "Geofence arrival + departure logging"
+        ],
+        "stack": [
+          "Calendar",
+          "Sales & POS",
+          "Client Portal",
+          "Campaigns",
+          "Inventory",
+          "Reports"
+        ],
+        "stats": [
+          {
+            "k": "Offline reliability",
+            "v": "100%"
+          },
+          {
+            "k": "Jobs per day",
+            "v": "+22%"
+          },
+          {
+            "k": "Payment lag",
+            "v": "-98%"
+          }
+        ],
+        "whoFor": "Mobile beauty, home healthcare, field service and at-home premium brands.",
+        "useCases": [
+          "Mobile hair + makeup visiting weddings",
+          "Home physio covering a metro area",
+          "Mobile pet grooming van running routes",
+          "On-site IT repair billed at the door"
+        ]
+      },
+      "memberships": {
+        "title": "Membership businesses",
+        "tagline": "Recurring plans, credits, auto-renew, freeze & retention analytics.",
+        "icon": "i-lucide-infinity",
+        "accent": "from-purple-500 to-fuchsia-600",
+        "dot": "bg-purple-500",
+        "category": "Business shape",
+        "long": "If your business runs on recurring revenue — gyms, salons, wellness subscriptions, unlimited classes — Momentfy ships the full membership lifecycle: plans, credits, auto-renew, pause, freeze, cancel and retention analytics.",
+        "pains": [
+          "Members silently lapsing without notice",
+          "Credits that never get spent",
+          "Freezes handled by email",
+          "No insight into who is about to churn"
+        ],
+        "capabilities": [
+          "Plan library with tier + credit rules",
+          "Auto-renew via Stripe / Lemon Squeezy card-on-file",
+          "Self-service pause/freeze/cancel from portal",
+          "Retention dashboards (cohort, churn risk)",
+          "Upgrade/downgrade with proration",
+          "Usage tracking per plan allowance",
+          "Dunning flow on failed payments",
+          "Referral credits and rewards"
+        ],
+        "stack": [
+          "Memberships",
+          "Sales & POS",
+          "Client Portal",
+          "Campaigns",
+          "Reports",
+          "Loyalty Points"
+        ],
+        "stats": [
+          {
+            "k": "Churn reduction",
+            "v": "-31%"
+          },
+          {
+            "k": "Auto-renew success",
+            "v": "96%"
+          },
+          {
+            "k": "Upgrade rate",
+            "v": "+18%"
+          }
+        ],
+        "whoFor": "Any business whose revenue is majority-recurring: gyms, salons, wellness, class packs, subscriptions.",
+        "useCases": [
+          "Gym running unlimited + limited-access tiers",
+          "Salon selling monthly beauty subscriptions",
+          "Wellness studio with pause-on-holiday feature",
+          "Class studio offering 4 / 8 / 12 pack credits"
+        ]
+      }
+    },
+    "solutionsPage": {
+      "eyebrow": "Solutions",
+      "h1a": "Built for your",
+      "h1b": "field of work.",
+      "sub": "Sixteen ready-shaped configurations — from salons to driving schools to multi-location chains. Pick yours, ship in a day.",
+      "chaptersLabel": "Chapters",
+      "industriesLabel": "Industries",
+      "businessShapesLabel": "Business shapes",
+      "breadcrumb": "Solutions",
+      "categoryIndustry": "Industry",
+      "categoryBusiness": "Business shape",
+      "painsTitle": "What it solves",
+      "painsBody": "The operational pain this setup is designed to remove.",
+      "capsTitle": "What you get",
+      "capsBody": "Everything below ships in the base source — no upgrade tier required.",
+      "stackTitle": "Built on",
+      "stackBody": "Modules and add-ons bundled into this configuration.",
+      "useCasesTitle": "Who runs it",
+      "useCasesBody": "A handful of ways operators configure this today.",
+      "faqTitle": "Quick answers",
+      "ctaTitle": "Ready to ship yours?",
+      "ctaBody": "Buy the source, enable the add-ons that match — live in a day.",
+      "ctaPrimary": "Get the source code",
+      "ctaSecondary": "Browse every solution",
+      "statsNote": "Benchmarks are illustrative — drawn from early operators and industry norms, not a guaranteed result.",
+      "browseAll": "All solutions",
+      "notFoundEyebrow": "Not found",
+      "notFoundBody": "We don't have a page for that solution yet — browse the full list."
+    },
+    "portal": {
+      "eyebrow": "Client Portal",
+      "heading": "Every tenant gets a branded PWA.",
+      "sub": "Your clients book appointments, pay invoices, see their memberships, track loyalty points, download prescriptions, review visits and chat with the in-app AI — from their phone, with your logo, installed like a native app.",
+      "bullets": [
+        "Installable PWA with offline cache",
+        "Booking, invoicing, loyalty, memberships",
+        "Lab results & prescriptions download",
+        "Reviews, tickets, AI chat assistant",
+        "Arabic RTL and English LTR"
+      ],
+      "cta": "See the portal tour",
+      "cardTag": "Lina's Spa",
+      "welcomeBack": "Welcome back",
+      "loyalty": "Loyalty balance",
+      "ptsShort": "pts",
+      "nextAppt": "Next appointment",
+      "quickActions": "Quick actions",
+      "actionBook": "Book",
+      "actionInvoices": "Invoices",
+      "actionRx": "Rx",
+      "askAi": "Ask the AI assistant…",
+      "apptTitle": "Color & Cut",
+      "apptMeta": "Tue · 14:00 · Lina H.",
+      "apptStatus": "Confirmed"
+    },
+    "pricing": {
+      "eyebrow": "Two plans. Same product.",
+      "heading": "Buy once. Own it.",
+      "sub": "Both plans ship the identical codebase with lifetime updates included. The only thing that changes is whether you install it — or we do.",
+      "billing": {
+        "onetime": "One-time",
+        "updates": "+ lifetime updates",
+        "save": "all plans"
+      },
+      "includedAllLabel": "What you get (identical in every plan)",
+      "includedAll": [
+        "Full source code",
+        "Unlimited tenants",
+        "All 9 core modules",
+        "All 16 add-ons",
+        "ZATCA + ETA compliance",
+        "Bilingual AR + EN",
+        "Self-host anywhere",
+        "Lifetime license + lifetime updates"
+      ],
+      "windowLabel": "Pick your install path",
+      "durationAxisStart": "You install",
+      "durationAxisEndForever": "We install",
+      "plans": [
+        {
+          "name": "Self-install",
+          "tag": "You deploy it",
+          "price": "$599",
+          "priceSuffix": "/ one-time",
+          "cta": "Get Self-install",
+          "durationValue": "∞",
+          "durationLabel": "LIFETIME UPDATES",
+          "durationProgress": 15,
+          "tagline": "Download the source, deploy in an hour, own it forever.",
+          "features": [
+            "Full source code",
+            "Unlimited tenants",
+            "All 9 core modules",
+            "All 16 add-ons",
+            "ZATCA + ETA compliance",
+            "Bilingual AR + EN",
+            "Lifetime updates (every release, forever)",
+            "Docker Compose install guide",
+            "Email support (48h response)"
+          ]
+        },
+        {
+          "name": "Done-for-you",
+          "tag": "We deploy it",
+          "price": "$1,499",
+          "priceSuffix": "/ one-time",
+          "cta": "Get Done-for-you",
+          "durationValue": "∞",
+          "durationLabel": "LIFETIME UPDATES",
+          "durationProgress": 100,
+          "featured": true,
+          "mostPopular": "Most popular",
+          "tagline": "We install, configure and hand you the keys.",
+          "features": [
+            "Everything in Self-install",
+            "We deploy on your VPS (or ours)",
+            "Tenant setup + branding configured",
+            "ZATCA / ETA activated for your region",
+            "Data import from your current system",
+            "60-minute operator training session",
+            "Priority email support (24h response)",
+            "Lifetime updates (every release, forever)"
+          ]
+        }
+      ],
+      "footer": "Secure checkout via Lemon Squeezy — handles VAT and Merchant-of-Record obligations in your local currency."
+    },
+    "testimonials": {
+      "eyebrow": "Operators who shipped with it",
+      "heading": "Built by operators, for operators.",
+      "items": [
+        {
+          "quote": "Replaced three separate tools with Momentfy in a weekend. Our receptionists actually smile now.",
+          "name": "Lina H.",
+          "role": "Spa chain owner · Riyadh"
+        },
+        {
+          "quote": "We white-labelled it, deployed to ten clinics and passed the ZATCA audit on the first try.",
+          "name": "Karim M.",
+          "role": "Dental group IT · Cairo"
+        },
+        {
+          "quote": "Finally a platform that treats Arabic as a first-class language. Not an afterthought.",
+          "name": "Noura A.",
+          "role": "Clinic owner · Dubai"
+        }
+      ],
+      "disclaimer": "Illustrative — these quotes represent feedback patterns from early operators. Named case studies and verified logos land here as v1.0 deployments publish."
+    },
+    "trust": {
+      "eyebrow": "Trust & security",
+      "heading": "You own the stack.",
+      "sub": "Self-hosted by design. Source-available by principle. Auditable by obligation.",
+      "pillars": [
+        {
+          "title": "Your data, your server",
+          "body": "Nothing leaves your VPS. No telemetry, no phone-home, no SaaS middle layer — your clients' records stay where you put them.",
+          "icon": "i-lucide-server"
+        },
+        {
+          "title": "Read every line",
+          "body": "Full TypeScript source ships with every license. Audit the code, fork the repo, ship patches — no black boxes.",
+          "icon": "i-lucide-file-code-2"
+        },
+        {
+          "title": "Audit trail built-in",
+          "body": "Every sensitive action (refund, override, impersonation, data export) is timestamped, attributed and queryable from the admin panel.",
+          "icon": "i-lucide-history"
+        },
+        {
+          "title": "Compliance-ready",
+          "body": "ZATCA Phase 2 and Egypt ETA signing flows ship with the product. VAT, audit log and data-export tools are built in, not sold as extras.",
+          "icon": "i-lucide-shield-check"
+        }
+      ]
+    },
+    "faq": {
+      "eyebrow": "FAQ",
+      "heading": "Common questions.",
+      "linkAll": "All questions",
+      "items": [
+        {
+          "q": "What exactly do I get when I buy?",
+          "a": "A zipped download of the full source code repository, install docs, and a license key. You can clone it, modify it and deploy it anywhere."
+        },
+        {
+          "q": "Can I run it as a SaaS and sell to multiple tenants?",
+          "a": "Yes. Multi-tenant mode is built in. One deployment serves unlimited tenants, each with their own data, branding, staff and clients."
+        },
+        {
+          "q": "Do I pay monthly?",
+          "a": "No. One payment, lifetime license, unlimited tenants, unlimited users. Optional yearly renewal only for continued updates and support."
+        },
+        {
+          "q": "Which countries is it ready for?",
+          "a": "Built in Saudi Arabia and Egypt. Includes ZATCA Phase 2, ETA e-invoicing, VAT. Works worldwide for any service business."
+        }
+      ]
+    },
+    "cta": {
+      "eyebrow": "Start today",
+      "heading": "Ship your business platform this weekend.",
+      "sub": "Buy the source once. Deploy on your own server. Charge your clients whatever you want. Keep 100% of the revenue.",
+      "buy": "Download source code",
+      "explore": "Explore features",
+      "lifetime": "Lifetime license",
+      "unlimited": "Unlimited tenants",
+      "updates": "Lifetime updates"
+    },
+    "footer": {
+      "tag": "The complete booking & business platform for salons, spas, clinics and service businesses. Source-available, self-hosted, yours forever.",
+      "badge": "v1.0 — Production ready",
+      "columns": [
+        {
+          "title": "Product",
+          "links": [
+            {
+              "label": "Features",
+              "to": "/portal/features"
+            },
+            {
+              "label": "Add-ons",
+              "to": "/portal/addons"
+            },
+            {
+              "label": "Showcase",
+              "to": "/portal/showcase"
+            },
+            {
+              "label": "Pricing",
+              "to": "/portal/pricing"
+            },
+            {
+              "label": "FAQ",
+              "to": "/portal/faq"
+            }
+          ]
+        },
+        {
+          "title": "Solutions",
+          "links": [
+            {
+              "label": "Salons & Spas",
+              "to": "/portal/solutions/salon"
+            },
+            {
+              "label": "Dental Clinics",
+              "to": "/portal/solutions/dental"
+            },
+            {
+              "label": "Medical Clinics",
+              "to": "/portal/solutions/medical"
+            },
+            {
+              "label": "Barbershops",
+              "to": "/portal/solutions/barber"
+            },
+            {
+              "label": "Fitness & Classes",
+              "to": "/portal/solutions/fitness"
+            },
+            {
+              "label": "Pet & Vet Care",
+              "to": "/portal/solutions/pet"
+            },
+            {
+              "label": "Therapy & Coaching",
+              "to": "/portal/solutions/therapy"
+            },
+            {
+              "label": "Photo Studios",
+              "to": "/portal/solutions/photo"
+            },
+            {
+              "label": "Nail & Lash Bars",
+              "to": "/portal/solutions/nails"
+            },
+            {
+              "label": "Tattoo & Piercing",
+              "to": "/portal/solutions/tattoo"
+            },
+            {
+              "label": "Massage & Wellness",
+              "to": "/portal/solutions/wellness"
+            },
+            {
+              "label": "Driving Schools",
+              "to": "/portal/solutions/driving"
+            },
+            {
+              "label": "Tutoring Centers",
+              "to": "/portal/solutions/tutoring"
+            },
+            {
+              "label": "Multi-location chains",
+              "to": "/portal/solutions/multi-tenant"
+            },
+            {
+              "label": "Mobile & on-site teams",
+              "to": "/portal/solutions/mobile"
+            },
+            {
+              "label": "Membership businesses",
+              "to": "/portal/solutions/memberships"
+            }
+          ]
+        },
+        {
+          "title": "Compliance",
+          "links": [
+            {
+              "label": "ZATCA (Saudi)",
+              "to": "/portal/features#zatca"
+            },
+            {
+              "label": "ETA (Egypt)",
+              "to": "/portal/features#eta"
+            },
+            {
+              "label": "Arabic + RTL",
+              "to": "/portal/features#i18n"
+            },
+            {
+              "label": "Multi-tenant",
+              "to": "/portal/features#multi-tenant"
+            },
+            {
+              "label": "Self-hosted",
+              "to": "/portal/features#self-hosted"
+            }
+          ]
+        },
+        {
+          "title": "Resources",
+          "links": [
+            {
+              "label": "Docs",
+              "to": "/portal/docs"
+            },
+            {
+              "label": "Buy source",
+              "to": "/portal/download"
+            },
+            {
+              "label": "Sign in",
+              "to": "/auth/login"
+            },
+            {
+              "label": "Changelog",
+              "to": "/portal/download#changelog"
+            },
+            {
+              "label": "Contact",
+              "to": "/portal/download#contact"
+            }
+          ]
+        },
+        {
+          "title": "Legal",
+          "links": [
+            {
+              "label": "License",
+              "to": "/portal/legal#license"
+            },
+            {
+              "label": "Terms",
+              "to": "/portal/legal#terms"
+            },
+            {
+              "label": "Privacy",
+              "to": "/portal/legal#privacy"
+            },
+            {
+              "label": "Sales policy",
+              "to": "/portal/legal#sales"
+            },
+            {
+              "label": "Company",
+              "to": "/portal/legal#company"
+            }
+          ]
+        }
+      ],
+      "bottom": "© {year} Momentfy. Crafted for operators, not investors.",
+      "bottomLang": "English · العربية",
+      "bottomHost": "Self-hosted · No lock-in"
+    },
+    "ui": {
+      "skipToMain": "Skip to main content",
+      "backToTop": "back to top",
+      "readAbout": "Read about",
+      "exploreVerb": "Explore",
+      "illustrative": "Illustrative",
+      "illustrativeBenchmarks": "Illustrative benchmarks",
+      "includedInEveryPlan": "Included in every plan",
+      "breadcrumbFeatures": "Features",
+      "breadcrumbAddons": "Add-ons",
+      "coreModule": "Core module",
+      "addonCategorySuffix": "add-on",
+      "whatItDoes": "What it does",
+      "whatItLooksLike": "What it looks like",
+      "livePreviewPrefix": "A live preview of the ",
+      "livePreviewSuffix": " module.",
+      "worksBestWith": "Works best with",
+      "worksBestWithBody": "Each module is designed to work with every other — here are the ones that pair most tightly.",
+      "betterTogether": "Better together.",
+      "keyCapabilities": "Key capabilities",
+      "everyMovingPart": "Every moving part.",
+      "whoItsFor": "Who it's for",
+      "setupTitle": "Setup",
+      "setupBody": "Four steps from enable to production — no external services required.",
+      "fromDisabledToLive": "From disabled to live.",
+      "integratesWith": "Integrates with",
+      "integratesBody": "The modules this add-on plugs into out of the box.",
+      "moreFromCategoryPrefix": "More from ",
+      "exploreTheChapter": "Explore the chapter.",
+      "previousModule": "Previous module",
+      "nextModule": "Next module",
+      "previousAddon": "Previous add-on",
+      "nextAddon": "Next add-on",
+      "moduleNotFoundEyebrow": "Module not found",
+      "addonNotFoundEyebrow": "Add-on not found",
+      "noModuleWithId": "No module with that id.",
+      "noAddonWithKey": "No add-on with that key.",
+      "checkUrlFeatures": "Check the URL, or browse the full feature list.",
+      "checkUrlAddons": "Check the URL, or browse the full add-ons directory.",
+      "browseAllFeatures": "Browse all features",
+      "browseAllAddons": "Browse all add-ons",
+      "currencyLabel": "Currency",
+      "methodsLabel": "Methods",
+      "processorLabel": "Processor",
+      "colVer": "Ver",
+      "colLang": "Lang",
+      "colHost": "Host",
+      "colStat": "Stat",
+      "chaptersLabel": "Chapters:",
+      "appRatingLabel": "App rating",
+      "timeToBookLabel": "Time to book",
+      "pwaReadyLabel": "PWA ready",
+      "offlineLabel": "Offline",
+      "revenueLabel": "revenue",
+      "oneSourceThreeBrands": "One source. Three brands.",
+      "threeBrandsTagline": "Same codebase, same release — every tenant with their own hostname, theme, and content.",
+      "cantFindFaq": "Can't find it? The full FAQ has 24+ more answers.",
+      "liveDemo": "Live demo",
+      "watchTourLead": "Watch the ",
+      "watchTourSuffix": " product tour",
+      "tourChapters": "Calendar → POS → Client portal → ZATCA invoice. Under three minutes.",
+      "demoChip": "Demo",
+      "fromZeroToLive": "From zero to live in four steps",
+      "readyKicker": "Ready?",
+      "buyCloneTagline": "Buy the source, clone the repo.",
+      "readLicense": "Read the license",
+      "fullFaq": "Full FAQ",
+      "stepLabel": "Step",
+      "swipeHint": "Swipe ←→ to compare tenants",
+      "explorerPaused": "paused · hover to resume",
+      "explorerAutoPrefix": "auto · ",
+      "readMore": "Read more",
+      "allSixteenShip": "All sixteen ship with every copy of the source",
+      "secureCheckout": "Secure checkout",
+      "lifetimeLicense": "Lifetime license",
+      "lifetimeUpdates": "Lifetime updates",
+      "videoSectionEyebrow": "See it in motion",
+      "videoSectionBody": "A short autoplaying tour — no signup, no sign-in, no placeholders.",
+      "videoSectionHeading": "A 30-second tour of the",
+      "videoSectionHeadingSuffix": " module.",
+      "videoComingSoonEyebrow": "Video tour · in production",
+      "videoComingSoon": "We're recording a fresh 30-second walkthrough of this module. It lands here the moment it renders.",
+      "muteVideo": "Mute",
+      "unmuteVideo": "Unmute",
+      "playVideo": "Play",
+      "pauseVideo": "Pause",
+      "mutedIndicator": "muted · tap to hear",
+      "mockZatcaCleared": "ZATCA — Cleared",
+      "mockInvoicePrefix": "Invoice ",
+      "mockVat": "VAT",
+      "mockTotal": "Total",
+      "mockSigned": "Signed",
+      "mockAiActive": "active",
+      "mockAiDraft": "Draft messages ready to send.",
+      "mockAiSendAll": "Send all",
+      "mockAiReview": "Review",
+      "mockThisMonth": "This month",
+      "mockNetRevenue": "Net revenue · 342 tickets"
+    },
+    "featuresPage": {
+      "eyebrow": "Features",
+      "h1": "Everything, on one tab.",
+      "sub": "Sixteen major feature areas. Hundreds of screens. All wired together, all included in the source, all yours.",
+      "filterAll": "all",
+      "filterLabels": {
+        "all": "all"
+      },
+      "groups": {
+        "Front of house": "Front of house",
+        "Money": "Money",
+        "Relationships": "Relationships",
+        "Offering": "Offering",
+        "Operations": "Operations",
+        "People": "People",
+        "Insights": "Insights",
+        "Clients": "Clients",
+        "Platform": "Platform",
+        "Compliance": "Compliance",
+        "Intelligence": "Intelligence",
+        "Growth": "Growth"
+      },
+      "items": [
+        {
+          "id": "calendar",
+          "group": "Front of house",
+          "title": "Calendar & Scheduling",
+          "summary": "The heart of every service business. Drag, drop, resize, move — and everything stays in sync.",
+          "bullets": [
+            "Day, week and staff-lane views with timezone awareness",
+            "Drag-to-resize, drag-to-move, multi-resource bookings",
+            "Multi-location with per-location availability",
+            "Blocked time, staff leave, breaks and buffers",
+            "Recurring appointments and waitlists",
+            "Color-coded statuses (confirmed, no-show, checked-in, completed)",
+            "Realtime updates across devices"
+          ]
+        },
+        {
+          "id": "sales",
+          "group": "Money",
+          "title": "Sales, POS & Invoicing",
+          "summary": "A cash register, a POS, and a full invoicing suite rolled into one.",
+          "bullets": [
+            "Sell services, products, memberships, gift cards",
+            "Invoices, estimates, recurring invoices, credit notes",
+            "Expense tracking and category rules",
+            "Cash register open/close with variance",
+            "Payments: cash, card, Tabby, Tamara, bank, custom methods",
+            "Tax rates, discounts, tips, service charges",
+            "Print-ready receipts and public invoice links"
+          ]
+        },
+        {
+          "id": "clients",
+          "group": "Relationships",
+          "title": "Clients & CRM",
+          "summary": "Know every client. Nudge the right ones at the right time.",
+          "bullets": [
+            "Client profiles with visit history, spend, allergies and files",
+            "Dynamic segments (by spend, recency, tags, age, etc.)",
+            "Campaigns: SMS, email or WhatsApp to a segment",
+            "Reviews captured automatically after appointments",
+            "Client tickets for support and complaints",
+            "Follow-up task engine with assignees and SLAs",
+            "Birthday greetings and re-engagement nudges"
+          ]
+        },
+        {
+          "id": "catalogue",
+          "group": "Offering",
+          "title": "Catalogue",
+          "summary": "Your entire offering, structured once, priced precisely.",
+          "bullets": [
+            "Services with duration, buffer, required staff or resources",
+            "Bundles and packages with discounted pricing",
+            "Memberships: prepaid, unlimited, session-based",
+            "Retail products with SKU, barcode, units, expiry",
+            "Discounts with stacking and eligibility rules",
+            "Smart pricing: peak, off-peak, member pricing",
+            "Categories, menus and tenant-specific branding"
+          ]
+        },
+        {
+          "id": "inventory",
+          "group": "Operations",
+          "title": "Inventory & Supply",
+          "summary": "Stock you can trust — across every location.",
+          "bullets": [
+            "Stock levels per location with low-stock alerts",
+            "Stock transfers with in-transit tracking",
+            "Stocktakes with variance reporting",
+            "Supplier management and stock orders",
+            "Supplier payments tied to accounting",
+            "Stock comparison across periods",
+            "Cost of goods automatically journaled on sale"
+          ]
+        },
+        {
+          "id": "team",
+          "group": "People",
+          "title": "Team & HR",
+          "summary": "From schedule to payroll — one tab per member.",
+          "bullets": [
+            "Roles and granular permissions (Owner / Admin / Staff / custom)",
+            "Weekly schedules with per-location shifts",
+            "Attendance with clock in/out + QR",
+            "Leave requests and approvals",
+            "Timesheets rolled into pay runs",
+            "Commission engine per service / staff",
+            "Pay runs with payslips and exports"
+          ]
+        },
+        {
+          "id": "accounting",
+          "group": "Money",
+          "title": "Accounting",
+          "summary": "Double-entry bookkeeping — no external software required.",
+          "bullets": [
+            "Chart of accounts with opening balances",
+            "Auto-posted journal entries from sales, refunds, payroll",
+            "Manual journal entries with audit trail",
+            "Bills & supplier payments",
+            "Bank reconciliation with import",
+            "Fixed assets with automatic depreciation",
+            "Month-end checks and close"
+          ]
+        },
+        {
+          "id": "reports",
+          "group": "Insights",
+          "title": "Reports",
+          "summary": "Answer every \"how are we doing?\" in two clicks.",
+          "bullets": [
+            "Finance overview, P&L, balance sheet, cash flow",
+            "VAT return, AR/AP aging, trial balance",
+            "Commissions, discounts, performance, staff KPIs",
+            "Client cohort retention & lifetime value",
+            "Inventory valuation and movement",
+            "Operational reports per add-on (Rx, lab, resources)",
+            "Export every report to Excel or PDF"
+          ]
+        },
+        {
+          "id": "portal",
+          "group": "Clients",
+          "title": "Client Portal (PWA)",
+          "summary": "A branded app for every tenant, installable on iOS and Android.",
+          "bullets": [
+            "Online booking with service + staff selection",
+            "Pay invoices and see receipts",
+            "Loyalty wallet with transactions",
+            "Memberships, packages and gift cards",
+            "Lab results, prescriptions, medical records",
+            "Reviews and support tickets",
+            "AI chat assistant (optional add-on)"
+          ]
+        },
+        {
+          "id": "multi-tenant",
+          "group": "Platform",
+          "title": "Multi-Tenant Architecture",
+          "summary": "Run one copy. Serve thousands of businesses.",
+          "bullets": [
+            "Isolated data per tenant with row-level safety",
+            "Per-tenant branding, logo, menu config",
+            "Super-admin panel to manage subscriptions",
+            "Impersonation with audit banner",
+            "Plans, subscriptions, usage limits",
+            "Per-tenant add-on activation",
+            "Slug-based routing for portal and booking"
+          ]
+        },
+        {
+          "id": "i18n",
+          "group": "Platform",
+          "title": "Bilingual & RTL",
+          "summary": "Arabic and English, not just translated — truly localized.",
+          "bullets": [
+            "Full RTL rendering for Arabic",
+            "Locale-aware numbers, currency, dates",
+            "Hijri calendar support",
+            "IBM Plex Arabic + Latin fonts",
+            "Language toggle per user",
+            "Per-tenant default language",
+            "Saudi Riyal custom symbol font built in"
+          ]
+        },
+        {
+          "id": "self-hosted",
+          "group": "Platform",
+          "title": "Self-Hosted",
+          "summary": "Your server, your rules. No phone home. No SaaS bill.",
+          "bullets": [
+            "Docker Compose ready",
+            "PostgreSQL + Prisma",
+            "Works on any VPS from $5/mo",
+            "Environment flags for single- or multi-tenant mode",
+            "S3-compatible storage or local disk",
+            "SMTP, Twilio, custom providers",
+            "GDPR & data-residency friendly"
+          ]
+        },
+        {
+          "id": "zatca",
+          "group": "Compliance",
+          "title": "ZATCA Phase 2 (Saudi)",
+          "summary": "Sign, stamp and report e-invoices to the Saudi tax authority.",
+          "bullets": [
+            "Compliance CSR + CSID issuance",
+            "XML generation + UBL signing",
+            "QR code on every invoice",
+            "Clearance + reporting flow",
+            "Retry and error surfacing",
+            "Archival of cleared invoices",
+            "Full audit trail"
+          ]
+        },
+        {
+          "id": "eta",
+          "group": "Compliance",
+          "title": "ETA E-Invoicing (Egypt)",
+          "summary": "Submit invoices to the Egyptian Tax Authority without leaving the app.",
+          "bullets": [
+            "Item, customer & tax code mapping",
+            "Pre-submission validation",
+            "Signed submission and status tracking",
+            "Credit notes and corrections",
+            "Reconciliation reports"
+          ]
+        },
+        {
+          "id": "ai",
+          "group": "Intelligence",
+          "title": "AI Assistant",
+          "summary": "Vercel AI SDK, any OpenAI-compatible model — always on.",
+          "bullets": [
+            "In-app chat on booking and client portal",
+            "Answers from your own data (services, hours, policies)",
+            "Can assist booking and rebooking",
+            "Configurable provider and model",
+            "Per-tenant system prompt and brand voice",
+            "Cost controls and usage tracking"
+          ]
+        },
+        {
+          "id": "reviews-loyalty",
+          "group": "Growth",
+          "title": "Reviews & Loyalty",
+          "summary": "Turn every happy visit into repeat revenue.",
+          "bullets": [
+            "Auto-request reviews after completed visits",
+            "Public review pages per tenant",
+            "Loyalty points earning & redemption rules",
+            "Expiring points with portal visibility",
+            "Campaigns targeting top referrers and dormant clients"
+          ]
+        }
+      ]
+    },
+    "addonsPage": {
+      "eyebrow": "Add-ons",
+      "h1": "Sixteen modules. One codebase.",
+      "sub": "Toggle per tenant. Ship for salons, clinics, gyms or studios with the same install.",
+      "filterAll": "all"
+    },
+    "pricingPage": {
+      "eyebrow": "Pricing",
+      "h1a": "Buy once.",
+      "h1b": "Own it forever.",
+      "sub": "No per-seat pricing. No per-tenant pricing. No monthly rent that grows with your success.",
+      "everywhereTitle": "Included everywhere",
+      "everywhereHeading": "Every plan ships with the lot.",
+      "included": [
+        "Full source code",
+        "Arabic + English",
+        "Unlimited users",
+        "Self-host anywhere",
+        "ZATCA + ETA ready",
+        "PWA client portal",
+        "AI assistant",
+        "Accounting engine"
+      ],
+      "compareEyebrow": "Why not SaaS?",
+      "compareHeading": "Do the math.",
+      "compareBody": "What typical booking SaaS costs over 3 years for a 3-location chain:",
+      "saasLabel": "Typical SaaS",
+      "saasValue": "$7,200+",
+      "saasBody": "$200/mo × 36 months. Price rises yearly. You never own the data.",
+      "momentfyLabel": "Momentfy Self-install",
+      "momentfyValue": "$599",
+      "momentfyBody": "One payment. Unlimited tenants. Full source. Lifetime updates. Own it.",
+      "faq": {
+        "eyebrow": "Pricing questions",
+        "heading": "Pricing, translated.",
+        "items": [
+          {
+            "q": "Are updates really forever?",
+            "a": "Yes. Both plans include lifetime updates — every future release is yours at no additional cost. No renewal, no tier upgrade, no surprise bill."
+          },
+          {
+            "q": "What's the difference between Self-install and Done-for-you?",
+            "a": "Exact same source code, same unlimited tenants, same lifetime updates. Self-install means you deploy it yourself (takes about an hour with our Docker Compose guide). Done-for-you means we deploy on your VPS, configure your tenant and branding, activate ZATCA/ETA, migrate your existing data, and run a 60-minute training session with your team."
+          },
+          {
+            "q": "Can I try before I buy?",
+            "a": "Yes — a live demo URL is available from the hero and pricing page. Click through the full product with sample data before purchasing."
+          },
+          {
+            "q": "Which currencies and payment methods?",
+            "a": "Primary pricing is in USD. At checkout you can pay in USD, SAR, EGP, EUR, GBP or AED — Lemon Squeezy auto-converts. Visa, Mastercard, Amex, Apple Pay and Google Pay are supported. For bank transfer on invoice, email hello@momentfy.io."
+          },
+          {
+            "q": "Can I upgrade from Self-install to Done-for-you later?",
+            "a": "Yes. Pay the difference and we'll schedule your installation. Just email with your order number."
+          },
+          {
+            "q": "Do you bill VAT or tax?",
+            "a": "Lemon Squeezy handles VAT, MoR obligations, and country-specific tax registration — including Saudi 15% VAT and EU VAT — automatically at checkout."
+          },
+          {
+            "q": "Can I buy one license for multiple businesses I run?",
+            "a": "One license covers one legal entity. If you operate two separate entities, you need two licenses. For multi-brand deployments inside a single entity, one license is fine."
+          },
+          {
+            "q": "Do you offer refunds?",
+            "a": "All sales are final once the source is downloaded. If your download link fails or the archive is materially broken and we can't fix it within 7 days, we'll issue a full refund. See the Sales policy on the legal page."
+          }
+        ]
+      },
+      "payments": {
+        "eyebrow": "Checkout & payment",
+        "heading": "Safe, local, auditable.",
+        "sub": "All payments run through Lemon Squeezy — a Merchant of Record so you get a proper tax invoice with VAT in your local currency.",
+        "currency": "Primary USD · auto-converts to SAR, EGP, EUR, GBP, AED at checkout",
+        "methods": [
+          "Visa · Mastercard · Amex",
+          "Apple Pay · Google Pay",
+          "Bank transfer on invoice (on request)"
+        ],
+        "processor": "Processed by Lemon Squeezy · Merchant of Record"
+      }
+    },
+    "showcasePage": {
+      "eyebrow": "Showcase",
+      "h1a": "One platform.",
+      "h1b": "Every vertical.",
+      "sub": "Flip the switches. Ship the product. Six industries, identical source code.",
+      "shipsWith": "Ships with",
+      "cta1": "See matching features",
+      "cta2": "Required add-ons",
+      "statsNote": "Numbers are illustrative benchmarks — drawn from early-operator self-reports and industry norms, not a guaranteed result for every deployment.",
+      "verticals": [
+        {
+          "id": "salon",
+          "title": "Salons & Spas",
+          "hero": "Color-coded staff lanes, memberships, gift cards and loyalty — built for the rhythm of a salon.",
+          "setup": [
+            "Calendar",
+            "POS",
+            "Memberships",
+            "Loyalty",
+            "Campaigns",
+            "Reviews"
+          ],
+          "stats": [
+            {
+              "k": "Avg. no-show drop",
+              "v": "-38%"
+            },
+            {
+              "k": "Rebook rate",
+              "v": "+52%"
+            },
+            {
+              "k": "Checkout time",
+              "v": "< 90s"
+            }
+          ]
+        },
+        {
+          "id": "dental",
+          "title": "Dental Clinics",
+          "hero": "Odontogram, treatment plans, DICOM imaging, prescriptions and insurance — plus ZATCA e-invoicing.",
+          "setup": [
+            "Calendar",
+            "Dental Chart",
+            "Imaging",
+            "Prescriptions",
+            "Insurance",
+            "ZATCA"
+          ],
+          "stats": [
+            {
+              "k": "Chair utilization",
+              "v": "+24%"
+            },
+            {
+              "k": "Insurance recovery",
+              "v": "+31%"
+            },
+            {
+              "k": "Record time",
+              "v": "-65%"
+            }
+          ]
+        },
+        {
+          "id": "medical",
+          "title": "Medical Clinics",
+          "hero": "Structured EMR, lab orders, prescriptions and multi-doctor scheduling with insurance-ready invoicing.",
+          "setup": [
+            "Calendar",
+            "Medical Records",
+            "Lab Orders",
+            "Prescriptions",
+            "Insurance",
+            "Portal"
+          ],
+          "stats": [
+            {
+              "k": "Charting time",
+              "v": "-40%"
+            },
+            {
+              "k": "Portal adoption",
+              "v": "72%"
+            },
+            {
+              "k": "Lab turnaround",
+              "v": "-28%"
+            }
+          ]
+        },
+        {
+          "id": "barber",
+          "title": "Barber Shops",
+          "hero": "Walk-in queue, fast POS and per-barber commissions. Built for volume.",
+          "setup": [
+            "Calendar",
+            "POS",
+            "Memberships",
+            "Commissions",
+            "Tips",
+            "Campaigns"
+          ],
+          "stats": [
+            {
+              "k": "Avg. ticket",
+              "v": "+18%"
+            },
+            {
+              "k": "Queue wait",
+              "v": "-44%"
+            },
+            {
+              "k": "Commission accuracy",
+              "v": "100%"
+            }
+          ]
+        },
+        {
+          "id": "fitness",
+          "title": "Fitness & Studios",
+          "hero": "Group classes, memberships, waitlists and attendance tracking. Kiosk-friendly check-in.",
+          "setup": [
+            "Events",
+            "Memberships",
+            "Attendance",
+            "Portal",
+            "Campaigns",
+            "Reports"
+          ],
+          "stats": [
+            {
+              "k": "Class fill rate",
+              "v": "+26%"
+            },
+            {
+              "k": "Member churn",
+              "v": "-19%"
+            },
+            {
+              "k": "Check-in time",
+              "v": "< 5s"
+            }
+          ]
+        },
+        {
+          "id": "pet",
+          "title": "Vet & Pet Care",
+          "hero": "Vet records, vaccination schedules, boarding and day-care billing in one place.",
+          "setup": [
+            "Calendar",
+            "Medical Records",
+            "Boarding",
+            "POS",
+            "Portal",
+            "Reminders"
+          ],
+          "stats": [
+            {
+              "k": "Vaccine recall",
+              "v": "+48%"
+            },
+            {
+              "k": "Boarding utilization",
+              "v": "+33%"
+            },
+            {
+              "k": "Client reviews",
+              "v": "4.9★"
+            }
+          ]
+        }
+      ]
+    },
+    "downloadPage": {
+      "eyebrow": "Get the source",
+      "h1": "Ready in ten minutes.",
+      "sub": "Buy once. Download the source. Deploy anywhere. Start billing your clients.",
+      "buy": "Choose a plan",
+      "talk": "Talk to us first",
+      "steps": [
+        {
+          "n": "01",
+          "title": "Buy",
+          "body": "Secure checkout via Lemon Squeezy. Lifetime license key delivered by email."
+        },
+        {
+          "n": "02",
+          "title": "Download",
+          "body": "Get a zipped copy of the full source repo + install guide + .env template."
+        },
+        {
+          "n": "03",
+          "title": "Install",
+          "body": "Docker Compose up, or run the install wizard in your browser. Ten minutes."
+        },
+        {
+          "n": "04",
+          "title": "Configure",
+          "body": "Create your first tenant, enable add-ons, upload your logo — you're live."
+        }
+      ],
+      "inside": {
+        "eyebrow": "Inside the zip",
+        "heading": "What you'll actually download.",
+        "body": "Nothing hidden. Here's exactly what lands in your inbox.",
+        "items": [
+          "Full Nuxt 4 + Vue 3 TypeScript app",
+          "Prisma schema, migrations and seeds",
+          "Server API with H3 handlers",
+          "Dockerfile + docker-compose.yml",
+          "Install wizard + sample .env",
+          "English + Arabic locale files",
+          "Admin / Portal / Booking layouts",
+          "MIT-compatible internal license"
+        ]
+      },
+      "changelog": {
+        "eyebrow": "Changelog",
+        "heading": "What's new.",
+        "entries": [
+          {
+            "ver": "v1.0 · Shipping now",
+            "title": "Insurance classes & coverage rules",
+            "body": "InsuranceClass + InsuranceClassCoverage models with full CRUD and coverage-rule management for clinics.",
+            "current": true
+          },
+          {
+            "ver": "v0.9",
+            "title": "Check-in management + ETA invoice",
+            "body": "Improved filtering, sorting and direct ETA invoice generation from check-ins."
+          },
+          {
+            "ver": "v0.8",
+            "title": "Follow-up task engine",
+            "body": "Client + member validation, truncation notice, improved pagination."
+          }
+        ]
+      },
+      "contact": {
+        "eyebrow": "Contact",
+        "heading": "Want a demo or have a question?",
+        "sub": "We reply within one business day.",
+        "name": "Name",
+        "namePh": "Your name",
+        "email": "Email *",
+        "emailPh": "you@company.com",
+        "message": "How can we help?",
+        "messagePh": "Tell us about your business…",
+        "submit": "Send message",
+        "sent": "Message sent — talk soon"
+      },
+      "faq": {
+        "eyebrow": "Answers",
+        "heading": "What buyers ask most.",
+        "items": [
+          {
+            "q": "Do I get the real source code?",
+            "a": "Yes — the entire TypeScript codebase. Nuxt app, server API, Prisma schema, migrations, seeds. No obfuscation, no minification."
+          },
+          {
+            "q": "Can I modify the code?",
+            "a": "Completely. Change branding, add features, rip out whatever you don't want."
+          },
+          {
+            "q": "Do I need a server?",
+            "a": "Any VPS with Docker. We recommend 2GB RAM, PostgreSQL, and an S3-compatible bucket for uploads."
+          },
+          {
+            "q": "Are updates included?",
+            "a": "Yes — lifetime updates on both plans. Every future release lands in your private download link at no extra cost, no renewal, forever."
+          }
+        ]
+      }
+    },
+    "faqPage": {
+      "eyebrow": "FAQ",
+      "h1": "Everything you'd ask.",
+      "sub": "If your question isn't here,",
+      "contactLink": "drop us a line",
+      "sections": [
+        {
+          "title": "Licensing & pricing",
+          "items": [
+            {
+              "q": "Is this a SaaS subscription?",
+              "a": "No. Momentfy is source-available. You buy the code once and host it yourself. No monthly bill."
+            },
+            {
+              "q": "What's included in the price?",
+              "a": "The entire source code repository, install documentation, an .env template and a lifetime license key — with lifetime updates included on both plans. Done-for-you also includes us installing it for you."
+            },
+            {
+              "q": "Can I resell it as a SaaS to my own clients?",
+              "a": "Yes on both plans — multi-tenant mode is built in and each tenant you onboard counts as your own. You may not resell the source code itself to other developers; that is not what the license covers."
+            },
+            {
+              "q": "Do you offer a free demo?",
+              "a": "Yes — a live demo URL is available on the pricing page and the homepage. You can click around the full product with sample data before you buy."
+            }
+          ]
+        },
+        {
+          "title": "Installation & hosting",
+          "items": [
+            {
+              "q": "What do I need to deploy?",
+              "a": "Any Linux VPS with Docker (2GB RAM minimum), PostgreSQL 14+, and optionally an S3-compatible bucket."
+            },
+            {
+              "q": "Can I run it on shared hosting?",
+              "a": "Technically yes with Node 18+, but we strongly recommend a dedicated VPS from providers like Hetzner, DigitalOcean or Railway."
+            },
+            {
+              "q": "How long does install take?",
+              "a": "About 10 minutes. `docker compose up -d`, open the browser, run the install wizard."
+            },
+            {
+              "q": "Do you help with deployment?",
+              "a": "Pick the Done-for-you plan — we install on your VPS, set up your tenant, activate ZATCA/ETA, migrate your data and train your team. The Self-install plan comes with a step-by-step Docker Compose guide and email support."
+            }
+          ]
+        },
+        {
+          "title": "Multi-tenant & SaaS",
+          "items": [
+            {
+              "q": "Can one install serve multiple businesses?",
+              "a": "Yes. Multi-tenant mode is a flag. One deployment serves unlimited tenants, each with isolated data."
+            },
+            {
+              "q": "Can I charge my tenants?",
+              "a": "Absolutely. Built-in subscription plans, usage limits, Lemon Squeezy/Stripe integration and a super-admin panel ship out of the box."
+            },
+            {
+              "q": "Can tenants have their own branding?",
+              "a": "Yes. Logo, menu config, locale default, add-on toggles — all per tenant."
+            },
+            {
+              "q": "Is single-tenant mode supported?",
+              "a": "Yes. Set `APP_MODE=single-tenant` and subscription checks are skipped — perfect for running your own shop."
+            }
+          ]
+        },
+        {
+          "title": "Compliance & regions",
+          "items": [
+            {
+              "q": "Does it support ZATCA Phase 2?",
+              "a": "Yes. Full flow: CSR, CSID, XML UBL signing, QR stamping, clearance and reporting. Ready for Saudi Arabia."
+            },
+            {
+              "q": "Does it support Egypt's ETA e-invoicing?",
+              "a": "Yes. Item/customer code mapping, pre-submission validation, submission and status tracking, credit notes."
+            },
+            {
+              "q": "Does it handle VAT?",
+              "a": "Yes — per-item tax rates, VAT-inclusive pricing, VAT return report, and tax-code mapping for e-invoicing."
+            },
+            {
+              "q": "Is it GDPR-friendly?",
+              "a": "Yes — you control the data because you host it. Includes data-export, deletion and audit logs."
+            }
+          ]
+        },
+        {
+          "title": "Features & customization",
+          "items": [
+            {
+              "q": "Can I rip out features I don't need?",
+              "a": "Yes. Every add-on is toggleable per tenant; remove the code entirely if you want."
+            },
+            {
+              "q": "Can I add my own features?",
+              "a": "Yes — it's your code now. Nuxt 4, Vue 3, Prisma, standard TypeScript."
+            },
+            {
+              "q": "Is there an API?",
+              "a": "Yes — server routes using H3. You can expose them publicly with auth middleware."
+            },
+            {
+              "q": "Does it support offline?",
+              "a": "Yes, it's a PWA with workbox caching. Booking and POS keep working when the network blinks."
+            }
+          ]
+        },
+        {
+          "title": "Support & updates",
+          "items": [
+            {
+              "q": "How do updates work?",
+              "a": "You get a private download link. Clone/pull the new version and run migrations."
+            },
+            {
+              "q": "Are there breaking changes?",
+              "a": "We follow semver. Minor versions are drop-in. Major versions ship a migration guide."
+            },
+            {
+              "q": "How do I get support?",
+              "a": "Email support on both plans. Done-for-you includes priority reply within 24 hours. Self-install replies within 48 hours on business days."
+            },
+            {
+              "q": "Is there a roadmap?",
+              "a": "Yes — buyers get access to the private roadmap and can vote on priorities."
+            }
+          ]
+        }
+      ]
+    },
+    "docsPage": {
+      "eyebrow": "Docs",
+      "h1": "Everything you need to deploy.",
+      "sub": "A compact operator guide. Deeper reference docs ship with the source in /docs.",
+      "sections": [
+        {
+          "id": "requirements",
+          "num": "01",
+          "title": "System requirements",
+          "body": "Momentfy runs as a Node.js + PostgreSQL app. Any modest VPS or managed Node host will do.",
+          "kv": [
+            {
+              "k": "Runtime",
+              "v": "Node.js 20 LTS or newer"
+            },
+            {
+              "k": "Database",
+              "v": "PostgreSQL 14 or newer"
+            },
+            {
+              "k": "RAM",
+              "v": "2 GB min · 4 GB recommended"
+            },
+            {
+              "k": "CPU",
+              "v": "2 vCPU recommended"
+            },
+            {
+              "k": "Disk",
+              "v": "20 GB + your upload volume"
+            },
+            {
+              "k": "Storage",
+              "v": "Local disk or any S3-compatible bucket"
+            },
+            {
+              "k": "SSL",
+              "v": "Required for ZATCA, PWA and push notifications"
+            }
+          ]
+        },
+        {
+          "id": "hosting-cost",
+          "num": "02",
+          "title": "Typical hosting cost",
+          "body": "Self-hosted means you own the server bill. Real-world monthly costs land in these brackets:",
+          "kv": [
+            {
+              "k": "Solo operator",
+              "v": "≈ $5–10 / month (1× small VPS + SQLite-ish workload)"
+            },
+            {
+              "k": "3–5 locations",
+              "v": "≈ $15–30 / month (2 GB VPS + managed PG)"
+            },
+            {
+              "k": "SaaS reseller",
+              "v": "≈ $40–120 / month (dedicated PG + S3 + CDN)"
+            }
+          ]
+        },
+        {
+          "id": "deployment",
+          "num": "03",
+          "title": "Deployment",
+          "body": "The repo ships with a Dockerfile, docker-compose.yml and a browser-based install wizard. You can also deploy without Docker if you prefer.",
+          "items": [
+            "Docker Compose — one command, includes Postgres",
+            "Bare Node.js — clone, `npm ci`, `npm run build`, serve with PM2 or systemd",
+            "Hetzner / DigitalOcean / Railway — tested Docker images, step-by-step guide included in /docs",
+            "macOS / Windows for local development — supported out of the box",
+            "Managed Postgres (Supabase / Neon / RDS) — pointed via DATABASE_URL"
+          ]
+        },
+        {
+          "id": "repo-access",
+          "num": "04",
+          "title": "Repo & updates",
+          "body": "When you purchase, we add you to a private GitHub organisation with your own license seat. Every release ships as a tagged commit — pull, migrate, restart.",
+          "items": [
+            "Private GitHub repo invite to your email within minutes",
+            "Releases follow semver · migrations are included in each tag",
+            "Release notes + upgrade guide on every major",
+            "If you prefer ZIPs over git, signed release archives are also available"
+          ]
+        },
+        {
+          "id": "multi-tenant",
+          "num": "05",
+          "title": "Single- vs multi-tenant",
+          "body": "Set APP_MODE=single-tenant for your own shop. Set multi-tenant to resell or serve clients under branded portals.",
+          "items": [
+            "Single-tenant → no plans/subscription checks, one tenant per install",
+            "Multi-tenant → slug-based routing, super-admin panel, per-tenant branding & add-on toggles",
+            "Switch modes at any time — no schema changes required"
+          ]
+        },
+        {
+          "id": "backups",
+          "num": "06",
+          "title": "Backups & disaster recovery",
+          "body": "Self-hosted means backups are on you. The repo ships with a daily backup hook but you decide where it lands.",
+          "items": [
+            "Nightly `pg_dump` via scheduled task (included)",
+            "Uploads stored on S3 → use S3 versioning or lifecycle rules",
+            "Recommended: offsite copy (S3, Backblaze, or your own NAS)",
+            "Restore tested under docs/restore.md"
+          ]
+        },
+        {
+          "id": "environment",
+          "num": "07",
+          "title": "Key environment variables",
+          "body": "Everything in .env. Only a handful are required; the rest are optional feature toggles.",
+          "kv": [
+            {
+              "k": "DATABASE_URL",
+              "v": "Postgres connection string (required)"
+            },
+            {
+              "k": "NUXT_SESSION_PASSWORD",
+              "v": "Random 32+ char secret (required)"
+            },
+            {
+              "k": "APP_MODE",
+              "v": "single-tenant | multi-tenant"
+            },
+            {
+              "k": "S3_*",
+              "v": "S3 bucket for uploads (optional — falls back to local disk)"
+            },
+            {
+              "k": "SMTP_*",
+              "v": "Transactional email (password resets, receipts)"
+            },
+            {
+              "k": "ZATCA_*",
+              "v": "Saudi e-invoicing keys (optional)"
+            },
+            {
+              "k": "AI_PROVIDER_URL",
+              "v": "OpenAI-compatible endpoint (optional AI add-on)"
+            }
+          ]
+        },
+        {
+          "id": "license-summary",
+          "num": "08",
+          "title": "License at a glance",
+          "body": "One-line version of the full terms. See /portal/legal for the authoritative license text.",
+          "items": [
+            "You can deploy it for your own business or for your own paying clients",
+            "You can modify any line and keep those changes private",
+            "You cannot resell the source code itself to other developers",
+            "You cannot remove or obscure the licence header in the repo",
+            "Your license is per-deployment-operator — each legal entity needs its own license"
+          ]
+        }
+      ]
+    },
+    "legalPage": {
+      "eyebrow": "Legal",
+      "h1": "The small print, in plain English.",
+      "sub": "License, Terms of Service and Privacy — all on one page, so you can read them in under ten minutes.",
+      "lastUpdated": "Last updated 2026-04-18",
+      "sections": [
+        {
+          "id": "license",
+          "num": "01",
+          "title": "License",
+          "body": "Momentfy is source-available commercial software. Buying a license gives you a non-exclusive, non-transferable right to deploy and operate the code under the conditions below.",
+          "can": [
+            "Deploy it for your own business or legal entity",
+            "Deploy it for your own direct clients (SaaS reselling allowed on both plans)",
+            "Modify, extend, and fork the code for your own deployments — those changes stay yours",
+            "Self-host on any infrastructure, anywhere in the world",
+            "Use it in commercial production from day one"
+          ],
+          "cannot": [
+            "Resell or sublicense the source code itself to other developers",
+            "Publish the source publicly or open-source it under a different license",
+            "Remove or obscure license headers, copyright notices or attribution files",
+            "Use one license across multiple unaffiliated legal entities — each entity needs its own"
+          ]
+        },
+        {
+          "id": "terms",
+          "num": "02",
+          "title": "Terms of service",
+          "body": "By purchasing or downloading the software you agree to these terms. They are written as plainly as we can.",
+          "items": [
+            {
+              "k": "Acceptance",
+              "v": "Purchase or download of the software constitutes acceptance of this license and these terms."
+            },
+            {
+              "k": "Updates",
+              "v": "Both plans include lifetime updates. Every future release is delivered to your private download link at no additional cost, with no renewal required."
+            },
+            {
+              "k": "Support",
+              "v": "Email support is included on both plans. Priority response (<24h on business days) on the Done-for-you plan; standard response (<48h) on Self-install."
+            },
+            {
+              "k": "Warranty",
+              "v": "The software is provided \"as is\" without warranty of any kind. Because you host it, you are responsible for backups, security patches and uptime."
+            },
+            {
+              "k": "Liability",
+              "v": "Our total liability is capped at the amount you paid for the license in the prior 12 months."
+            },
+            {
+              "k": "Termination",
+              "v": "The license terminates automatically if you materially breach it (e.g. republishing the source). On termination you must stop using the software and destroy all copies."
+            },
+            {
+              "k": "Governing law",
+              "v": "Saudi Arabia law applies unless your legal entity is EU-based, in which case the Republic of Ireland governs — both under the UN CISG convention."
+            }
+          ]
+        },
+        {
+          "id": "privacy",
+          "num": "03",
+          "title": "Privacy",
+          "body": "Because Momentfy is self-hosted, your tenants' data never touches our servers. Your users, clients, appointments and invoices live on infrastructure you control.",
+          "items": [
+            {
+              "k": "What we collect",
+              "v": "Only your purchase email, billing details (via Lemon Squeezy) and GitHub handle (for repo access). No tenant data."
+            },
+            {
+              "k": "What we share",
+              "v": "Nothing. Your purchase record stays between us and Lemon Squeezy (our Merchant of Record)."
+            },
+            {
+              "k": "Cookies",
+              "v": "This marketing site uses no third-party tracking cookies. Your deployed product sets its own auth cookie on your own domain."
+            },
+            {
+              "k": "Your rights",
+              "v": "You can request export or deletion of your purchase record at any time by emailing hello@momentfy.io."
+            },
+            {
+              "k": "GDPR / Saudi PDPL",
+              "v": "Because the data stays on your infrastructure, you are the controller. We are not a processor of your tenant data."
+            }
+          ]
+        },
+        {
+          "id": "sales",
+          "num": "04",
+          "title": "Sales policy",
+          "body": "Momentfy is delivered as source code. Once you download it you have the product in hand — so by policy all sales are final.",
+          "items": [
+            {
+              "k": "Delivery",
+              "v": "Your license key and private download link arrive immediately after payment clears. Installation instructions are included in the archive."
+            },
+            {
+              "k": "No refunds",
+              "v": "Because source code cannot be returned once downloaded, all purchases are final. By checking out you explicitly waive any statutory withdrawal right on digital goods."
+            },
+            {
+              "k": "Undelivered or broken",
+              "v": "If your download link does not work or the archive is materially corrupted and we cannot fix it within 7 days of your report, we'll refund you in full — email hello@momentfy.io with your order number."
+            },
+            {
+              "k": "Chargebacks",
+              "v": "Please contact support before raising a chargeback. Unprompted chargebacks terminate your license and revoke your access to future updates."
+            },
+            {
+              "k": "License terminates",
+              "v": "If a refund is issued for any reason, your license ends. You must delete the source and stop running the software."
+            }
+          ]
+        },
+        {
+          "id": "company",
+          "num": "05",
+          "title": "Company",
+          "body": "Momentfy is developed and maintained by an independent team. We do not take outside investment and we are accountable to operators, not shareholders.",
+          "items": [
+            {
+              "k": "Entity",
+              "v": "Momentfy Software FZ-LLC (placeholder — update with your actual legal entity name)"
+            },
+            {
+              "k": "Address",
+              "v": "Placeholder — update with your registered address"
+            },
+            {
+              "k": "Tax ID",
+              "v": "Placeholder — update with your VAT / tax registration"
+            },
+            {
+              "k": "Contact",
+              "v": "hello@momentfy.io"
+            },
+            {
+              "k": "Support",
+              "v": "support@momentfy.io"
+            },
+            {
+              "k": "Press",
+              "v": "press@momentfy.io"
+            }
+          ]
+        }
+      ],
+      "companyLabel": "Contact",
+      "companyLines": [
+        "hello@momentfy.io",
+        "support@momentfy.io"
+      ]
+    }
+  }
 }

@@ -42,8 +42,10 @@ Opens on <http://localhost:3001> (port `3001` keeps it out of the way of the mai
 - Static generate (optional): `pnpm generate`
 - Designed for Vercel / Netlify / any static host. Set the env vars in the platform's project settings.
 
-## Pending work
+## Copy storage
 
-The bilingual marketing copy lives in `app/composables/useLandingCopy.ts` (~3,500 lines, hardcoded `en` / `ar` objects). The plan is to migrate this into proper `@nuxtjs/i18n` JSON locale files at `i18n/locales/{en,ar}/landing.json` so the codebase follows the same i18n pattern as the main app. The Nuxt config already points to those JSON files — currently empty stubs. Until migration completes, the composable provides the strings.
+Bilingual marketing copy lives in `i18n/locales/{en,ar}/landing.json` under a top-level `landing` key. The composable `useLandingCopy()` (in `app/composables/useLandingCopy.ts`) imports both JSON files directly and returns the active-locale tree.
 
-See `/Users/aamin/.claude/plans/warm-painting-widget.md` for the full extraction plan and migration instructions.
+We bypass vue-i18n's message compiler for these files (they're not registered in the i18n module config) because the marketing copy contains literal `@` (email addresses) and `{...}` tokens that conflict with vue-i18n's linked-message / placeholder syntax. Locale state — active code, RTL direction, language switcher — still flows through `@nuxtjs/i18n`.
+
+To edit copy, change the JSON file and the page updates on next reload.
