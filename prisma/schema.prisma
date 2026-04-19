@@ -1,0 +1,50 @@
+// Portal database — completely isolated from the main Momentfy app.
+// Same Postgres host & credentials as the app, but a separate database
+// (default name: `portal`).
+//
+// Phase 1 scope: account auth + password reset only. License/Order/Activation
+// models will be added in Phase 2.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Account {
+  id              String          @id @default(cuid())
+  email           String          @unique
+  passwordHash    String
+  firstName       String?
+  lastName        String?
+  // GitHub username — captured at register or in profile. Required before we
+  // can invite the customer to the source-repo team after a purchase.
+  githubUsername  String?
+  isAdmin         Boolean         @default(false)
+  isActive        Boolean         @default(true)
+  emailVerifiedAt DateTime?
+  lastLoginAt     DateTime?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  passwordResets  PasswordReset[]
+
+  @@index([email])
+  @@index([githubUsername])
+}
+
+model PasswordReset {
+  id        String    @id @default(cuid())
+  accountId String
+  account   Account   @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  // SHA-256 of the URL token (never store plaintext)
+  token     String    @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  @@index([accountId])
+}

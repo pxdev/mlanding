@@ -1,10 +1,13 @@
 import pkg from './package.json'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
-// Standalone landing site — no DB, no auth, no server APIs. Marketing only.
+// Standalone Momentfy customer portal:
+//   - Marketing pages prerendered (SEO)
+//   - /auth/**, /dashboard/**, /admin/** server-rendered, session via nuxt-auth-utils
+//   - Own Postgres `portal` database via Prisma — fully isolated from the main app
 export default defineNuxtConfig({
 
-  ssr: false,
+  ssr: true,
 
   app: {
     baseURL: '/',
@@ -22,13 +25,37 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
+    // Server-only secrets
+    databaseUrl: process.env.DATABASE_URL || '',
+    sessionPassword: process.env.NUXT_SESSION_PASSWORD || '',
+    licensePepper: process.env.LICENSE_PEPPER || '',
+    smtp: {
+      host: process.env.SMTP_HOST || '',
+      port: Number(process.env.SMTP_PORT || 465),
+      user: process.env.SMTP_USER || '',
+      pass: process.env.SMTP_PASS || '',
+      from: process.env.SMTP_FROM || 'Momentfy <noreply@momentfy.io>'
+    },
+    lemonSqueezy: {
+      apiKey: process.env.LEMON_SQUEEZY_API_KEY || '',
+      storeId: process.env.LEMON_SQUEEZY_STORE_ID || '',
+      webhookSecret: process.env.LEMON_SQUEEZY_WEBHOOK_SECRET || ''
+    },
+    github: {
+      token: process.env.GITHUB_TOKEN || '',
+      org: process.env.GITHUB_ORG || '',
+      teamSlug: process.env.GITHUB_TEAM_SLUG || 'customers',
+      repo: process.env.GITHUB_REPO || ''
+    },
     public: {
       appVersion: pkg.version,
-      // Where the "Try demo" / "Sign in" CTAs send visitors. Hosted on a
-      // separate domain that runs the Momentfy app.
+      // Where the "Try demo" CTA sends visitors. Hosted on a separate domain
+      // running the Momentfy app.
       demoUrl: process.env.NUXT_PUBLIC_DEMO_URL || 'https://demo.momentfy.com',
-      // Hosted checkout / "Buy" CTA target (Lemon Squeezy, etc.).
-      checkoutUrl: process.env.NUXT_PUBLIC_CHECKOUT_URL || 'https://momentfy.lemonsqueezy.com'
+      // Hosted checkout fallback (Phase 3 will replace with portal-mediated checkout).
+      checkoutUrl: process.env.NUXT_PUBLIC_CHECKOUT_URL || 'https://momentfy.lemonsqueezy.com',
+      // Public base URL self-hosted Momentfy instances POST to for license validation.
+      portalUrl: process.env.NUXT_PUBLIC_PORTAL_URL || ''
     }
   },
 
@@ -36,6 +63,8 @@ export default defineNuxtConfig({
     '@nuxt/eslint',
     '@nuxt/ui',
     '@nuxtjs/i18n',
+    'nuxt-auth-utils',
+    'nuxt-authorization',
     '@vite-pwa/nuxt' as any
   ],
 
@@ -93,6 +122,7 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
 
   routeRules: {
+    // Default headers for everything
     '/**': {
       headers: {
         'X-Content-Type-Options': 'nosniff',
@@ -101,7 +131,14 @@ export default defineNuxtConfig({
         'Referrer-Policy': 'strict-origin-when-cross-origin',
         'Permissions-Policy': 'camera=(), microphone=(), geolocation=(self)'
       }
-    }
+    },
+    // Marketing pages — prerender for speed + SEO
+    '/': { prerender: true },
+    '/portal/**': { prerender: true },
+    // Auth + portal pages — server-render per request (need session)
+    '/auth/**': { ssr: true },
+    '/dashboard/**': { ssr: true },
+    '/admin/**': { ssr: true }
   },
 
   fonts: {
