@@ -27,14 +27,36 @@ export interface CreateCheckoutOpts {
   accountId: string
   email: string
   redirectUrl?: string
-  // Optional override in cents. If the variant is configured as
-  // "pay-what-you-want" or "custom-price", LS requires this; otherwise it
-  // just overrides the variant's built-in price.
-  amountCents?: number
 }
 
-// Returns the LS-hosted checkout URL. The custom data is round-tripped through
-// the order webhook so we can map the resulting Order back to the portal Account.
+// Cached store subdomain so we only hit /v1/stores/:id once per process.
+let _storeDomainCache: string | null = null
+
+async function getStoreDomain(apiKey: string, storeId: string): Promise<string> {
+  if (_storeDomainCache) return _storeDomainCache
+  const res = await $fetch<any>(`${LS_API}/stores/${storeId}`, {
+    headers: {
+      Accept: 'application/vnd.api+json',
+      Authorization: `Bearer ${apiKey}`
+    }
+  })
+  const domain = res?.data?.attributes?.domain
+  if (!domain) throw createError({ statusCode: 502, statusMessage: 'Lemon Squeezy: could not resolve store domain' })
+  _storeDomainCache = String(domain)
+  return _storeDomainCache
+}
+
+// Build the checkout URL.
+//
+// We use LS's *direct-buy* URLs (`/buy/<variantId>`) rather than the API's
+// POST /v1/checkouts, because API-created custom checkouts require full
+// merchant activation to render — even in test mode. Direct-buy URLs work
+// from day one for unactivated stores in test mode, and are identical in
+// behaviour post-activation in live mode.
+//
+// account_id, email, and redirect_url go through as query params that LS
+// populates the checkout form with. The resulting order webhook still
+// carries `custom_data.account_id`, so the downstream handler is unchanged.
 export async function createCheckout(opts: CreateCheckoutOpts): Promise<string> {
   const apiKey = process.env.LEMON_SQUEEZY_API_KEY
   const storeId = process.env.LEMON_SQUEEZY_STORE_ID
@@ -42,62 +64,14 @@ export async function createCheckout(opts: CreateCheckoutOpts): Promise<string> 
     throw createError({ statusCode: 500, statusMessage: 'Lemon Squeezy not configured' })
   }
 
-  // Checkout mode (test vs live) is determined by the API key itself — the
-  // main app's working adapter confirms this. There is no test_mode attribute
-  // on the checkout resource; passing one causes LS to silently return a URL
-  // that refuses to render ("store not activated"). Use a test-mode key in
-  // dev and a live-mode key in prod.
+  const domain = await getStoreDomain(apiKey, storeId)
 
-  const attributes: Record<string, unknown> = {
-    checkout_data: {
-      email: opts.email,
-      custom: { account_id: opts.accountId }
-    },
-    checkout_options: {
-      button_color: '#7047EB'
-    },
-    product_options: {
-      redirect_url: opts.redirectUrl,
-      receipt_button_text: 'Return to dashboard'
-    }
-  }
-  // Matching the main app's adapter: send custom_price when we have one.
-  // Handles "pay-what-you-want" variants (which require it) and is harmless
-  // for fixed-price variants (just overrides the variant's price with the
-  // same value we'd expect).
-  if (opts.amountCents !== undefined) {
-    attributes.custom_price = opts.amountCents
+  const params = new URLSearchParams()
+  params.set('checkout[email]', opts.email)
+  params.set('checkout[custom][account_id]', opts.accountId)
+  if (opts.redirectUrl) {
+    params.set('checkout[success_url]', opts.redirectUrl)
   }
 
-  const body = {
-    data: {
-      type: 'checkouts',
-      attributes,
-      relationships: {
-        store: { data: { type: 'stores', id: String(storeId) } },
-        variant: { data: { type: 'variants', id: String(opts.variantId) } }
-      }
-    }
-  }
-
-  let res: any
-  try {
-    res = await $fetch<any>(`${LS_API}/checkouts`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/vnd.api+json',
-        'Content-Type': 'application/vnd.api+json',
-        Authorization: `Bearer ${apiKey}`
-      },
-      body
-    })
-  } catch (err: any) {
-    // Surface LS's own error detail so operators can debug (vs a generic 502).
-    const detail = err?.data?.errors?.[0]?.detail || err?.message || 'Unknown error'
-    throw createError({ statusCode: 502, statusMessage: `Lemon Squeezy: ${detail}` })
-  }
-
-  const url = res?.data?.attributes?.url
-  if (!url) throw createError({ statusCode: 502, statusMessage: 'Lemon Squeezy returned no checkout URL' })
-  return url as string
+  return `https://${domain}/buy/${opts.variantId}?${params.toString()}`
 }
