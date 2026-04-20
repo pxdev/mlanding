@@ -81,7 +81,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     <template #footer>
       <p class="text-sm text-center text-gray-500 dark:text-gray-400">
         Already have an account?
-        <NuxtLink to="/auth/login" class="text-primary font-medium">Sign in</NuxtLink>
+        <NuxtLink :to="{ path: '/auth/login', query: route.query.redirect ? { redirect: route.query.redirect as string } : undefined }" class="text-primary font-medium">Sign in</NuxtLink>
       </p>
     </template>
   </UCard>
