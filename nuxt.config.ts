@@ -19,6 +19,22 @@ export default defineNuxtConfig({
     payloadExtraction: false
   },
 
+  // Dev server host allowlist. Vite 5+ refuses requests whose Host header
+  // isn't on this list (DNS-rebinding protection). Tunnels like cloudflared
+  // and ngrok land here — whitelist their wildcard suffixes so LS webhook
+  // dry-runs over a tunnel work against `pnpm dev`.
+  vite: {
+    server: {
+      allowedHosts: [
+        'localhost',
+        '.trycloudflare.com',
+        '.ngrok.io',
+        '.ngrok-free.app',
+        '.loca.lt'
+      ]
+    }
+  },
+
   app: {
     baseURL: '/',
     head: {
