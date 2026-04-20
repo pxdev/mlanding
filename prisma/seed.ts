@@ -3,12 +3,21 @@
 //
 //   pnpm tsx prisma/seed.ts
 //
-// Or hook it into prisma.config.ts when you're ready (see main app's
-// prisma.config.ts for the migrations.seed pattern).
+// Prisma 7 requires an explicit driver adapter when instantiating
+// PrismaClient — no more zero-arg constructor. We also load .env manually
+// here since prisma.config.ts only runs for CLI commands, not scripts.
 
+import 'dotenv/config'
+import { PrismaPg } from '@prisma/adapter-pg'
 import { PrismaClient } from '../generated/client'
 
-const prisma = new PrismaClient()
+if (!process.env.DATABASE_URL) {
+  console.error('DATABASE_URL is not set — check your .env')
+  process.exit(1)
+}
+
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL })
+const prisma = new PrismaClient({ adapter })
 
 const plans = [
   {
