@@ -718,7 +718,7 @@
       "dental": {
         "title": "Dental Clinics",
         "tagline": "Odontogram, imaging, prescriptions and insurance — ZATCA-ready.",
-        "icon": "i-lucide-tooth",
+        "icon": "i-hugeicons-dental-tooth",
         "accent": "from-sky-500 to-blue-600",
         "dot": "bg-sky-500",
         "category": "Industry",

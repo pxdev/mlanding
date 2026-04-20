@@ -9,6 +9,16 @@ export default defineNuxtConfig({
 
   ssr: true,
 
+  // The payload cache conflicts when sibling routes share a path prefix
+  // (e.g. /portal/addons is a page AND /portal/addons/:key is its children —
+  // Nuxt tries to use `.../payload/portal/addons` as both a file and a
+  // directory). Disabling payload extraction removes the `_payload.json`
+  // side-files; the HTML still prerenders and client navigation still works,
+  // just without the cached data fetch.
+  experimental: {
+    payloadExtraction: false
+  },
+
   app: {
     baseURL: '/',
     head: {

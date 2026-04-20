@@ -718,7 +718,7 @@
       "dental": {
         "title": "عيادات الأسنان",
         "tagline": "مخطط أسنان، أشعة، وصفات وتأمين — جاهز لـ ZATCA.",
-        "icon": "i-lucide-tooth",
+        "icon": "i-hugeicons-dental-tooth",
         "accent": "from-sky-500 to-blue-600",
         "dot": "bg-sky-500",
         "category": "قطاع",

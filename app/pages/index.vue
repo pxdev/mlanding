@@ -25,7 +25,7 @@ const addonMeta: Record<string, AddonMeta> = {
   ai:         { icon: 'i-lucide-sparkles',        cat: 'Intelligence' },
   gcal:       { icon: 'i-lucide-calendar-check',  cat: 'Intelligence' },
   insurance:  { icon: 'i-lucide-heart-pulse',     cat: 'Clinical' },
-  dental:     { icon: 'i-lucide-tooth',           cat: 'Clinical' },
+  dental:     { icon: 'i-hugeicons-dental-tooth',           cat: 'Clinical' },
   imaging:    { icon: 'i-lucide-scan',            cat: 'Clinical' },
   labs:       { icon: 'i-lucide-flask-conical',   cat: 'Clinical' },
   rx:         { icon: 'i-lucide-pill',            cat: 'Clinical' },
@@ -63,7 +63,7 @@ const addonCategories = computed(() => {
 // Industry visuals
 const industryVisuals: Record<string, { icon: string; tint: string }> = {
   salon: { icon: 'i-lucide-scissors', tint: 'from-pink-500/20 to-rose-500/20 text-rose-600 dark:text-rose-400' },
-  dental: { icon: 'i-lucide-tooth', tint: 'from-sky-500/20 to-blue-500/20 text-sky-600 dark:text-sky-400' },
+  dental: { icon: 'i-hugeicons-dental-tooth', tint: 'from-sky-500/20 to-blue-500/20 text-sky-600 dark:text-sky-400' },
   medical: { icon: 'i-lucide-heart-pulse', tint: 'from-red-500/20 to-orange-500/20 text-red-600 dark:text-red-400' },
   barber: { icon: 'i-lucide-user', tint: 'from-stone-500/20 to-neutral-500/20 text-stone-700 dark:text-stone-300' },
   fitness: { icon: 'i-lucide-dumbbell', tint: 'from-lime-500/20 to-emerald-500/20 text-emerald-600 dark:text-emerald-400' },
@@ -108,7 +108,7 @@ const tenantBrands: TenantBrand[] = [
     slug: 'smile-dental', name: 'Smile Dental', industry: 'Clinic', logo: 'S',
     grad: 'from-sky-400 to-blue-600',
     accent: 'bg-sky-500',
-    apptIcon: 'i-lucide-tooth', apptTitle: 'Root canal', apptMeta: 'Thu · 10:30',
+    apptIcon: 'i-hugeicons-dental-tooth', apptTitle: 'Root canal', apptMeta: 'Thu · 10:30',
     heroLabel: 'Treatment plan', heroValue: '3', heroUnit: 'visits', heroProgress: 33,
     actions: [
       { icon: 'i-lucide-calendar-plus', label: 'Book' },

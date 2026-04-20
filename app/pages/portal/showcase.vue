@@ -16,7 +16,7 @@ useHead(() => ({
 
 const visuals: Record<string, { icon: string; accent: string; mockId: string; dot: string }> = {
   salon:   { icon: 'i-lucide-scissors',      accent: 'from-pink-500 to-rose-600',    mockId: 'calendar', dot: 'bg-rose-500' },
-  dental:  { icon: 'i-lucide-tooth',         accent: 'from-sky-500 to-blue-600',     mockId: 'dental',   dot: 'bg-sky-500' },
+  dental:  { icon: 'i-hugeicons-dental-tooth',         accent: 'from-sky-500 to-blue-600',     mockId: 'dental',   dot: 'bg-sky-500' },
   medical: { icon: 'i-lucide-heart-pulse',   accent: 'from-red-500 to-orange-500',   mockId: 'medical',  dot: 'bg-red-500' },
   barber:  { icon: 'i-lucide-user',          accent: 'from-stone-500 to-neutral-700',mockId: 'barber',   dot: 'bg-stone-500' },
   fitness: { icon: 'i-lucide-dumbbell',      accent: 'from-lime-500 to-emerald-600', mockId: 'fitness',  dot: 'bg-emerald-500' },

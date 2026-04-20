@@ -23,7 +23,7 @@ const addonMeta: Record<string, AddonMeta> = {
   ai:         { icon: 'i-lucide-sparkles',        cat: 'Intelligence' },
   gcal:       { icon: 'i-lucide-calendar-check',  cat: 'Intelligence' },
   insurance:  { icon: 'i-lucide-heart-pulse',     cat: 'Clinical' },
-  dental:     { icon: 'i-lucide-tooth',           cat: 'Clinical' },
+  dental:     { icon: 'i-hugeicons-dental-tooth',           cat: 'Clinical' },
   imaging:    { icon: 'i-lucide-scan',            cat: 'Clinical' },
   labs:       { icon: 'i-lucide-flask-conical',   cat: 'Clinical' },
   rx:         { icon: 'i-lucide-pill',            cat: 'Clinical' },
