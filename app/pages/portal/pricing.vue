@@ -6,6 +6,7 @@ const { locale } = useI18n()
 const config = useRuntimeConfig()
 const route = useRoute()
 const toast = useToast()
+const session = useUserSession()
 
 // Marketing copy iterates plans by index; map index → catalog slug here.
 // Keep aligned with prisma/seed.ts.
@@ -17,12 +18,11 @@ async function startCheckout(idx: number) {
   const slug = PLAN_SLUGS[idx]
   if (!slug) return
 
-  // Phase 3 ships the portal-mediated checkout path. If the customer is
-  // signed in, we hit the API to bind their account to the LS order.
-  // If not, send them through register first and bring them back here.
-  const session = useUserSession()
+  // If the visitor isn't logged in, bounce through register and carry the
+  // intent forward — after register we land back here with ?buy=<slug> and
+  // the mount hook auto-triggers checkout.
   if (!session.loggedIn.value) {
-    return navigateTo(`/auth/register?redirect=${encodeURIComponent(route.fullPath)}`)
+    return navigateTo(`/auth/register?redirect=${encodeURIComponent(`/portal/pricing?buy=${slug}`)}`)
   }
 
   checkoutLoading.value = idx
@@ -41,6 +41,19 @@ async function startCheckout(idx: number) {
     checkoutLoading.value = null
   }
 }
+
+// Auto-trigger checkout when arriving with ?buy=<slug> (post-register bounce,
+// or a direct deep-link from an email / social post).
+onMounted(() => {
+  const buy = route.query.buy as string | undefined
+  if (!buy || !session.loggedIn.value) return
+  const idx = PLAN_SLUGS.indexOf(buy)
+  if (idx >= 0) {
+    // Clear the query so a refresh doesn't re-trigger.
+    navigateTo({ path: route.path, query: {} }, { replace: true })
+    startCheckout(idx)
+  }
+})
 
 useHead(() => ({
   title: locale.value === 'ar' ? 'الأسعار — Momentfy' : 'Pricing — Momentfy',

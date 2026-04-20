@@ -4,6 +4,13 @@ useHead({ title: 'Licenses — Momentfy portal' })
 
 const { user, isAdmin, displayName } = useSession()
 const config = useRuntimeConfig()
+const route = useRoute()
+const toast = useToast()
+
+// ?purchased=<slug> → LS redirected here right after payment. The webhook
+// usually lands within seconds; show a nudge so the customer doesn't think
+// it got lost if the list still looks empty on first load.
+const justPurchased = computed(() => route.query.purchased as string | undefined)
 
 interface LicenseRow {
   id: string
@@ -19,6 +26,29 @@ interface LicenseRow {
 
 const { data: licenses, refresh, status } = await useFetch<LicenseRow[]>('/api/portal/licenses', {
   default: () => []
+})
+
+// After a Lemon Squeezy redirect, the webhook runs asynchronously.
+// Poll a few times so the newly-issued license shows up without the customer
+// needing to refresh. Stops once we see any license or after ~15s.
+onMounted(() => {
+  if (!justPurchased.value) return
+  toast.add({
+    title: 'Thanks for your purchase!',
+    description: 'Your license is being provisioned — this takes a few seconds. We also emailed the key to you.',
+    color: 'success',
+    duration: 10000
+  })
+  let tries = 0
+  const iv = setInterval(async () => {
+    tries++
+    await refresh()
+    if ((licenses.value && licenses.value.length > 0) || tries >= 5) {
+      clearInterval(iv)
+      // Clear the query so a refresh doesn't re-trigger the banner.
+      navigateTo({ path: route.path, query: {} }, { replace: true })
+    }
+  }, 3000)
 })
 
 function formatDate(d: string | null) {

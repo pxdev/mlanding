@@ -49,7 +49,7 @@ const copy = useLandingCopy()
       <!-- ─── CTAs ─── -->
       <div class="mt-10 flex flex-wrap justify-center gap-3">
         <NuxtLink
-          to="/portal/download"
+          to="/portal/pricing"
           class="group inline-flex items-center gap-2 px-7 h-14 rounded-full text-base font-semibold bg-primary text-white shadow-xl shadow-primary/30 hover:shadow-secondary-500/40 hover:scale-[1.02] transition-all relative overflow-hidden"
         >
           <span aria-hidden="true" class="absolute inset-0 bg-gradient-to-r from-primary via-secondary-900 to-primary opacity-0 group-hover:opacity-100 transition-opacity" />

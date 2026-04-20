@@ -6,7 +6,8 @@ function toggleColorMode() { colorMode.preference = isDark.value ? 'light' : 'da
 
 const copy = useLandingCopy()
 const { localeItems, currentLocale } = useLandingLocale()
-const demoUrl = useRuntimeConfig().public.demoUrl
+// Logged-in visitors get "Dashboard" in place of "Sign in".
+const { loggedIn } = useUserSession()
 
 const mobileOpen = ref(false)
 watch(() => route.fullPath, () => { mobileOpen.value = false })
@@ -97,16 +98,25 @@ function isActive(to: string) {
           <UIcon :name="isDark ? 'i-lucide-sun' : 'i-lucide-moon'" class="size-4" />
         </button>
 
-        <a
-          :href="demoUrl"
-          rel="noopener"
-          class="hidden sm:inline-flex items-center px-4 h-9 rounded-full text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-black/5 dark:hover:bg-white/10 transition"
-        >
-          {{ copy.nav.signIn }}
-        </a>
+        <ClientOnly>
+          <NuxtLink
+            :to="loggedIn ? '/dashboard' : '/auth/login'"
+            class="hidden sm:inline-flex items-center px-4 h-9 rounded-full text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-black/5 dark:hover:bg-white/10 transition"
+          >
+            {{ loggedIn ? 'Dashboard' : copy.nav.signIn }}
+          </NuxtLink>
+          <template #fallback>
+            <NuxtLink
+              to="/auth/login"
+              class="hidden sm:inline-flex items-center px-4 h-9 rounded-full text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-black/5 dark:hover:bg-white/10 transition"
+            >
+              {{ copy.nav.signIn }}
+            </NuxtLink>
+          </template>
+        </ClientOnly>
 
         <NuxtLink
-          to="/portal/download"
+          to="/portal/pricing"
           class="inline-flex items-center gap-1.5 px-4 h-9 rounded-full text-sm font-semibold bg-primary text-white shadow-lg shadow-primary/20 hover:shadow-primary/40 hover:scale-[1.02] transition-all"
         >
           {{ copy.nav.getCode }}
@@ -173,8 +183,15 @@ function isActive(to: string) {
             </div>
           </nav>
           <div class="p-4 border-t border-black/5 dark:border-white/10 space-y-2">
-            <a :href="demoUrl" rel="noopener" class="block text-center px-4 py-3 rounded-xl text-sm font-medium bg-black/5 dark:bg-white/10">{{ copy.nav.signIn }}</a>
-            <NuxtLink to="/portal/download" class="block text-center px-4 py-3 rounded-xl text-sm font-semibold bg-primary text-white">{{ copy.nav.getCode }}</NuxtLink>
+            <ClientOnly>
+              <NuxtLink :to="loggedIn ? '/dashboard' : '/auth/login'" class="block text-center px-4 py-3 rounded-xl text-sm font-medium bg-black/5 dark:bg-white/10">
+                {{ loggedIn ? 'Dashboard' : copy.nav.signIn }}
+              </NuxtLink>
+              <template #fallback>
+                <NuxtLink to="/auth/login" class="block text-center px-4 py-3 rounded-xl text-sm font-medium bg-black/5 dark:bg-white/10">{{ copy.nav.signIn }}</NuxtLink>
+              </template>
+            </ClientOnly>
+            <NuxtLink to="/portal/pricing" class="block text-center px-4 py-3 rounded-xl text-sm font-semibold bg-primary text-white">{{ copy.nav.getCode }}</NuxtLink>
           </div>
         </aside>
       </Transition>

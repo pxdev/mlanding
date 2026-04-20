@@ -79,7 +79,7 @@ function scrollToTop() {
             </span>
             {{ copy.footer.badge }}
           </span>
-          <NuxtLink to="/portal/download" class="group inline-flex items-center gap-3 text-sm font-bold">
+          <NuxtLink to="/portal/pricing" class="group inline-flex items-center gap-3 text-sm font-bold">
             <span class="size-10 rounded-full bg-primary text-white dark:bg-white dark:text-primary flex items-center justify-center transition-transform group-hover:scale-110">
               <UIcon name="i-lucide-arrow-right" class="size-4 rtl:rotate-180" />
             </span>

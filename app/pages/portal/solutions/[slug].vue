@@ -254,7 +254,7 @@ onMounted(() => {
         <h2 class="font-black tracking-tight leading-[0.9] text-4xl sm:text-5xl lg:text-6xl mb-6">{{ sp.ctaTitle }}</h2>
         <p class="text-base sm:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">{{ sp.ctaBody }}</p>
         <div class="flex flex-wrap items-center justify-center gap-6">
-          <NuxtLink to="/portal/download" class="group inline-flex items-center gap-3 text-sm font-bold">
+          <NuxtLink to="/portal/pricing" class="group inline-flex items-center gap-3 text-sm font-bold">
             <span class="size-11 rounded-full bg-primary text-white dark:bg-white dark:text-primary flex items-center justify-center transition-transform group-hover:scale-110">
               <UIcon name="i-lucide-arrow-right" class="size-4 rtl:rotate-180" />
             </span>

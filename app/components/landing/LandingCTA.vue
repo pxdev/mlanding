@@ -34,10 +34,10 @@ const subtitleText = computed(() => props.subtitle ?? copy.value.cta.sub)
           </p>
           <div class="mt-8 flex flex-wrap items-center gap-3">
             <NuxtLink
-              to="/portal/download"
+              to="/portal/pricing"
               class="inline-flex items-center gap-2 px-6 h-12 rounded-full text-sm font-semibold bg-white text-primary hover:scale-[1.02] shadow-xl shadow-black/30 transition-all"
             >
-              <UIcon name="i-lucide-download" class="size-4" />
+              <UIcon name="i-lucide-shopping-cart" class="size-4" />
               {{ copy.cta.buy }}
             </NuxtLink>
             <NuxtLink
