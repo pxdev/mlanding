@@ -66,12 +66,16 @@ export async function createCheckout(opts: CreateCheckoutOpts): Promise<string> 
 
   const domain = await getStoreDomain(apiKey, storeId)
 
+  // Direct-buy URL with the two params we actually need: email pre-fill and
+  // custom.account_id for webhook round-trip. We intentionally do NOT pass
+  // checkout[success_url]: LS validates it against the store's configured
+  // domains and rejects localhost / tunnel URLs, so the customer was landing
+  // on an error page. Customers get the product's default post-purchase
+  // redirect, which is fine — the /dashboard?purchased=<slug> polling logic
+  // will pull in the license as soon as the webhook fires.
   const params = new URLSearchParams()
   params.set('checkout[email]', opts.email)
   params.set('checkout[custom][account_id]', opts.accountId)
-  if (opts.redirectUrl) {
-    params.set('checkout[success_url]', opts.redirectUrl)
-  }
 
   return `https://${domain}/buy/${opts.variantId}?${params.toString()}`
 }

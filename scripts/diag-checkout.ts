@@ -164,7 +164,6 @@ async function main() {
       const params = new URLSearchParams()
       params.set('checkout[email]', 'diag@momentfy.io')
       params.set('checkout[custom][account_id]', 'diag-run')
-      params.set('checkout[success_url]', 'http://localhost:5173/dashboard')
       const directUrl = `https://${domain}/buy/${p.lsVariantId}?${params.toString()}`
       console.log(`   direct-buy URL (what the portal now returns):`)
       console.log(`      ${directUrl}`)
