@@ -38,6 +38,20 @@ export async function createCheckout(opts: CreateCheckoutOpts): Promise<string> 
     throw createError({ statusCode: 500, statusMessage: 'Lemon Squeezy not configured' })
   }
 
+  // test_mode: when true, LS creates a test-mode checkout (only test cards
+  // work, no real money moves). Useful while the store is still being
+  // activated for live payments or when exercising the webhook loop locally.
+  //
+  // Precedence:
+  //   LEMON_SQUEEZY_TEST_MODE=true  → test_mode true
+  //   LEMON_SQUEEZY_TEST_MODE=false → test_mode false
+  //   (unset) + NODE_ENV=production → test_mode false
+  //   (unset) + anything else        → test_mode true  (dev-safe default)
+  const rawFlag = (process.env.LEMON_SQUEEZY_TEST_MODE || '').toLowerCase().trim()
+  const testMode = rawFlag === 'true' ? true
+    : rawFlag === 'false' ? false
+    : process.env.NODE_ENV !== 'production'
+
   const body = {
     data: {
       type: 'checkouts',
@@ -46,7 +60,8 @@ export async function createCheckout(opts: CreateCheckoutOpts): Promise<string> 
           email: opts.email,
           custom: { account_id: opts.accountId }
         },
-        product_options: opts.redirectUrl ? { redirect_url: opts.redirectUrl } : undefined
+        product_options: opts.redirectUrl ? { redirect_url: opts.redirectUrl } : undefined,
+        test_mode: testMode
       },
       relationships: {
         store: { data: { type: 'stores', id: String(storeId) } },
