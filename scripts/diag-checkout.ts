@@ -22,11 +22,6 @@ const apiKey = process.env.LEMON_SQUEEZY_API_KEY || bail('LEMON_SQUEEZY_API_KEY 
 const storeId = process.env.LEMON_SQUEEZY_STORE_ID || bail('LEMON_SQUEEZY_STORE_ID missing')
 if (!process.env.DATABASE_URL) bail('DATABASE_URL missing')
 
-const rawFlag = (process.env.LEMON_SQUEEZY_TEST_MODE || '').toLowerCase().trim()
-const testMode = rawFlag === 'true' ? true
-  : rawFlag === 'false' ? false
-  : process.env.NODE_ENV !== 'production'
-
 const prisma = new PrismaClient({
   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL! })
 })
@@ -48,6 +43,8 @@ async function readVariant(variantId: string) {
 }
 
 async function tryCheckout(variantId: string) {
+  // Mirror the portal's real payload (no test_mode attribute — LS infers
+  // from the API key's mode, just like the main app).
   const body = {
     data: {
       type: 'checkouts',
@@ -56,7 +53,8 @@ async function tryCheckout(variantId: string) {
           email: 'diag@momentfy.io',
           custom: { account_id: 'diag-run' }
         },
-        test_mode: testMode
+        checkout_options: { button_color: '#7047EB' },
+        product_options: { receipt_button_text: 'Return to dashboard' }
       },
       relationships: {
         store: { data: { type: 'stores', id: String(storeId) } },
@@ -95,7 +93,7 @@ async function main() {
   console.log('═══ Momentfy portal checkout diagnostic ═══\n')
   console.log(`API key     : ${redactKey(apiKey)}`)
   console.log(`Store ID    : ${storeId}`)
-  console.log(`test_mode   : ${testMode}  (LEMON_SQUEEZY_TEST_MODE=${process.env.LEMON_SQUEEZY_TEST_MODE ?? '<unset>'}, NODE_ENV=${process.env.NODE_ENV ?? '<unset>'})`)
+  console.log(`(checkout mode is determined by the API key — no test_mode attribute is sent)`)
   console.log()
 
   console.log('── Stores visible to this API key ──')

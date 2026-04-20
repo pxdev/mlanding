@@ -38,19 +38,11 @@ export async function createCheckout(opts: CreateCheckoutOpts): Promise<string> 
     throw createError({ statusCode: 500, statusMessage: 'Lemon Squeezy not configured' })
   }
 
-  // test_mode: when true, LS creates a test-mode checkout (only test cards
-  // work, no real money moves). Useful while the store is still being
-  // activated for live payments or when exercising the webhook loop locally.
-  //
-  // Precedence:
-  //   LEMON_SQUEEZY_TEST_MODE=true  → test_mode true
-  //   LEMON_SQUEEZY_TEST_MODE=false → test_mode false
-  //   (unset) + NODE_ENV=production → test_mode false
-  //   (unset) + anything else        → test_mode true  (dev-safe default)
-  const rawFlag = (process.env.LEMON_SQUEEZY_TEST_MODE || '').toLowerCase().trim()
-  const testMode = rawFlag === 'true' ? true
-    : rawFlag === 'false' ? false
-    : process.env.NODE_ENV !== 'production'
+  // Checkout mode (test vs live) is determined by the API key itself — the
+  // main app's working adapter confirms this. There is no test_mode attribute
+  // on the checkout resource; passing one causes LS to silently return a URL
+  // that refuses to render ("store not activated"). Use a test-mode key in
+  // dev and a live-mode key in prod.
 
   const body = {
     data: {
@@ -60,8 +52,13 @@ export async function createCheckout(opts: CreateCheckoutOpts): Promise<string> 
           email: opts.email,
           custom: { account_id: opts.accountId }
         },
-        product_options: opts.redirectUrl ? { redirect_url: opts.redirectUrl } : undefined,
-        test_mode: testMode
+        checkout_options: {
+          button_color: '#7047EB'
+        },
+        product_options: {
+          redirect_url: opts.redirectUrl,
+          receipt_button_text: 'Return to dashboard'
+        }
       },
       relationships: {
         store: { data: { type: 'stores', id: String(storeId) } },
@@ -70,15 +67,22 @@ export async function createCheckout(opts: CreateCheckoutOpts): Promise<string> 
     }
   }
 
-  const res = await $fetch<any>(`${LS_API}/checkouts`, {
-    method: 'POST',
-    headers: {
-      Accept: 'application/vnd.api+json',
-      'Content-Type': 'application/vnd.api+json',
-      Authorization: `Bearer ${apiKey}`
-    },
-    body
-  })
+  let res: any
+  try {
+    res = await $fetch<any>(`${LS_API}/checkouts`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/vnd.api+json',
+        'Content-Type': 'application/vnd.api+json',
+        Authorization: `Bearer ${apiKey}`
+      },
+      body
+    })
+  } catch (err: any) {
+    // Surface LS's own error detail so operators can debug (vs a generic 502).
+    const detail = err?.data?.errors?.[0]?.detail || err?.message || 'Unknown error'
+    throw createError({ statusCode: 502, statusMessage: `Lemon Squeezy: ${detail}` })
+  }
 
   const url = res?.data?.attributes?.url
   if (!url) throw createError({ statusCode: 502, statusMessage: 'Lemon Squeezy returned no checkout URL' })
