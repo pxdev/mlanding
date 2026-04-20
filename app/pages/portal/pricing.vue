@@ -30,13 +30,15 @@ async function startCheckout(idx: number) {
     const res = await $fetch<{ url: string }>(`/api/portal/checkout/${slug}`, { method: 'POST' })
     window.location.href = res.url
   } catch (err: any) {
-    // Fall back to the hosted-checkout URL so a misconfigured plan / LS
-    // outage doesn't block the sale entirely.
-    if (config.public.checkoutUrl) {
-      window.location.href = config.public.checkoutUrl
-      return
-    }
-    toast.add({ title: 'Checkout failed', description: err.statusMessage || err.message, color: 'error' })
+    // Surface the real error. We used to silently fall back to
+    // NUXT_PUBLIC_CHECKOUT_URL (the store root), but that page shows
+    // "store not activated" in test mode and confuses customers.
+    toast.add({
+      title: 'Checkout unavailable',
+      description: err.statusMessage || err.data?.statusMessage || err.message || 'Try again in a moment.',
+      color: 'error',
+      duration: 8000
+    })
   } finally {
     checkoutLoading.value = null
   }

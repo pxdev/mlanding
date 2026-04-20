@@ -29,21 +29,36 @@ export interface CreateCheckoutOpts {
   redirectUrl?: string
 }
 
-// Cached store subdomain so we only hit /v1/stores/:id once per process.
+// Resolve the store's subdomain. Prefer the env var so we don't depend on
+// LS API reachability at checkout time; fall back to /v1/stores/:id if the
+// var isn't set (with the result cached in-memory).
 let _storeDomainCache: string | null = null
 
 async function getStoreDomain(apiKey: string, storeId: string): Promise<string> {
+  const fromEnv = process.env.LEMON_SQUEEZY_STORE_DOMAIN
+  if (fromEnv && fromEnv.trim()) return fromEnv.trim()
+
   if (_storeDomainCache) return _storeDomainCache
-  const res = await $fetch<any>(`${LS_API}/stores/${storeId}`, {
-    headers: {
-      Accept: 'application/vnd.api+json',
-      Authorization: `Bearer ${apiKey}`
+
+  try {
+    const res = await $fetch<any>(`${LS_API}/stores/${storeId}`, {
+      headers: {
+        Accept: 'application/vnd.api+json',
+        Authorization: `Bearer ${apiKey}`
+      }
+    })
+    const domain = res?.data?.attributes?.domain
+    if (domain) {
+      _storeDomainCache = String(domain)
+      return _storeDomainCache
     }
+  } catch (err: any) {
+    console.error('[lemon-squeezy] failed to resolve store domain:', err?.message || err)
+  }
+  throw createError({
+    statusCode: 500,
+    statusMessage: 'Set LEMON_SQUEEZY_STORE_DOMAIN in .env (e.g. momentfy.lemonsqueezy.com)'
   })
-  const domain = res?.data?.attributes?.domain
-  if (!domain) throw createError({ statusCode: 502, statusMessage: 'Lemon Squeezy: could not resolve store domain' })
-  _storeDomainCache = String(domain)
-  return _storeDomainCache
 }
 
 // Build the checkout URL.
