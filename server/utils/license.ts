@@ -21,20 +21,24 @@ const GROUP_COUNT = 5
 const TOTAL_CHARS = GROUP_LEN * GROUP_COUNT // 20
 
 export function generateLicenseKey(): { key: string; prefix: string; hash: string } {
-  // 20 chars × 5 bits = 100 bits. randomBytes(13) gives 104 bits which we
-  // truncate to 100; plenty of entropy.
+  // 13 random bytes = 104 random bits. We consume 20 × 5 = 100 of them and
+  // discard the trailing 4 — still 100 bits of entropy, well above the ~64
+  // bits at which brute-force becomes implausible against a rate-limited API.
+  //
+  // Streaming 5-bit extractor: accumulate incoming bytes into a small integer,
+  // pop 5-bit groups off the top. Max accumulator width = 4 (holdover) + 8
+  // (new byte) = 12 bits, so plain 32-bit math is safe — no BigInt.
   const bytes = randomBytes(13)
-  let acc = 0n
-  for (const b of bytes) acc = (acc << 8n) | BigInt(b)
-
-  // Take the top 100 bits (drop the bottom 4)
-  acc = acc >> 4n
-
   const chars: string[] = []
-  for (let i = 0; i < TOTAL_CHARS; i++) {
-    const idx = Number(acc & 31n)
-    chars.unshift(ALPHABET[idx]!)
-    acc = acc >> 5n
+  let acc = 0
+  let bits = 0
+  for (const b of bytes) {
+    acc = (acc << 8) | b
+    bits += 8
+    while (bits >= 5 && chars.length < TOTAL_CHARS) {
+      bits -= 5
+      chars.push(ALPHABET[(acc >>> bits) & 0x1f]!)
+    }
   }
 
   const groups: string[] = []
