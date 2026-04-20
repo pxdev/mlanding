@@ -68,12 +68,12 @@ const statusColor: Record<string, 'success' | 'error' | 'warning'> = {
 </script>
 
 <template>
-  <div v-if="license" class="space-y-8">
+  <div v-if="license" class="space-y-6 sm:space-y-8">
     <div>
       <NuxtLink to="/dashboard" class="text-sm text-gray-500 hover:text-primary inline-flex items-center gap-1.5">
         <UIcon name="i-lucide-chevron-left" class="size-4" /> Back to licenses
       </NuxtLink>
-      <h1 class="text-2xl font-semibold mt-3 font-mono">{{ license.keyPrefix }}…</h1>
+      <h1 class="text-xl sm:text-2xl font-semibold mt-3 font-mono break-all">{{ license.keyPrefix }}…</h1>
       <div class="flex items-center gap-2 flex-wrap mt-2">
         <UBadge :color="statusColor[license.status]" variant="soft">{{ license.status }}</UBadge>
         <span class="text-sm text-gray-500">{{ license.plan.name }}</span>
@@ -159,20 +159,20 @@ const statusColor: Record<string, 'success' | 'error' | 'warning'> = {
       <template #header>
         <h2 class="font-semibold">Danger zone</h2>
       </template>
-      <div class="flex items-start justify-between gap-4">
-        <div class="text-sm">
+      <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+        <div class="text-sm min-w-0">
           <p class="font-medium">Rotate license key</p>
           <p class="text-gray-500 mt-1">
             Generate a new key. The current key stops working immediately and every active install must re-activate.
             Use this if a key has leaked.
           </p>
         </div>
-        <UButton v-if="!showRotateConfirm" color="warning" variant="soft" icon="i-lucide-refresh-cw" @click="showRotateConfirm = true">
+        <UButton v-if="!showRotateConfirm" color="warning" variant="soft" icon="i-lucide-refresh-cw" class="w-full sm:w-auto justify-center shrink-0" @click="showRotateConfirm = true">
           Rotate
         </UButton>
-        <div v-else class="flex gap-2">
-          <UButton color="error" :loading="rotating" @click="rotateKey">Confirm rotate</UButton>
-          <UButton variant="ghost" :disabled="rotating" @click="showRotateConfirm = false">Cancel</UButton>
+        <div v-else class="flex flex-col sm:flex-row gap-2 shrink-0">
+          <UButton color="error" :loading="rotating" class="justify-center" @click="rotateKey">Confirm rotate</UButton>
+          <UButton variant="ghost" :disabled="rotating" class="justify-center" @click="showRotateConfirm = false">Cancel</UButton>
         </div>
       </div>
     </UCard>

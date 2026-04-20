@@ -113,10 +113,10 @@ function fmt(d: string | null) { return d ? new Date(d).toLocaleString() : '—'
 </script>
 
 <template>
-  <div v-if="profile" class="space-y-8 max-w-2xl">
+  <div v-if="profile" class="space-y-6 sm:space-y-8 max-w-2xl">
     <header>
-      <h1 class="text-2xl font-semibold">Profile</h1>
-      <p class="text-gray-500 dark:text-gray-400 mt-1">Your name, GitHub username, and password.</p>
+      <h1 class="text-xl sm:text-2xl font-semibold">Profile</h1>
+      <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Your name, GitHub username, and password.</p>
     </header>
 
     <UCard>
@@ -125,7 +125,7 @@ function fmt(d: string | null) { return d ? new Date(d).toLocaleString() : '—'
       </template>
 
       <UForm :schema="profileSchema" :state="state" class="space-y-4" @submit="saveProfile">
-        <div class="grid grid-cols-2 gap-3">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <UFormField label="First name" name="firstName" required>
             <UInput v-model="state.firstName" size="lg" class="w-full" />
           </UFormField>
@@ -156,7 +156,7 @@ function fmt(d: string | null) { return d ? new Date(d).toLocaleString() : '—'
           <UBadge :color="inviteColor[profile.repoInvite.status]" variant="soft">{{ profile.repoInvite.status }}</UBadge>
           <span class="text-gray-500">for <code>{{ profile.githubUsername }}</code></span>
         </div>
-        <dl class="grid grid-cols-2 gap-x-6 gap-y-1 text-xs text-gray-500">
+        <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1 text-xs text-gray-500">
           <div><dt class="inline">Sent: </dt><dd class="inline">{{ fmt(profile.repoInvite.sentAt) }}</dd></div>
           <div><dt class="inline">Accepted: </dt><dd class="inline">{{ fmt(profile.repoInvite.acceptedAt) }}</dd></div>
           <div v-if="profile.repoInvite.attempts"><dt class="inline">Attempts: </dt><dd class="inline">{{ profile.repoInvite.attempts }}</dd></div>

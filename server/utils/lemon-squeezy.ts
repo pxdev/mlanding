@@ -29,49 +29,16 @@ export interface CreateCheckoutOpts {
   redirectUrl?: string
 }
 
-// Resolve the store's subdomain. Prefer the env var so we don't depend on
-// LS API reachability at checkout time; fall back to /v1/stores/:id if the
-// var isn't set (with the result cached in-memory).
-let _storeDomainCache: string | null = null
-
-async function getStoreDomain(apiKey: string, storeId: string): Promise<string> {
-  const fromEnv = process.env.LEMON_SQUEEZY_STORE_DOMAIN
-  if (fromEnv && fromEnv.trim()) return fromEnv.trim()
-
-  if (_storeDomainCache) return _storeDomainCache
-
-  try {
-    const res = await $fetch<any>(`${LS_API}/stores/${storeId}`, {
-      headers: {
-        Accept: 'application/vnd.api+json',
-        Authorization: `Bearer ${apiKey}`
-      }
-    })
-    const domain = res?.data?.attributes?.domain
-    if (domain) {
-      _storeDomainCache = String(domain)
-      return _storeDomainCache
-    }
-  } catch (err: any) {
-    console.error('[lemon-squeezy] failed to resolve store domain:', err?.message || err)
-  }
-  throw createError({
-    statusCode: 500,
-    statusMessage: 'Set LEMON_SQUEEZY_STORE_DOMAIN in .env (e.g. momentfy.lemonsqueezy.com)'
-  })
+interface LsCheckoutResponse {
+  data: { id: string, attributes: { url: string } }
 }
 
-// Build the checkout URL.
+// Build the checkout URL via the API's POST /v1/checkouts.
 //
-// We use LS's *direct-buy* URLs (`/buy/<variantId>`) rather than the API's
-// POST /v1/checkouts, because API-created custom checkouts require full
-// merchant activation to render — even in test mode. Direct-buy URLs work
-// from day one for unactivated stores in test mode, and are identical in
-// behaviour post-activation in live mode.
-//
-// account_id, email, and redirect_url go through as query params that LS
-// populates the checkout form with. The resulting order webhook still
-// carries `custom_data.account_id`, so the downstream handler is unchanged.
+// This produces a `/checkout/custom/<UUID>` URL that works in test mode
+// against an unactivated store. Direct-buy URLs (`/buy/<variantId>`) hit
+// the public storefront and return "This store has not been activated"
+// until the merchant completes activation.
 export async function createCheckout(opts: CreateCheckoutOpts): Promise<string> {
   const apiKey = process.env.LEMON_SQUEEZY_API_KEY
   const storeId = process.env.LEMON_SQUEEZY_STORE_ID
@@ -79,18 +46,45 @@ export async function createCheckout(opts: CreateCheckoutOpts): Promise<string> 
     throw createError({ statusCode: 500, statusMessage: 'Lemon Squeezy not configured' })
   }
 
-  const domain = await getStoreDomain(apiKey, storeId)
+  const payload = {
+    data: {
+      type: 'checkouts' as const,
+      attributes: {
+        checkout_data: {
+          email: opts.email,
+          custom: { account_id: opts.accountId }
+        },
+        product_options: {
+          redirect_url: opts.redirectUrl,
+          receipt_button_text: 'Return to Dashboard'
+        }
+      },
+      relationships: {
+        store: { data: { type: 'stores' as const, id: storeId } },
+        variant: { data: { type: 'variants' as const, id: opts.variantId } }
+      }
+    }
+  }
 
-  // Direct-buy URL with the two params we actually need: email pre-fill and
-  // custom.account_id for webhook round-trip. We intentionally do NOT pass
-  // checkout[success_url]: LS validates it against the store's configured
-  // domains and rejects localhost / tunnel URLs, so the customer was landing
-  // on an error page. Customers get the product's default post-purchase
-  // redirect, which is fine — the /dashboard?purchased=<slug> polling logic
-  // will pull in the license as soon as the webhook fires.
-  const params = new URLSearchParams()
-  params.set('checkout[email]', opts.email)
-  params.set('checkout[custom][account_id]', opts.accountId)
+  let response: LsCheckoutResponse
+  try {
+    response = await $fetch<LsCheckoutResponse>(`${LS_API}/checkouts`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        Accept: 'application/vnd.api+json',
+        'Content-Type': 'application/vnd.api+json'
+      },
+      body: payload
+    })
+  } catch (err: any) {
+    const msg = err?.data?.errors?.[0]?.detail || err?.message || 'Failed to create checkout'
+    throw createError({ statusCode: 502, statusMessage: `Lemon Squeezy: ${msg}` })
+  }
 
-  return `https://${domain}/buy/${opts.variantId}?${params.toString()}`
+  const url = response?.data?.attributes?.url
+  if (!url) {
+    throw createError({ statusCode: 502, statusMessage: 'Lemon Squeezy: No checkout URL returned' })
+  }
+  return url
 }

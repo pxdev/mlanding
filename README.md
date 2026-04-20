@@ -126,9 +126,9 @@ After running `pnpm db:migrate` and `pnpm tsx prisma/seed.ts` (which creates the
 1. In Lemon Squeezy, create a one-time product with two variants matching the marketing site's plans (Self-install, Done-for-you).
 2. Open Prisma Studio (`pnpm db:studio`) → `Plan` table → set `lsVariantId` on each row to the matching LS variant id.
 3. In LS dashboard, configure the webhook endpoint: `https://YOUR_PORTAL/api/webhooks/lemon-squeezy`. Set the signing secret to the value of `LEMON_SQUEEZY_WEBHOOK_SECRET` in your env. Subscribe to `order_created` and `order_refunded` at minimum.
-4. Set `LEMON_SQUEEZY_API_KEY` and `LEMON_SQUEEZY_STORE_ID` in `.env`.
+4. Set `LEMON_SQUEEZY_API_KEY`, `LEMON_SQUEEZY_STORE_ID`, and `LEMON_SQUEEZY_STORE_DOMAIN` in `.env`.
 
-When a logged-in visitor clicks Buy on `/portal/pricing`, the portal hits LS's `POST /v1/checkouts`, binds the order to their account via `custom_data.account_id`, and 302s to the hosted checkout. On payment, the webhook issues the License (returns plaintext key once via email) and records the Order. Refunds revoke any licenses on that order.
+When a logged-in visitor clicks Buy on `/portal/pricing`, the portal builds LS's direct-buy URL for the selected variant, binds the order to their account via `checkout[custom][account_id]`, and 302s to the hosted checkout. On payment, the webhook issues the License (returns plaintext key once via email) and records the Order. Refunds revoke any licenses on that order.
 
 ### Phase 5: license validation API
 

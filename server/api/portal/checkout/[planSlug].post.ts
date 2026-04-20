@@ -31,8 +31,7 @@ export default defineEventHandler(async (event) => {
     variantId: plan.lsVariantId,
     accountId: user.id,
     email: user.email,
-    redirectUrl: `${portalUrl}/dashboard?purchased=${plan.slug}`,
-    amountCents: plan.priceUsdCents
+    redirectUrl: `${portalUrl}/dashboard?purchased=${plan.slug}`
   })
 
   return { url }
