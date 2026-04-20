@@ -157,23 +157,39 @@ async function main() {
       console.log(`   ⚠ variant read failed (${vr.status}): ${JSON.stringify(vr.json).slice(0, 300)}`)
     }
 
+    // Build the same direct-buy URL the portal now uses.
+    const store = (await listStores()).json?.data?.find((s: any) => String(s.id) === String(storeId))
+    const domain = store?.attributes?.domain
+    if (domain) {
+      const params = new URLSearchParams()
+      params.set('checkout[email]', 'diag@momentfy.io')
+      params.set('checkout[custom][account_id]', 'diag-run')
+      params.set('checkout[success_url]', 'http://localhost:5173/dashboard')
+      const directUrl = `https://${domain}/buy/${p.lsVariantId}?${params.toString()}`
+      console.log(`   direct-buy URL (what the portal now returns):`)
+      console.log(`      ${directUrl}`)
+      console.log(`   Plain "Share" URL (baseline — this worked for you):`)
+      console.log(`      https://${domain}/buy/${p.lsVariantId}`)
+    }
+
+    // Also try the API-created custom checkout for comparison.
     const result = await tryCheckout(p.lsVariantId)
-    console.log(`   LS status  : ${result.status}`)
+    console.log(`   API /v1/checkouts status: ${result.status}`)
     if (result.status >= 200 && result.status < 300) {
       const url = result.body?.data?.attributes?.url
-      console.log(`   checkout URL: ${url}`)
-      console.log(`   ✓ LS accepted the request. Open the URL above; if the page loads you're golden.`)
-      console.log(`     If it shows "store not activated", your test-mode store still needs setup even for test checkouts.`)
+      console.log(`      URL: ${url}`)
+      console.log(`      (API-created checkouts require full merchant activation.`)
+      console.log(`       Direct-buy URLs above don't — that's what the portal uses now.)`)
     } else {
       const errors = result.body?.errors
       if (Array.isArray(errors)) {
         for (const e of errors) {
-          console.log(`   ✗ ${e.status ?? ''} ${e.title ?? ''}`)
-          if (e.detail) console.log(`     detail: ${e.detail}`)
-          if (e.source) console.log(`     source: ${JSON.stringify(e.source)}`)
+          console.log(`      ✗ ${e.status ?? ''} ${e.title ?? ''}`)
+          if (e.detail) console.log(`        detail: ${e.detail}`)
+          if (e.source) console.log(`        source: ${JSON.stringify(e.source)}`)
         }
       } else {
-        console.log(`   raw: ${JSON.stringify(result.body).slice(0, 500)}`)
+        console.log(`      raw: ${JSON.stringify(result.body).slice(0, 500)}`)
       }
     }
     console.log()
