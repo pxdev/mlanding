@@ -67,25 +67,40 @@ export default defineEventHandler(async (event) => {
     }
   }
 
-  if (license.activations.length >= license.maxActivations) {
-    throw createError({
-      statusCode: 403,
-      statusMessage: 'Max activations reached',
-      data: { reason: 'max_activations_reached', current: license.activations.length, max: license.maxActivations }
-    })
-  }
-
+  // Capacity check + create inside a Serializable transaction so two
+  // concurrent activates on the same license can't both slip past the cap.
+  // Rare under light load, but worth closing — licenses being sold as
+  // "1 install per key" means the cap is contractually meaningful.
   const token = randomBytes(32).toString('base64url')
-  const activation = await prisma.activation.create({
-    data: {
-      licenseId: license.id,
-      fingerprint: body.fingerprint,
-      hostname: body.hostname ?? null,
-      ipAddress: ip,
-      appVersion: body.version ?? null,
-      activationToken: token
-    }
-  })
+  let activation
+  try {
+    activation = await prisma.$transaction(async (tx) => {
+      const live = await tx.activation.count({
+        where: { licenseId: license.id, deactivatedAt: null }
+      })
+      if (live >= license.maxActivations) {
+        throw createError({
+          statusCode: 403,
+          statusMessage: 'Max activations reached',
+          data: { reason: 'max_activations_reached', current: live, max: license.maxActivations }
+        })
+      }
+      return await tx.activation.create({
+        data: {
+          licenseId: license.id,
+          fingerprint: body.fingerprint,
+          hostname: body.hostname ?? null,
+          ipAddress: ip,
+          appVersion: body.version ?? null,
+          activationToken: token
+        }
+      })
+    }, { isolationLevel: 'Serializable' })
+  } catch (err: any) {
+    // Rethrow H3 errors as-is; wrap everything else so we don't leak internals.
+    if (err && typeof err === 'object' && 'statusCode' in err) throw err
+    throw createError({ statusCode: 500, statusMessage: 'Activation failed' })
+  }
 
   await auditLog({
     actorId: null,

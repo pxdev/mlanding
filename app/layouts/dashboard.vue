@@ -14,6 +14,7 @@ const navItems = computed(() => {
     base.push(
       { label: 'Customers', to: '/admin/users', icon: 'i-lucide-users' },
       { label: 'All licenses', to: '/admin/licenses', icon: 'i-lucide-shield' },
+      { label: 'GitHub invites', to: '/admin/invites', icon: 'i-simple-icons-github' },
       { label: 'Audit log', to: '/admin/audit', icon: 'i-lucide-list' }
     )
   }

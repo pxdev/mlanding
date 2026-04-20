@@ -1,6 +1,7 @@
 // Rotate a license key. The old key stops working immediately and every
-// existing activation is forced to re-activate (we delete activation rows so
-// the next heartbeat fails closed).
+// existing activation is forced to re-activate. We soft-deactivate rather
+// than delete so the install history (hostnames, last-seen, versions) is
+// preserved for support forensics.
 //
 // The new plaintext key is returned ONCE; thereafter only the prefix is
 // recoverable from the dashboard.
@@ -30,7 +31,13 @@ export default defineEventHandler(async (event) => {
       where: { id: license.id },
       data: { keyHash: hash, keyPrefix: prefix }
     }),
-    prisma.activation.deleteMany({ where: { licenseId: license.id } })
+    // Soft-deactivate every live install under this license so the next
+    // heartbeat returns 401 and the instance has to re-activate with the
+    // new key. Rows are retained for the audit trail.
+    prisma.activation.updateMany({
+      where: { licenseId: license.id, deactivatedAt: null },
+      data: { deactivatedAt: new Date() }
+    })
   ])
 
   await auditLog({
