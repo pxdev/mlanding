@@ -111,6 +111,14 @@ async function main() {
       if (!rows.some((s: any) => String(s.id) === String(storeId))) {
         console.log(`   ⚠ LEMON_SQUEEZY_STORE_ID=${storeId} is NOT in this list.`)
         console.log(`     Set it to one of the ids above. That's your checkout failure.`)
+      } else {
+        // Dump full attributes of the matched store — setup/activation flags.
+        const store = rows.find((s: any) => String(s.id) === String(storeId))!
+        console.log('   ── full attributes ──')
+        for (const [k, v] of Object.entries(store.attributes || {})) {
+          const vs = typeof v === 'string' && v.length > 80 ? v.slice(0, 80) + '…' : JSON.stringify(v)
+          console.log(`      ${k}: ${vs}`)
+        }
       }
     }
   } else {

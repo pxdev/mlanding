@@ -27,6 +27,10 @@ export interface CreateCheckoutOpts {
   accountId: string
   email: string
   redirectUrl?: string
+  // Optional override in cents. If the variant is configured as
+  // "pay-what-you-want" or "custom-price", LS requires this; otherwise it
+  // just overrides the variant's built-in price.
+  amountCents?: number
 }
 
 // Returns the LS-hosted checkout URL. The custom data is round-tripped through
@@ -44,22 +48,31 @@ export async function createCheckout(opts: CreateCheckoutOpts): Promise<string> 
   // that refuses to render ("store not activated"). Use a test-mode key in
   // dev and a live-mode key in prod.
 
+  const attributes: Record<string, unknown> = {
+    checkout_data: {
+      email: opts.email,
+      custom: { account_id: opts.accountId }
+    },
+    checkout_options: {
+      button_color: '#7047EB'
+    },
+    product_options: {
+      redirect_url: opts.redirectUrl,
+      receipt_button_text: 'Return to dashboard'
+    }
+  }
+  // Matching the main app's adapter: send custom_price when we have one.
+  // Handles "pay-what-you-want" variants (which require it) and is harmless
+  // for fixed-price variants (just overrides the variant's price with the
+  // same value we'd expect).
+  if (opts.amountCents !== undefined) {
+    attributes.custom_price = opts.amountCents
+  }
+
   const body = {
     data: {
       type: 'checkouts',
-      attributes: {
-        checkout_data: {
-          email: opts.email,
-          custom: { account_id: opts.accountId }
-        },
-        checkout_options: {
-          button_color: '#7047EB'
-        },
-        product_options: {
-          redirect_url: opts.redirectUrl,
-          receipt_button_text: 'Return to dashboard'
-        }
-      },
+      attributes,
       relationships: {
         store: { data: { type: 'stores', id: String(storeId) } },
         variant: { data: { type: 'variants', id: String(opts.variantId) } }
