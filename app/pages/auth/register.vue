@@ -7,6 +7,11 @@ useHead({ title: 'Create account — Momentfy' })
 
 const { fetch: fetchSession } = useUserSession()
 const toast = useToast()
+const route = useRoute()
+const redirectTo = computed(() => {
+  const r = route.query.redirect as string | undefined
+  return r && r.startsWith('/') && !r.startsWith('//') ? r : '/dashboard'
+})
 
 const schema = z.object({
   firstName: z.string().min(1, 'First name is required').max(80),
@@ -37,7 +42,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
       }
     })
     await fetchSession()
-    await navigateTo('/dashboard')
+    await navigateTo(redirectTo.value)
   } catch (err: any) {
     toast.add({ title: 'Registration failed', description: err.statusMessage || err.message, color: 'error' })
   } finally {
