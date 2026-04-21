@@ -3,11 +3,11 @@
 // verifySignature passes and the handler runs exactly as it would in prod.
 //
 // Usage:
-//     pnpm tsx scripts/simulate-lemon-webhook.ts <account_email> [plan_slug]
+//     npx tsx scripts/simulate-lemon-webhook.ts <account_email> [plan_slug]
 //
 // Examples:
-//     pnpm tsx scripts/simulate-lemon-webhook.ts you@example.com
-//     pnpm tsx scripts/simulate-lemon-webhook.ts you@example.com we-install
+//     npx tsx scripts/simulate-lemon-webhook.ts you@example.com
+//     npx tsx scripts/simulate-lemon-webhook.ts you@example.com we-install
 //
 // Prints whatever the handler returns (usually { ok: true, orderId, ... }).
 
@@ -19,7 +19,7 @@ import { PrismaClient } from '../generated/client'
 const email = process.argv[2]
 const planSlug = process.argv[3] || 'self-install'
 if (!email) {
-  console.error('usage: pnpm tsx scripts/simulate-lemon-webhook.ts <email> [plan_slug]')
+  console.error('usage: npx tsx scripts/simulate-lemon-webhook.ts <email> [plan_slug]')
   process.exit(1)
 }
 

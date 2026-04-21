@@ -1,7 +1,7 @@
 // Seed the portal DB with the two plans the marketing site advertises.
 // Idempotent — safe to re-run.
 //
-//   pnpm tsx prisma/seed.ts
+//   npm run db:seed
 //
 // Prisma 7 requires an explicit driver adapter when instantiating
 // PrismaClient — no more zero-arg constructor. We also load .env manually

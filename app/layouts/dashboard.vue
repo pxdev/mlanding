@@ -1,26 +1,17 @@
 <script setup lang="ts">
 const route = useRoute()
-const { user, isAdmin, displayName, clear } = useSession()
+const { user, displayName, clear } = useSession()
 const colorMode = useColorMode()
 const isDark = computed(() => colorMode.value === 'dark')
 
 const mobileNavOpen = ref(false)
 
-const navItems = computed(() => {
-  const base = [
-    { label: 'Licenses', to: '/dashboard', icon: 'i-lucide-key' },
-    { label: 'Profile', to: '/dashboard/profile', icon: 'i-lucide-user' }
-  ]
-  if (isAdmin.value) {
-    base.push(
-      { label: 'Customers', to: '/admin/users', icon: 'i-lucide-users' },
-      { label: 'All licenses', to: '/admin/licenses', icon: 'i-lucide-shield' },
-      { label: 'GitHub invites', to: '/admin/invites', icon: 'i-simple-icons-github' },
-      { label: 'Audit log', to: '/admin/audit', icon: 'i-lucide-list' }
-    )
-  }
-  return base
-})
+// Customer-facing nav only. Admins are routed to the admin layout via
+// middleware/admin-layout.global.ts, so they never see these items.
+const navItems = computed(() => [
+  { label: 'Licenses', to: '/dashboard', icon: 'i-lucide-key' },
+  { label: 'Profile', to: '/dashboard/profile', icon: 'i-lucide-user' }
+])
 
 function isActive(to: string) {
   return route.path === to || (to !== '/dashboard' && route.path.startsWith(to + '/'))
@@ -39,10 +30,6 @@ const pageTitle = computed(() => {
   if (route.path === '/dashboard') return 'Licenses'
   if (route.path.startsWith('/dashboard/licenses/')) return 'License'
   if (route.path === '/dashboard/profile') return 'Profile'
-  if (route.path.startsWith('/admin/users')) return 'Customers'
-  if (route.path.startsWith('/admin/licenses')) return 'All licenses'
-  if (route.path.startsWith('/admin/invites')) return 'GitHub invites'
-  if (route.path.startsWith('/admin/audit')) return 'Audit log'
   return 'Portal'
 })
 

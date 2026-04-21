@@ -1,5 +1,5 @@
 <script setup lang="ts">
-definePageMeta({ layout: 'dashboard', middleware: ['auth', 'admin'] })
+definePageMeta({ layout: 'admin', middleware: ['auth', 'admin'] })
 useHead({ title: 'All licenses — Momentfy admin' })
 
 const route = useRoute()
@@ -92,12 +92,19 @@ const statusFilters = [
 </script>
 
 <template>
-  <div class="space-y-6">
-    <header>
-      <NuxtLink to="/admin" class="text-sm text-gray-500 hover:text-primary inline-flex items-center gap-1.5">
-        <UIcon name="i-lucide-chevron-left" class="size-4" /> Admin
-      </NuxtLink>
-      <h1 class="text-2xl font-semibold mt-2">All licenses</h1>
+  <div class="p-6 max-w-6xl mx-auto space-y-6">
+    <header class="flex items-start justify-between flex-wrap gap-2">
+      <div>
+        <h1 class="text-2xl font-bold">All licenses</h1>
+        <p class="text-sm text-gray-500 mt-1">Issue, revoke, and manage activation caps.</p>
+      </div>
+      <UButton
+        to="/admin/licenses/new"
+        icon="i-lucide-plus"
+        size="sm"
+      >
+        Issue new
+      </UButton>
     </header>
 
     <div class="flex flex-wrap gap-2">
@@ -106,7 +113,7 @@ const statusFilters = [
       <UButton icon="i-lucide-search" :loading="fetchStatus === 'pending'" @click="refresh">Search</UButton>
     </div>
 
-    <UCard>
+    <UCard class="!shadow-none">
       <div v-if="!licenses.length" class="text-center py-10 text-gray-500">
         <UIcon name="i-lucide-search-x" class="size-8 mx-auto opacity-40" />
         <p class="mt-3 text-sm">No licenses found.</p>

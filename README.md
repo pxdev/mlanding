@@ -5,13 +5,13 @@ Standalone Nuxt 4 site that serves as both the **public marketing pages** for Mo
 ## Local dev
 
 ```sh
-pnpm install
+npm install
 cp .env.example .env
 
 # Once Postgres is running and DATABASE_URL is set:
-pnpm db:migrate           # applies Prisma migrations to the `portal` database
+npm run db:migrate        # applies Prisma migrations to the `portal` database
 
-pnpm dev                  # http://localhost:5173
+npm run dev               # http://localhost:5173
 ```
 
 Mailpit is convenient for catching transactional email locally — point `SMTP_HOST=localhost`, `SMTP_PORT=1025`.
@@ -85,14 +85,20 @@ To edit copy, change the JSON file and the page updates on next reload.
 
 ## Promoting a user to admin
 
-There's no UI for this yet. After registering, set the flag manually:
+**Recommended — env bootstrap:** set `PORTAL_ADMIN_EMAILS` to a comma-separated allowlist. Matching accounts are auto-promoted on register, or on the next login if they already exist.
 
-```sh
-pnpm db:studio
-# Account → toggle isAdmin
+```env
+PORTAL_ADMIN_EMAILS=you@momentfy.io,ops@momentfy.io
 ```
 
-Or via SQL:
+Seed-only — removing an email does **not** demote; the DB flag sticks until you toggle it off.
+
+**Fallback — manual:**
+
+```sh
+npm run db:studio
+# Account → toggle isAdmin
+```
 
 ```sql
 UPDATE "Account" SET "isAdmin" = true WHERE email = 'you@momentfy.io';
@@ -100,11 +106,11 @@ UPDATE "Account" SET "isAdmin" = true WHERE email = 'you@momentfy.io';
 
 ## Deployment
 
-- Build: `pnpm build`
-- Preview locally: `pnpm preview`
+- Build: `npm run build`
+- Preview locally: `npm run preview`
 - The portal needs a Node runtime (it has SSR + an API). Static-only hosts won't work.
 - Recommended: Vercel (Node functions), Railway, Fly.io, or any Node host with Postgres available.
-- Run `pnpm db:migrate deploy` on each release.
+- Run `npx prisma migrate deploy` on each release.
 
 ## Phase roadmap
 
@@ -121,10 +127,10 @@ See `/Users/aamin/.claude/plans/landing-license-portal.md` for the full plan.
 
 ### Phase 3 setup
 
-After running `pnpm db:migrate` and `pnpm tsx prisma/seed.ts` (which creates the two plans):
+After running `npm run db:migrate` and `npm run db:seed` (which creates the two plans):
 
 1. In Lemon Squeezy, create a one-time product with two variants matching the marketing site's plans (Self-install, Done-for-you).
-2. Open Prisma Studio (`pnpm db:studio`) → `Plan` table → set `lsVariantId` on each row to the matching LS variant id.
+2. Open Prisma Studio (`npm run db:studio`) → `Plan` table → set `lsVariantId` on each row to the matching LS variant id.
 3. In LS dashboard, configure the webhook endpoint: `https://YOUR_PORTAL/api/webhooks/lemon-squeezy`. Set the signing secret to the value of `LEMON_SQUEEZY_WEBHOOK_SECRET` in your env. Subscribe to `order_created` and `order_refunded` at minimum.
 4. Set `LEMON_SQUEEZY_API_KEY`, `LEMON_SQUEEZY_STORE_ID`, and `LEMON_SQUEEZY_STORE_DOMAIN` in `.env`.
 
@@ -178,7 +184,7 @@ POST /api/v1/license/deactivate
 Keypair generation (once, at project setup):
 
 ```bash
-pnpm tsx scripts/generate-license-keypair.ts
+npx tsx scripts/generate-license-keypair.ts
 ```
 
 This prints the seed + public key for the portal `.env` and the XOR-split

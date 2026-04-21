@@ -1,5 +1,5 @@
 <script setup lang="ts">
-definePageMeta({ layout: 'dashboard', middleware: ['auth', 'admin'] })
+definePageMeta({ layout: 'admin', middleware: ['auth', 'admin'] })
 useHead({ title: 'Audit log — Momentfy admin' })
 
 interface AuditRow {
@@ -33,19 +33,16 @@ const actionColor: Record<string, 'success' | 'error' | 'warning' | 'neutral' | 
 </script>
 
 <template>
-  <div class="space-y-6">
+  <div class="p-6 max-w-6xl mx-auto space-y-6">
     <header class="flex items-end justify-between gap-4">
       <div>
-        <NuxtLink to="/admin" class="text-sm text-gray-500 hover:text-primary inline-flex items-center gap-1.5">
-          <UIcon name="i-lucide-chevron-left" class="size-4" /> Admin
-        </NuxtLink>
-        <h1 class="text-2xl font-semibold mt-2">Audit log</h1>
+        <h1 class="text-2xl font-bold">Audit log</h1>
         <p class="text-gray-500 text-sm mt-1">Newest first. Last 100 events.</p>
       </div>
       <UButton size="sm" variant="ghost" icon="i-lucide-refresh-cw" :loading="status === 'pending'" @click="refresh">Refresh</UButton>
     </header>
 
-    <UCard>
+    <UCard class="!shadow-none">
       <div v-if="!logs.length" class="text-center py-10 text-gray-500">
         <UIcon name="i-lucide-list" class="size-8 mx-auto opacity-40" />
         <p class="mt-3 text-sm">No audit events yet.</p>

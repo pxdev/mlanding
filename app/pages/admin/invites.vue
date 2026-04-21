@@ -1,5 +1,5 @@
 <script setup lang="ts">
-definePageMeta({ layout: 'dashboard', middleware: ['auth', 'admin'] })
+definePageMeta({ layout: 'admin', middleware: ['auth', 'admin'] })
 useHead({ title: 'GitHub invites — Momentfy admin' })
 
 const toast = useToast()
@@ -55,12 +55,9 @@ const statusFilters = [
 </script>
 
 <template>
-  <div class="space-y-6">
+  <div class="p-6 max-w-6xl mx-auto space-y-6">
     <header>
-      <NuxtLink to="/admin" class="text-sm text-gray-500 hover:text-primary inline-flex items-center gap-1.5">
-        <UIcon name="i-lucide-chevron-left" class="size-4" /> Admin
-      </NuxtLink>
-      <h1 class="text-2xl font-semibold mt-2">GitHub invites</h1>
+      <h1 class="text-2xl font-bold">GitHub invites</h1>
       <p class="text-gray-500 text-sm mt-1">Customer memberships on the source-repo team. Retry failed sends after fixing a typo'd username.</p>
     </header>
 
@@ -69,7 +66,7 @@ const statusFilters = [
       <UButton icon="i-lucide-refresh-cw" :loading="status === 'pending'" @click="refresh">Refresh</UButton>
     </div>
 
-    <UCard>
+    <UCard class="!shadow-none">
       <div v-if="!invites.length" class="text-center py-10 text-gray-500">
         <UIcon name="i-simple-icons-github" class="size-8 mx-auto opacity-40" />
         <p class="mt-3 text-sm">No invites.</p>

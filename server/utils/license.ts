@@ -64,3 +64,20 @@ export function isLicenseKeyShape(s: unknown): s is string {
   // MFY- followed by 5 groups of 4 chars from the alphabet
   return /^MFY-[0-9A-HJKMNP-TV-Z]{4}(-[0-9A-HJKMNP-TV-Z]{4}){4}$/.test(s)
 }
+
+/**
+ * User-facing normalisation: uppercase, strip every whitespace and
+ * every non-hyphen separator the customer might have pasted in. The
+ * canonical shape on storage is MFY-XXXX-XXXX-XXXX-XXXX-XXXX.
+ *
+ * We do NOT enforce the shape here — isLicenseKeyShape does that. This
+ * just cleans up friendly-looking input so the shape check has a chance.
+ */
+export function normaliseLicenseKey(raw: string): string {
+  return raw
+    .toUpperCase()
+    .replace(/[\s\u00A0\u200B]/g, '') // spaces, NBSP, zero-width
+    .replace(/[_.,;:|]/g, '-')       // common delimiter typos → hyphen
+    .replace(/-+/g, '-')             // collapse multiple hyphens
+    .replace(/^-|-$/g, '')           // trim leading/trailing hyphens
+}

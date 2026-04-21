@@ -1,5 +1,5 @@
 <script setup lang="ts">
-definePageMeta({ layout: 'dashboard', middleware: ['auth', 'admin'] })
+definePageMeta({ layout: 'admin', middleware: ['auth', 'admin'] })
 useHead({ title: 'Customers — Momentfy admin' })
 
 interface UserRow {
@@ -30,12 +30,10 @@ function name(u: UserRow) {
 </script>
 
 <template>
-  <div class="space-y-6">
+  <div class="p-6 max-w-6xl mx-auto space-y-6">
     <header>
-      <NuxtLink to="/admin" class="text-sm text-gray-500 hover:text-primary inline-flex items-center gap-1.5">
-        <UIcon name="i-lucide-chevron-left" class="size-4" /> Admin
-      </NuxtLink>
-      <h1 class="text-2xl font-semibold mt-2">Customers</h1>
+      <h1 class="text-2xl font-bold">Customers</h1>
+      <p class="text-sm text-gray-500 mt-1">Search and manage portal accounts.</p>
     </header>
 
     <div class="flex gap-2">
@@ -43,7 +41,7 @@ function name(u: UserRow) {
       <UButton icon="i-lucide-search" @click="refresh">Search</UButton>
     </div>
 
-    <UCard>
+    <UCard class="!shadow-none">
       <div v-if="!users.length" class="text-center py-10 text-gray-500">
         <UIcon name="i-lucide-users-round" class="size-8 mx-auto opacity-40" />
         <p class="mt-3 text-sm">No customers found.</p>

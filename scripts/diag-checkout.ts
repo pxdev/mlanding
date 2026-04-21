@@ -1,6 +1,6 @@
 // Standalone LS checkout diagnostic.
 //
-//   pnpm tsx scripts/diag-checkout.ts
+//   npx tsx scripts/diag-checkout.ts
 //
 // Reads env + Plan rows, tries the same POST /v1/checkouts call the portal
 // does, and dumps the raw LS response. Pinpoints the usual failure modes:
@@ -128,7 +128,7 @@ async function main() {
 
   const plans = await prisma.plan.findMany({ orderBy: { priceUsdCents: 'asc' } })
   if (plans.length === 0) {
-    console.log('⚠ No Plan rows in DB. Run:  pnpm tsx prisma/seed.ts')
+    console.log('⚠ No Plan rows in DB. Run:  npm run db:seed')
     return
   }
 
@@ -138,7 +138,7 @@ async function main() {
     console.log(`   lsVariantId=${p.lsVariantId ?? '<NULL>'}  isActive=${p.isActive}`)
 
     if (!p.lsVariantId) {
-      console.log(`   → Skipped: set lsVariantId via  pnpm db:studio  first.`)
+      console.log(`   → Skipped: set lsVariantId via  npm run db:studio  first.`)
       console.log()
       continue
     }

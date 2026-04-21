@@ -6,6 +6,8 @@ export default defineEventHandler(async (event) => {
   const data = await validateBody(event, registerSchema)
 
   const passwordHash = await hashPassword(data.password)
+  const email = data.email.toLowerCase()
+  const bootstrapAdmin = isBootstrapAdminEmail(email)
 
   let account
   try {
@@ -13,9 +15,10 @@ export default defineEventHandler(async (event) => {
       data: {
         firstName: data.firstName,
         lastName: data.lastName,
-        email: data.email.toLowerCase(),
+        email,
         githubUsername: data.githubUsername || null,
-        passwordHash
+        passwordHash,
+        isAdmin: bootstrapAdmin
       }
     })
   } catch (e: any) {
@@ -23,6 +26,16 @@ export default defineEventHandler(async (event) => {
       throw createError({ statusCode: 409, statusMessage: 'An account with this email already exists' })
     }
     throw e
+  }
+
+  if (bootstrapAdmin) {
+    await auditLog({
+      actorId: account.id,
+      action: 'account.bootstrap_admin',
+      targetType: 'Account',
+      targetId: account.id,
+      metadata: { email: account.email, source: 'register' }
+    })
   }
 
   await setUserSession(event, {

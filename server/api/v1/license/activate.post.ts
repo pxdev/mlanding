@@ -19,7 +19,7 @@
 import prisma from '../../../utils/prisma'
 import { randomBytes } from 'node:crypto'
 import { activateLicenseSchema, validateBody } from '../../../utils/validation'
-import { hashLicenseKey, isLicenseKeyShape } from '../../../utils/license'
+import { hashLicenseKey, isLicenseKeyShape, normaliseLicenseKey } from '../../../utils/license'
 import { signCertificate, type CertificatePayload } from '../../../utils/license-signing'
 import { auditLog } from '../../../utils/audit'
 
@@ -27,12 +27,28 @@ export default defineEventHandler(async (event) => {
   enforceRateLimit(event, { max: 5, windowSeconds: 60 })
   const body = await validateBody(event, activateLicenseSchema)
 
-  if (!isLicenseKeyShape(body.key)) {
-    // Don't disclose whether the format is wrong vs the key is unknown.
-    throw createError({ statusCode: 404, statusMessage: 'License not found' })
+  // Accept lightly-malformed input (whitespace, wrong case, common typos
+  // in separators) so a customer who pasted their key with trailing
+  // whitespace doesn't get a confusing "not found".
+  const key = normaliseLicenseKey(body.key)
+
+  if (!isLicenseKeyShape(key)) {
+    // Distinct from "not found" — tells the customer to double-check
+    // the key they pasted rather than contacting support. Doesn't leak
+    // anything an attacker could use for enumeration (an attacker
+    // submitting random strings gets this for obviously-wrong formats
+    // and "not found" for well-shaped random guesses; both are useless).
+    throw createError({
+      statusCode: 400,
+      statusMessage: 'License key format is invalid',
+      data: {
+        reason: 'invalid_format',
+        hint: 'Expected format: MFY-XXXX-XXXX-XXXX-XXXX-XXXX (letters and digits, no O/I/L/U)'
+      }
+    })
   }
 
-  const keyHash = hashLicenseKey(body.key)
+  const keyHash = hashLicenseKey(key)
   const license = await prisma.license.findUnique({
     where: { keyHash },
     include: {
@@ -42,82 +58,177 @@ export default defineEventHandler(async (event) => {
   })
 
   if (!license) {
-    throw createError({ statusCode: 404, statusMessage: 'License not found' })
+    throw createError({
+      statusCode: 404,
+      statusMessage: 'License key not recognised',
+      data: {
+        reason: 'not_found',
+        hint: 'Check the key in your purchase email. If you just bought, the key may take a minute to sync.'
+      }
+    })
   }
   if (license.status === 'REVOKED') {
-    throw createError({ statusCode: 403, statusMessage: 'License revoked', data: { reason: 'revoked' } })
+    throw createError({
+      statusCode: 403,
+      statusMessage: 'License revoked',
+      data: {
+        reason: 'revoked',
+        revokedReason: license.revokedReason,
+        hint: 'This key has been revoked by the vendor. Contact support if you believe this is a mistake.'
+      }
+    })
   }
   if (license.status === 'EXPIRED' || (license.expiresAt && license.expiresAt < new Date())) {
-    throw createError({ statusCode: 403, statusMessage: 'License expired', data: { reason: 'expired' } })
+    throw createError({
+      statusCode: 403,
+      statusMessage: 'License expired',
+      data: {
+        reason: 'expired',
+        expiredAt: license.expiresAt,
+        hint: 'Renew your license to reactivate.'
+      }
+    })
   }
 
   const ip = getRequestIP(event, { xForwardedFor: true }) || null
-  const issuer = process.env.NUXT_PUBLIC_PORTAL_URL || 'portal.momentfy.com'
+  const issuer = process.env.NUXT_PUBLIC_PORTAL_URL || 'momentfy.com'
 
-  // Idempotency: same fingerprint already activated → reissue a fresh cert
-  // with a current activatedAt. Lets customers re-run installer safely.
-  const existing = await prisma.activation.findUnique({
-    where: { licenseId_fingerprint: { licenseId: license.id, fingerprint: body.fingerprint } }
-  })
-  if (existing && !existing.deactivatedAt) {
-    const now = new Date()
-    await prisma.activation.update({
-      where: { id: existing.id },
-      data: {
-        lastSeenAt: now,
-        ipAddress: ip,
-        appVersion: body.version ?? existing.appVersion,
-        hostname: body.hostname ?? existing.hostname
-      }
-    })
-    return issueCertificate({
-      licenseId: license.id,
-      keyPrefix: license.keyPrefix,
-      customer: license.account.email,
-      fingerprint: body.fingerprint,
-      activatedAt: now,
-      expiresAt: license.expiresAt,
-      maxActivations: license.maxActivations,
-      issuer,
-      activationToken: existing.activationToken
-    })
-  }
+  // Activation decision tree — all paths inside a single Serializable
+  // transaction so the capacity check and the write agree on the same
+  // snapshot.
+  //
+  //   ┌─ existing row for (licenseId, fingerprint)? ─┐
+  //   │                                              │
+  //   ├─ yes, still active → idempotent refresh      │
+  //   │   (re-running installer, same machine, same  │
+  //   │   key — no slot consumption, reuse token)    │
+  //   │                                              │
+  //   ├─ yes, deactivated → revive                   │
+  //   │   (key rotated or manually deactivated and   │
+  //   │   the same machine is coming back — consumes │
+  //   │   a slot, fresh token)                       │
+  //   │                                              │
+  //   └─ no → create new                             │
+  //       (first activation from this machine —      │
+  //       consumes a slot, fresh token)              │
+  //
+  // Reviving rather than inserting a new row matters: the unique index
+  // on (licenseId, fingerprint) ignores deactivatedAt, so a naïve
+  // INSERT after rotation would collide. Also keeps the audit trail
+  // continuous — one Activation row per (license, machine) pairing,
+  // whatever its history.
+  const newToken = randomBytes(32).toString('base64url')
+  let activation: { id: string; createdAt: Date; activationToken: string; wasRevived: boolean } | null = null
 
-  // Capacity check + create inside a Serializable transaction so two
-  // concurrent activates on the same license can't both slip past the cap.
-  const token = randomBytes(32).toString('base64url')
-  let activation
   try {
     activation = await prisma.$transaction(async (tx) => {
+      const existing = await tx.activation.findUnique({
+        where: { licenseId_fingerprint: { licenseId: license.id, fingerprint: body.fingerprint } }
+      })
+      const now = new Date()
+
+      if (existing && !existing.deactivatedAt) {
+        // Still active — idempotent refresh, no slot change, reuse token.
+        const updated = await tx.activation.update({
+          where: { id: existing.id },
+          data: {
+            lastSeenAt: now,
+            ipAddress: ip,
+            appVersion: body.version ?? existing.appVersion,
+            hostname: body.hostname ?? existing.hostname
+          }
+        })
+        return {
+          id: updated.id,
+          createdAt: updated.createdAt,
+          activationToken: updated.activationToken,
+          wasRevived: false
+        }
+      }
+
+      // Either reviving a deactivated row or creating a fresh one —
+      // both consume a slot.
       const live = await tx.activation.count({
         where: { licenseId: license.id, deactivatedAt: null }
       })
       if (live >= license.maxActivations) {
         throw createError({
           statusCode: 403,
-          statusMessage: 'Max activations reached',
-          data: { reason: 'max_activations_reached', current: live, max: license.maxActivations }
+          statusMessage: 'Maximum installs reached for this license',
+          data: {
+            reason: 'max_activations_reached',
+            current: live,
+            max: license.maxActivations,
+            hint: license.maxActivations === 1
+              ? 'This license is already active on another machine. Deactivate it there first, or contact support to reset.'
+              : `This license is already installed on ${live} of ${license.maxActivations} allowed machines.`
+          }
         })
       }
-      return await tx.activation.create({
+
+      if (existing) {
+        // Revive: same row, fresh token, cleared deactivatedAt.
+        const revived = await tx.activation.update({
+          where: { id: existing.id },
+          data: {
+            deactivatedAt: null,
+            activationToken: newToken,
+            lastSeenAt: now,
+            ipAddress: ip,
+            appVersion: body.version ?? null,
+            hostname: body.hostname ?? null
+          }
+        })
+        return {
+          id: revived.id,
+          createdAt: revived.createdAt,
+          activationToken: revived.activationToken,
+          wasRevived: true
+        }
+      }
+
+      const created = await tx.activation.create({
         data: {
           licenseId: license.id,
           fingerprint: body.fingerprint,
           hostname: body.hostname ?? null,
           ipAddress: ip,
           appVersion: body.version ?? null,
-          activationToken: token
+          activationToken: newToken
         }
       })
+      return {
+        id: created.id,
+        createdAt: created.createdAt,
+        activationToken: created.activationToken,
+        wasRevived: false
+      }
     }, { isolationLevel: 'Serializable' })
   } catch (err: any) {
     if (err && typeof err === 'object' && 'statusCode' in err) throw err
-    throw createError({ statusCode: 500, statusMessage: 'Activation failed' })
+    // Internal error — log it server-side, return a generic message.
+    // In non-production, also surface the error text so the operator can
+    // debug without terminal access.
+    console.error('[license.activate] unexpected error:', err)
+    const isProd = process.env.NODE_ENV === 'production'
+    throw createError({
+      statusCode: 500,
+      statusMessage: 'Activation failed due to a server error',
+      data: {
+        reason: 'server_error',
+        hint: 'Try again in a minute. If the problem persists, contact support.',
+        ...(isProd ? {} : {
+          detail: String(err?.message ?? err),
+          code: err?.code,
+          meta: err?.meta
+        })
+      }
+    })
   }
 
   await auditLog({
     actorId: null,
-    action: 'license.activated',
+    action: activation.wasRevived ? 'license.reactivated' : 'license.activated',
     targetType: 'Activation',
     targetId: activation.id,
     metadata: {
@@ -125,7 +236,8 @@ export default defineEventHandler(async (event) => {
       keyPrefix: license.keyPrefix,
       fingerprint: body.fingerprint,
       hostname: body.hostname,
-      version: body.version
+      version: body.version,
+      revived: activation.wasRevived
     }
   })
 
@@ -134,11 +246,11 @@ export default defineEventHandler(async (event) => {
     keyPrefix: license.keyPrefix,
     customer: license.account.email,
     fingerprint: body.fingerprint,
-    activatedAt: activation.createdAt,
+    activatedAt: new Date(),
     expiresAt: license.expiresAt,
     maxActivations: license.maxActivations,
     issuer,
-    activationToken: token
+    activationToken: activation.activationToken
   })
 })
 

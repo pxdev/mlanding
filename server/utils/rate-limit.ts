@@ -35,12 +35,24 @@ export function enforceRateLimit(event: any, options: RateLimitOptions) {
   const path = getRequestURL(event).pathname
   const key = `${ip}:${path}`
   if (!_check(key, options)) {
-    throw createError({ statusCode: 429, statusMessage: 'Too Many Requests' })
+    throw createError({
+      statusCode: 429,
+      statusMessage: 'Too many attempts — try again in a minute',
+      data: {
+        reason: 'rate_limited',
+        windowSeconds: options.windowSeconds,
+        hint: `You can retry in up to ${options.windowSeconds} seconds.`
+      }
+    })
   }
 }
 
 export function enforceRateLimitKey(keySuffix: string, options: RateLimitOptions) {
   if (!_check(`key:${keySuffix}`, options)) {
-    throw createError({ statusCode: 429, statusMessage: 'Too Many Requests' })
+    throw createError({
+      statusCode: 429,
+      statusMessage: 'Too many attempts — try again in a minute',
+      data: { reason: 'rate_limited', windowSeconds: options.windowSeconds }
+    })
   }
 }

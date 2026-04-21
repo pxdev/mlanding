@@ -76,7 +76,7 @@ function fmtPrice(cents: number) {
     <UCard class="!shadow-none">
       <div v-if="!plans.length" class="text-center py-10 text-gray-500">
         <UIcon name="i-lucide-package" class="size-8 mx-auto opacity-40" />
-        <p class="mt-3 text-sm">No plans seeded yet. Run <code>pnpm tsx prisma/seed.ts</code>.</p>
+        <p class="mt-3 text-sm">No plans seeded yet. Run <code>npm run db:seed</code>.</p>
       </div>
       <div v-else class="divide-y divide-black/5 dark:divide-white/10 -m-4">
         <div v-for="p in plans" :key="p.id" class="px-4 py-3">

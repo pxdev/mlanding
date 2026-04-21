@@ -1,5 +1,5 @@
 <script setup lang="ts">
-definePageMeta({ layout: 'dashboard', middleware: ['auth', 'admin'] })
+definePageMeta({ layout: 'admin', middleware: ['auth', 'admin'] })
 useHead({ title: 'Customer — Momentfy admin' })
 
 const route = useRoute()
@@ -115,12 +115,12 @@ const statusColor: Record<string, 'success' | 'error' | 'warning' | 'neutral'> =
 </script>
 
 <template>
-  <div v-if="user" class="space-y-8">
+  <div v-if="user" class="p-6 max-w-6xl mx-auto space-y-6">
     <div>
       <NuxtLink to="/admin/users" class="text-sm text-gray-500 hover:text-primary inline-flex items-center gap-1.5">
         <UIcon name="i-lucide-chevron-left" class="size-4" /> Customers
       </NuxtLink>
-      <h1 class="text-2xl font-semibold mt-2">{{ (user.firstName || '') + ' ' + (user.lastName || '') }}</h1>
+      <h1 class="text-2xl font-bold mt-2">{{ ((user.firstName || '') + ' ' + (user.lastName || '')).trim() || user.email }}</h1>
       <p class="text-gray-500 text-sm mt-1">{{ user.email }}</p>
     </div>
 
@@ -141,7 +141,7 @@ const statusColor: Record<string, 'success' | 'error' | 'warning' | 'neutral'> =
       </template>
     </UAlert>
 
-    <UCard>
+    <UCard class="!shadow-none">
       <template #header>
         <h2 class="font-semibold">Account</h2>
       </template>
@@ -178,7 +178,7 @@ const statusColor: Record<string, 'success' | 'error' | 'warning' | 'neutral'> =
       </template>
     </UCard>
 
-    <UCard>
+    <UCard class="!shadow-none">
       <template #header>
         <div class="flex items-center justify-between">
           <h2 class="font-semibold">Licenses</h2>
@@ -227,7 +227,7 @@ const statusColor: Record<string, 'success' | 'error' | 'warning' | 'neutral'> =
       </div>
     </UCard>
 
-    <UCard>
+    <UCard class="!shadow-none">
       <template #header>
         <h2 class="font-semibold">Orders</h2>
       </template>
@@ -235,7 +235,11 @@ const statusColor: Record<string, 'success' | 'error' | 'warning' | 'neutral'> =
         No orders yet.
       </div>
       <div v-else class="divide-y divide-black/5 dark:divide-white/10 -m-4">
-        <div v-for="o in user.orders" :key="o.id" class="flex items-center gap-4 px-4 py-3">
+        <NuxtLink
+          v-for="o in user.orders" :key="o.id"
+          :to="`/admin/orders/${o.id}`"
+          class="flex items-center gap-4 px-4 py-3 hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition"
+        >
           <UIcon name="i-lucide-receipt" class="size-5 text-primary" />
           <div class="flex-1 min-w-0">
             <div class="flex items-center gap-2 flex-wrap text-sm">
@@ -248,7 +252,8 @@ const statusColor: Record<string, 'success' | 'error' | 'warning' | 'neutral'> =
               {{ fmt(o.createdAt) }}
             </div>
           </div>
-        </div>
+          <UIcon name="i-lucide-chevron-right" class="size-4 text-gray-400" />
+        </NuxtLink>
       </div>
     </UCard>
   </div>

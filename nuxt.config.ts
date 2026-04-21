@@ -22,7 +22,13 @@ export default defineNuxtConfig({
   // Dev server host allowlist. Vite 5+ refuses requests whose Host header
   // isn't on this list (DNS-rebinding protection). Tunnels like cloudflared
   // and ngrok land here — whitelist their wildcard suffixes so LS webhook
-  // dry-runs over a tunnel work against `pnpm dev`.
+  // dry-runs over a tunnel work against `npm run dev`.
+  //
+  // fs.allow: the portal lives in `Momentfy Portal/` but node_modules are
+  // hoisted to the parent `/Volumes/HDD/Momentfy`. Vite's default fs.allow
+  // only covers the project root, so iconify/@nuxt/ui modules imported
+  // from the parent trip "outside of serving allow list". Adding `..`
+  // authorises the parent repo.
   vite: {
     server: {
       allowedHosts: [
@@ -31,7 +37,10 @@ export default defineNuxtConfig({
         '.ngrok.io',
         '.ngrok-free.app',
         '.loca.lt'
-      ]
+      ],
+      fs: {
+        allow: ['..']
+      }
     }
   },
 
@@ -113,6 +122,15 @@ export default defineNuxtConfig({
 
   icon: {
     mode: 'svg'
+  },
+
+  // Default to light mode. Users can still toggle; once they pick a
+  // preference it's stored in a cookie and respected. Without this
+  // override @nuxtjs/color-mode defaults to `system`, which hands
+  // dark-OS users dark on first visit.
+  colorMode: {
+    preference: 'light',
+    fallback: 'light'
   },
 
   devtools: {

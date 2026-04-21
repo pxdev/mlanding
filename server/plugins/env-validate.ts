@@ -22,7 +22,7 @@ const CHECKS: EnvCheck[] = [
   // Phase 1 — required in prod
   { name: 'NUXT_SESSION_COOKIE_SECURE', required: 'prod', description: 'Set to "true" behind HTTPS' },
   { name: 'LICENSE_PEPPER', required: 'prod', description: 'Extra secret folded into license-key hashing (phase 2+)' },
-  { name: 'LICENSE_SIGNING_PRIVATE_KEY', required: 'prod', description: '64-hex Ed25519 seed used to sign license certificates. Generate via `pnpm tsx scripts/generate-license-keypair.ts`.' },
+  { name: 'LICENSE_SIGNING_PRIVATE_KEY', required: 'prod', description: '64-hex Ed25519 seed used to sign license certificates. Generate via `npx tsx scripts/generate-license-keypair.ts`.' },
   { name: 'LICENSE_SIGNING_PUBLIC_KEY', required: 'prod', description: '64-hex Ed25519 public key (must pair with the private seed). Also compiled into the main Momentfy app as a constant.' },
 
   // Phase 1 — soft (password reset + license emails silently no-op without it)

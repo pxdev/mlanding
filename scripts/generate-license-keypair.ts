@@ -1,6 +1,6 @@
 // One-off: generate an Ed25519 keypair for license certificate signing.
 //
-//   pnpm tsx scripts/generate-license-keypair.ts
+//   npx tsx scripts/generate-license-keypair.ts
 //
 // The seed is kept only in the portal env. The public key goes into the
 // main Momentfy app as a hardcoded constant (see server/utils/license/

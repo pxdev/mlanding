@@ -17,29 +17,44 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 403, statusMessage: 'Account is deactivated' })
   }
 
-  await prisma.account.update({
+  const shouldBootstrapAdmin = !account.isAdmin && isBootstrapAdminEmail(account.email)
+
+  const updated = await prisma.account.update({
     where: { id: account.id },
-    data: { lastLoginAt: new Date() }
+    data: {
+      lastLoginAt: new Date(),
+      ...(shouldBootstrapAdmin ? { isAdmin: true } : {})
+    }
   })
+
+  if (shouldBootstrapAdmin) {
+    await auditLog({
+      actorId: account.id,
+      action: 'account.bootstrap_admin',
+      targetType: 'Account',
+      targetId: account.id,
+      metadata: { email: account.email, source: 'login' }
+    })
+  }
 
   await setUserSession(event, {
     user: {
-      id: account.id,
-      email: account.email,
-      firstName: account.firstName,
-      lastName: account.lastName,
-      isAdmin: account.isAdmin
+      id: updated.id,
+      email: updated.email,
+      firstName: updated.firstName,
+      lastName: updated.lastName,
+      isAdmin: updated.isAdmin
     },
     loggedInAt: Date.now()
   })
 
   return {
     user: {
-      id: account.id,
-      email: account.email,
-      firstName: account.firstName,
-      lastName: account.lastName,
-      isAdmin: account.isAdmin
+      id: updated.id,
+      email: updated.email,
+      firstName: updated.firstName,
+      lastName: updated.lastName,
+      isAdmin: updated.isAdmin
     }
   }
 })
