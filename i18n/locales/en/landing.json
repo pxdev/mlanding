@@ -2027,7 +2027,17 @@
       "mockAiSendAll": "Send all",
       "mockAiReview": "Review",
       "mockThisMonth": "This month",
-      "mockNetRevenue": "Net revenue · 342 tickets"
+      "mockNetRevenue": "Net revenue · 342 tickets",
+      "liveLabel": "Live",
+      "threeTenantsLabel": "Three tenants",
+      "allFeatureAreas": "All 16 feature areas",
+      "addonCategoryLabels": {
+        "Compliance": "Compliance",
+        "Clinical": "Clinical",
+        "Intelligence": "Intelligence",
+        "Operations": "Operations",
+        "Growth": "Growth"
+      }
     },
     "featuresPage": {
       "eyebrow": "Features",

@@ -132,23 +132,6 @@ const tenantBrands: TenantBrand[] = [
   }
 ]
 
-// Split a heading at the first period / comma (English + Arabic) so we can
-// render two contrasting lines. Returns { first, rest } where rest may be ''.
-function splitHeading(s: string) {
-  if (!s) return { first: '', rest: '' }
-  const idx = s.search(/[.،,]/)
-  if (idx < 0 || idx === s.length - 1) return { first: s, rest: '' }
-  return {
-    first: s.slice(0, idx + 1).trim(),
-    rest: s.slice(idx + 1).trim()
-  }
-}
-
-const industriesTitle = computed(() => splitHeading(copy.value.industries.heading))
-const pricingTitle = computed(() => splitHeading(copy.value.pricing.heading))
-const testimonialsTitle = computed(() => splitHeading(copy.value.testimonials.heading))
-const portalTitle = computed(() => splitHeading(copy.value.portal.heading))
-const addonsTitle = computed(() => splitHeading(copy.value.addons.heading))
 </script>
 
 <template>
@@ -176,7 +159,7 @@ const addonsTitle = computed(() => splitHeading(copy.value.addons.heading))
           <span class="text-[10px] tabular-nums text-gray-400">0{{ i + 1 }}</span>
           <span v-if="i === 0" class="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
             <span class="size-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            Live
+            {{ copy.ui.liveLabel }}
           </span>
         </div>
         <p class="text-6xl lg:text-7xl xl:text-[5.5rem] font-black tracking-tight leading-none bg-gradient-to-br from-primary to-secondary-600 dark:from-white dark:to-secondary-400 bg-clip-text text-transparent">
@@ -193,19 +176,12 @@ const addonsTitle = computed(() => splitHeading(copy.value.addons.heading))
     <div aria-hidden="true" class="pointer-events-none absolute -top-16 -end-12 text-[28rem] leading-[0.8] font-black text-black/[0.025] dark:text-white/[0.03] select-none hidden lg:block tabular-nums">01</div>
 
     <div class="max-w-6xl mx-auto px-5 sm:px-8">
-      <!-- Header: eyebrow top-right, huge headline below -->
-      <div class="grid grid-cols-12 gap-6 mb-20">
-        <div class="col-span-12 sm:col-span-3">
-          <p class="text-xs uppercase tracking-[0.25em] text-gray-400">—— 01 / {{ copy.why.eyebrow }}</p>
-        </div>
-        <div class="col-span-12 sm:col-span-9">
-          <h2 class="font-black tracking-tight leading-[0.95] text-5xl sm:text-6xl lg:text-7xl xl:text-8xl">
-            <span class="block">{{ copy.why.h2a }}</span>
-            <span class="block mt-1 bg-gradient-to-br from-secondary-500 via-secondary-400 to-sky-500 bg-clip-text text-transparent">{{ copy.why.h2b }}</span>
-          </h2>
-          <p class="mt-8 text-xl sm:text-2xl text-gray-600 dark:text-gray-400 leading-relaxed font-light max-w-2xl">{{ copy.why.body }}</p>
-        </div>
-      </div>
+      <LandingSectionHeading
+        number="1"
+        :label="copy.why.eyebrow"
+        :heading="`${copy.why.h2a} ${copy.why.h2b}`"
+        :sub="copy.why.body"
+      />
 
       <!-- Numbered list, hairline dividers, no cards -->
       <ol class="border-t border-black/10 dark:border-white/10">
@@ -237,7 +213,7 @@ const addonsTitle = computed(() => splitHeading(copy.value.addons.heading))
             <UIcon name="i-lucide-arrow-right" class="size-5 rtl:rotate-180 transition-transform group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5" />
           </span>
           <span class="relative">
-            All 16 feature areas
+            {{ copy.ui.allFeatureAreas }}
             <span aria-hidden="true" class="absolute -bottom-0.5 inset-x-0 h-px bg-current origin-start scale-x-100 group-hover:bg-secondary-500 transition-colors" />
           </span>
         </NuxtLink>
@@ -253,19 +229,13 @@ const addonsTitle = computed(() => splitHeading(copy.value.addons.heading))
     <div aria-hidden="true" class="absolute inset-x-0 top-0 h-px bg-black/10 dark:bg-white/10" />
 
     <div class="max-w-7xl mx-auto px-5 sm:px-8">
-      <!-- Header: asymmetric -->
-      <div class="grid grid-cols-12 gap-6 mb-16">
-        <div class="col-span-12 sm:col-span-4 lg:col-span-3">
-          <p class="text-xs uppercase tracking-[0.25em] text-gray-400">—— 03 / Verticals</p>
-          <p class="mt-3 text-sm text-gray-500 dark:text-gray-500 max-w-[16rem]">{{ copy.industries.sub }}</p>
-        </div>
-        <div class="col-span-12 sm:col-span-8 lg:col-span-9">
-          <h2 class="font-black tracking-tight leading-[0.9] text-5xl sm:text-6xl lg:text-7xl xl:text-8xl">
-            <span class="block text-black/20 dark:text-white/20">{{ industriesTitle.first }}</span>
-            <span v-if="industriesTitle.rest" class="block italic">{{ industriesTitle.rest }}</span>
-          </h2>
-        </div>
-      </div>
+      <LandingSectionHeading
+        number="3"
+        :label="copy.industries.eyebrow"
+        :heading="copy.industries.heading"
+        :sub="copy.industries.sub"
+        :count="copy.industries.items.length"
+      />
 
       <!-- Industry list: each row is a huge hoverable entry with stat -->
       <ul class="border-t border-black/10 dark:border-white/10">
@@ -282,7 +252,7 @@ const addonsTitle = computed(() => splitHeading(copy.value.addons.heading))
                 <span class="text-xs tabular-nums text-gray-400">0{{ i + 1 }}</span>
               </div>
               <!-- Icon (rotates in on hover) -->
-              <div class="col-span-10 sm:col-span-1 flex">
+              <div class="col-span-2 sm:col-span-1 flex">
                 <UIcon
                   :name="industryVisuals[ind.id]?.icon"
                   class="size-6 text-gray-400 group-hover:text-primary dark:group-hover:text-white transition-all duration-300 group-hover:rotate-[-8deg]"
@@ -290,7 +260,7 @@ const addonsTitle = computed(() => splitHeading(copy.value.addons.heading))
                 />
               </div>
               <!-- Huge label -->
-              <div class="col-span-12 sm:col-span-7 lg:col-span-8">
+              <div class="col-span-8 sm:col-span-7 lg:col-span-8">
                 <h3 class="text-3xl sm:text-4xl lg:text-6xl font-black tracking-tight leading-none">
                   <span class="relative inline-block">
                     <span class="text-black/30 dark:text-white/20 group-hover:text-primary dark:group-hover:text-white transition-colors duration-300">{{ ind.label }}</span>
@@ -322,40 +292,33 @@ const addonsTitle = computed(() => splitHeading(copy.value.addons.heading))
     </div>
 
     <div class="relative max-w-7xl mx-auto px-5 sm:px-8">
-      <!-- Asymmetric header -->
-      <div class="grid grid-cols-12 gap-6 mb-20">
-        <div class="col-span-12 sm:col-span-4 lg:col-span-3">
-          <p class="text-xs uppercase tracking-[0.25em] text-gray-400">—— 04 / {{ copy.addons.eyebrow }}</p>
-          <p class="mt-3 text-sm text-gray-500 dark:text-gray-500 max-w-[16rem]">{{ copy.addons.sub }}</p>
-          <NuxtLink to="/portal/addons" class="mt-6 group inline-flex items-center gap-3 text-sm font-bold">
-            <span class="size-10 rounded-full bg-primary text-white dark:bg-white dark:text-primary flex items-center justify-center transition-transform group-hover:scale-110">
-              <UIcon name="i-lucide-arrow-right" class="size-4 rtl:rotate-180" />
-            </span>
-            <span class="relative">
-              {{ copy.addons.linkAll }}
-              <span aria-hidden="true" class="absolute -bottom-0.5 inset-x-0 h-px bg-current group-hover:bg-secondary-500 transition-colors" />
-            </span>
-          </NuxtLink>
-        </div>
+      <LandingSectionHeading
+        number="4"
+        :label="copy.addons.eyebrow"
+        :heading="copy.addons.heading"
+        :sub="copy.addons.sub"
+      />
 
-        <div class="col-span-12 sm:col-span-8 lg:col-span-9">
-          <h2 class="font-black tracking-tight leading-[0.9] text-5xl sm:text-6xl lg:text-7xl xl:text-8xl">
-            <span class="block">{{ addonsTitle.first }}</span>
-            <span v-if="addonsTitle.rest" class="block italic text-black/20 dark:text-white/20">{{ addonsTitle.rest }}</span>
-          </h2>
-
-          <!-- Category jump-nav -->
-          <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs uppercase tracking-[0.2em]">
-            <span class="text-gray-400">{{ copy.ui.chaptersLabel }}</span>
-            <a v-for="(cat, ci) in addonCategories" :key="cat.name" :href="`#addons-${cat.name.toLowerCase()}`"
-              class="group inline-flex items-center gap-2 hover:text-primary dark:hover:text-white transition-colors text-gray-500"
-            >
-              <span class="size-1.5 rounded-full" :class="catPalette[cat.name].dot" />
-              {{ String(ci + 1).padStart(2, '0') }} · {{ cat.name }}
-              <span class="text-gray-400 normal-case tracking-normal">({{ cat.items.length }})</span>
-            </a>
-          </div>
-        </div>
+      <!-- CTA + category jump-nav -->
+      <div class="flex flex-wrap items-center gap-x-6 gap-y-3 mb-16 sm:mb-20">
+        <NuxtLink to="/portal/addons" class="group inline-flex items-center gap-3 text-sm font-bold">
+          <span class="size-10 rounded-full bg-primary text-white dark:bg-white dark:text-primary flex items-center justify-center transition-transform group-hover:scale-110">
+            <UIcon name="i-lucide-arrow-right" class="size-4 rtl:rotate-180" />
+          </span>
+          <span class="relative">
+            {{ copy.addons.linkAll }}
+            <span aria-hidden="true" class="absolute -bottom-0.5 inset-x-0 h-px bg-current group-hover:bg-secondary-500 transition-colors" />
+          </span>
+        </NuxtLink>
+        <span aria-hidden="true" class="h-8 w-px bg-black/10 dark:bg-white/10 mx-2" />
+        <span class="text-xs uppercase tracking-[0.2em] text-gray-400">{{ copy.ui.chaptersLabel }}</span>
+        <a v-for="(cat, ci) in addonCategories" :key="cat.name" :href="`#addons-${cat.name.toLowerCase()}`"
+          class="group inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-gray-500 hover:text-primary dark:hover:text-white transition-colors"
+        >
+          <span class="size-1.5 rounded-full" :class="catPalette[cat.name].dot" />
+          {{ String(ci + 1).padStart(2, '0') }} · {{ copy.ui.addonCategoryLabels[cat.name] }}
+          <span class="text-gray-400 normal-case tracking-normal">({{ cat.items.length }})</span>
+        </a>
       </div>
 
       <!-- Directory chapters -->
@@ -368,7 +331,7 @@ const addonsTitle = computed(() => splitHeading(copy.value.addons.heading))
               <div class="flex items-baseline gap-3 min-w-0">
                 <span aria-hidden="true" class="size-2.5 rounded-full shrink-0" :class="catPalette[cat.name].dot" />
                 <h3 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight uppercase truncate" :class="catPalette[cat.name].accent">
-                  {{ cat.name }}
+                  {{ copy.ui.addonCategoryLabels[cat.name] }}
                 </h3>
               </div>
             </div>
@@ -421,69 +384,61 @@ const addonsTitle = computed(() => splitHeading(copy.value.addons.heading))
     </div>
 
     <div class="relative max-w-7xl mx-auto px-5 sm:px-8">
-      <!-- Asymmetric header -->
-      <div class="grid grid-cols-12 gap-6 mb-16">
-        <div class="col-span-12 sm:col-span-4 lg:col-span-3">
-          <p class="text-xs uppercase tracking-[0.25em] text-gray-400">—— 05 / {{ copy.portal.eyebrow }}</p>
-          <p class="mt-3 text-sm text-gray-500 dark:text-gray-500 max-w-[16rem]">{{ copy.portal.sub }}</p>
+      <LandingSectionHeading
+        number="5"
+        :label="copy.portal.eyebrow"
+        :heading="copy.portal.heading"
+        :sub="copy.portal.sub"
+      />
 
-          <!-- Inline typographic metrics (no cards) -->
-          <div class="mt-10 space-y-6">
-            <div>
-              <div class="flex items-center gap-0.5 text-amber-500 mb-1.5">
-                <UIcon v-for="n in 5" :key="n" name="i-lucide-star" class="size-3" />
-              </div>
-              <p class="text-4xl font-black leading-none">4.9</p>
-              <p class="mt-1 text-[10px] text-gray-500 uppercase tracking-[0.2em]">{{ copy.ui.appRatingLabel }}</p>
-            </div>
-            <div>
-              <UIcon name="i-lucide-zap" class="size-5 text-secondary-500 mb-1.5" />
-              <p class="text-4xl font-black leading-none">&lt; 1s</p>
-              <p class="mt-1 text-[10px] text-gray-500 uppercase tracking-[0.2em]">{{ copy.ui.timeToBookLabel }}</p>
-            </div>
-            <div>
-              <UIcon name="i-lucide-wifi-off" class="size-5 text-emerald-500 mb-1.5" />
-              <p class="text-4xl font-black leading-none">{{ copy.ui.offlineLabel }}</p>
-              <p class="mt-1 text-[10px] text-gray-500 uppercase tracking-[0.2em]">{{ copy.ui.pwaReadyLabel }}</p>
-            </div>
+      <!-- Metrics row + CTA -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-12 mb-12 max-w-3xl">
+        <div>
+          <div class="flex items-center gap-0.5 text-amber-500 mb-1.5">
+            <UIcon v-for="n in 5" :key="n" name="i-lucide-star" class="size-3" />
           </div>
-
-          <NuxtLink to="/portal/features#portal" class="mt-10 group inline-flex items-center gap-3 text-sm font-bold">
-            <span class="size-10 rounded-full bg-primary text-white dark:bg-white dark:text-primary flex items-center justify-center transition-transform group-hover:scale-110">
-              <UIcon name="i-lucide-arrow-right" class="size-4 rtl:rotate-180" />
-            </span>
-            <span class="relative">
-              {{ copy.portal.cta }}
-              <span aria-hidden="true" class="absolute -bottom-0.5 inset-x-0 h-px bg-current group-hover:bg-secondary-500 transition-colors" />
-            </span>
-          </NuxtLink>
+          <p class="text-4xl font-black leading-none">4.9</p>
+          <p class="mt-1 text-[10px] text-gray-500 uppercase tracking-[0.2em]">{{ copy.ui.appRatingLabel }}</p>
         </div>
-
-        <div class="col-span-12 sm:col-span-8 lg:col-span-9">
-          <h2 class="font-black tracking-tight leading-[0.9] text-5xl sm:text-6xl lg:text-7xl xl:text-8xl">
-            <span class="block">{{ portalTitle.first }}</span>
-            <span v-if="portalTitle.rest" class="block italic bg-gradient-to-br from-secondary-500 via-secondary-400 to-sky-500 bg-clip-text text-transparent">{{ portalTitle.rest }}</span>
-          </h2>
-
-          <!-- Feature bullets — hairline list -->
-          <ul class="mt-10 border-t border-black/10 dark:border-white/10 max-w-2xl">
-            <li v-for="(f, i) in copy.portal.bullets" :key="f"
-              class="group flex items-center gap-4 py-3 border-b border-black/10 dark:border-white/10"
-            >
-              <span class="text-[10px] text-gray-400 tabular-nums w-6 shrink-0">0{{ i + 1 }}</span>
-              <span aria-hidden="true" class="h-px w-4 bg-black/20 dark:bg-white/20 group-hover:w-10 group-hover:bg-secondary-500 transition-all duration-300" />
-              <span class="text-sm sm:text-base font-medium text-gray-700 dark:text-gray-300">{{ f }}</span>
-            </li>
-          </ul>
+        <div>
+          <UIcon name="i-lucide-zap" class="size-5 text-secondary-500 mb-1.5" />
+          <p class="text-4xl font-black leading-none">&lt; 1s</p>
+          <p class="mt-1 text-[10px] text-gray-500 uppercase tracking-[0.2em]">{{ copy.ui.timeToBookLabel }}</p>
+        </div>
+        <div>
+          <UIcon name="i-lucide-wifi-off" class="size-5 text-emerald-500 mb-1.5" />
+          <p class="text-4xl font-black leading-none">{{ copy.ui.offlineLabel }}</p>
+          <p class="mt-1 text-[10px] text-gray-500 uppercase tracking-[0.2em]">{{ copy.ui.pwaReadyLabel }}</p>
         </div>
       </div>
+
+      <NuxtLink to="/portal/features#portal" class="group inline-flex items-center gap-3 text-sm font-bold mb-16">
+        <span class="size-10 rounded-full bg-primary text-white dark:bg-white dark:text-primary flex items-center justify-center transition-transform group-hover:scale-110">
+          <UIcon name="i-lucide-arrow-right" class="size-4 rtl:rotate-180" />
+        </span>
+        <span class="relative">
+          {{ copy.portal.cta }}
+          <span aria-hidden="true" class="absolute -bottom-0.5 inset-x-0 h-px bg-current group-hover:bg-secondary-500 transition-colors" />
+        </span>
+      </NuxtLink>
+
+      <!-- Feature bullets — hairline list -->
+      <ul class="border-t border-black/10 dark:border-white/10 max-w-2xl">
+        <li v-for="(f, i) in copy.portal.bullets" :key="f"
+          class="group flex items-center gap-4 py-3 border-b border-black/10 dark:border-white/10"
+        >
+          <span class="text-[10px] text-gray-400 tabular-nums w-6 shrink-0">0{{ i + 1 }}</span>
+          <span aria-hidden="true" class="h-px w-4 bg-black/20 dark:bg-white/20 group-hover:w-10 group-hover:bg-secondary-500 transition-all duration-300" />
+          <span class="text-sm sm:text-base font-medium text-gray-700 dark:text-gray-300">{{ f }}</span>
+        </li>
+      </ul>
 
       <!-- ═══ Tenant showcase — clean editorial grid ═══ -->
       <div class="mt-20 pt-16 border-t border-black/10 dark:border-white/10">
         <!-- Section sub-header -->
         <div class="flex items-end justify-between gap-4 mb-12 flex-wrap">
           <div>
-            <p class="text-xs uppercase tracking-[0.25em] text-gray-400">—— Three tenants</p>
+            <p class="text-xs uppercase tracking-[0.25em] text-gray-400">—— {{ copy.ui.threeTenantsLabel }}</p>
             <h3 class="mt-3 text-2xl sm:text-3xl font-black tracking-tight">{{ copy.ui.oneSourceThreeBrands }}</h3>
           </div>
           <p class="text-sm text-gray-500 max-w-xs">{{ copy.ui.threeBrandsTagline }}</p>
@@ -595,27 +550,22 @@ const addonsTitle = computed(() => splitHeading(copy.value.addons.heading))
     <div aria-hidden="true" class="absolute inset-x-0 top-0 h-px bg-black/10 dark:bg-white/10" />
 
     <div class="max-w-7xl mx-auto px-5 sm:px-8">
-      <!-- Asymmetric header -->
-      <div class="grid grid-cols-12 gap-6 mb-16">
-        <div class="col-span-12 sm:col-span-4 lg:col-span-3">
-          <p class="text-xs uppercase tracking-[0.25em] text-gray-400">—— 06 / {{ copy.trust.eyebrow }}</p>
-          <p class="mt-3 text-sm text-gray-500 max-w-[16rem]">{{ copy.trust.sub }}</p>
-          <NuxtLink to="/portal/legal" class="mt-6 group inline-flex items-center gap-3 text-sm font-bold">
-            <span class="size-10 rounded-full bg-primary text-white dark:bg-white dark:text-primary flex items-center justify-center transition-transform group-hover:scale-110">
-              <UIcon name="i-lucide-arrow-right" class="size-4 rtl:rotate-180" />
-            </span>
-            <span class="relative">
-              {{ copy.ui.readLicense }}
-              <span aria-hidden="true" class="absolute -bottom-0.5 inset-x-0 h-px bg-current group-hover:bg-secondary-500 transition-colors" />
-            </span>
-          </NuxtLink>
-        </div>
-        <div class="col-span-12 sm:col-span-8 lg:col-span-9">
-          <h2 class="font-black tracking-tight leading-[0.9] text-5xl sm:text-6xl lg:text-7xl xl:text-8xl">
-            <span class="block">{{ copy.trust.heading }}</span>
-          </h2>
-        </div>
-      </div>
+      <LandingSectionHeading
+        number="6"
+        :label="copy.trust.eyebrow"
+        :heading="copy.trust.heading"
+        :sub="copy.trust.sub"
+      />
+
+      <NuxtLink to="/portal/legal" class="group inline-flex items-center gap-3 text-sm font-bold mb-16">
+        <span class="size-10 rounded-full bg-primary text-white dark:bg-white dark:text-primary flex items-center justify-center transition-transform group-hover:scale-110">
+          <UIcon name="i-lucide-arrow-right" class="size-4 rtl:rotate-180" />
+        </span>
+        <span class="relative">
+          {{ copy.ui.readLicense }}
+          <span aria-hidden="true" class="absolute -bottom-0.5 inset-x-0 h-px bg-current group-hover:bg-secondary-500 transition-colors" />
+        </span>
+      </NuxtLink>
 
       <!-- 4 pillars in a hairline-separated grid -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-t border-black/10 dark:border-white/10 lg:divide-x lg:divide-black/10 lg:dark:divide-white/10 rtl:lg:divide-x-reverse">
@@ -640,31 +590,26 @@ const addonsTitle = computed(() => splitHeading(copy.value.addons.heading))
     <div aria-hidden="true" class="absolute top-1/2 start-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-secondary-500 blur-[150px] opacity-[0.08] dark:opacity-15 rounded-full" />
 
     <div class="relative max-w-7xl mx-auto px-5 sm:px-8">
-      <!-- Asymmetric header -->
-      <div class="grid grid-cols-12 gap-6 mb-20">
-        <div class="col-span-12 sm:col-span-4 lg:col-span-3">
-          <p class="text-xs uppercase tracking-[0.25em] text-gray-400">—— 07 / {{ copy.pricing.eyebrow }}</p>
-          <p class="mt-3 text-sm text-gray-500 dark:text-gray-500 max-w-[16rem]">{{ copy.pricing.sub }}</p>
-          <div class="mt-6 space-y-2 text-xs text-gray-500">
-            <div class="flex items-center gap-2">
-              <UIcon name="i-lucide-infinity" class="size-3.5 text-emerald-500" />
-              {{ copy.ui.lifetimeUpdates }}
-            </div>
-            <div class="flex items-center gap-2">
-              <UIcon name="i-lucide-lock" class="size-3.5 text-emerald-500" />
-              {{ copy.ui.secureCheckout }}
-            </div>
-            <div class="flex items-center gap-2">
-              <UIcon name="i-lucide-shield-check" class="size-3.5 text-emerald-500" />
-              {{ copy.ui.lifetimeLicense }}
-            </div>
-          </div>
+      <LandingSectionHeading
+        number="7"
+        :label="copy.pricing.eyebrow"
+        :heading="copy.pricing.heading"
+        :sub="copy.pricing.sub"
+      />
+
+      <!-- Trust badges — horizontal row -->
+      <div class="flex flex-wrap gap-x-6 gap-y-2 text-xs text-gray-500 mb-16 sm:mb-20">
+        <div class="flex items-center gap-2">
+          <UIcon name="i-lucide-infinity" class="size-3.5 text-emerald-500" />
+          {{ copy.ui.lifetimeUpdates }}
         </div>
-        <div class="col-span-12 sm:col-span-8 lg:col-span-9">
-          <h2 class="font-black tracking-tight leading-[0.9] text-5xl sm:text-6xl lg:text-7xl xl:text-8xl">
-            <span class="block">{{ pricingTitle.first }}</span>
-            <span v-if="pricingTitle.rest" class="block italic text-black/20 dark:text-white/20">{{ pricingTitle.rest }}</span>
-          </h2>
+        <div class="flex items-center gap-2">
+          <UIcon name="i-lucide-lock" class="size-3.5 text-emerald-500" />
+          {{ copy.ui.secureCheckout }}
+        </div>
+        <div class="flex items-center gap-2">
+          <UIcon name="i-lucide-shield-check" class="size-3.5 text-emerald-500" />
+          {{ copy.ui.lifetimeLicense }}
         </div>
       </div>
 
@@ -802,23 +747,18 @@ const addonsTitle = computed(() => splitHeading(copy.value.addons.heading))
     <div aria-hidden="true" class="absolute top-20 end-[-10rem] w-96 h-96 rounded-full bg-secondary-400 blur-[120px] opacity-10" />
 
     <div class="max-w-6xl mx-auto px-5 sm:px-8">
-      <!-- Asymmetric header -->
-      <div class="grid grid-cols-12 gap-6 mb-10">
-        <div class="col-span-12 sm:col-span-4 lg:col-span-3">
-          <p class="text-xs uppercase tracking-[0.25em] text-gray-400">—— 08 / {{ copy.testimonials.eyebrow }}</p>
-          <!-- Illustrative label — removes the "200+ businesses" claim until we have real ones -->
-          <span class="mt-4 inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-700 dark:text-amber-400 text-[10px] uppercase tracking-[0.2em] font-bold">
+      <LandingSectionHeading
+        number="8"
+        :label="copy.testimonials.eyebrow"
+        :heading="copy.testimonials.heading"
+      >
+        <template #meta>
+          <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-700 dark:text-amber-400 text-[10px] uppercase tracking-[0.2em] font-bold">
             <UIcon name="i-lucide-info" class="size-3" />
             {{ copy.ui.illustrative }}
           </span>
-        </div>
-        <div class="col-span-12 sm:col-span-8 lg:col-span-9">
-          <h2 class="font-black tracking-tight leading-[0.9] text-5xl sm:text-6xl lg:text-7xl xl:text-8xl">
-            <span class="block">{{ testimonialsTitle.first }}</span>
-            <span v-if="testimonialsTitle.rest" class="block italic text-black/20 dark:text-white/20">{{ testimonialsTitle.rest }}</span>
-          </h2>
-        </div>
-      </div>
+        </template>
+      </LandingSectionHeading>
 
       <!-- Full disclaimer row beneath header -->
       <p class="text-sm text-gray-500 dark:text-gray-500 mb-12 max-w-3xl border-t border-black/10 dark:border-white/10 pt-4 flex items-start gap-3">
@@ -870,27 +810,22 @@ const addonsTitle = computed(() => splitHeading(copy.value.addons.heading))
     <div aria-hidden="true" class="absolute inset-x-0 top-0 h-px bg-black/10 dark:bg-white/10" />
 
     <div class="max-w-6xl mx-auto px-5 sm:px-8">
-      <!-- Header + side link -->
-      <div class="grid grid-cols-12 gap-6 mb-14">
-        <div class="col-span-12 sm:col-span-4 lg:col-span-3">
-          <p class="text-xs uppercase tracking-[0.25em] text-gray-400">—— 09 / {{ copy.faq.eyebrow }}</p>
-          <p class="mt-3 text-sm text-gray-500 dark:text-gray-500 max-w-[14rem]">{{ copy.ui.cantFindFaq }}</p>
-          <NuxtLink to="/portal/faq" class="mt-6 group inline-flex items-center gap-3 text-sm font-bold">
-            <span class="size-10 rounded-full bg-primary dark:bg-white text-white dark:text-primary flex items-center justify-center transition-transform group-hover:scale-110">
-              <UIcon name="i-lucide-arrow-right" class="size-4 rtl:rotate-180" />
-            </span>
-            <span class="relative">
-              {{ copy.faq.linkAll }}
-              <span aria-hidden="true" class="absolute -bottom-0.5 inset-x-0 h-px bg-current group-hover:bg-secondary-500 transition-colors" />
-            </span>
-          </NuxtLink>
-        </div>
-        <div class="col-span-12 sm:col-span-8 lg:col-span-9">
-          <h2 class="font-black tracking-tight leading-[0.9] text-5xl sm:text-6xl lg:text-7xl xl:text-8xl">
-            <span class="block">{{ copy.faq.heading }}</span>
-          </h2>
-        </div>
-      </div>
+      <LandingSectionHeading
+        number="9"
+        :label="copy.faq.eyebrow"
+        :heading="copy.faq.heading"
+        :sub="copy.ui.cantFindFaq"
+      />
+
+      <NuxtLink to="/portal/faq" class="group inline-flex items-center gap-3 text-sm font-bold mb-14">
+        <span class="size-10 rounded-full bg-primary dark:bg-white text-white dark:text-primary flex items-center justify-center transition-transform group-hover:scale-110">
+          <UIcon name="i-lucide-arrow-right" class="size-4 rtl:rotate-180" />
+        </span>
+        <span class="relative">
+          {{ copy.faq.linkAll }}
+          <span aria-hidden="true" class="absolute -bottom-0.5 inset-x-0 h-px bg-current group-hover:bg-secondary-500 transition-colors" />
+        </span>
+      </NuxtLink>
 
       <!-- Bare accordion — just horizontal rules -->
       <div class="border-t border-black/10 dark:border-white/10">

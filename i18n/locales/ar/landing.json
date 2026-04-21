@@ -144,8 +144,8 @@
     },
     "industries": {
       "eyebrow": "القطاعات",
-      "heading": "منصة واحدة تخدم تخصصات متعددة.",
-      "sub": "فعّل الإضافات المناسبة لقطاعك وأطلق منتجاً يبدو وكأنه بُني لك خصيصاً خلال ساعات لا خلال أشهر.",
+      "heading": "منصة واحدة. لكل تخصص.",
+      "sub": "فعّل الإضافات التي تحتاجها، وأطلق منتجاً مخصصاً لقطاعك خلال ساعات لا أشهر.",
       "items": [
         {
           "id": "salon",
@@ -2027,7 +2027,17 @@
       "mockAiSendAll": "أرسل الكل",
       "mockAiReview": "راجع",
       "mockThisMonth": "هذا الشهر",
-      "mockNetRevenue": "صافي الإيرادات · 342 تذكرة"
+      "mockNetRevenue": "صافي الإيرادات · 342 تذكرة",
+      "liveLabel": "مباشر",
+      "threeTenantsLabel": "ثلاث منشآت",
+      "allFeatureAreas": "كل المجالات الستة عشر",
+      "addonCategoryLabels": {
+        "Compliance": "الامتثال",
+        "Clinical": "الإكلينيكي",
+        "Intelligence": "الذكاء",
+        "Operations": "التشغيل",
+        "Growth": "النمو"
+      }
     },
     "featuresPage": {
       "eyebrow": "المزايا",

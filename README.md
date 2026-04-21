@@ -137,12 +137,21 @@ Self-hosted Momentfy instances call back to the portal via three endpoints. None
 ```
 POST /api/v1/license/activate
   body:    { key, fingerprint, hostname?, version? }
-  200:     { activationToken, license: { plan, status, maxActivations, expiresAt } }
+  200:     {
+            activationToken,           // opaque handle for heartbeat/deactivate
+            certificate: {             // Ed25519-signed, verified offline by the app
+              v: 1,
+              licenseId, keyPrefix, customer,
+              fingerprint, activatedAt, expiresAt,
+              maxActivations, issuer,
+              sig                      // base64 Ed25519 signature over canonical JSON
+            }
+          }
   404:     license not found (or wrong format)
   403:     { reason: 'revoked' | 'expired' | 'max_activations_reached' }
   429:     too many activate calls in window (5/min/IP)
 
-POST /api/v1/license/heartbeat
+POST /api/v1/license/heartbeat   (legacy — optional, main app does not use)
   body:    { activationToken, fingerprint, version? }
   200:     { valid: true, license: {...} }
   401:     activation token unknown / reset by admin
@@ -153,13 +162,27 @@ POST /api/v1/license/deactivate
   200:     { ok: true }   (always — idempotent, no info-leak)
 ```
 
-**Recommended client behaviour for the self-hosted instance**:
-1. On first boot, prompt operator for the license key during install.
-2. Call `activate` once — store the returned `activationToken` in `PlatformSetting.license.activationToken`.
-3. Background task (hourly) calls `heartbeat`. On `403 revoked` → display banner, optionally degrade non-essential features. On network error → 7-day grace period before degrading.
-4. On uninstall / migration to new server, call `deactivate` to free the slot.
+**Client behaviour in the self-hosted instance**:
+1. On first boot, the install wizard prompts for the license key.
+2. Wizard calls `activate`, verifies the signature locally against the
+   embedded public key, and stores the cert in both the `License` DB row
+   and `./data/license.cert`.
+3. Every boot, the instance re-verifies the stored cert offline (no
+   network call). The HKDF-derived session secret used by
+   `nuxt-auth-utils` comes from the cert signature, so tampering with
+   the verifier breaks authentication.
+4. `heartbeat` is no longer required — the cert is self-contained. Kept
+   for future use (live revocation, telemetry). `deactivate` is still
+   available for migrating an install to a new host.
 
-Embedding this client into the main Momentfy app is a separate ticket.
+Keypair generation (once, at project setup):
+
+```bash
+pnpm tsx scripts/generate-license-keypair.ts
+```
+
+This prints the seed + public key for the portal `.env` and the XOR-split
+shards to paste into the main app's `server/utils/license/public-key.ts`.
 
 ### Phase 4 setup
 

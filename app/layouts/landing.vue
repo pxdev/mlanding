@@ -1,6 +1,20 @@
 <script setup lang="ts">
+import * as uiLocales from '@nuxt/ui/locale'
+
 // Landing marketing layout — shared nav + footer for the home page and /portal/* marketing sub-pages.
 const copy = useLandingCopy()
+const { locale } = useI18n()
+
+const uiLocale = computed(
+  () => (uiLocales as Record<string, { code: string; dir: 'rtl' | 'ltr' }>)[locale.value]
+)
+
+useHead({
+  htmlAttrs: {
+    lang: computed(() => uiLocale.value?.code ?? locale.value),
+    dir: computed(() => uiLocale.value?.dir ?? 'ltr')
+  }
+})
 </script>
 
 <template>

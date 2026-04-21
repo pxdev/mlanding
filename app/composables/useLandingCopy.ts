@@ -92,7 +92,7 @@ export type LandingCopy = {
   faq: { eyebrow: string; heading: string; items: { q: string; a: string }[]; linkAll: string }
   cta: Record<string, string>
   footer: { tag: string; badge: string; columns: { title: string; links: { label: string; to: string }[] }[]; bottom: string; bottomLang: string; bottomHost: string }
-  ui: Record<string, string>
+  ui: Record<string, string | Record<string, string>> & { addonCategoryLabels: Record<string, string> }
   featuresPage: { eyebrow: string; heading: string; sub: string; items: Feature[]; closer: { title: string; body: string; cta: string } }
   showcasePage: Record<string, any>
   pricingPage: Record<string, any>

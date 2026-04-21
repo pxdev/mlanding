@@ -82,27 +82,22 @@ const totalIndex = computed(() => String(modules.value.length).padStart(2, '0'))
 
     <div class="relative max-w-7xl mx-auto px-5 sm:px-8">
 
-      <!-- ─── Asymmetric header ─── -->
-      <div class="grid grid-cols-12 gap-6 mb-16 lg:mb-20">
-        <div class="col-span-12 sm:col-span-4 lg:col-span-3">
-          <p class="text-xs uppercase tracking-[0.25em] text-gray-400">—— 02 / {{ copy.modules.eyebrow }}</p>
-          <p class="mt-3 text-sm text-gray-500 max-w-[16rem]">{{ copy.modules.sub }}</p>
-          <NuxtLink to="/portal/features" class="mt-6 group inline-flex items-center gap-3 text-sm font-bold">
-            <span class="size-10 rounded-full bg-primary text-white dark:bg-white dark:text-primary flex items-center justify-center transition-transform group-hover:scale-110">
-              <UIcon name="i-lucide-arrow-right" class="size-4 rtl:rotate-180" />
-            </span>
-            <span class="relative">
-              {{ copy.modules.linkAll }}
-              <span aria-hidden="true" class="absolute -bottom-0.5 inset-x-0 h-px bg-current group-hover:bg-secondary-500 transition-colors" />
-            </span>
-          </NuxtLink>
-        </div>
-        <div class="col-span-12 sm:col-span-8 lg:col-span-9">
-          <h2 class="font-black tracking-tight leading-[0.9] text-5xl sm:text-6xl lg:text-7xl xl:text-8xl">
-            <span class="block">{{ copy.modules.heading }}</span>
-          </h2>
-        </div>
-      </div>
+      <LandingSectionHeading
+        number="2"
+        :label="copy.modules.eyebrow"
+        :heading="copy.modules.heading"
+        :sub="copy.modules.sub"
+      />
+
+      <NuxtLink to="/portal/features" class="group inline-flex items-center gap-3 text-sm font-bold mb-16 lg:mb-20">
+        <span class="size-10 rounded-full bg-primary text-white dark:bg-white dark:text-primary flex items-center justify-center transition-transform group-hover:scale-110">
+          <UIcon name="i-lucide-arrow-right" class="size-4 rtl:rotate-180" />
+        </span>
+        <span class="relative">
+          {{ copy.modules.linkAll }}
+          <span aria-hidden="true" class="absolute -bottom-0.5 inset-x-0 h-px bg-current group-hover:bg-secondary-500 transition-colors" />
+        </span>
+      </NuxtLink>
 
       <!-- ═══ Explorer ═══ -->
       <div

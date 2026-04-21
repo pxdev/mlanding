@@ -1,7 +1,7 @@
-// List plans (admin) — feeds the "issue license" form.
+// List plans (admin) — feeds the "issue license" form and the plans page.
 
-import prisma from '../../../utils/prisma'
-import { requireAdmin } from '../../../utils/auth-guards'
+import prisma from '../../../../utils/prisma'
+import { requireAdmin } from '../../../../utils/auth-guards'
 
 export default defineEventHandler(async (event) => {
   await requireAdmin(event)
@@ -14,7 +14,10 @@ export default defineEventHandler(async (event) => {
       description: true,
       priceUsdCents: true,
       defaultActivations: true,
-      isActive: true
+      lsVariantId: true,
+      isActive: true,
+      createdAt: true,
+      _count: { select: { licenses: true, orders: true } }
     }
   })
 })
