@@ -2,6 +2,7 @@
 // Hero section orchestrator.
 // Composes: background → headline block → product mock → four floating overlay cards.
 const copy = useLandingCopy()
+const demoUrl = useRuntimeConfig().public.demoUrl
 </script>
 
 <template>
@@ -53,17 +54,20 @@ const copy = useLandingCopy()
           class="group inline-flex items-center gap-2 px-7 h-14 rounded-full text-base font-semibold bg-primary text-white shadow-xl shadow-primary/30 hover:shadow-secondary-500/40 hover:scale-[1.02] transition-all relative overflow-hidden"
         >
           <span aria-hidden="true" class="absolute inset-0 bg-gradient-to-r from-primary via-secondary-900 to-primary opacity-0 group-hover:opacity-100 transition-opacity" />
-          <UIcon name="i-lucide-download" class="size-4 relative" />
+          <UIcon name="i-lucide-shopping-bag" class="size-4 relative" />
           <span class="relative">{{ copy.hero.primary }}</span>
           <UIcon name="i-lucide-arrow-right" class="size-4 relative group-hover:translate-x-0.5 rtl:rotate-180 rtl:group-hover:-translate-x-0.5 transition-transform" />
         </NuxtLink>
-        <NuxtLink
-          to="/portal/download#contact"
-          class="inline-flex items-center gap-2 px-7 h-14 rounded-full text-base font-semibold bg-white/80 dark:bg-white/[0.04] backdrop-blur text-primary dark:text-white border border-black/10 dark:border-white/15 hover:bg-white dark:hover:bg-white/[0.08] transition"
+        <a
+          :href="demoUrl"
+          target="_blank"
+          rel="noopener"
+          class="group inline-flex items-center gap-2 px-7 h-14 rounded-full text-base font-semibold bg-white/80 dark:bg-white/[0.04] backdrop-blur text-primary dark:text-white border border-black/10 dark:border-white/15 hover:bg-white dark:hover:bg-white/[0.08] transition"
         >
-          <UIcon name="i-lucide-calendar-check" class="size-4 text-secondary-500" />
-          {{ copy.hero.secondary }}
-        </NuxtLink>
+          <UIcon name="i-lucide-play-circle" class="size-4 text-secondary-500" />
+          <span>{{ copy.hero.secondary }}</span>
+          <UIcon name="i-lucide-arrow-up-right" class="size-3.5 opacity-60 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+        </a>
       </div>
 
       <!-- ─── Trust bar ─── -->

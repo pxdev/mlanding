@@ -17,10 +17,38 @@ useHead(() => ({
 const contactName = ref('')
 const contactEmail = ref('')
 const contactMessage = ref('')
+const contactWebsite = ref('') // honeypot — real visitors leave empty
 const sent = ref(false)
-function submitContact() {
-  if (!contactEmail.value) return
-  sent.value = true
+const submitting = ref(false)
+const submitError = ref('')
+const toast = useToast()
+
+async function submitContact() {
+  if (!contactEmail.value || submitting.value) return
+  submitting.value = true
+  submitError.value = ''
+  try {
+    await $fetch('/api/portal/contact', {
+      method: 'POST',
+      body: {
+        name: contactName.value,
+        email: contactEmail.value,
+        message: contactMessage.value,
+        website: contactWebsite.value
+      }
+    })
+    sent.value = true
+  } catch (err: any) {
+    submitError.value = err.statusMessage || err.data?.statusMessage || err.message || 'Could not send — try again.'
+    toast.add({
+      title: 'Message not sent',
+      description: submitError.value,
+      color: 'error',
+      duration: 6000
+    })
+  } finally {
+    submitting.value = false
+  }
 }
 </script>
 
@@ -205,14 +233,24 @@ function submitContact() {
           <textarea v-model="contactMessage" rows="4" :placeholder="copy.downloadPage.contact.messagePh"
             class="mt-2 w-full bg-transparent text-base font-medium placeholder:text-gray-400 dark:placeholder:text-gray-600 focus:outline-none resize-none" />
         </label>
+        <div aria-hidden="true" class="absolute left-[-9999px] h-0 w-0 overflow-hidden" tabindex="-1">
+          <label>
+            Website (leave empty)
+            <input v-model="contactWebsite" type="text" tabindex="-1" autocomplete="off" />
+          </label>
+        </div>
         <button type="submit"
-          class="group/cta mt-6 inline-flex items-center gap-3 text-sm font-bold"
-          :disabled="sent"
+          class="group/cta mt-6 inline-flex items-center gap-3 text-sm font-bold disabled:opacity-60"
+          :disabled="sent || submitting"
         >
           <span class="size-11 rounded-full bg-primary text-white dark:bg-white dark:text-primary flex items-center justify-center transition-transform group-hover/cta:scale-110"
             :class="sent ? 'bg-emerald-500 dark:bg-emerald-500 !text-white' : ''"
           >
-            <UIcon :name="sent ? 'i-lucide-check' : 'i-lucide-send'" class="size-4" />
+            <UIcon
+              :name="submitting ? 'i-lucide-loader-circle' : sent ? 'i-lucide-check' : 'i-lucide-send'"
+              class="size-4"
+              :class="{ 'animate-spin': submitting }"
+            />
           </span>
           <span class="relative">
             {{ sent ? copy.downloadPage.contact.sent : copy.downloadPage.contact.submit }}

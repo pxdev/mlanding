@@ -24,14 +24,14 @@ const plans = [
     slug: 'self-install',
     name: 'Self-install',
     description: 'You install. Lifetime updates.',
-    priceUsdCents: 49900,           // $499 — adjust to actual pricing
+    priceUsdCents: 19900,           // $199 — must match the LS variant price
     defaultActivations: 1
   },
   {
     slug: 'we-install',
-    name: 'We install',
+    name: 'Done-for-you',
     description: 'We install on your VPS. Lifetime updates.',
-    priceUsdCents: 99900,           // $999 — adjust to actual pricing
+    priceUsdCents: 29900,           // $299 — must match the LS variant price
     defaultActivations: 1
   }
 ]
@@ -40,7 +40,16 @@ async function main() {
   for (const p of plans) {
     const existing = await prisma.plan.findUnique({ where: { slug: p.slug } })
     if (existing) {
-      console.log(`✓ plan exists: ${p.slug}`)
+      await prisma.plan.update({
+        where: { slug: p.slug },
+        data: {
+          name: p.name,
+          description: p.description,
+          priceUsdCents: p.priceUsdCents,
+          defaultActivations: p.defaultActivations
+        }
+      })
+      console.log(`✓ plan updated: ${p.slug}`)
     } else {
       await prisma.plan.create({ data: p })
       console.log(`+ plan created: ${p.slug}`)

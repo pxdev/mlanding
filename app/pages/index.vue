@@ -60,20 +60,29 @@ const addonCategories = computed(() => {
   })).filter(c => c.items.length > 0)
 })
 
-// Industry visuals
-const industryVisuals: Record<string, { icon: string; tint: string }> = {
-  salon: { icon: 'i-lucide-scissors', tint: 'from-pink-500/20 to-rose-500/20 text-rose-600 dark:text-rose-400' },
-  dental: { icon: 'i-hugeicons-dental-tooth', tint: 'from-sky-500/20 to-blue-500/20 text-sky-600 dark:text-sky-400' },
-  medical: { icon: 'i-lucide-heart-pulse', tint: 'from-red-500/20 to-orange-500/20 text-red-600 dark:text-red-400' },
-  barber: { icon: 'i-lucide-user', tint: 'from-stone-500/20 to-neutral-500/20 text-stone-700 dark:text-stone-300' },
-  fitness: { icon: 'i-lucide-dumbbell', tint: 'from-lime-500/20 to-emerald-500/20 text-emerald-600 dark:text-emerald-400' },
-  pet: { icon: 'i-lucide-paw-print', tint: 'from-amber-500/20 to-yellow-500/20 text-amber-600 dark:text-amber-400' },
-  therapy: { icon: 'i-lucide-brain', tint: 'from-violet-500/20 to-purple-500/20 text-violet-600 dark:text-violet-400' },
-  photo: { icon: 'i-lucide-camera', tint: 'from-cyan-500/20 to-teal-500/20 text-cyan-600 dark:text-cyan-400' }
+// Industry visuals — each row uses a real photograph instead of an icon.
+// Drop the images into `public/images/industries/{id}.webp` (or .jpg).
+// `tint` keeps the hover-wash color keyed to the row in case the image
+// fails to load; `icon` is the fallback if the image can't be fetched.
+const industryVisuals: Record<string, { image: string; icon: string; tint: string }> = {
+  salon:   { image: '/images/industries/salon.webp',   icon: 'i-lucide-scissors',       tint: 'from-pink-500/20 to-rose-500/20 text-rose-600 dark:text-rose-400' },
+  dental:  { image: '/images/industries/dental.webp',  icon: 'i-hugeicons-dental-tooth', tint: 'from-sky-500/20 to-blue-500/20 text-sky-600 dark:text-sky-400' },
+  medical: { image: '/images/industries/medical.webp', icon: 'i-lucide-heart-pulse',    tint: 'from-red-500/20 to-orange-500/20 text-red-600 dark:text-red-400' },
+  barber:  { image: '/images/industries/barber.webp',  icon: 'i-lucide-user',           tint: 'from-stone-500/20 to-neutral-500/20 text-stone-700 dark:text-stone-300' },
+  fitness: { image: '/images/industries/fitness.webp', icon: 'i-lucide-dumbbell',       tint: 'from-lime-500/20 to-emerald-500/20 text-emerald-600 dark:text-emerald-400' },
+  pet:     { image: '/images/industries/pet.webp',     icon: 'i-lucide-paw-print',      tint: 'from-amber-500/20 to-yellow-500/20 text-amber-600 dark:text-amber-400' },
+  therapy: { image: '/images/industries/therapy.webp', icon: 'i-lucide-brain',          tint: 'from-violet-500/20 to-purple-500/20 text-violet-600 dark:text-violet-400' },
+  photo:   { image: '/images/industries/photo.webp',   icon: 'i-lucide-camera',         tint: 'from-cyan-500/20 to-teal-500/20 text-cyan-600 dark:text-cyan-400' }
+}
+
+// Graceful fallback: if the image 404s, hide it so the icon stays visible.
+function onIndustryImgError(e: Event) {
+  const img = e.target as HTMLImageElement
+  img.style.display = 'none'
 }
 
 // Why-items icon list (order matches copy.why.items)
-const whyIcons = ['i-lucide-package-2', 'i-lucide-server', 'i-lucide-languages', 'i-lucide-shield-check', 'i-lucide-brain-circuit', 'i-lucide-wifi-off']
+const whyIcons = ['i-lucide-package-2', 'i-lucide-server', 'i-lucide-languages', 'i-lucide-shield-check', 'i-lucide-brain-circuit', 'i-lucide-smartphone']
 
 // Testimonial accents (order matches copy.testimonials.items)
 const testimonialAccents = ['from-pink-500 to-rose-500', 'from-sky-500 to-indigo-500', 'from-emerald-500 to-teal-500']
@@ -140,32 +149,38 @@ const tenantBrands: TenantBrand[] = [
 
   <!-- ════════════════════════ PROOF BAND — marquee + big numbers ════════════════════════ -->
   <section class="relative py-16 overflow-hidden bg-white dark:bg-black">
-    <!-- Marquee: huge uppercase industry sweep -->
+    <!-- Marquee: huge uppercase industry sweep — pulls labels from localized copy -->
     <div class="relative border-y border-black/5 dark:border-white/10 py-6 overflow-hidden mb-16" role="presentation">
       <div class="flex w-max animate-marquee gap-14">
         <div v-for="pass in 2" :key="pass" class="flex items-center gap-14 shrink-0">
-          <template v-for="(ind, i) in ['Salons', 'Dental', 'Medical', 'Barber', 'Fitness', 'Pet care', 'Therapy', 'Photo studios']" :key="`${pass}-${ind}`">
-            <span class="text-3xl sm:text-5xl font-black uppercase tracking-tight text-gray-300/80 dark:text-white/10 whitespace-nowrap">{{ ind }}</span>
+          <template v-for="(ind, i) in copy.industries.items" :key="`${pass}-${ind.id}`">
+            <span class="text-3xl sm:text-5xl font-black uppercase tracking-tight text-gray-300/80 dark:text-white/10 whitespace-nowrap">{{ ind.label }}</span>
             <UIcon name="i-lucide-asterisk" class="size-5 sm:size-6 text-secondary-500/60 shrink-0" :class="i === 0 && pass === 1 ? 'animate-spin [animation-duration:8s]' : ''" />
           </template>
         </div>
       </div>
     </div>
 
-    <!-- Big borderless stats with vertical rules -->
-    <div class="max-w-7xl mx-auto px-5 sm:px-8 grid grid-cols-2 lg:grid-cols-4 divide-x divide-black/5 dark:divide-white/10 rtl:divide-x-reverse">
-      <div v-for="(s, i) in copy.hero.statsStrip" :key="s.v" class="px-6 lg:px-10 py-4 lg:py-0">
-        <div class="flex items-center gap-2 mb-3">
-          <span class="text-[10px] tabular-nums text-gray-400">0{{ i + 1 }}</span>
-          <span v-if="i === 0" class="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
-            <span class="size-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            {{ copy.ui.liveLabel }}
+    <!-- Stats — four hairline cells. `gap-px` on a tinted parent renders the
+         dividers automatically for both the mobile 2×2 grid and the desktop 1×4 row. -->
+    <div class="max-w-7xl mx-auto px-5 sm:px-8">
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-px bg-black/10 dark:bg-white/10 border-y border-black/10 dark:border-white/10">
+        <div
+          v-for="(s, i) in copy.hero.statsStrip"
+          :key="s.v"
+          class="relative py-10 lg:py-14 px-5 sm:px-8 bg-white dark:bg-black"
+        >
+          <span class="text-[10px] tabular-nums text-gray-400 tracking-widest">
+            {{ String(i + 1).padStart(2, '0') }}
           </span>
+          <p
+            class="mt-4 text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-none text-primary dark:text-white"
+            style="font-variant-numeric: tabular-nums"
+          >{{ s.k }}</p>
+          <p class="mt-5 text-xs sm:text-[13px] text-gray-500 dark:text-gray-400 leading-snug max-w-[14rem]">
+            {{ s.v }}
+          </p>
         </div>
-        <p class="text-6xl lg:text-7xl xl:text-[5.5rem] font-black tracking-tight leading-none bg-gradient-to-br from-primary to-secondary-600 dark:from-white dark:to-secondary-400 bg-clip-text text-transparent">
-          {{ s.k }}
-        </p>
-        <p class="mt-4 text-xs text-gray-500 dark:text-gray-400 uppercase tracking-[0.15em] max-w-[12rem] leading-snug">{{ s.v }}</p>
       </div>
     </div>
   </section>
@@ -251,13 +266,24 @@ const tenantBrands: TenantBrand[] = [
               <div class="col-span-2 sm:col-span-1">
                 <span class="text-xs tabular-nums text-gray-400">0{{ i + 1 }}</span>
               </div>
-              <!-- Icon (rotates in on hover) -->
-              <div class="col-span-2 sm:col-span-1 flex">
-                <UIcon
-                  :name="industryVisuals[ind.id]?.icon"
-                  class="size-6 text-gray-400 group-hover:text-primary dark:group-hover:text-white transition-all duration-300 group-hover:rotate-[-8deg]"
-                  :class="industryVisuals[ind.id]?.tint?.split(' ')?.slice(-2)?.join(' ')"
-                />
+              <!-- Thumbnail (photo scales up on hover; icon falls back if the image 404s) -->
+              <div class="col-span-2 sm:col-span-1 flex items-center">
+                <div class="relative size-14 sm:size-16 lg:size-20 rounded-xl overflow-hidden bg-gray-100 dark:bg-white/5 transition-all duration-500 group-hover:scale-105 ring-1 ring-black/5 dark:ring-white/10">
+                  <!-- Fallback icon (sits behind the image; shown when the image fails to load) -->
+                  <UIcon
+                    :name="industryVisuals[ind.id]?.icon"
+                    class="absolute inset-0 m-auto size-5 sm:size-6 text-gray-400"
+                    :class="industryVisuals[ind.id]?.tint?.split(' ')?.slice(-2)?.join(' ')"
+                  />
+                  <img
+                    :src="industryVisuals[ind.id]?.image"
+                    :alt="ind.label"
+                    loading="lazy"
+                    decoding="async"
+                    class="relative w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    @error="onIndustryImgError"
+                  >
+                </div>
               </div>
               <!-- Huge label -->
               <div class="col-span-8 sm:col-span-7 lg:col-span-8">

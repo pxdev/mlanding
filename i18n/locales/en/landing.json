@@ -13,18 +13,18 @@
       "langLabel": "Language"
     },
     "hero": {
-      "badge": "Momentfy 1.0 is out — production-ready",
-      "h1a": "The",
-      "highlight": "operating system",
-      "h1b": "for booking businesses.",
-      "sub": "One codebase. Calendar, POS, CRM, inventory, accounting, HR, client portal and AI — in English and Arabic.",
-      "subStrong": "Buy the source. Host it anywhere. Charge what you want.",
-      "primary": "Get the source code",
-      "secondary": "Book a demo",
+      "badge": "Momentfy 1.0 · Ship in a weekend",
+      "h1a": "Run your whole business on",
+      "highlight": "one codebase.",
+      "h1b": "Own it forever.",
+      "sub": "Bookings, POS, accounting, CRM, inventory and a client portal — bilingual AR + EN, ZATCA & ETA ready, deployable on your own server in under an hour.",
+      "subStrong": "Pay once. Host it anywhere. No per-user fees, ever.",
+      "primary": "Buy now",
+      "secondary": "Try the live demo",
       "trust": [
-        "Lifetime license",
-        "Unlimited tenants",
-        "Full source access",
+        "One-time payment",
+        "Unlimited tenants & users",
+        "Source on GitHub",
         "Lifetime updates"
       ],
       "chips": {
@@ -40,20 +40,20 @@
       "chromeUrl": "app.momentfy.io / dashboard",
       "statsStrip": [
         {
-          "k": "120+",
-          "v": "dashboard pages"
+          "k": "∞",
+          "v": "clients you can host"
         },
         {
-          "k": "16",
-          "v": "modular add-ons"
-        },
-        {
-          "k": "2",
-          "v": "languages (AR + EN)"
+          "k": "0",
+          "v": "royalties owed"
         },
         {
           "k": "100%",
-          "v": "source code included"
+          "v": "revenue you keep"
+        },
+        {
+          "k": "1×",
+          "v": "license fee, once"
         }
       ]
     },
@@ -61,31 +61,31 @@
       "eyebrow": "Why Momentfy",
       "h2a": "Not a SaaS you rent.",
       "h2b": "A codebase you own.",
-      "body": "Most booking platforms grow more expensive as you grow. Momentfy is the opposite: one payment, unlimited everything, deploy wherever you want — and modify any line if you need to.",
+      "body": "Most booking platforms grow more expensive as you grow. Momentfy goes the other way — one payment, unlimited everything, and every line of the source is yours to change.",
       "items": [
         {
           "title": "Source you own",
-          "body": "Full TypeScript codebase — Nuxt 4, Vue 3, Prisma, PostgreSQL. No obfuscation, no vendor lock-in."
+          "body": "Every file. Every query. Every pixel. Change what you need, build what's missing — and none of it ever expires."
         },
         {
           "title": "Self-hosted, SaaS-ready",
-          "body": "Run single-tenant for your own business — or flip a flag and resell it to thousands of tenants."
+          "body": "Run it as your in-house system — or flip one flag and resell it to thousands of tenants."
         },
         {
           "title": "Bilingual, RTL-native",
-          "body": "Arabic (RTL) and English built in from day one. Localized currency, numbers, calendars and receipts."
+          "body": "Arabic and English from day one. Every screen, receipt and AI message respects right-to-left like it was born there."
         },
         {
-          "title": "Compliance out of the box",
-          "body": "ZATCA Phase 2, ETA e-invoicing, VAT, audit trail and fixed-asset depreciation — all included."
+          "title": "Compliance built-in",
+          "body": "ZATCA Phase 2, ETA e-invoicing, VAT and audit trails — certified-ready for Saudi and Egypt from the first install."
         },
         {
           "title": "AI baked in",
-          "body": "Vercel AI SDK assistant for booking and client portal. Bring any OpenAI-compatible provider."
+          "body": "An assistant that books, rebooks and follows up with your clients. Works with any OpenAI-compatible provider — OpenAI, Gemini, Groq or a local Ollama model."
         },
         {
-          "title": "Offline-ready PWA",
-          "body": "Installable on iOS and Android. Booking and POS keep working when the network blinks."
+          "title": "Installs like a native app",
+          "body": "Progressive web app on iOS and Android — no app store review. One build runs on web, tablet and phone."
         }
       ]
     },
@@ -145,47 +145,47 @@
     "industries": {
       "eyebrow": "Industries",
       "heading": "One platform. Every vertical.",
-      "sub": "Toggle the add-ons you need. Ship a tailored product in hours — not months.",
+      "sub": "Each vertical flips on its own add-ons — all 16 ship in the base source.",
       "items": [
         {
           "id": "salon",
           "label": "Salons & Spas",
-          "tagline": "Ready out of the box"
+          "tagline": "Bookings, memberships, stylist tips"
         },
         {
           "id": "dental",
           "label": "Dental Clinics",
-          "tagline": "Ready out of the box"
+          "tagline": "Dental chart, Rx, ZATCA invoicing"
         },
         {
           "id": "medical",
           "label": "Medical Clinics",
-          "tagline": "Ready out of the box"
+          "tagline": "Records, labs, insurance-ready"
         },
         {
           "id": "barber",
           "label": "Barber Shops",
-          "tagline": "Ready out of the box"
+          "tagline": "Chair rotation, tips, commissions"
         },
         {
           "id": "fitness",
-          "label": "Fitness & Studios",
-          "tagline": "Ready out of the box"
+          "label": "Fitness & Gyms",
+          "tagline": "Classes, memberships, check-ins"
         },
         {
           "id": "pet",
           "label": "Vet & Pet Care",
-          "tagline": "Ready out of the box"
+          "tagline": "Pet records, boarding, grooming"
         },
         {
           "id": "therapy",
           "label": "Therapy & Coaching",
-          "tagline": "Ready out of the box"
+          "tagline": "Sessions, notes, packages"
         },
         {
           "id": "photo",
-          "label": "Photo & Studios",
-          "tagline": "Ready out of the box"
+          "label": "Photo Studios",
+          "tagline": "Packages, contracts, deposits"
         }
       ]
     },
@@ -1436,23 +1436,23 @@
       },
       "mobile": {
         "title": "Mobile & on-site teams",
-        "tagline": "Route bookings, on-the-way ETAs and offline check-out in the field.",
+        "tagline": "Route-optimized day plans, on-the-way ETAs and at-the-door invoicing — installed on every team phone.",
         "icon": "i-lucide-truck",
         "accent": "from-blue-500 to-indigo-600",
         "dot": "bg-blue-500",
         "category": "Business shape",
-        "long": "Field teams — mobile beauty, home physio, on-site IT, at-home grooming — can't afford to lose a session to a patchy network. Momentfy's PWA installs on any phone, routes jobs by address, and completes sales offline, syncing when signal returns.",
+        "long": "Field teams — mobile beauty, home physio, on-site IT, at-home grooming — need one app that plans the day and closes the invoice at the customer's door. Momentfy installs on any phone as a PWA, routes jobs by address, captures signatures on the device, and turns each visit into a sent invoice before the van drives away.",
         "pains": [
-          "Calendar not syncing in the field",
-          "Invoice sent hours after the job",
-          "No signal = no payment",
-          "Routes planned by guesswork"
+          "Calendar out of sync with dispatcher",
+          "Invoices sent hours after the job ends",
+          "Routes planned by guesswork",
+          "No paper trail for on-site signatures"
         ],
         "capabilities": [
-          "Installable PWA works offline by default",
+          "Installable PWA — every team member carries the same tool",
           "Route-optimised day plan per team member",
           "On-the-way ETA sent by SMS automatically",
-          "Offline POS — takes payment later when online",
+          "In-van POS that invoices and takes card at the door",
           "Mileage + travel-time rules billed automatically",
           "Client signature capture on device",
           "Inventory consumed per on-site visit",
@@ -1468,7 +1468,7 @@
         ],
         "stats": [
           {
-            "k": "Offline reliability",
+            "k": "Same-day invoicing",
             "v": "100%"
           },
           {
@@ -1577,7 +1577,7 @@
       "heading": "Every tenant gets a branded PWA.",
       "sub": "Your clients book appointments, pay invoices, see their memberships, track loyalty points, download prescriptions, review visits and chat with the in-app AI — from their phone, with your logo, installed like a native app.",
       "bullets": [
-        "Installable PWA with offline cache",
+        "Installable PWA with the tenant's logo",
         "Booking, invoicing, loyalty, memberships",
         "Lab results & prescriptions download",
         "Reviews, tickets, AI chat assistant",
@@ -1625,7 +1625,7 @@
         {
           "name": "Self-install",
           "tag": "You deploy it",
-          "price": "$599",
+          "price": "$199",
           "priceSuffix": "/ one-time",
           "cta": "Get Self-install",
           "durationValue": "∞",
@@ -1647,7 +1647,7 @@
         {
           "name": "Done-for-you",
           "tag": "We deploy it",
-          "price": "$1,499",
+          "price": "$299",
           "priceSuffix": "/ one-time",
           "cta": "Get Done-for-you",
           "durationValue": "∞",
@@ -2329,7 +2329,7 @@
       "saasValue": "$7,200+",
       "saasBody": "$200/mo × 36 months. Price rises yearly. You never own the data.",
       "momentfyLabel": "Momentfy Self-install",
-      "momentfyValue": "$599",
+      "momentfyValue": "$199",
       "momentfyBody": "One payment. Unlimited tenants. Full source. Lifetime updates. Own it.",
       "faq": {
         "eyebrow": "Pricing questions",
@@ -2764,7 +2764,7 @@
             },
             {
               "q": "Does it support offline?",
-              "a": "Yes, it's a PWA with workbox caching. Booking and POS keep working when the network blinks."
+              "a": "It's a Progressive Web App with cached assets for fast loading. Booking and POS require a network connection to write data — a dedicated offline sync queue is on the roadmap."
             }
           ]
         },

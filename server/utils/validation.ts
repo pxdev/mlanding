@@ -34,6 +34,16 @@ export const changePasswordSchema = z.object({
 export type RegisterInput = z.infer<typeof registerSchema>
 export type LoginInput = z.infer<typeof loginSchema>
 
+// ── Marketing: contact form ──
+
+export const contactSchema = z.object({
+  name: z.string().max(160).optional().nullable(),
+  email: z.string().email('Invalid email address').max(160),
+  message: z.string().max(4000).optional().nullable(),
+  // Honeypot — real browsers leave it empty; bots fill it in.
+  website: z.string().max(0).optional().nullable()
+})
+
 // ── Admin: licenses ──
 
 export const issueLicenseSchema = z.object({
