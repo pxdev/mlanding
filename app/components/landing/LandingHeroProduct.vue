@@ -1,20 +1,21 @@
 <script setup lang="ts">
-// Hero stage — video preview wrapped in browser chrome.
-// Pass `src` + optional `poster` to show a real video; otherwise the
-// component renders a stylish placeholder with a big play button.
+// Hero stage — video preview wrapped in an iPad-style bezel.
 const copy = useLandingCopy()
 
 const props = withDefaults(defineProps<{
   src?: string
   poster?: string
   duration?: string
+  aspectRatio?: string
 }>(), {
   src: '',
   poster: '',
-  duration: '2:34'
+  duration: '2:34',
+  aspectRatio: '16 / 9'
 })
 
-const isPlaying = ref(false)
+// If no poster is provided, start the video immediately instead of showing the play affordance.
+const isPlaying = ref(!props.poster && !!props.src)
 const isMuted = ref(true)
 const videoRef = ref<HTMLVideoElement | null>(null)
 
@@ -30,33 +31,17 @@ function toggleMute() {
   isMuted.value = !isMuted.value
   videoRef.value.muted = isMuted.value
 }
-
-// Small list of "chapters" shown in the bottom toolbar as a scrubbing tease
-const chapters = ['Calendar', 'Point of sale', 'Clients', 'Inventory', 'ZATCA']
 </script>
 
 <template>
-  <div class="relative rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 bg-white dark:bg-[#0a0a0a] shadow-2xl shadow-secondary-500/10 dark:shadow-black/50 ring-1 ring-black/5 dark:ring-white/10">
+  <!-- iPad-style bezel -->
+  <div class="relative rounded-[1.25rem] sm:rounded-[1.5rem] p-2.5 sm:p-3.5 bg-gradient-to-br from-gray-800 via-black to-gray-900 dark:from-gray-700 dark:via-gray-900 dark:to-black shadow-2xl shadow-black/40 dark:shadow-black/60 ring-1 ring-white/10">
 
-    <!-- Browser chrome -->
-    <div class="h-10 bg-gradient-to-b from-gray-50 to-white dark:from-white/[0.06] dark:to-white/[0.03] border-b border-black/5 dark:border-white/10 flex items-center px-4 gap-3">
-      <div class="flex gap-1.5 shrink-0">
-        <div class="size-2.5 rounded-full bg-red-400/80" />
-        <div class="size-2.5 rounded-full bg-amber-400/80" />
-        <div class="size-2.5 rounded-full bg-emerald-400/80" />
-      </div>
-      <div class="mx-auto flex items-center gap-1.5 px-3 h-6 rounded-full bg-black/5 dark:bg-white/5 text-[11px] text-gray-500 dark:text-gray-400">
-        <UIcon name="i-lucide-lock" class="size-3 text-emerald-500" />
-        {{ copy.hero.chromeUrl }}
-      </div>
-      <div class="hidden sm:inline-flex items-center gap-1.5 shrink-0 text-[10px] uppercase tracking-[0.2em] text-rose-500 font-bold">
-        <span class="size-1.5 rounded-full bg-rose-500 animate-pulse" />
-        {{ copy.ui.liveDemo }}
-      </div>
-    </div>
+    <!-- Front camera dot -->
+    <span aria-hidden="true" class="absolute top-1/2 -translate-y-1/2 start-1.5 sm:start-2 size-1.5 sm:size-2 rounded-full bg-gray-700 ring-1 ring-white/10" />
 
-    <!-- ═══ Video stage ═══ -->
-    <div class="relative aspect-video bg-primary overflow-hidden">
+    <!-- ═══ Video stage (iPad screen) ═══ -->
+    <div class="relative rounded-[0.75rem] sm:rounded-[1rem] bg-primary overflow-hidden" :style="{ aspectRatio: props.aspectRatio }">
       <!-- Dark poster: layered ambient light (no dashboard mock) -->
       <div aria-hidden="true" class="absolute inset-0 bg-gradient-to-br from-primary via-primary-500 to-primary" />
       <div aria-hidden="true" class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(0,0,0,0.6)_80%)]" />
@@ -117,27 +102,6 @@ const chapters = ['Calendar', 'Point of sale', 'Clients', 'Inventory', 'ZATCA']
       >
         <UIcon :name="isMuted ? 'i-lucide-volume-x' : 'i-lucide-volume-2'" class="size-4" />
       </button>
-    </div>
-
-    <!-- Bottom bar: duration + chapter scrubber + DEMO chip -->
-    <div class="flex items-center gap-4 px-4 sm:px-5 h-11 border-t border-black/5 dark:border-white/10 bg-gray-50 dark:bg-white/[0.02]">
-      <span class="inline-flex items-center gap-1.5 text-xs font-bold tabular-nums text-gray-700 dark:text-gray-300 shrink-0">
-        <UIcon name="i-lucide-clock" class="size-3.5 text-gray-400" />
-        {{ duration }}
-      </span>
-
-      <!-- Chapters (desktop only) -->
-      <div class="hidden md:flex items-center gap-3 flex-1 min-w-0 overflow-hidden">
-        <template v-for="(ch, i) in chapters" :key="ch">
-          <span class="text-xs text-gray-500 dark:text-gray-400 truncate">{{ ch }}</span>
-          <span v-if="i < chapters.length - 1" aria-hidden="true" class="h-px w-4 bg-black/10 dark:bg-white/20 shrink-0" />
-        </template>
-      </div>
-
-      <span class="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-[0.25em] text-secondary-600 dark:text-secondary-400 font-bold shrink-0 ms-auto md:ms-0">
-        <UIcon name="i-lucide-play-circle" class="size-3.5" />
-        {{ copy.ui.demoChip }}
-      </span>
     </div>
   </div>
 </template>
