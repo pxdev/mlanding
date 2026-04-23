@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 definePageMeta({ layout: 'landing' })
 
 const copy = useLandingCopy()
@@ -37,7 +37,7 @@ useHead(() => ({
     <div class="max-w-7xl mx-auto px-5 sm:px-8">
       <div class="grid grid-cols-12 gap-6">
         <div class="col-span-12 sm:col-span-4 lg:col-span-3">
-          <p class="text-xs uppercase tracking-[0.25em] text-gray-400">—— {{ sp.eyebrow }}</p>
+          <LandingSectionEyebrow :label="sp.eyebrow" />
           <p class="mt-3 text-sm text-gray-500 dark:text-gray-500 max-w-[18rem]">{{ sp.sub }}</p>
 
           <!-- Chapter index -->

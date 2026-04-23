@@ -1,55 +1,49 @@
-<script setup lang="ts">
-definePageMeta({ layout: 'admin', middleware: ['auth', 'admin'] })
-useHead({ title: 'Customers — Momentfy admin' })
-
-interface UserRow {
-  id: string
-  email: string
-  firstName: string | null
-  lastName: string | null
-  githubUsername: string | null
-  isAdmin: boolean
-  isActive: boolean
-  lastLoginAt: string | null
-  createdAt: string
-  _count: { licenses: number; orders: number }
+<script setup>
+import { fillTemplate } from '~/composables/useChromeCopy';
+definePageMeta({ layout: 'portal', middleware: ['auth', 'admin'], colorMode: 'light' });
+const chrome = useChromeCopy();
+const t = computed(() => chrome.value.admin.usersPage);
+useHead({ title: () => chrome.value.admin.usersPage.docTitle });
+const q = ref('');
+const { data: users, refresh } = await useFetch('/api/portal/admin/users', {
+    query: computed(() => ({ q: q.value || undefined })),
+    default: () => []
+});
+function fmt(d) {
+    return d ? new Date(d).toLocaleDateString() : '—';
 }
-
-const q = ref('')
-const { data: users, refresh } = await useFetch<UserRow[]>('/api/portal/admin/users', {
-  query: computed(() => ({ q: q.value || undefined })),
-  default: () => []
-})
-
-function fmt(d: string | null) {
-  return d ? new Date(d).toLocaleDateString() : '—'
+function name(u) {
+    return `${u.firstName || ''} ${u.lastName || ''}`.trim() || u.email;
 }
-function name(u: UserRow) {
-  return `${u.firstName || ''} ${u.lastName || ''}`.trim() || u.email
+function pluralLicense(n) {
+    return fillTemplate(n === 1 ? t.value.licenseOne : t.value.licenseMany, { n });
+}
+function pluralOrder(n) {
+    return fillTemplate(n === 1 ? t.value.orderOne : t.value.orderMany, { n });
 }
 </script>
 
 <template>
   <div class="p-6 max-w-6xl mx-auto space-y-6">
     <header>
-      <h1 class="text-2xl font-bold">Customers</h1>
-      <p class="text-sm text-gray-500 mt-1">Search and manage portal accounts.</p>
+      <h1 class="text-2xl font-bold">{{ t.title }}</h1>
+      <p class="text-sm text-muted mt-1">{{ t.subtitle }}</p>
     </header>
 
     <div class="flex gap-2">
-      <UInput v-model="q" placeholder="Search by email, name, GitHub username" icon="i-lucide-search" class="flex-1" @keyup.enter="refresh" />
-      <UButton icon="i-lucide-search" @click="refresh">Search</UButton>
+      <UInput v-model="q" :placeholder="t.searchPlaceholder" icon="i-lucide-search" class="flex-1" @keyup.enter="refresh" />
+      <UButton icon="i-lucide-search" @click="refresh">{{ t.search }}</UButton>
     </div>
 
     <UCard class="!shadow-none">
-      <div v-if="!users.length" class="text-center py-10 text-gray-500">
+      <div v-if="!users.length" class="text-center py-10 text-muted">
         <UIcon name="i-lucide-users-round" class="size-8 mx-auto opacity-40" />
-        <p class="mt-3 text-sm">No customers found.</p>
+        <p class="mt-3 text-sm">{{ t.empty }}</p>
       </div>
-      <div v-else class="divide-y divide-black/5 dark:divide-white/10 -m-4">
+      <div v-else class="divide-y divide-default -m-4">
         <NuxtLink
           v-for="u in users" :key="u.id" :to="`/admin/users/${u.id}`"
-          class="flex items-center gap-4 px-4 py-3 hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition"
+          class="flex items-center gap-4 px-4 py-3 hover:bg-elevated transition"
         >
           <div class="size-10 rounded-full bg-primary/10 text-primary flex items-center justify-center font-semibold">
             {{ (u.firstName?.[0] || u.email[0] || '?').toUpperCase() }}
@@ -57,20 +51,20 @@ function name(u: UserRow) {
           <div class="flex-1 min-w-0">
             <div class="flex items-center gap-2 flex-wrap text-sm">
               <span class="font-medium truncate">{{ name(u) }}</span>
-              <UBadge v-if="u.isAdmin" color="primary" variant="soft" size="sm">admin</UBadge>
-              <UBadge v-if="!u.isActive" color="error" variant="soft" size="sm">inactive</UBadge>
+              <UBadge v-if="u.isAdmin" color="primary" variant="soft" size="sm">{{ t.adminBadge }}</UBadge>
+              <UBadge v-if="!u.isActive" color="error" variant="soft" size="sm">{{ t.inactiveBadge }}</UBadge>
             </div>
-            <div class="text-xs text-gray-500 mt-0.5">
+            <div class="text-xs text-muted mt-0.5">
               {{ u.email }}
               <span v-if="u.githubUsername"> · gh:{{ u.githubUsername }}</span>
-              · joined {{ fmt(u.createdAt) }}
+              · {{ t.joinedPrefix }} {{ fmt(u.createdAt) }}
             </div>
           </div>
-          <div class="text-xs text-gray-500 text-right">
-            <div>{{ u._count.licenses }} license{{ u._count.licenses === 1 ? '' : 's' }}</div>
-            <div>{{ u._count.orders }} order{{ u._count.orders === 1 ? '' : 's' }}</div>
+          <div class="text-xs text-muted text-end">
+            <div>{{ pluralLicense(u._count.licenses) }}</div>
+            <div>{{ pluralOrder(u._count.orders) }}</div>
           </div>
-          <UIcon name="i-lucide-chevron-right" class="size-4 text-gray-400" />
+          <UIcon name="i-lucide-chevron-right" class="size-4 text-muted rtl:rotate-180" />
         </NuxtLink>
       </div>
     </UCard>

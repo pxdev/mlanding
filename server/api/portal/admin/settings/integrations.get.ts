@@ -1,13 +1,14 @@
 // Structured integration status for the Settings admin page.
 //
-// This is a diagnostic endpoint: the operator sees what's configured
-// without having to SSH into the server. We never echo raw secrets —
-// only booleans and masked identifiers. Values that ARE safe to expose
-// (store IDs, org names, repo paths, SMTP host) are returned in full.
+// Reads via integration-settings (DB row → env fallback). Sensitive values
+// are surfaced as booleans (`apiKeySet: true`) rather than echoed; non-
+// sensitive values (host, port, store id, etc.) come back in full so the
+// admin can see what's currently in effect without checking the DB by hand.
 
 import { requireAdmin } from '../../../../utils/auth-guards'
+import { getSetting } from '../../../../utils/integration-settings'
 
-function mask(value: string | undefined, keepStart = 4, keepEnd = 4): string | null {
+function mask(value: string | undefined | null, keepStart = 4, keepEnd = 4): string | null {
   if (!value) return null
   if (value.length <= keepStart + keepEnd + 1) return value.slice(0, keepStart) + '…'
   return value.slice(0, keepStart) + '…' + value.slice(-keepEnd)
@@ -28,7 +29,6 @@ async function verifyLicenseKeypair(): Promise<boolean> {
       maxActivations: 1,
       issuer: 'self-check'
     })
-    // Reconstruct the canonical bytes the signer produced.
     const { sig: _sig, ...payload } = test
     const keys = Object.keys(payload).sort()
     const canonical = '{' + keys.map(k => JSON.stringify(k) + ':' + JSON.stringify((payload as any)[k])).join(',') + '}'
@@ -38,8 +38,7 @@ async function verifyLicenseKeypair(): Promise<boolean> {
   }
 }
 
-async function verifyGithubToken(): Promise<boolean | null> {
-  const token = process.env.GITHUB_TOKEN
+async function verifyGithubToken(token: string | null): Promise<boolean | null> {
   if (!token) return null
   try {
     const res = await $fetch<{ login: string }>('https://api.github.com/user', {
@@ -60,6 +59,27 @@ async function verifyGithubToken(): Promise<boolean | null> {
 export default defineEventHandler(async (event) => {
   await requireAdmin(event)
 
+  const [
+    lsApiKey, lsStoreId, lsStoreDomain, lsWebhookSecret, lsTestMode,
+    ghToken, ghOrg, ghTeamSlug, ghRepo,
+    smtpHost, smtpPort, smtpFrom, smtpUser
+  ] = await Promise.all([
+    getSetting('LEMON_SQUEEZY_API_KEY'),
+    getSetting('LEMON_SQUEEZY_STORE_ID'),
+    getSetting('LEMON_SQUEEZY_STORE_DOMAIN'),
+    getSetting('LEMON_SQUEEZY_WEBHOOK_SECRET'),
+    getSetting('LEMON_SQUEEZY_TEST_MODE'),
+    getSetting('GITHUB_TOKEN'),
+    getSetting('GITHUB_ORG'),
+    getSetting('GITHUB_TEAM_SLUG'),
+    getSetting('GITHUB_REPO'),
+    getSetting('SMTP_HOST'),
+    getSetting('SMTP_PORT'),
+    getSetting('SMTP_FROM'),
+    getSetting('SMTP_USER')
+  ])
+
+  // Bootstrap secrets (still env-only — see schema comment for rationale).
   const publicKeyHex = process.env.LICENSE_SIGNING_PUBLIC_KEY || null
   const hasPrivate = !!process.env.LICENSE_SIGNING_PRIVATE_KEY
   const licenseKeypairMatches = hasPrivate && publicKeyHex ? await verifyLicenseKeypair() : false
@@ -71,25 +91,25 @@ export default defineEventHandler(async (event) => {
       keypairMatches: licenseKeypairMatches
     },
     lemonSqueezy: {
-      apiKeySet: !!process.env.LEMON_SQUEEZY_API_KEY,
-      storeId: process.env.LEMON_SQUEEZY_STORE_ID || null,
-      storeDomain: process.env.LEMON_SQUEEZY_STORE_DOMAIN || null,
-      webhookSecretSet: !!process.env.LEMON_SQUEEZY_WEBHOOK_SECRET,
-      testMode: process.env.LEMON_SQUEEZY_TEST_MODE === 'true'
+      apiKeySet: !!lsApiKey,
+      storeId: lsStoreId,
+      storeDomain: lsStoreDomain,
+      webhookSecretSet: !!lsWebhookSecret,
+      testMode: lsTestMode === 'true' || lsTestMode === '1'
     },
     github: {
-      tokenSet: !!process.env.GITHUB_TOKEN,
-      org: process.env.GITHUB_ORG || null,
-      teamSlug: process.env.GITHUB_TEAM_SLUG || null,
-      repo: process.env.GITHUB_REPO || null,
-      tokenValid: await verifyGithubToken()
+      tokenSet: !!ghToken,
+      org: ghOrg,
+      teamSlug: ghTeamSlug,
+      repo: ghRepo,
+      tokenValid: await verifyGithubToken(ghToken)
     },
     smtp: {
-      configured: !!(process.env.SMTP_HOST && process.env.SMTP_FROM),
-      host: process.env.SMTP_HOST || null,
-      port: process.env.SMTP_PORT ? Number(process.env.SMTP_PORT) : null,
-      from: process.env.SMTP_FROM || null,
-      userSet: !!process.env.SMTP_USER
+      configured: !!(smtpHost && smtpFrom),
+      host: smtpHost,
+      port: smtpPort ? Number(smtpPort) : null,
+      from: smtpFrom,
+      userSet: !!smtpUser
     },
     licensePepperSet: !!process.env.LICENSE_PEPPER,
     portalUrl: process.env.NUXT_PUBLIC_PORTAL_URL || null,

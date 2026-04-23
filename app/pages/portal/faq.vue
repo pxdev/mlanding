@@ -1,68 +1,54 @@
-<script setup lang="ts">
-definePageMeta({ layout: 'landing' })
-
-const copy = useLandingCopy()
-const { locale } = useI18n()
-
+<script setup>
+definePageMeta({ layout: 'landing' });
+const copy = useLandingCopy();
+const { locale } = useI18n();
 useHead(() => ({
-  title: locale.value === 'ar' ? 'أسئلة شائعة — Momentfy' : 'FAQ — Momentfy',
-  meta: [{
-    name: 'description',
-    content: locale.value === 'ar'
-      ? 'أسئلة متكررة حول Momentfy — الترخيص، النشر، التحديثات، الامتثال والدعم.'
-      : 'Frequently asked questions about Momentfy — licensing, deployment, updates, compliance and support.'
-  }]
-}))
-
-const sectionDots = ['bg-secondary-500', 'bg-amber-500', 'bg-violet-500', 'bg-emerald-500', 'bg-sky-500', 'bg-rose-500']
-
-const openSet = ref(new Set<string>())
-function toggle(key: string) {
-  if (openSet.value.has(key)) openSet.value.delete(key)
-  else openSet.value.add(key)
-  openSet.value = new Set(openSet.value)
+    title: locale.value === 'ar' ? 'أسئلة شائعة — Momentfy' : 'FAQ — Momentfy',
+    meta: [{
+            name: 'description',
+            content: locale.value === 'ar'
+                ? 'أسئلة متكررة حول Momentfy — الترخيص، النشر، التحديثات، الامتثال والدعم.'
+                : 'Frequently asked questions about Momentfy — licensing, deployment, updates, compliance and support.'
+        }]
+}));
+const sectionDots = ['bg-secondary-500', 'bg-amber-500', 'bg-violet-500', 'bg-emerald-500', 'bg-sky-500', 'bg-rose-500'];
+const openSet = ref(new Set());
+function toggle(key) {
+    if (openSet.value.has(key))
+        openSet.value.delete(key);
+    else
+        openSet.value.add(key);
+    openSet.value = new Set(openSet.value);
 }
-
-function slugify(s: string) {
-  return s.toLowerCase().replace(/[^a-z0-9\u0600-\u06FF]+/g, '-').replace(/^-+|-+$/g, '')
+function slugify(s) {
+    return s.toLowerCase().replace(/[^a-z0-9\u0600-\u06FF]+/g, '-').replace(/^-+|-+$/g, '');
 }
+const chapterNav = computed(() => copy.value.faqPage.sections.map((s, i) => ({
+    id: slugify(s.title),
+    label: s.title,
+    dot: sectionDots[i % sectionDots.length],
+    count: s.items.length
+})));
 </script>
 
 <template>
   <!-- ═══ Hero ═══ -->
-  <section class="relative py-20 sm:py-28 overflow-hidden">
-    <div aria-hidden="true" class="absolute inset-0 -z-10">
+  <LandingPageHero
+    :crumb-label="copy.faqPage.eyebrow"
+    :headline="copy.faqPage.h1"
+    :sub="copy.faqPage.sub"
+  >
+    <template #background>
       <div class="absolute top-0 start-1/2 -translate-x-1/2 w-[40rem] h-[30rem] bg-secondary-500 blur-[150px] opacity-[0.1] rounded-full" />
-    </div>
+    </template>
 
-    <div class="max-w-7xl mx-auto px-5 sm:px-8">
-      <div class="grid grid-cols-12 gap-6">
-        <div class="col-span-12 sm:col-span-4 lg:col-span-3">
-          <p class="text-xs uppercase tracking-[0.25em] text-gray-400">—— {{ copy.faqPage.eyebrow }}</p>
-          <p class="mt-3 text-sm text-gray-500 dark:text-gray-500 max-w-[16rem]">
-            {{ copy.faqPage.sub }}
-            <NuxtLink to="/portal/download#contact" class="text-primary dark:text-white font-semibold underline underline-offset-4 decoration-secondary-500 hover:decoration-2">{{ copy.faqPage.contactLink }}</NuxtLink>.
-          </p>
+    <p class="mt-4 text-sm sm:text-base text-gray-500 dark:text-gray-400 max-w-2xl leading-relaxed">
+      <NuxtLink to="/portal/download#contact" class="text-primary dark:text-white font-semibold underline underline-offset-4 decoration-secondary-500 hover:decoration-2">{{ copy.faqPage.contactLink }}</NuxtLink>.
+    </p>
+  </LandingPageHero>
 
-          <!-- Jump nav -->
-          <div class="mt-6 space-y-2 text-xs">
-            <a v-for="(section, si) in copy.faqPage.sections" :key="section.title" :href="`#${slugify(section.title)}`"
-              class="group flex items-center gap-2 text-gray-500 hover:text-primary dark:hover:text-white transition-colors"
-            >
-              <span class="size-1.5 rounded-full" :class="sectionDots[si % sectionDots.length]" />
-              <span class="uppercase tracking-[0.2em] truncate">{{ String(si + 1).padStart(2, '0') }} · {{ section.title }}</span>
-              <span class="ms-auto tabular-nums text-gray-400">{{ String(section.items.length).padStart(2, '0') }}</span>
-            </a>
-          </div>
-        </div>
-        <div class="col-span-12 sm:col-span-8 lg:col-span-9">
-          <h1 class="font-black tracking-tight leading-[0.9] text-5xl sm:text-6xl lg:text-7xl xl:text-8xl">
-            <span class="block">{{ copy.faqPage.h1 }}</span>
-          </h1>
-        </div>
-      </div>
-    </div>
-  </section>
+  <!-- Sticky chapter nav -->
+  <LandingChapterNav :items="chapterNav" />
 
   <!-- ═══ FAQ chapters ═══ -->
   <section class="py-16 sm:py-20">

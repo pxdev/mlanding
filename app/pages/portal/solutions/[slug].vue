@@ -1,69 +1,60 @@
-<script setup lang="ts">
-definePageMeta({ layout: 'landing' })
-
-const copy = useLandingCopy()
-const { locale } = useI18n()
-const route = useRoute()
-
-const slug = computed(() => String(route.params.slug || ''))
-
-const solution = computed(() => copy.value.solutionDetails[slug.value])
-const sp = computed(() => copy.value.solutionsPage)
-
+<script setup>
+definePageMeta({ layout: 'landing' });
+const copy = useLandingCopy();
+const { locale } = useI18n();
+const route = useRoute();
+const slug = computed(() => String(route.params.slug || ''));
+const solution = computed(() => copy.value.solutionDetails[slug.value]);
+const sp = computed(() => copy.value.solutionsPage);
 // All solution slugs in the order they appear in the footer + showcase rollup.
 // Used for prev/next pager and for the "browse all" fallback.
 const solutionOrder = [
-  'salon', 'dental', 'medical', 'barber', 'fitness', 'pet',
-  'therapy', 'photo', 'nails', 'tattoo', 'wellness', 'driving', 'tutoring',
-  'multi-tenant', 'mobile', 'memberships'
-]
-const solutions = computed(() =>
-  solutionOrder
+    'salon', 'dental', 'medical', 'barber', 'fitness', 'pet',
+    'therapy', 'photo', 'nails', 'tattoo', 'wellness', 'driving', 'tutoring',
+    'multi-tenant', 'mobile', 'memberships'
+];
+const solutions = computed(() => solutionOrder
     .map(id => ({ id, ...(copy.value.solutionDetails[id] || {}) }))
-    .filter(s => s.title)
-)
-const idx = computed(() => solutionOrder.indexOf(slug.value))
-const total = computed(() => String(solutions.value.length).padStart(2, '0'))
-const prev = computed(() => idx.value > 0 ? solutions.value[idx.value - 1] : null)
-const next = computed(() => idx.value >= 0 && idx.value < solutions.value.length - 1 ? solutions.value[idx.value + 1] : null)
-
+    .filter(s => s.title));
+const idx = computed(() => solutionOrder.indexOf(slug.value));
+const total = computed(() => String(solutions.value.length).padStart(2, '0'));
+const prev = computed(() => idx.value > 0 ? solutions.value[idx.value - 1] : null);
+const next = computed(() => idx.value >= 0 && idx.value < solutions.value.length - 1 ? solutions.value[idx.value + 1] : null);
 // Video URLs per solution — empty for now (placeholder state renders).
 // Swap in real YouTube / mp4 URLs once recorded.
-const solutionVideos: Record<string, { url?: string; poster?: string }> = {
-  salon:       { url: '', poster: '' },
-  dental:      { url: '', poster: '' },
-  medical:     { url: '', poster: '' },
-  barber:      { url: '', poster: '' },
-  fitness:     { url: '', poster: '' },
-  pet:         { url: '', poster: '' },
-  therapy:     { url: '', poster: '' },
-  photo:       { url: '', poster: '' },
-  nails:       { url: '', poster: '' },
-  tattoo:      { url: '', poster: '' },
-  wellness:    { url: '', poster: '' },
-  driving:     { url: '', poster: '' },
-  tutoring:    { url: '', poster: '' },
-  'multi-tenant': { url: '', poster: '' },
-  mobile:      { url: '', poster: '' },
-  memberships: { url: '', poster: '' }
-}
-const video = computed(() => solutionVideos[slug.value] || {})
-
+const solutionVideos = {
+    salon: { url: '', poster: '' },
+    dental: { url: '', poster: '' },
+    medical: { url: '', poster: '' },
+    barber: { url: '', poster: '' },
+    fitness: { url: '', poster: '' },
+    pet: { url: '', poster: '' },
+    therapy: { url: '', poster: '' },
+    photo: { url: '', poster: '' },
+    nails: { url: '', poster: '' },
+    tattoo: { url: '', poster: '' },
+    wellness: { url: '', poster: '' },
+    driving: { url: '', poster: '' },
+    tutoring: { url: '', poster: '' },
+    'multi-tenant': { url: '', poster: '' },
+    mobile: { url: '', poster: '' },
+    memberships: { url: '', poster: '' }
+};
+const video = computed(() => solutionVideos[slug.value] || {});
 useHead(() => ({
-  title: solution.value ? `${solution.value.title} — Momentfy` : 'Solutions — Momentfy',
-  meta: [{
-    name: 'description',
-    content: solution.value?.tagline || (locale.value === 'ar'
-      ? 'حلول Momentfy لكل قطاع وشكل عمل.'
-      : 'Momentfy solutions for every vertical and business shape.')
-  }]
-}))
-
+    title: solution.value ? `${solution.value.title} — Momentfy` : 'Solutions — Momentfy',
+    meta: [{
+            name: 'description',
+            content: solution.value?.tagline || (locale.value === 'ar'
+                ? 'حلول Momentfy لكل قطاع وشكل عمل.'
+                : 'Momentfy solutions for every vertical and business shape.')
+        }]
+}));
 onMounted(() => {
-  if (!solution.value && typeof window !== 'undefined') {
-    navigateTo('/portal/solutions')
-  }
-})
+    if (!solution.value && typeof window !== 'undefined') {
+        navigateTo('/portal/solutions');
+    }
+});
 </script>
 
 <template>
@@ -121,7 +112,7 @@ onMounted(() => {
         <div class="grid grid-cols-12 gap-6 lg:gap-12">
           <div class="col-span-12 lg:col-span-5">
             <div class="lg:sticky lg:top-28">
-              <p class="text-xs uppercase tracking-[0.25em] text-gray-400 mb-4">—— {{ sp.painsTitle }}</p>
+              <LandingSectionEyebrow :label="sp.painsTitle" class="mb-4" />
               <h2 class="font-black tracking-tight leading-[0.95] text-4xl sm:text-5xl lg:text-6xl">
                 {{ solution.title }}
               </h2>
@@ -149,7 +140,7 @@ onMounted(() => {
       <div class="max-w-7xl mx-auto px-5 sm:px-8">
         <div class="grid grid-cols-12 gap-6 mb-10">
           <div class="col-span-12 sm:col-span-4 lg:col-span-3">
-            <p class="text-xs uppercase tracking-[0.25em] text-gray-400">—— {{ sp.capsTitle }}</p>
+            <LandingSectionEyebrow :label="sp.capsTitle" />
             <p class="mt-3 text-sm text-gray-500 max-w-[16rem]">{{ sp.capsBody }}</p>
           </div>
           <div class="col-span-12 sm:col-span-8 lg:col-span-9">
@@ -191,7 +182,7 @@ onMounted(() => {
       <div class="max-w-7xl mx-auto px-5 sm:px-8">
         <div class="grid grid-cols-12 gap-6 mb-10">
           <div class="col-span-12 sm:col-span-4 lg:col-span-3">
-            <p class="text-xs uppercase tracking-[0.25em] text-gray-400">—— {{ sp.stackTitle }}</p>
+            <LandingSectionEyebrow :label="sp.stackTitle" />
             <p class="mt-3 text-sm text-gray-500 max-w-[16rem]">{{ sp.stackBody }}</p>
           </div>
           <div class="col-span-12 sm:col-span-8 lg:col-span-9">
@@ -213,7 +204,7 @@ onMounted(() => {
       <div class="max-w-7xl mx-auto px-5 sm:px-8">
         <div class="grid grid-cols-12 gap-6 mb-10">
           <div class="col-span-12 sm:col-span-4 lg:col-span-3">
-            <p class="text-xs uppercase tracking-[0.25em] text-gray-400">—— {{ sp.useCasesTitle }}</p>
+            <LandingSectionEyebrow :label="sp.useCasesTitle" />
             <p class="mt-3 text-sm text-gray-500 max-w-[16rem]">{{ sp.useCasesBody }}</p>
           </div>
           <div class="col-span-12 sm:col-span-8 lg:col-span-9">
@@ -234,7 +225,7 @@ onMounted(() => {
     <!-- ═══ Mini FAQ (optional) ═══ -->
     <section v-if="solution.faq && solution.faq.length" class="py-16 sm:py-20 border-t border-black/10 dark:border-white/10">
       <div class="max-w-3xl mx-auto px-5 sm:px-8">
-        <p class="text-xs uppercase tracking-[0.25em] text-gray-400 mb-4">—— {{ sp.faqTitle }}</p>
+        <LandingSectionEyebrow :label="sp.faqTitle" class="mb-4" />
         <div class="divide-y divide-black/10 dark:divide-white/10 border-t border-b border-black/10 dark:border-white/10">
           <details v-for="(f, fi) in solution.faq" :key="fi" class="group py-5">
             <summary class="flex items-center justify-between cursor-pointer list-none gap-4">
@@ -250,7 +241,7 @@ onMounted(() => {
     <!-- ═══ CTA ═══ -->
     <section class="py-20 border-t border-black/10 dark:border-white/10">
       <div class="max-w-4xl mx-auto px-5 sm:px-8 text-center">
-        <p class="text-xs uppercase tracking-[0.25em] text-gray-400 mb-6">—— {{ sp.ctaTitle }}</p>
+        <LandingSectionEyebrow :label="sp.ctaTitle" class="mb-6" />
         <h2 class="font-black tracking-tight leading-[0.9] text-4xl sm:text-5xl lg:text-6xl mb-6">{{ sp.ctaTitle }}</h2>
         <p class="text-base sm:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">{{ sp.ctaBody }}</p>
         <div class="flex flex-wrap items-center justify-center gap-6">
@@ -310,7 +301,7 @@ onMounted(() => {
   <template v-else>
     <section class="py-28">
       <div class="max-w-2xl mx-auto px-5 text-center">
-        <p class="text-xs uppercase tracking-[0.25em] text-gray-400 mb-4">—— {{ sp.notFoundEyebrow }}</p>
+        <LandingSectionEyebrow :label="sp.notFoundEyebrow" class="mb-4" />
         <h1 class="font-black tracking-tight text-4xl sm:text-5xl mb-4">{{ sp.notFoundBody }}</h1>
         <NuxtLink to="/portal/solutions" class="group inline-flex items-center gap-3 text-sm font-bold mt-6">
           <span class="size-11 rounded-full bg-primary text-white dark:bg-white dark:text-primary flex items-center justify-center transition-transform group-hover:scale-110">

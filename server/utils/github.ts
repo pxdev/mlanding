@@ -4,7 +4,7 @@
 // invites.
 //
 // Auth: PAT with `admin:org` (Members > Read & write) or fine-grained token
-// scoped to the org. See README phase-4 setup.
+// scoped to the org. Configure via /admin/settings/integrations.
 //
 // API ref:
 //   PUT  /orgs/{org}/teams/{team_slug}/memberships/{username}
@@ -16,52 +16,46 @@
 import { Octokit } from '@octokit/rest'
 import prisma from './prisma'
 import { auditLog } from './audit'
+import { getSetting } from './integration-settings'
 
-let _octokit: Octokit | null = null
-function octokit(): Octokit {
-  if (_octokit) return _octokit
-  const token = process.env.GITHUB_TOKEN
+interface GhClient { octokit: Octokit; org: string; team: string }
+
+// Build a fresh client each call. Octokit instantiation is cheap and this
+// guarantees we read the latest DB-stored token after an admin update.
+async function getClient(): Promise<GhClient> {
+  const token = await getSetting('GITHUB_TOKEN')
   if (!token) throw new Error('GITHUB_TOKEN is not set')
-  _octokit = new Octokit({ auth: token })
-  return _octokit
+  const org = await getSetting('GITHUB_ORG')
+  if (!org) throw new Error('GITHUB_ORG is not set')
+  const team = (await getSetting('GITHUB_TEAM_SLUG')) || 'customers'
+  return { octokit: new Octokit({ auth: token }), org, team }
 }
 
-function org() {
-  const o = process.env.GITHUB_ORG
-  if (!o) throw new Error('GITHUB_ORG is not set')
-  return o
-}
-function team() {
-  const t = process.env.GITHUB_TEAM_SLUG || 'customers'
-  return t
-}
-
-// Send (or update) the team-invite. Idempotent on the GitHub side:
-// repeating the call when the user is already a member is a no-op.
 export async function inviteToCustomersTeam(githubUsername: string) {
-  return octokit().teams.addOrUpdateMembershipForUserInOrg({
-    org: org(),
-    team_slug: team(),
+  const { octokit, org, team } = await getClient()
+  return octokit.teams.addOrUpdateMembershipForUserInOrg({
+    org,
+    team_slug: team,
     username: githubUsername,
     role: 'member'
   })
 }
 
 export async function removeFromCustomersTeam(githubUsername: string) {
-  return octokit().teams.removeMembershipForUserInOrg({
-    org: org(),
-    team_slug: team(),
+  const { octokit, org, team } = await getClient()
+  return octokit.teams.removeMembershipForUserInOrg({
+    org,
+    team_slug: team,
     username: githubUsername
   })
 }
 
 export async function checkMembership(githubUsername: string) {
-  // 200 + state='active' → member; 404 → not a member; 200 + state='pending'
-  // → invite sent but not accepted yet. Octokit throws on 404 — catch.
+  const { octokit, org, team } = await getClient()
   try {
-    const res = await octokit().teams.getMembershipForUserInOrg({
-      org: org(),
-      team_slug: team(),
+    const res = await octokit.teams.getMembershipForUserInOrg({
+      org,
+      team_slug: team,
       username: githubUsername
     })
     return res.data.state as 'active' | 'pending'
@@ -84,7 +78,6 @@ export async function ensureRepoInvite(args: {
 }): Promise<{ ok: boolean; status: 'SENT' | 'ACCEPTED' | 'FAILED' | 'PENDING'; error?: string }> {
   const { accountId, githubUsername } = args
 
-  // Upsert the RepoInvite row.
   const invite = await prisma.repoInvite.upsert({
     where: { accountId_githubUsername: { accountId, githubUsername } },
     create: { accountId, githubUsername, status: 'PENDING', attempts: 0 },
@@ -92,8 +85,9 @@ export async function ensureRepoInvite(args: {
   })
   if (invite.status === 'ACCEPTED') return { ok: true, status: 'ACCEPTED' }
 
-  if (!process.env.GITHUB_TOKEN || !process.env.GITHUB_ORG) {
-    // Not configured — leave row PENDING for an admin retry later.
+  const token = await getSetting('GITHUB_TOKEN')
+  const org = await getSetting('GITHUB_ORG')
+  if (!token || !org) {
     return { ok: false, status: 'PENDING', error: 'GitHub not configured' }
   }
 

@@ -1,92 +1,88 @@
-<script setup lang="ts">
-import { z } from 'zod'
-import type { FormSubmitEvent } from '@nuxt/ui'
-
-definePageMeta({ layout: 'auth', middleware: 'guest' })
-useHead({ title: 'Create account — Momentfy' })
-
-const { fetch: fetchSession } = useUserSession()
-const toast = useToast()
-const route = useRoute()
+<script setup>
+import { z } from 'zod';
+definePageMeta({ layout: 'auth', middleware: 'guest' });
+const chrome = useChromeCopy();
+useHead({ title: () => chrome.value.auth.register.docTitle });
+const { fetch: fetchSession } = useUserSession();
+const toast = useToast();
+const route = useRoute();
 const redirectTo = computed(() => {
-  const r = route.query.redirect as string | undefined
-  return r && r.startsWith('/') && !r.startsWith('//') ? r : '/dashboard'
-})
-
+    const r = route.query.redirect;
+    return r && r.startsWith('/') && !r.startsWith('//') ? r : '/dashboard';
+});
 const schema = z.object({
-  firstName: z.string().min(1, 'First name is required').max(80),
-  lastName: z.string().min(1, 'Last name is required').max(80),
-  email: z.string().email('Invalid email address').max(160),
-  password: z.string().min(8, 'At least 8 characters').max(200),
-  githubUsername: z.string().regex(/^[a-zA-Z0-9-]{1,39}$/, 'Letters, numbers and dashes only').optional().or(z.literal(''))
-})
-type Schema = z.output<typeof schema>
-
-const state = reactive<Partial<Schema>>({
-  firstName: '',
-  lastName: '',
-  email: '',
-  password: '',
-  githubUsername: ''
-})
-const loading = ref(false)
-
-async function onSubmit(event: FormSubmitEvent<Schema>) {
-  loading.value = true
-  try {
-    await $fetch('/api/auth/register', {
-      method: 'POST',
-      body: {
-        ...event.data,
-        githubUsername: event.data.githubUsername || null
-      }
-    })
-    await fetchSession()
-    await navigateTo(redirectTo.value)
-  } catch (err: any) {
-    toast.add({ title: 'Registration failed', description: err.statusMessage || err.message, color: 'error' })
-  } finally {
-    loading.value = false
-  }
+    firstName: z.string().min(1, 'First name is required').max(80),
+    lastName: z.string().min(1, 'Last name is required').max(80),
+    email: z.string().email('Invalid email address').max(160),
+    password: z.string().min(8, 'At least 8 characters').max(200),
+    githubUsername: z.string().regex(/^[a-zA-Z0-9-]{1,39}$/, 'Letters, numbers and dashes only').optional().or(z.literal(''))
+});
+const state = reactive({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    githubUsername: ''
+});
+const loading = ref(false);
+async function onSubmit(event) {
+    loading.value = true;
+    try {
+        await $fetch('/api/auth/register', {
+            method: 'POST',
+            body: {
+                ...event.data,
+                githubUsername: event.data.githubUsername || null
+            }
+        });
+        await fetchSession();
+        await navigateTo(redirectTo.value);
+    }
+    catch (err) {
+        toast.add({ title: chrome.value.auth.register.failedToast, description: err.statusMessage || err.message, color: 'error' });
+    }
+    finally {
+        loading.value = false;
+    }
 }
 </script>
 
 <template>
   <UCard>
     <template #header>
-      <h2 class="text-lg font-semibold">Create your account</h2>
-      <p class="text-sm text-gray-500 dark:text-gray-400">It's free to sign up. Buy a license whenever you're ready.</p>
+      <h2 class="text-lg font-semibold">{{ chrome.auth.register.title }}</h2>
+      <p class="text-sm text-gray-500 dark:text-gray-400">{{ chrome.auth.register.subtitle }}</p>
     </template>
 
     <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
       <div class="grid grid-cols-2 gap-3">
-        <UFormField label="First name" name="firstName" required>
+        <UFormField :label="chrome.auth.register.firstName" name="firstName" required>
           <UInput v-model="state.firstName" size="lg" class="w-full" autocomplete="given-name" />
         </UFormField>
-        <UFormField label="Last name" name="lastName" required>
+        <UFormField :label="chrome.auth.register.lastName" name="lastName" required>
           <UInput v-model="state.lastName" size="lg" class="w-full" autocomplete="family-name" />
         </UFormField>
       </div>
 
-      <UFormField label="Email" name="email" required>
+      <UFormField :label="chrome.auth.register.email" name="email" required>
         <UInput v-model="state.email" type="email" icon="i-lucide-mail" size="lg" class="w-full" autocomplete="email" />
       </UFormField>
 
-      <UFormField label="Password" name="password" required hint="At least 8 characters">
+      <UFormField :label="chrome.auth.register.password" name="password" required :hint="chrome.auth.register.passwordHint">
         <UInput v-model="state.password" type="password" icon="i-lucide-lock" size="lg" class="w-full" autocomplete="new-password" />
       </UFormField>
 
-      <UFormField label="GitHub username" name="githubUsername" hint="Optional now — required before we can give you repo access">
-        <UInput v-model="state.githubUsername" icon="i-simple-icons-github" size="lg" class="w-full" placeholder="octocat" />
+      <UFormField :label="chrome.auth.register.github" name="githubUsername" :hint="chrome.auth.register.githubHint">
+        <UInput v-model="state.githubUsername" icon="i-simple-icons-github" size="lg" class="w-full" :placeholder="chrome.auth.register.githubPlaceholder" />
       </UFormField>
 
-      <UButton type="submit" block :loading="loading" size="lg">Create account</UButton>
+      <UButton type="submit" block :loading="loading" size="lg">{{ chrome.auth.register.submit }}</UButton>
     </UForm>
 
     <template #footer>
       <p class="text-sm text-center text-gray-500 dark:text-gray-400">
-        Already have an account?
-        <NuxtLink :to="{ path: '/auth/login', query: route.query.redirect ? { redirect: route.query.redirect as string } : undefined }" class="text-primary font-medium">Sign in</NuxtLink>
+        {{ chrome.auth.register.haveAccountPrompt }}
+        <NuxtLink :to="{ path: '/auth/login', query: route.query.redirect ? { redirect: route.query.redirect } : undefined }" class="text-primary font-medium">{{ chrome.auth.register.haveAccountCta }}</NuxtLink>
       </p>
     </template>
   </UCard>

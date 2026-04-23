@@ -1,35 +1,168 @@
-<script setup lang="ts">
-definePageMeta({ layout: 'admin', middleware: ['auth', 'admin'] })
-useHead({ title: 'Integrations — Momentfy admin' })
-
-interface IntegrationsStatus {
-  licenseSigning: { privateKeySet: boolean; publicKeyMasked: string | null; keypairMatches: boolean }
-  lemonSqueezy: { apiKeySet: boolean; storeId: string | null; storeDomain: string | null; webhookSecretSet: boolean; testMode: boolean }
-  github: { tokenSet: boolean; org: string | null; teamSlug: string | null; repo: string | null; tokenValid: boolean | null }
-  smtp: { configured: boolean; host: string | null; port: number | null; from: string | null; userSet: boolean }
-  licensePepperSet: boolean
-  portalUrl: string | null
-  nodeEnv: string
-  sessionCookieSecure: boolean
+<script setup>
+definePageMeta({ layout: 'portal', middleware: ['auth', 'admin'], colorMode: 'light' });
+const chrome = useChromeCopy();
+const t = computed(() => chrome.value.admin.integrationsPage);
+useHead({ title: () => chrome.value.admin.integrationsPage.docTitle });
+const toast = useToast();
+const { user } = useSession();
+const { data: cfg, refresh, status } = await useFetch('/api/portal/admin/settings/integrations');
+const lsForm = reactive({ apiKey: '', webhookSecret: '', storeId: '', storeDomain: '', testMode: false });
+const ghForm = reactive({ token: '', org: '', teamSlug: '', repo: '' });
+const smtpForm = reactive({ host: '', port: null, user: '', pass: '', from: '' });
+watch(cfg, (v) => {
+    if (!v)
+        return;
+    lsForm.storeId = v.lemonSqueezy.storeId || '';
+    lsForm.storeDomain = v.lemonSqueezy.storeDomain || '';
+    lsForm.testMode = v.lemonSqueezy.testMode;
+    ghForm.org = v.github.org || '';
+    ghForm.teamSlug = v.github.teamSlug || '';
+    ghForm.repo = v.github.repo || '';
+    smtpForm.host = v.smtp.host || '';
+    smtpForm.port = v.smtp.port;
+    smtpForm.from = v.smtp.from || '';
+}, { immediate: true });
+const savingLs = ref(false);
+const savingGh = ref(false);
+const savingSmtp = ref(false);
+const testingLs = ref(false);
+const testingGh = ref(false);
+const testingSmtp = ref(false);
+const smtpTestTo = ref('');
+async function saveLemonSqueezy() {
+    savingLs.value = true;
+    try {
+        await $fetch('/api/portal/admin/settings/integrations', {
+            method: 'PATCH',
+            body: {
+                lemonSqueezy: {
+                    // Empty string for secrets means "leave unchanged"; we send `undefined`
+                    // by omitting the field. Any non-empty string overwrites or saves.
+                    ...(lsForm.apiKey ? { apiKey: lsForm.apiKey } : {}),
+                    ...(lsForm.webhookSecret ? { webhookSecret: lsForm.webhookSecret } : {}),
+                    storeId: lsForm.storeId || null,
+                    storeDomain: lsForm.storeDomain || null,
+                    testMode: lsForm.testMode
+                }
+            }
+        });
+        lsForm.apiKey = '';
+        lsForm.webhookSecret = '';
+        toast.add({ title: t.value.toastSaved, color: 'success' });
+        await refresh();
+    }
+    catch (err) {
+        toast.add({ title: t.value.toastSaveFailed, description: err.statusMessage || err.message, color: 'error' });
+    }
+    finally {
+        savingLs.value = false;
+    }
 }
-
-const { data: cfg, refresh, status } = await useFetch<IntegrationsStatus>('/api/portal/admin/settings/integrations')
-
-function statusFor(enabled: boolean | null): { color: 'success' | 'error' | 'warning' | 'neutral'; label: string } {
-  if (enabled === true) return { color: 'success', label: 'Active' }
-  if (enabled === false) return { color: 'error', label: 'Misconfigured' }
-  return { color: 'neutral', label: 'Not configured' }
+async function saveGithub() {
+    savingGh.value = true;
+    try {
+        await $fetch('/api/portal/admin/settings/integrations', {
+            method: 'PATCH',
+            body: {
+                github: {
+                    ...(ghForm.token ? { token: ghForm.token } : {}),
+                    org: ghForm.org || null,
+                    teamSlug: ghForm.teamSlug || null,
+                    repo: ghForm.repo || null
+                }
+            }
+        });
+        ghForm.token = '';
+        toast.add({ title: t.value.toastSaved, color: 'success' });
+        await refresh();
+    }
+    catch (err) {
+        toast.add({ title: t.value.toastSaveFailed, description: err.statusMessage || err.message, color: 'error' });
+    }
+    finally {
+        savingGh.value = false;
+    }
+}
+async function saveSmtp() {
+    savingSmtp.value = true;
+    try {
+        await $fetch('/api/portal/admin/settings/integrations', {
+            method: 'PATCH',
+            body: {
+                smtp: {
+                    host: smtpForm.host || null,
+                    port: smtpForm.port,
+                    user: smtpForm.user || null,
+                    ...(smtpForm.pass ? { pass: smtpForm.pass } : {}),
+                    from: smtpForm.from || null
+                }
+            }
+        });
+        smtpForm.pass = '';
+        smtpForm.user = '';
+        toast.add({ title: t.value.toastSaved, color: 'success' });
+        await refresh();
+    }
+    catch (err) {
+        toast.add({ title: t.value.toastSaveFailed, description: err.statusMessage || err.message, color: 'error' });
+    }
+    finally {
+        savingSmtp.value = false;
+    }
+}
+async function testLemonSqueezy() {
+    testingLs.value = true;
+    try {
+        const r = await $fetch('/api/portal/admin/settings/test-lemon-squeezy', { method: 'POST' });
+        toast.add({ title: t.value.toastTestOk, description: r.name || r.email || undefined, color: 'success' });
+    }
+    catch (err) {
+        toast.add({ title: t.value.toastTestFailed, description: err.statusMessage || err.message, color: 'error' });
+    }
+    finally {
+        testingLs.value = false;
+    }
+}
+async function testGithub() {
+    testingGh.value = true;
+    try {
+        const r = await $fetch('/api/portal/admin/settings/test-github', { method: 'POST' });
+        toast.add({ title: t.value.toastTestOk, description: `${r.login} · ${r.teamCheck}`, color: 'success' });
+    }
+    catch (err) {
+        toast.add({ title: t.value.toastTestFailed, description: err.statusMessage || err.message, color: 'error' });
+    }
+    finally {
+        testingGh.value = false;
+    }
+}
+async function testSmtp() {
+    testingSmtp.value = true;
+    try {
+        const body = smtpTestTo.value ? { to: smtpTestTo.value } : {};
+        const r = await $fetch('/api/portal/admin/settings/test-smtp', { method: 'POST', body });
+        toast.add({ title: t.value.toastTestOk, description: r.to, color: 'success' });
+    }
+    catch (err) {
+        toast.add({ title: t.value.toastTestFailed, description: err.statusMessage || err.message, color: 'error' });
+    }
+    finally {
+        testingSmtp.value = false;
+    }
+}
+function secretHint(set) {
+    return set ? t.value.secretSetHint : t.value.secretUnsetHint;
 }
 </script>
 
 <template>
-  <div class="p-6 max-w-5xl mx-auto space-y-6">
+  <div class="p-6 max-w-4xl mx-auto space-y-6">
     <header class="flex items-start justify-between gap-3">
       <div>
-        <h1 class="text-2xl font-bold">Integrations</h1>
-        <p class="text-sm text-gray-500 mt-1">External services the Portal talks to. All configured via environment variables.</p>
+        <h1 class="text-2xl font-bold">{{ t.title }}</h1>
+        <p class="text-sm text-muted mt-1">{{ t.subtitle }}</p>
       </div>
-      <UButton size="sm" variant="ghost" icon="i-lucide-refresh-cw" :loading="status === 'pending'" @click="refresh">Refresh</UButton>
+      <UButton size="sm" variant="ghost" icon="i-lucide-refresh-cw" :loading="status === 'pending'" @click="refresh">{{ t.refresh }}</UButton>
     </header>
 
     <!-- Lemon Squeezy -->
@@ -38,55 +171,47 @@ function statusFor(enabled: boolean | null): { color: 'success' | 'error' | 'war
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-2">
             <UIcon name="i-lucide-shopping-cart" class="size-5 text-primary" />
-            <h3 class="font-semibold">Lemon Squeezy</h3>
+            <h3 class="font-semibold">{{ t.lsTitle }}</h3>
           </div>
           <UBadge
             v-if="cfg?.lemonSqueezy.apiKeySet && cfg?.lemonSqueezy.storeId"
-            :color="statusFor(true).color" variant="soft" size="sm"
+            color="success" variant="soft" size="sm"
           >
-            {{ cfg.lemonSqueezy.testMode ? 'Active (test mode)' : 'Active' }}
+            {{ cfg.lemonSqueezy.testMode ? t.lsActiveTest : t.lsActive }}
           </UBadge>
-          <UBadge v-else color="neutral" variant="soft" size="sm">Not configured</UBadge>
+          <UBadge v-else color="neutral" variant="soft" size="sm">{{ t.statusNotConfigured }}</UBadge>
         </div>
       </template>
-      <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
-        <div>
-          <dt class="text-gray-500">API key</dt>
-          <dd>
-            <UBadge :color="cfg?.lemonSqueezy.apiKeySet ? 'success' : 'error'" variant="soft" size="sm">
-              {{ cfg?.lemonSqueezy.apiKeySet ? 'Set' : 'Missing' }}
-            </UBadge>
-          </dd>
+
+      <div class="space-y-5">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <UFormField :label="t.fieldApiKey" :hint="secretHint(cfg?.lemonSqueezy.apiKeySet ?? false)">
+            <UInput v-model="lsForm.apiKey" type="password" autocomplete="off" placeholder="lsk_…" size="lg" class="w-full" />
+          </UFormField>
+          <UFormField :label="t.fieldWebhookSecret" :hint="secretHint(cfg?.lemonSqueezy.webhookSecretSet ?? false)">
+            <UInput v-model="lsForm.webhookSecret" type="password" autocomplete="off" size="lg" class="w-full" />
+          </UFormField>
+          <UFormField :label="t.fieldStoreId">
+            <UInput v-model="lsForm.storeId" size="lg" class="w-full" />
+          </UFormField>
+          <UFormField :label="t.fieldStoreDomain">
+            <UInput v-model="lsForm.storeDomain" placeholder="your-store.lemonsqueezy.com" size="lg" class="w-full" />
+          </UFormField>
         </div>
-        <div>
-          <dt class="text-gray-500">Webhook secret</dt>
-          <dd>
-            <UBadge :color="cfg?.lemonSqueezy.webhookSecretSet ? 'success' : 'error'" variant="soft" size="sm">
-              {{ cfg?.lemonSqueezy.webhookSecretSet ? 'Set' : 'Missing' }}
-            </UBadge>
-          </dd>
+        <UFormField :hint="t.lsTestModeHint">
+          <label class="flex items-center gap-2 text-sm">
+            <USwitch v-model="lsForm.testMode" />
+            <span>{{ t.fieldTestMode }}</span>
+          </label>
+        </UFormField>
+      </div>
+
+      <template #footer>
+        <div class="flex justify-end gap-2">
+          <UButton color="neutral" variant="outline" :loading="testingLs" :disabled="!cfg?.lemonSqueezy.apiKeySet" @click="testLemonSqueezy">{{ t.test }}</UButton>
+          <UButton :loading="savingLs" @click="saveLemonSqueezy">{{ t.save }}</UButton>
         </div>
-        <div>
-          <dt class="text-gray-500">Store ID</dt>
-          <dd class="font-mono text-xs">{{ cfg?.lemonSqueezy.storeId || '—' }}</dd>
-        </div>
-        <div>
-          <dt class="text-gray-500">Store domain</dt>
-          <dd class="font-mono text-xs">{{ cfg?.lemonSqueezy.storeDomain || '—' }}</dd>
-        </div>
-      </dl>
-      <details class="mt-4">
-        <summary class="text-xs text-gray-500 cursor-pointer">How to configure</summary>
-        <div class="mt-2 text-xs text-gray-500 space-y-1">
-          <p>Set these in your Portal <code>.env</code>:</p>
-          <ul class="list-disc ps-5 font-mono">
-            <li>LEMON_SQUEEZY_API_KEY</li>
-            <li>LEMON_SQUEEZY_STORE_ID</li>
-            <li>LEMON_SQUEEZY_STORE_DOMAIN</li>
-            <li>LEMON_SQUEEZY_WEBHOOK_SECRET</li>
-          </ul>
-        </div>
-      </details>
+      </template>
     </UCard>
 
     <!-- GitHub -->
@@ -95,57 +220,43 @@ function statusFor(enabled: boolean | null): { color: 'success' | 'error' | 'war
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-2">
             <UIcon name="i-simple-icons-github" class="size-5" />
-            <h3 class="font-semibold">GitHub</h3>
+            <h3 class="font-semibold">{{ t.ghTitle }}</h3>
           </div>
-          <UBadge :color="statusFor(cfg?.github.tokenSet ? cfg?.github.tokenValid : null).color" variant="soft" size="sm">
-            {{ statusFor(cfg?.github.tokenSet ? cfg?.github.tokenValid : null).label }}
-          </UBadge>
+          <UBadge
+            v-if="cfg?.github.tokenSet && cfg.github.tokenValid"
+            color="success" variant="soft" size="sm"
+          >{{ t.statusActive }}</UBadge>
+          <UBadge
+            v-else-if="cfg?.github.tokenSet && cfg.github.tokenValid === false"
+            color="error" variant="soft" size="sm"
+          >{{ t.statusMisconfigured }}</UBadge>
+          <UBadge v-else color="neutral" variant="soft" size="sm">{{ t.statusNotConfigured }}</UBadge>
         </div>
       </template>
-      <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
-        <div>
-          <dt class="text-gray-500">Token</dt>
-          <dd>
-            <UBadge :color="cfg?.github.tokenSet ? 'success' : 'neutral'" variant="soft" size="sm">
-              {{ cfg?.github.tokenSet ? 'Set' : 'Not set' }}
-            </UBadge>
-          </dd>
+
+      <div class="space-y-5">
+        <UFormField :label="t.fieldToken" :hint="cfg?.github.tokenSet ? t.secretSetHint : t.fieldTokenHint">
+          <UInput v-model="ghForm.token" type="password" autocomplete="off" placeholder="ghp_…" size="lg" class="w-full" />
+        </UFormField>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <UFormField :label="t.fieldOrg">
+            <UInput v-model="ghForm.org" size="lg" class="w-full" />
+          </UFormField>
+          <UFormField :label="t.fieldTeamSlug">
+            <UInput v-model="ghForm.teamSlug" placeholder="customers" size="lg" class="w-full" />
+          </UFormField>
         </div>
-        <div>
-          <dt class="text-gray-500">Token valid</dt>
-          <dd>
-            <UBadge
-              v-if="cfg?.github.tokenSet"
-              :color="cfg.github.tokenValid ? 'success' : 'error'" variant="soft" size="sm"
-            >{{ cfg.github.tokenValid ? 'Verified' : 'Rejected' }}</UBadge>
-            <span v-else class="text-gray-500 text-xs">—</span>
-          </dd>
+        <UFormField :label="t.fieldRepo">
+          <UInput v-model="ghForm.repo" placeholder="org/repo" size="lg" class="w-full" />
+        </UFormField>
+      </div>
+
+      <template #footer>
+        <div class="flex justify-end gap-2">
+          <UButton color="neutral" variant="outline" :loading="testingGh" :disabled="!cfg?.github.tokenSet" @click="testGithub">{{ t.test }}</UButton>
+          <UButton :loading="savingGh" @click="saveGithub">{{ t.save }}</UButton>
         </div>
-        <div>
-          <dt class="text-gray-500">Organisation</dt>
-          <dd>{{ cfg?.github.org || '—' }}</dd>
-        </div>
-        <div>
-          <dt class="text-gray-500">Team slug</dt>
-          <dd>{{ cfg?.github.teamSlug || '—' }}</dd>
-        </div>
-        <div class="sm:col-span-2">
-          <dt class="text-gray-500">Repository</dt>
-          <dd class="font-mono text-xs">{{ cfg?.github.repo || '—' }}</dd>
-        </div>
-      </dl>
-      <details class="mt-4">
-        <summary class="text-xs text-gray-500 cursor-pointer">How to configure</summary>
-        <div class="mt-2 text-xs text-gray-500 space-y-1">
-          <p>Generate a PAT with <code>admin:org</code> (or fine-grained with Members write) and set:</p>
-          <ul class="list-disc ps-5 font-mono">
-            <li>GITHUB_TOKEN</li>
-            <li>GITHUB_ORG</li>
-            <li>GITHUB_TEAM_SLUG</li>
-            <li>GITHUB_REPO</li>
-          </ul>
-        </div>
-      </details>
+      </template>
     </UCard>
 
     <!-- SMTP -->
@@ -154,71 +265,60 @@ function statusFor(enabled: boolean | null): { color: 'success' | 'error' | 'war
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-2">
             <UIcon name="i-lucide-mail" class="size-5 text-primary" />
-            <h3 class="font-semibold">Transactional email (SMTP)</h3>
+            <h3 class="font-semibold">{{ t.smtpTitle }}</h3>
           </div>
           <UBadge :color="cfg?.smtp.configured ? 'success' : 'neutral'" variant="soft" size="sm">
-            {{ cfg?.smtp.configured ? 'Active' : 'Disabled' }}
+            {{ cfg?.smtp.configured ? t.statusActive : t.smtpDisabled }}
           </UBadge>
         </div>
       </template>
-      <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
-        <div>
-          <dt class="text-gray-500">Host</dt>
-          <dd class="font-mono text-xs">{{ cfg?.smtp.host || '—' }}</dd>
+
+      <div class="space-y-5">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <UFormField :label="t.fieldHost">
+            <UInput v-model="smtpForm.host" placeholder="smtp.example.com" size="lg" class="w-full" />
+          </UFormField>
+          <UFormField :label="t.fieldPort">
+            <UInput v-model.number="smtpForm.port" type="number" min="1" max="65535" placeholder="465" size="lg" class="w-full" />
+          </UFormField>
+          <UFormField :label="t.fieldUser">
+            <UInput v-model="smtpForm.user" autocomplete="off" size="lg" class="w-full" />
+          </UFormField>
+          <UFormField :label="t.fieldPass" :hint="secretHint(cfg?.smtp.userSet ?? false)">
+            <UInput v-model="smtpForm.pass" type="password" autocomplete="off" size="lg" class="w-full" />
+          </UFormField>
         </div>
-        <div>
-          <dt class="text-gray-500">Port</dt>
-          <dd>{{ cfg?.smtp.port || '—' }}</dd>
+        <UFormField :label="t.fieldFrom">
+          <UInput v-model="smtpForm.from" placeholder="Momentfy <noreply@…>" size="lg" class="w-full" />
+        </UFormField>
+        <p class="text-xs text-muted">{{ t.smtpUnsetNote }}</p>
+        <UFormField :label="t.smtpTestRecipient" :hint="user?.email ? fillTemplate(t.currentValueHint, { value: user.email }) : ''">
+          <UInput v-model="smtpTestTo" type="email" :placeholder="user?.email" size="lg" class="w-full" />
+        </UFormField>
+      </div>
+
+      <template #footer>
+        <div class="flex justify-end gap-2">
+          <UButton color="neutral" variant="outline" :loading="testingSmtp" :disabled="!cfg?.smtp.host" @click="testSmtp">{{ t.test }}</UButton>
+          <UButton :loading="savingSmtp" @click="saveSmtp">{{ t.save }}</UButton>
         </div>
-        <div>
-          <dt class="text-gray-500">From</dt>
-          <dd class="font-mono text-xs">{{ cfg?.smtp.from || '—' }}</dd>
-        </div>
-        <div>
-          <dt class="text-gray-500">Authentication</dt>
-          <dd>
-            <UBadge :color="cfg?.smtp.userSet ? 'success' : 'neutral'" variant="soft" size="sm">
-              {{ cfg?.smtp.userSet ? 'With SMTP user' : 'Relay (no auth)' }}
-            </UBadge>
-          </dd>
-        </div>
-      </dl>
-      <details class="mt-4">
-        <summary class="text-xs text-gray-500 cursor-pointer">How to configure</summary>
-        <div class="mt-2 text-xs text-gray-500 space-y-1">
-          <p>Set these in your Portal <code>.env</code>:</p>
-          <ul class="list-disc ps-5 font-mono">
-            <li>SMTP_HOST</li>
-            <li>SMTP_PORT (465 for SMTPS, 587 for STARTTLS)</li>
-            <li>SMTP_USER / SMTP_PASS (optional for open relay)</li>
-            <li>SMTP_FROM</li>
-          </ul>
-          <p>Leaving SMTP unset disables password-reset and post-purchase "your license is ready" emails.</p>
-        </div>
-      </details>
+      </template>
     </UCard>
 
-    <!-- License hashing pepper -->
+    <!-- License pepper (read-only, env-only) -->
     <UCard class="!shadow-none">
       <template #header>
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-2">
             <UIcon name="i-lucide-key" class="size-5 text-primary" />
-            <h3 class="font-semibold">License key pepper</h3>
+            <h3 class="font-semibold">{{ t.pepperTitle }}</h3>
           </div>
           <UBadge :color="cfg?.licensePepperSet ? 'success' : 'warning'" variant="soft" size="sm">
-            {{ cfg?.licensePepperSet ? 'Set' : 'Missing' }}
+            {{ cfg?.licensePepperSet ? t.badgeSet : t.badgeMissing }}
           </UBadge>
         </div>
       </template>
-      <p class="text-sm text-gray-600 dark:text-gray-400">
-        Extra secret folded into the SHA-256 hash of every issued key. Treat it like an encryption key:
-        rotating makes every existing key unrecognisable. Required in production.
-      </p>
-      <details class="mt-4">
-        <summary class="text-xs text-gray-500 cursor-pointer">How to configure</summary>
-        <pre class="mt-2 text-xs font-mono bg-black/[0.03] dark:bg-white/[0.03] p-2 rounded">LICENSE_PEPPER=$(openssl rand -hex 32)</pre>
-      </details>
+      <p class="text-sm text-muted">{{ t.pepperDesc }}</p>
     </UCard>
   </div>
 </template>

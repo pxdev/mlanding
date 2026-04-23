@@ -1,18 +1,14 @@
 <script setup lang="ts">
-// Operator console layout. Three panels:
-//   1. Dark icon sidebar on the left (primary section jump)
-//   2. Collapsible submenu in the middle (sub-pages within a section)
-//   3. Content on the right, with a top bar for brand/language/profile
-//
-// Visual language mirrors the main Momentfy app's admin layout so
-// operators feel at home. Uses Portal tokens (primary colour) rather
-// than the main app's exact palette, which is fine — the shape is the
-// familiar part.
+// Unified chrome for all authenticated portal pages (/dashboard/** and
+// /admin/**). Branches on `isAdmin` to show admin nav + submenu, or the
+// simpler customer nav. Replaces the previous admin.vue + dashboard.vue
+// split and the setPageLayout-via-middleware dance — every authenticated
+// page just sets `layout: 'portal'` and this component does the rest.
 
 const route = useRoute()
-const colorMode = useColorMode()
-const isDark = computed(() => colorMode.value === 'dark')
-const { user, displayName, clear } = useSession()
+const { user, isAdmin, displayName, clear } = useSession()
+const { localeItems, currentLocale } = useLandingLocale()
+const chrome = useChromeCopy()
 
 const isSubMenuOpen = ref(true)
 const mobileMenuOpen = ref(false)
@@ -27,46 +23,54 @@ defineShortcuts({
 
 interface NavItem { icon: string; to: string; label: string }
 
-// Primary nav: shows in the narrow left rail.
-const mainNavItems = computed<NavItem[]>(() => [
-  { icon: 'i-lucide-layout-dashboard', to: '/admin', label: 'Dashboard' },
-  { icon: 'i-lucide-shield', to: '/admin/licenses', label: 'Licenses' },
-  { icon: 'i-lucide-users', to: '/admin/users', label: 'Customers' },
-  { icon: 'i-lucide-shopping-cart', to: '/admin/orders', label: 'Purchases' },
-  { icon: 'i-lucide-package', to: '/admin/plans', label: 'Plans' },
-  { icon: 'i-simple-icons-github', to: '/admin/invites', label: 'GitHub invites' },
-  { icon: 'i-lucide-list', to: '/admin/audit', label: 'Audit log' },
-  { icon: 'i-lucide-settings', to: '/admin/settings', label: 'Settings' }
+const adminNavItems = computed<NavItem[]>(() => [
+  { icon: 'i-lucide-layout-dashboard', to: '/admin', label: chrome.value.admin.nav.dashboard },
+  { icon: 'i-lucide-shield', to: '/admin/licenses', label: chrome.value.admin.nav.licenses },
+  { icon: 'i-lucide-users', to: '/admin/users', label: chrome.value.admin.nav.customers },
+  { icon: 'i-lucide-shopping-cart', to: '/admin/orders', label: chrome.value.admin.nav.purchases },
+  { icon: 'i-lucide-package', to: '/admin/plans', label: chrome.value.admin.nav.plans },
+  { icon: 'i-lucide-list-checks', to: '/admin/features', label: chrome.value.admin.nav.features },
+  { icon: 'i-lucide-ticket-percent', to: '/admin/promo-codes', label: chrome.value.admin.nav.promoCodes },
+  { icon: 'i-simple-icons-github', to: '/admin/invites', label: chrome.value.admin.nav.githubInvites },
+  { icon: 'i-lucide-list', to: '/admin/audit', label: chrome.value.admin.nav.auditLog },
+  { icon: 'i-lucide-settings', to: '/admin/settings', label: chrome.value.admin.nav.settings }
 ])
 
-// Submenu: only populated for sections that have sub-pages. Leaving a
-// section out means no middle panel is rendered.
-const subMenuConfig = computed<Record<string, { title: string; items: { label: string; to: string }[] }>>(() => ({
+const customerNavItems = computed<NavItem[]>(() => [
+  { icon: 'i-lucide-key', to: '/dashboard', label: chrome.value.dashboard.nav.licenses },
+  { icon: 'i-lucide-user', to: '/dashboard/profile', label: chrome.value.dashboard.nav.profile }
+])
+
+const mainNavItems = computed<NavItem[]>(() => isAdmin.value ? adminNavItems.value : customerNavItems.value)
+
+const adminSubMenuConfig = computed<Record<string, { title: string; items: { label: string; to: string }[] }>>(() => ({
   '/admin/licenses': {
-    title: 'Licenses',
+    title: chrome.value.admin.submenu.licenses,
     items: [
-      { label: 'All licenses', to: '/admin/licenses' },
-      { label: 'Issue new', to: '/admin/licenses/new' }
+      { label: chrome.value.admin.submenu.allLicenses, to: '/admin/licenses' },
+      { label: chrome.value.admin.submenu.issueNew, to: '/admin/licenses/new' }
     ]
   },
   '/admin/orders': {
-    title: 'Purchases',
+    title: chrome.value.admin.submenu.purchases,
     items: [
-      { label: 'All orders', to: '/admin/orders' }
+      { label: chrome.value.admin.submenu.allOrders, to: '/admin/orders' }
     ]
   },
   '/admin/settings': {
-    title: 'Settings',
+    title: chrome.value.admin.submenu.settings,
     items: [
-      { label: 'General', to: '/admin/settings' },
-      { label: 'Integrations', to: '/admin/settings/integrations' }
+      { label: chrome.value.admin.submenu.general, to: '/admin/settings' },
+      { label: chrome.value.admin.submenu.integrations, to: '/admin/settings/integrations' },
+      { label: chrome.value.admin.backupPage.title, to: '/admin/settings/backup' }
     ]
   }
 }))
 
 const currentSubMenu = computed(() => {
+  if (!isAdmin.value) return null
   const path = route.path
-  for (const [prefix, config] of Object.entries(subMenuConfig.value)) {
+  for (const [prefix, config] of Object.entries(adminSubMenuConfig.value)) {
     if (path === prefix || path.startsWith(prefix + '/')) return config
   }
   return null
@@ -74,7 +78,7 @@ const currentSubMenu = computed(() => {
 const hasSubMenu = computed(() => currentSubMenu.value !== null)
 
 function isActive(to: string) {
-  if (to === '/admin') return route.path === '/admin'
+  if (to === '/admin' || to === '/dashboard') return route.path === to
   return route.path === to || route.path.startsWith(to + '/')
 }
 
@@ -82,15 +86,21 @@ function isSubActive(to: string) {
   return route.path === to
 }
 
-const userMenuItems = computed(() => [
-  [{ label: displayName.value || user.value?.email || 'Account', icon: 'i-lucide-user', disabled: true }],
-  [
-    { label: 'Portal dashboard', icon: 'i-lucide-layout-dashboard', to: '/dashboard' },
-    { label: 'Profile', icon: 'i-lucide-user', to: '/dashboard/profile' },
-    { label: isDark.value ? 'Light mode' : 'Dark mode', icon: isDark.value ? 'i-lucide-sun' : 'i-lucide-moon', onSelect: () => { colorMode.preference = isDark.value ? 'light' : 'dark' } }
-  ],
-  [{ label: 'Sign out', icon: 'i-lucide-log-out', onSelect: onLogout }]
-])
+const topbarTitle = computed(() => isAdmin.value ? chrome.value.admin.title : chrome.value.dashboard.title)
+
+const userMenuItems = computed(() => {
+  const groups: Array<Array<Record<string, unknown>>> = [
+    [{ label: displayName.value || user.value?.email || chrome.value.common.account, icon: 'i-lucide-user', disabled: true }]
+  ]
+  const middle: Array<Record<string, unknown>> = []
+  if (isAdmin.value) {
+    middle.push({ label: chrome.value.admin.portalDashboard, icon: 'i-lucide-layout-dashboard', to: '/dashboard' })
+  }
+  middle.push({ label: chrome.value.common.profile, icon: 'i-lucide-user', to: '/dashboard/profile' })
+  groups.push(middle)
+  groups.push([{ label: chrome.value.common.signOut, icon: 'i-lucide-log-out', onSelect: onLogout }])
+  return groups
+})
 
 async function onLogout() {
   await $fetch('/api/auth/logout', { method: 'POST' })
@@ -104,9 +114,9 @@ async function onLogout() {
     <!-- LEFT: Dark icon rail -->
     <aside class="w-16 hidden lg:flex flex-col bg-primary-900 flex-shrink-0 z-20">
       <div class="h-14 flex items-center justify-center border-b border-white/10 flex-shrink-0">
-        <div class="size-8 rounded-lg bg-primary flex items-center justify-center">
-          <UIcon name="i-lucide-shield" class="size-4 text-white" />
-        </div>
+        <NuxtLink :to="isAdmin ? '/admin' : '/dashboard'" class="size-8 rounded-lg bg-primary flex items-center justify-center font-black text-white" aria-label="Momentfy">
+          M
+        </NuxtLink>
       </div>
       <nav class="flex-1 py-4 flex flex-col items-center gap-2 overflow-y-auto">
         <UPopover
@@ -118,6 +128,7 @@ async function onLogout() {
         >
           <NuxtLink
             :to="item.to"
+            :aria-current="isActive(item.to) ? 'page' : undefined"
             class="relative w-11 h-11 flex items-center justify-center rounded-lg transition-all duration-200 group"
             :class="[
               isActive(item.to)
@@ -127,33 +138,32 @@ async function onLogout() {
           >
             <span
               v-if="isActive(item.to)"
+              aria-hidden="true"
               class="absolute top-1/2 -translate-y-1/2 -left-2 w-1 h-5 bg-primary rounded-r-full"
             />
             <UIcon :name="item.icon" class="size-5" />
           </NuxtLink>
           <template #content>
-            <div class="px-2 py-1 text-sm font-medium whitespace-nowrap">
-              {{ item.label }}
-            </div>
+            <div class="px-2 py-1 text-sm font-medium whitespace-nowrap">{{ item.label }}</div>
           </template>
         </UPopover>
       </nav>
       <div class="py-4 flex flex-col items-center gap-2 border-t border-white/10 flex-shrink-0">
         <UPopover mode="hover" arrow :content="{ side: 'right', align: 'center' }">
           <NuxtLink
-            to="/dashboard"
+            to="/"
             class="w-11 h-11 flex items-center justify-center rounded-xl transition-all duration-200 text-gray-400 hover:text-white hover:bg-white/10"
           >
-            <UIcon name="i-lucide-arrow-left" class="size-5" />
+            <UIcon name="i-lucide-arrow-left" class="size-5 rtl:rotate-180" />
           </NuxtLink>
           <template #content>
-            <div class="px-2 py-1 text-sm font-medium whitespace-nowrap">Back to portal</div>
+            <div class="px-2 py-1 text-sm font-medium whitespace-nowrap">{{ chrome.common.backToHome }}</div>
           </template>
         </UPopover>
       </div>
     </aside>
 
-    <!-- MIDDLE: Submenu panel (collapsible) -->
+    <!-- MIDDLE: Submenu panel (admin only) -->
     <Transition
       enter-active-class="transition-all duration-300 ease-out"
       enter-from-class="-ms-64 opacity-0"
@@ -196,7 +206,7 @@ async function onLogout() {
     <div class="flex-1 flex flex-col min-w-0 bg-neutral-50 dark:bg-neutral-950">
       <header class="h-14 px-4 flex items-center justify-between bg-white dark:bg-neutral-900 border-b border-black/5 dark:border-white/10 flex-shrink-0">
         <div class="flex items-center gap-3">
-          <button class="lg:hidden p-2 -ms-2" @click="mobileMenuOpen = true">
+          <button class="lg:hidden p-2 -ms-2" :aria-label="chrome.common.openMenu" @click="mobileMenuOpen = true">
             <UIcon name="i-lucide-menu" class="size-5" />
           </button>
           <UButton
@@ -207,18 +217,27 @@ async function onLogout() {
             class="hidden lg:flex text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
             @click="isSubMenuOpen = true"
           />
-          <span class="text-xl font-bold tracking-tight">Admin</span>
+          <span class="text-xl font-bold tracking-tight">{{ topbarTitle }}</span>
         </div>
 
         <div class="flex items-center gap-1">
           <ClientOnly>
-            <button
-              class="hidden sm:flex size-9 items-center justify-center rounded-full text-gray-500 hover:bg-black/5 dark:hover:bg-white/10 transition"
-              :aria-label="isDark ? 'Light mode' : 'Dark mode'"
-              @click="colorMode.preference = isDark ? 'light' : 'dark'"
-            >
-              <UIcon :name="isDark ? 'i-lucide-sun' : 'i-lucide-moon'" class="size-4" />
-            </button>
+            <UDropdownMenu :items="localeItems" :ui="{ content: 'w-40' }">
+              <button
+                class="hidden sm:inline-flex items-center gap-1.5 h-9 px-3 rounded-full text-sm font-semibold text-gray-500 hover:bg-black/5 dark:hover:bg-white/10 transition"
+                :aria-label="chrome.common.language"
+              >
+                <UIcon name="i-lucide-languages" class="size-4" />
+                <span class="uppercase tracking-wider text-[11px] font-bold">{{ currentLocale?.code }}</span>
+                <UIcon name="i-lucide-chevron-down" class="size-3 opacity-50" />
+              </button>
+            </UDropdownMenu>
+            <template #fallback>
+              <span class="hidden sm:inline-flex items-center gap-1.5 h-9 px-3 rounded-full text-sm font-semibold text-gray-500">
+                <UIcon name="i-lucide-languages" class="size-4" />
+                <span class="uppercase tracking-wider text-[11px] font-bold">{{ currentLocale?.code }}</span>
+              </span>
+            </template>
           </ClientOnly>
           <ClientOnly>
             <UDropdownMenu :items="userMenuItems" :ui="{ content: 'w-56' }">
@@ -237,7 +256,9 @@ async function onLogout() {
       </header>
 
       <main class="flex-1 overflow-auto">
-        <slot />
+        <div class="px-4 sm:px-6 lg:px-8 py-6 sm:py-8 max-w-6xl w-full mx-auto">
+          <slot />
+        </div>
       </main>
     </div>
 
@@ -252,17 +273,23 @@ async function onLogout() {
         leave-to-class="opacity-0"
       >
         <div v-if="mobileMenuOpen" class="fixed inset-0 z-50 lg:hidden">
-          <div class="absolute inset-0 bg-black/50" @click="mobileMenuOpen = false" />
-          <aside class="absolute inset-y-0 start-0 w-72 bg-white dark:bg-neutral-900 shadow-xl flex flex-col overflow-y-auto">
+          <div class="absolute inset-0 bg-black/50" aria-hidden="true" @click="mobileMenuOpen = false" />
+          <aside
+            role="dialog"
+            aria-modal="true"
+            :aria-label="chrome.common.mainMenu"
+            class="absolute inset-y-0 start-0 w-72 bg-white dark:bg-neutral-900 shadow-xl flex flex-col overflow-y-auto"
+          >
             <div class="h-14 px-4 flex items-center justify-between border-b border-black/5 dark:border-white/10 flex-shrink-0">
-              <span class="text-lg font-bold">Admin</span>
-              <button class="p-1 rounded hover:bg-black/5 dark:hover:bg-white/10" @click="mobileMenuOpen = false">
+              <span class="text-lg font-bold">{{ topbarTitle }}</span>
+              <button class="p-1 rounded hover:bg-black/5 dark:hover:bg-white/10" :aria-label="chrome.common.closeMenu" @click="mobileMenuOpen = false">
                 <UIcon name="i-lucide-x" class="size-5" />
               </button>
             </div>
-            <nav class="flex-1 py-3 px-3 overflow-y-auto">
+            <nav class="flex-1 py-3 px-3 overflow-y-auto" :aria-label="chrome.common.mainMenu">
               <NuxtLink
                 v-for="item in mainNavItems" :key="item.to" :to="item.to"
+                :aria-current="isActive(item.to) ? 'page' : undefined"
                 class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium mb-1 transition-colors"
                 :class="isActive(item.to) ? 'bg-primary text-white' : 'text-gray-700 dark:text-gray-300 hover:bg-black/5 dark:hover:bg-white/10'"
               >
@@ -282,6 +309,24 @@ async function onLogout() {
                 </div>
               </template>
             </nav>
+            <div class="p-3 border-t border-black/5 dark:border-white/10 space-y-1">
+              <ClientOnly>
+                <UDropdownMenu :items="localeItems" :ui="{ content: 'w-full' }">
+                  <button class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-600 dark:text-gray-400 hover:bg-black/5 dark:hover:bg-white/10">
+                    <UIcon name="i-lucide-languages" class="size-4" />
+                    {{ currentLocale?.name }}
+                    <UIcon name="i-lucide-chevron-down" class="size-3.5 ms-auto opacity-50" />
+                  </button>
+                </UDropdownMenu>
+              </ClientOnly>
+              <button
+                class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-600 dark:text-gray-400 hover:bg-black/5 dark:hover:bg-white/10"
+                @click="onLogout"
+              >
+                <UIcon name="i-lucide-log-out" class="size-4" />
+                {{ chrome.common.signOut }}
+              </button>
+            </div>
           </aside>
         </div>
       </Transition>

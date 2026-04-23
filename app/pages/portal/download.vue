@@ -1,98 +1,87 @@
-<script setup lang="ts">
-definePageMeta({ layout: 'landing' })
-
-const copy = useLandingCopy()
-const { locale } = useI18n()
-
+<script setup>
+definePageMeta({ layout: 'landing' });
+const copy = useLandingCopy();
+const { locale } = useI18n();
 useHead(() => ({
-  title: locale.value === 'ar' ? 'احصل على الكود — Momentfy' : 'Get the source — Momentfy',
-  meta: [{
-    name: 'description',
-    content: locale.value === 'ar'
-      ? 'اشترِ كود Momentfy. دفع آمن عبر Lemon Squeezy. تنزيل فوري للمستودع، مفتاح الترخيص ووثائق التثبيت.'
-      : 'Buy the Momentfy source. Secure checkout via Lemon Squeezy. Instant download of the repo, license key and install docs.'
-  }]
-}))
-
-const contactName = ref('')
-const contactEmail = ref('')
-const contactMessage = ref('')
-const contactWebsite = ref('') // honeypot — real visitors leave empty
-const sent = ref(false)
-const submitting = ref(false)
-const submitError = ref('')
-const toast = useToast()
-
+    title: locale.value === 'ar' ? 'احصل على الكود — Momentfy' : 'Get the source — Momentfy',
+    meta: [{
+            name: 'description',
+            content: locale.value === 'ar'
+                ? 'اشترِ كود Momentfy. دفع آمن عبر Lemon Squeezy. تنزيل فوري للمستودع، مفتاح الترخيص ووثائق التثبيت.'
+                : 'Buy the Momentfy source. Secure checkout via Lemon Squeezy. Instant download of the repo, license key and install docs.'
+        }]
+}));
+const contactName = ref('');
+const contactEmail = ref('');
+const contactMessage = ref('');
+const contactWebsite = ref(''); // honeypot — real visitors leave empty
+const sent = ref(false);
+const submitting = ref(false);
+const submitError = ref('');
+const toast = useToast();
 async function submitContact() {
-  if (!contactEmail.value || submitting.value) return
-  submitting.value = true
-  submitError.value = ''
-  try {
-    await $fetch('/api/portal/contact', {
-      method: 'POST',
-      body: {
-        name: contactName.value,
-        email: contactEmail.value,
-        message: contactMessage.value,
-        website: contactWebsite.value
-      }
-    })
-    sent.value = true
-  } catch (err: any) {
-    submitError.value = err.statusMessage || err.data?.statusMessage || err.message || 'Could not send — try again.'
-    toast.add({
-      title: 'Message not sent',
-      description: submitError.value,
-      color: 'error',
-      duration: 6000
-    })
-  } finally {
-    submitting.value = false
-  }
+    if (!contactEmail.value || submitting.value)
+        return;
+    submitting.value = true;
+    submitError.value = '';
+    try {
+        await $fetch('/api/portal/contact', {
+            method: 'POST',
+            body: {
+                name: contactName.value,
+                email: contactEmail.value,
+                message: contactMessage.value,
+                website: contactWebsite.value
+            }
+        });
+        sent.value = true;
+    }
+    catch (err) {
+        submitError.value = err.statusMessage || err.data?.statusMessage || err.message || 'Could not send — try again.';
+        toast.add({
+            title: 'Message not sent',
+            description: submitError.value,
+            color: 'error',
+            duration: 6000
+        });
+    }
+    finally {
+        submitting.value = false;
+    }
 }
 </script>
 
 <template>
   <!-- ═══ Hero ═══ -->
-  <section class="relative py-20 sm:py-28 overflow-hidden">
-    <div aria-hidden="true" class="absolute inset-0 -z-10">
+  <LandingPageHero
+    :crumb-label="copy.downloadPage.eyebrow"
+    :headline="copy.downloadPage.h1"
+    :sub="copy.downloadPage.sub"
+  >
+    <template #background>
       <div class="absolute top-0 start-1/2 -translate-x-1/2 w-[50rem] h-[30rem] bg-secondary-500 blur-[150px] opacity-[0.15] rounded-full" />
-    </div>
+    </template>
 
-    <div class="max-w-7xl mx-auto px-5 sm:px-8">
-      <div class="grid grid-cols-12 gap-6">
-        <div class="col-span-12 sm:col-span-4 lg:col-span-3">
-          <p class="text-xs uppercase tracking-[0.25em] text-gray-400">—— {{ copy.downloadPage.eyebrow }}</p>
-          <p class="mt-3 text-sm text-gray-500 max-w-[16rem]">{{ copy.downloadPage.sub }}</p>
-
-          <!-- CTAs stacked -->
-          <div class="mt-8 space-y-4">
-            <NuxtLink to="/portal/pricing" class="group inline-flex items-center gap-3 text-sm font-bold">
-              <span class="size-11 rounded-full bg-primary text-white dark:bg-white dark:text-primary flex items-center justify-center transition-transform group-hover:scale-110">
-                <UIcon name="i-lucide-credit-card" class="size-4" />
-              </span>
-              <span class="relative">
-                {{ copy.downloadPage.buy }}
-                <span aria-hidden="true" class="absolute -bottom-0.5 inset-x-0 h-px bg-current group-hover:bg-secondary-500 transition-colors" />
-              </span>
-            </NuxtLink>
-            <a href="#contact" class="group inline-flex items-center gap-2 text-sm text-gray-500 hover:text-primary dark:hover:text-white transition-colors">
-              <UIcon name="i-lucide-mail" class="size-3.5" />
-              <span class="relative">
-                {{ copy.downloadPage.talk }}
-                <span aria-hidden="true" class="absolute -bottom-0.5 inset-x-0 h-px bg-current opacity-0 group-hover:opacity-100 transition-opacity" />
-              </span>
-            </a>
-          </div>
-        </div>
-        <div class="col-span-12 sm:col-span-8 lg:col-span-9">
-          <h1 class="font-black tracking-tight leading-[0.9] text-5xl sm:text-6xl lg:text-7xl xl:text-8xl">
-            <span class="block">{{ copy.downloadPage.h1 }}</span>
-          </h1>
-        </div>
-      </div>
+    <!-- CTAs -->
+    <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
+      <NuxtLink to="/portal/pricing" class="group inline-flex items-center gap-3 text-sm font-bold">
+        <span class="size-11 rounded-full bg-primary text-white dark:bg-white dark:text-primary flex items-center justify-center transition-transform group-hover:scale-110">
+          <UIcon name="i-lucide-credit-card" class="size-4" />
+        </span>
+        <span class="relative">
+          {{ copy.downloadPage.buy }}
+          <span aria-hidden="true" class="absolute -bottom-0.5 inset-x-0 h-px bg-current group-hover:bg-secondary-500 transition-colors" />
+        </span>
+      </NuxtLink>
+      <a href="#contact" class="group inline-flex items-center gap-2 text-sm text-gray-500 hover:text-primary dark:hover:text-white transition-colors">
+        <UIcon name="i-lucide-mail" class="size-3.5" />
+        <span class="relative">
+          {{ copy.downloadPage.talk }}
+          <span aria-hidden="true" class="absolute -bottom-0.5 inset-x-0 h-px bg-current opacity-0 group-hover:opacity-100 transition-opacity" />
+        </span>
+      </a>
     </div>
-  </section>
+  </LandingPageHero>
 
   <!-- ═══ Step timeline — hairline-separated ═══ -->
   <section class="py-16 sm:py-20 border-t border-black/10 dark:border-white/10">
@@ -121,15 +110,12 @@ async function submitContact() {
   <!-- ═══ What's in the zip ═══ -->
   <section class="py-16 sm:py-20 border-t border-black/10 dark:border-white/10">
     <div class="max-w-7xl mx-auto px-5 sm:px-8">
-      <div class="grid grid-cols-12 gap-6 mb-12">
-        <div class="col-span-12 sm:col-span-4 lg:col-span-3">
-          <p class="text-xs uppercase tracking-[0.25em] text-gray-400">—— {{ copy.downloadPage.inside.eyebrow }}</p>
-          <p class="mt-3 text-sm text-gray-500 max-w-[16rem]">{{ copy.downloadPage.inside.body }}</p>
-        </div>
-        <div class="col-span-12 sm:col-span-8 lg:col-span-9">
-          <h2 class="font-black tracking-tight leading-[0.9] text-4xl sm:text-5xl lg:text-6xl">{{ copy.downloadPage.inside.heading }}</h2>
-        </div>
-      </div>
+      <LandingSectionHeading
+        number="2"
+        :label="copy.downloadPage.inside.eyebrow"
+        :heading="copy.downloadPage.inside.heading"
+        :sub="copy.downloadPage.inside.body"
+      />
 
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 border-t border-black/10 dark:border-white/10 pt-10">
         <!-- Left: item list -->
@@ -173,14 +159,11 @@ async function submitContact() {
   <!-- ═══ Changelog ═══ -->
   <section id="changelog" class="py-16 sm:py-20 border-t border-black/10 dark:border-white/10">
     <div class="max-w-7xl mx-auto px-5 sm:px-8">
-      <div class="grid grid-cols-12 gap-6 mb-12">
-        <div class="col-span-12 sm:col-span-4 lg:col-span-3">
-          <p class="text-xs uppercase tracking-[0.25em] text-gray-400">—— {{ copy.downloadPage.changelog.eyebrow }}</p>
-        </div>
-        <div class="col-span-12 sm:col-span-8 lg:col-span-9">
-          <h2 class="font-black tracking-tight leading-[0.9] text-4xl sm:text-5xl lg:text-6xl">{{ copy.downloadPage.changelog.heading }}</h2>
-        </div>
-      </div>
+      <LandingSectionHeading
+        number="3"
+        :label="copy.downloadPage.changelog.eyebrow"
+        :heading="copy.downloadPage.changelog.heading"
+      />
 
       <div class="max-w-3xl border-t border-black/10 dark:border-white/10">
         <div v-for="(e, i) in copy.downloadPage.changelog.entries" :key="e.ver"
@@ -204,15 +187,12 @@ async function submitContact() {
   <!-- ═══ Contact form ═══ -->
   <section id="contact" class="py-16 sm:py-20 border-t border-black/10 dark:border-white/10">
     <div class="max-w-7xl mx-auto px-5 sm:px-8">
-      <div class="grid grid-cols-12 gap-6 mb-12">
-        <div class="col-span-12 sm:col-span-4 lg:col-span-3">
-          <p class="text-xs uppercase tracking-[0.25em] text-gray-400">—— {{ copy.downloadPage.contact.eyebrow }}</p>
-          <p class="mt-3 text-sm text-gray-500 max-w-[16rem]">{{ copy.downloadPage.contact.sub }}</p>
-        </div>
-        <div class="col-span-12 sm:col-span-8 lg:col-span-9">
-          <h2 class="font-black tracking-tight leading-[0.9] text-4xl sm:text-5xl lg:text-6xl">{{ copy.downloadPage.contact.heading }}</h2>
-        </div>
-      </div>
+      <LandingSectionHeading
+        number="4"
+        :label="copy.downloadPage.contact.eyebrow"
+        :heading="copy.downloadPage.contact.heading"
+        :sub="copy.downloadPage.contact.sub"
+      />
 
       <!-- Form: no card, just hairline-separated rows -->
       <form @submit.prevent="submitContact" class="max-w-3xl border-t border-black/10 dark:border-white/10">
@@ -264,14 +244,11 @@ async function submitContact() {
   <!-- ═══ Download FAQ ═══ -->
   <section class="py-16 sm:py-20 border-t border-black/10 dark:border-white/10">
     <div class="max-w-7xl mx-auto px-5 sm:px-8">
-      <div class="grid grid-cols-12 gap-6 mb-12">
-        <div class="col-span-12 sm:col-span-4 lg:col-span-3">
-          <p class="text-xs uppercase tracking-[0.25em] text-gray-400">—— {{ copy.downloadPage.faq.eyebrow }}</p>
-        </div>
-        <div class="col-span-12 sm:col-span-8 lg:col-span-9">
-          <h2 class="font-black tracking-tight leading-[0.9] text-4xl sm:text-5xl lg:text-6xl">{{ copy.downloadPage.faq.heading }}</h2>
-        </div>
-      </div>
+      <LandingSectionHeading
+        number="5"
+        :label="copy.downloadPage.faq.eyebrow"
+        :heading="copy.downloadPage.faq.heading"
+      />
 
       <div class="max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-0 border-t border-black/10 dark:border-white/10">
         <div v-for="f in copy.downloadPage.faq.items" :key="f.q"

@@ -40,6 +40,7 @@ model Account {
   orders          Order[]
   auditLogs       AuditLog[]
   repoInvites     RepoInvite[]
+  integrationSettings IntegrationSetting[]
 
   @@index([email])
   @@index([githubUsername])
@@ -65,7 +66,10 @@ model Plan {
   // Used in URLs, e.g. /portal/checkout/self-install
   slug                String   @unique
   name                String
+  // Bilingual fields — Arabic copies of name/description rendered when locale=ar.
+  nameAr              String?
   description         String?
+  descriptionAr       String?
   // Display-only — Lemon Squeezy is the source of truth for actual price.
   priceUsdCents       Int
   // How many concurrent installs a license on this plan allows by default.
@@ -73,12 +77,78 @@ model Plan {
   defaultActivations  Int      @default(1)
   // Lemon Squeezy variant id this plan maps to (set in Phase 3).
   lsVariantId         String?
+  // Display order on /portal/pricing and admin lists.
+  sortOrder           Int      @default(0)
   isActive            Boolean  @default(true)
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
 
   licenses            License[]
   orders              Order[]
+  features            PlanFeature[]
+  promoCodes          PromoCode[]
+}
+
+// Bilingual catalog of feature labels surfaced under each plan on /portal/pricing.
+// Decoupled from Plan so the same feature line ("Bilingual AR + EN UI") can be
+// reused across multiple tiers without retyping translations.
+model Feature {
+  id        String   @id @default(cuid())
+  label     String
+  labelAr   String?
+  // Free-form admin-only context (e.g. "Compliance copy mandated by legal 2025-Q1").
+  notes     String?
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  plans     PlanFeature[]
+}
+
+// Many-to-many between Plan and Feature; sortOrder lets the admin reorder a
+// feature within a single plan without affecting the global Feature.sortOrder.
+model PlanFeature {
+  planId    String
+  featureId String
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+
+  plan      Plan     @relation(fields: [planId], references: [id], onDelete: Cascade)
+  feature   Feature  @relation(fields: [featureId], references: [id], onDelete: Cascade)
+
+  @@id([planId, featureId])
+  @@index([planId])
+  @@index([featureId])
+}
+
+// Promo codes redeemable at checkout. `currentUses` is incremented by the
+// checkout webhook when an order is created with this code attached.
+// `planId == null` means the code applies to any plan.
+model PromoCode {
+  id              String    @id @default(cuid())
+  code            String    @unique
+  discountPercent Int
+  planId          String?
+  plan            Plan?     @relation(fields: [planId], references: [id], onDelete: SetNull)
+  maxUses         Int?
+  currentUses     Int       @default(0)
+  expiresAt       DateTime?
+  isActive        Boolean   @default(true)
+  // Admin-facing context (campaign name, partner, etc.). Never shown publicly.
+  notes           String?
+  // Mirror of this row in the Lemon Squeezy Discounts catalog. Populated
+  // when admin creates/updates the PromoCode — the portal POSTs to
+  // `POST /v1/discounts` and stores the LS id here so later edits can
+  // PATCH the same discount. `null` means the code hasn't been synced
+  // yet (e.g. seeded codes, or the sync failed — admin can re-sync).
+  lsDiscountId    String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  orders          Order[]
+
+  @@index([code])
+  @@index([planId])
 }
 
 // ─── Sales ──────────────────────────────────────────────────────────
@@ -108,6 +178,9 @@ model Order {
   status          OrderStatus   @default(PAID)
   refundedAt      DateTime?
   refundReason    String?
+  // Promo code applied at checkout (if any). Kept for audit + reporting.
+  promoCodeId     String?
+  promoCode       PromoCode?    @relation(fields: [promoCodeId], references: [id])
   // Last LS webhook payload kept for forensics / replay debugging.
   rawPayload      Json?
   createdAt       DateTime      @default(now())
@@ -117,6 +190,7 @@ model Order {
 
   @@index([accountId])
   @@index([lsCustomerId])
+  @@index([promoCodeId])
 }
 
 // ─── Licenses ───────────────────────────────────────────────────────
@@ -204,6 +278,32 @@ model RepoInvite {
 
   @@unique([accountId, githubUsername])
   @@index([status])
+}
+
+// ─── Integration settings ──────────────────────────────────────────
+//
+// Singleton key→value store for integration credentials previously held in
+// env vars (Lemon Squeezy, GitHub, SMTP). `value` is AES-256-GCM ciphertext
+// for sensitive keys (api keys, tokens, secrets, passwords) and plaintext
+// for the rest (host, port, store id, org names, etc.). The encryption-vs-
+// plaintext call is made in server/utils/integration-settings.ts based on
+// the key name; the column itself doesn't enforce a flag.
+//
+// Reads fall back to process.env when no row exists, so a fresh deployment
+// keeps working on its existing env vars until an admin saves a value.
+
+model IntegrationSetting {
+  key         String   @id
+  value       String   @db.Text
+  // True when `value` is encrypted ciphertext (sensitive keys); false for
+  // plaintext (host, port, ids). Lets the read path know whether to decrypt.
+  encrypted   Boolean  @default(false)
+  updatedById String?
+  updatedBy   Account? @relation(fields: [updatedById], references: [id])
+  updatedAt   DateTime @updatedAt
+  createdAt   DateTime @default(now())
+
+  @@index([updatedById])
 }
 
 // ─── Audit ──────────────────────────────────────────────────────────

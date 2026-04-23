@@ -1,63 +1,52 @@
-<script setup lang="ts">
-definePageMeta({ layout: 'landing' })
-
-const copy = useLandingCopy()
-const { locale } = useI18n()
-const route = useRoute()
-
-const addonKey = computed(() => String(route.params.key || ''))
-
-// Same visual metadata map as on the home page (icons + gradient + dot + category)
-type AddonCat = 'Compliance' | 'Clinical' | 'Intelligence' | 'Operations' | 'Growth'
-const addonMeta: Record<string, { icon: string; cat: AddonCat; accent: string; iconBg: string; iconText: string; dot: string }> = {
-  zatca:      { icon: 'i-lucide-shield-check',    cat: 'Compliance',   accent: 'from-emerald-500 to-green-600',   iconBg: 'bg-emerald-500/8',  iconText: 'text-emerald-600 dark:text-emerald-400', dot: 'bg-emerald-500' },
-  eta:        { icon: 'i-lucide-file-check',      cat: 'Compliance',   accent: 'from-amber-500 to-yellow-600',    iconBg: 'bg-emerald-500/8',  iconText: 'text-emerald-600 dark:text-emerald-400', dot: 'bg-emerald-500' },
-  ai:         { icon: 'i-lucide-sparkles',        cat: 'Intelligence', accent: 'from-violet-500 to-indigo-600',   iconBg: 'bg-violet-500/8',   iconText: 'text-violet-600 dark:text-violet-400',   dot: 'bg-violet-500' },
-  gcal:       { icon: 'i-lucide-calendar-check',  cat: 'Intelligence', accent: 'from-sky-500 to-blue-600',        iconBg: 'bg-violet-500/8',   iconText: 'text-violet-600 dark:text-violet-400',   dot: 'bg-violet-500' },
-  insurance:  { icon: 'i-lucide-heart-pulse',     cat: 'Clinical',     accent: 'from-red-500 to-rose-600',        iconBg: 'bg-sky-500/8',      iconText: 'text-sky-600 dark:text-sky-400',         dot: 'bg-sky-500' },
-  dental:     { icon: 'i-hugeicons-dental-tooth',           cat: 'Clinical',     accent: 'from-sky-500 to-cyan-600',        iconBg: 'bg-sky-500/8',      iconText: 'text-sky-600 dark:text-sky-400',         dot: 'bg-sky-500' },
-  imaging:    { icon: 'i-lucide-scan',            cat: 'Clinical',     accent: 'from-slate-500 to-gray-700',      iconBg: 'bg-sky-500/8',      iconText: 'text-sky-600 dark:text-sky-400',         dot: 'bg-sky-500' },
-  labs:       { icon: 'i-lucide-flask-conical',   cat: 'Clinical',     accent: 'from-teal-500 to-emerald-600',    iconBg: 'bg-sky-500/8',      iconText: 'text-sky-600 dark:text-sky-400',         dot: 'bg-sky-500' },
-  rx:         { icon: 'i-lucide-pill',            cat: 'Clinical',     accent: 'from-rose-500 to-pink-600',       iconBg: 'bg-sky-500/8',      iconText: 'text-sky-600 dark:text-sky-400',         dot: 'bg-sky-500' },
-  records:    { icon: 'i-lucide-folder-heart',    cat: 'Clinical',     accent: 'from-fuchsia-500 to-purple-600',  iconBg: 'bg-sky-500/8',      iconText: 'text-sky-600 dark:text-sky-400',         dot: 'bg-sky-500' },
-  resources:  { icon: 'i-lucide-armchair',        cat: 'Operations',   accent: 'from-indigo-500 to-violet-600',   iconBg: 'bg-amber-500/8',    iconText: 'text-amber-600 dark:text-amber-400',     dot: 'bg-amber-500' },
-  attendance: { icon: 'i-lucide-log-in',          cat: 'Operations',   accent: 'from-lime-500 to-emerald-600',    iconBg: 'bg-amber-500/8',    iconText: 'text-amber-600 dark:text-amber-400',     dot: 'bg-amber-500' },
-  boarding:   { icon: 'i-lucide-home',            cat: 'Operations',   accent: 'from-orange-500 to-amber-600',    iconBg: 'bg-amber-500/8',    iconText: 'text-amber-600 dark:text-amber-400',     dot: 'bg-amber-500' },
-  loyalty:    { icon: 'i-lucide-award',           cat: 'Growth',       accent: 'from-amber-500 to-orange-600',    iconBg: 'bg-rose-500/8',     iconText: 'text-rose-600 dark:text-rose-400',       dot: 'bg-rose-500' },
-  events:     { icon: 'i-lucide-calendar-heart',  cat: 'Growth',       accent: 'from-pink-500 to-rose-600',       iconBg: 'bg-rose-500/8',     iconText: 'text-rose-600 dark:text-rose-400',       dot: 'bg-rose-500' },
-  followup:   { icon: 'i-lucide-list-checks',     cat: 'Growth',       accent: 'from-blue-500 to-indigo-600',     iconBg: 'bg-rose-500/8',     iconText: 'text-rose-600 dark:text-rose-400',       dot: 'bg-rose-500' }
-}
-
-const addonItem = computed(() => copy.value.addons.items.find(a => a.key === addonKey.value))
-const detail = computed(() => copy.value.addonDetails[addonKey.value])
-const meta = computed(() => addonMeta[addonKey.value])
-
-const allAddons = computed(() => copy.value.addons.items)
-const addonIndex = computed(() => allAddons.value.findIndex(a => a.key === addonKey.value))
-const totalAddons = computed(() => String(allAddons.value.length).padStart(2, '0'))
-
-const prevAddon = computed(() => addonIndex.value > 0 ? allAddons.value[addonIndex.value - 1] : null)
-const nextAddon = computed(() => addonIndex.value < allAddons.value.length - 1 ? allAddons.value[addonIndex.value + 1] : null)
-
+<script setup>
+definePageMeta({ layout: 'landing' });
+const copy = useLandingCopy();
+const { locale } = useI18n();
+const route = useRoute();
+const addonKey = computed(() => String(route.params.key || ''));
+const addonMeta = {
+    zatca: { icon: 'i-lucide-shield-check', cat: 'Compliance', accent: 'from-emerald-500 to-green-600', iconBg: 'bg-emerald-500/8', iconText: 'text-emerald-600 dark:text-emerald-400', dot: 'bg-emerald-500' },
+    eta: { icon: 'i-lucide-file-check', cat: 'Compliance', accent: 'from-amber-500 to-yellow-600', iconBg: 'bg-emerald-500/8', iconText: 'text-emerald-600 dark:text-emerald-400', dot: 'bg-emerald-500' },
+    ai: { icon: 'i-lucide-sparkles', cat: 'Intelligence', accent: 'from-violet-500 to-indigo-600', iconBg: 'bg-violet-500/8', iconText: 'text-violet-600 dark:text-violet-400', dot: 'bg-violet-500' },
+    gcal: { icon: 'i-lucide-calendar-check', cat: 'Intelligence', accent: 'from-sky-500 to-blue-600', iconBg: 'bg-violet-500/8', iconText: 'text-violet-600 dark:text-violet-400', dot: 'bg-violet-500' },
+    insurance: { icon: 'i-lucide-heart-pulse', cat: 'Clinical', accent: 'from-red-500 to-rose-600', iconBg: 'bg-sky-500/8', iconText: 'text-sky-600 dark:text-sky-400', dot: 'bg-sky-500' },
+    dental: { icon: 'i-hugeicons-dental-tooth', cat: 'Clinical', accent: 'from-sky-500 to-cyan-600', iconBg: 'bg-sky-500/8', iconText: 'text-sky-600 dark:text-sky-400', dot: 'bg-sky-500' },
+    imaging: { icon: 'i-lucide-scan', cat: 'Clinical', accent: 'from-slate-500 to-gray-700', iconBg: 'bg-sky-500/8', iconText: 'text-sky-600 dark:text-sky-400', dot: 'bg-sky-500' },
+    labs: { icon: 'i-lucide-flask-conical', cat: 'Clinical', accent: 'from-teal-500 to-emerald-600', iconBg: 'bg-sky-500/8', iconText: 'text-sky-600 dark:text-sky-400', dot: 'bg-sky-500' },
+    rx: { icon: 'i-lucide-pill', cat: 'Clinical', accent: 'from-rose-500 to-pink-600', iconBg: 'bg-sky-500/8', iconText: 'text-sky-600 dark:text-sky-400', dot: 'bg-sky-500' },
+    records: { icon: 'i-lucide-folder-heart', cat: 'Clinical', accent: 'from-fuchsia-500 to-purple-600', iconBg: 'bg-sky-500/8', iconText: 'text-sky-600 dark:text-sky-400', dot: 'bg-sky-500' },
+    resources: { icon: 'i-lucide-armchair', cat: 'Operations', accent: 'from-indigo-500 to-violet-600', iconBg: 'bg-amber-500/8', iconText: 'text-amber-600 dark:text-amber-400', dot: 'bg-amber-500' },
+    attendance: { icon: 'i-lucide-log-in', cat: 'Operations', accent: 'from-lime-500 to-emerald-600', iconBg: 'bg-amber-500/8', iconText: 'text-amber-600 dark:text-amber-400', dot: 'bg-amber-500' },
+    loyalty: { icon: 'i-lucide-award', cat: 'Growth', accent: 'from-amber-500 to-orange-600', iconBg: 'bg-rose-500/8', iconText: 'text-rose-600 dark:text-rose-400', dot: 'bg-rose-500' },
+    events: { icon: 'i-lucide-calendar-heart', cat: 'Growth', accent: 'from-pink-500 to-rose-600', iconBg: 'bg-rose-500/8', iconText: 'text-rose-600 dark:text-rose-400', dot: 'bg-rose-500' },
+    followup: { icon: 'i-lucide-list-checks', cat: 'Growth', accent: 'from-blue-500 to-indigo-600', iconBg: 'bg-rose-500/8', iconText: 'text-rose-600 dark:text-rose-400', dot: 'bg-rose-500' }
+};
+const addonItem = computed(() => copy.value.addons.items.find(a => a.key === addonKey.value));
+const detail = computed(() => copy.value.addonDetails[addonKey.value]);
+const meta = computed(() => addonMeta[addonKey.value]);
+const allAddons = computed(() => copy.value.addons.items);
+const addonIndex = computed(() => allAddons.value.findIndex(a => a.key === addonKey.value));
+const totalAddons = computed(() => String(allAddons.value.length).padStart(2, '0'));
+const prevAddon = computed(() => addonIndex.value > 0 ? allAddons.value[addonIndex.value - 1] : null);
+const nextAddon = computed(() => addonIndex.value < allAddons.value.length - 1 ? allAddons.value[addonIndex.value + 1] : null);
 // Sibling add-ons in the same category
 const siblings = computed(() => {
-  if (!meta.value) return []
-  return allAddons.value.filter(a => a.key !== addonKey.value && addonMeta[a.key]?.cat === meta.value.cat).slice(0, 3)
-})
-
+    if (!meta.value)
+        return [];
+    return allAddons.value.filter(a => a.key !== addonKey.value && addonMeta[a.key]?.cat === meta.value.cat).slice(0, 3);
+});
 useHead(() => ({
-  title: addonItem.value ? `${addonItem.value.label} — Momentfy` : 'Add-on — Momentfy',
-  meta: [{
-    name: 'description',
-    content: detail.value?.long || addonItem.value?.desc || 'Momentfy add-on'
-  }]
-}))
-
+    title: addonItem.value ? `${addonItem.value.label} — Momentfy` : 'Add-on — Momentfy',
+    meta: [{
+            name: 'description',
+            content: detail.value?.long || addonItem.value?.desc || 'Momentfy add-on'
+        }]
+}));
 onMounted(() => {
-  if (!addonItem.value && typeof window !== 'undefined') {
-    navigateTo('/portal/addons')
-  }
-})
+    if (!addonItem.value && typeof window !== 'undefined') {
+        navigateTo('/portal/addons');
+    }
+});
 </script>
 
 <template>
@@ -87,7 +76,7 @@ onMounted(() => {
             <div class="size-20 rounded-3xl bg-gradient-to-br text-white flex items-center justify-center shadow-2xl mb-8" :class="meta?.accent">
               <UIcon :name="meta?.icon" class="size-10" />
             </div>
-            <p class="text-xs uppercase tracking-[0.25em] text-gray-400 mb-2">—— {{ meta?.cat }} {{ copy.ui.addonCategorySuffix }}</p>
+            <LandingSectionEyebrow class="mb-2">{{ meta?.cat }} {{ copy.ui.addonCategorySuffix }}</LandingSectionEyebrow>
             <p class="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-[0.2em] font-bold text-emerald-600 dark:text-emerald-400">
               <UIcon name="i-lucide-check-circle-2" class="size-3" />
               {{ copy.ui.includedInEveryPlan }}
@@ -110,7 +99,7 @@ onMounted(() => {
       <div class="max-w-7xl mx-auto px-5 sm:px-8">
         <div class="grid grid-cols-12 gap-6 lg:gap-12">
           <div class="col-span-12 sm:col-span-4 lg:col-span-3">
-            <p class="text-xs uppercase tracking-[0.25em] text-gray-400">—— {{ copy.ui.whatItDoes }}</p>
+            <LandingSectionEyebrow :label="copy.ui.whatItDoes" />
           </div>
           <div class="col-span-12 sm:col-span-8 lg:col-span-9">
             <p class="text-xl sm:text-2xl text-gray-700 dark:text-gray-300 leading-relaxed max-w-3xl font-light">{{ detail.long }}</p>
@@ -125,7 +114,7 @@ onMounted(() => {
         <div class="grid grid-cols-12 gap-6 lg:gap-12">
           <div class="col-span-12 lg:col-span-5">
             <div class="lg:sticky lg:top-28">
-              <p class="text-xs uppercase tracking-[0.25em] text-gray-400 mb-4">—— {{ copy.ui.keyCapabilities }}</p>
+              <LandingSectionEyebrow :label="copy.ui.keyCapabilities" class="mb-4" />
               <h2 class="font-black tracking-tight leading-[0.95] text-4xl sm:text-5xl">{{ copy.ui.everyMovingPart }}</h2>
             </div>
           </div>
@@ -149,7 +138,7 @@ onMounted(() => {
       <div class="max-w-7xl mx-auto px-5 sm:px-8">
         <div class="grid grid-cols-12 gap-6">
           <div class="col-span-12 sm:col-span-4 lg:col-span-3">
-            <p class="text-xs uppercase tracking-[0.25em] text-gray-400">—— {{ copy.ui.whoItsFor }}</p>
+            <LandingSectionEyebrow :label="copy.ui.whoItsFor" />
           </div>
           <div class="col-span-12 sm:col-span-8 lg:col-span-9">
             <p class="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight leading-[1.15] max-w-3xl">"{{ detail.whoFor }}"</p>
@@ -163,7 +152,7 @@ onMounted(() => {
       <div class="max-w-7xl mx-auto px-5 sm:px-8">
         <div class="grid grid-cols-12 gap-6 mb-12">
           <div class="col-span-12 sm:col-span-4 lg:col-span-3">
-            <p class="text-xs uppercase tracking-[0.25em] text-gray-400">—— {{ copy.ui.setupTitle }}</p>
+            <LandingSectionEyebrow :label="copy.ui.setupTitle" />
             <p class="mt-3 text-sm text-gray-500 max-w-[16rem]">{{ copy.ui.setupBody }}</p>
           </div>
           <div class="col-span-12 sm:col-span-8 lg:col-span-9">
@@ -187,7 +176,7 @@ onMounted(() => {
       <div class="max-w-7xl mx-auto px-5 sm:px-8">
         <div class="grid grid-cols-12 gap-6">
           <div class="col-span-12 sm:col-span-4 lg:col-span-3">
-            <p class="text-xs uppercase tracking-[0.25em] text-gray-400">—— {{ copy.ui.integratesWith }}</p>
+            <LandingSectionEyebrow :label="copy.ui.integratesWith" />
             <p class="mt-3 text-sm text-gray-500 max-w-[16rem]">{{ copy.ui.integratesBody }}</p>
           </div>
           <div class="col-span-12 sm:col-span-8 lg:col-span-9">
@@ -207,7 +196,7 @@ onMounted(() => {
       <div class="max-w-7xl mx-auto px-5 sm:px-8">
         <div class="grid grid-cols-12 gap-6 mb-10">
           <div class="col-span-12 sm:col-span-4 lg:col-span-3">
-            <p class="text-xs uppercase tracking-[0.25em] text-gray-400">—— {{ copy.ui.moreFromCategoryPrefix }}{{ meta?.cat }}</p>
+            <LandingSectionEyebrow>{{ copy.ui.moreFromCategoryPrefix }}{{ meta?.cat }}</LandingSectionEyebrow>
           </div>
           <div class="col-span-12 sm:col-span-8 lg:col-span-9">
             <h2 class="font-black tracking-tight leading-[0.9] text-4xl sm:text-5xl">{{ copy.ui.exploreTheChapter }}</h2>
@@ -274,7 +263,7 @@ onMounted(() => {
   <template v-else>
     <section class="py-28">
       <div class="max-w-2xl mx-auto px-5 text-center">
-        <p class="text-xs uppercase tracking-[0.25em] text-gray-400 mb-4">—— {{ copy.ui.addonNotFoundEyebrow }}</p>
+        <LandingSectionEyebrow :label="copy.ui.addonNotFoundEyebrow" class="mb-4" />
         <h1 class="font-black tracking-tight text-4xl sm:text-5xl mb-4">{{ copy.ui.noAddonWithKey }}</h1>
         <p class="text-gray-600 dark:text-gray-400 mb-8">{{ copy.ui.checkUrlAddons }}</p>
         <NuxtLink to="/portal/addons" class="group inline-flex items-center gap-3 text-sm font-bold">

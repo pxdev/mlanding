@@ -35,7 +35,7 @@ export default defineEventHandler(async (event) => {
   }
 
   const sig = getHeader(event, 'x-signature')
-  if (!verifySignature(typeof raw === 'string' ? raw : raw.toString('utf8'), sig)) {
+  if (!await verifySignature(typeof raw === 'string' ? raw : raw.toString('utf8'), sig)) {
     throw createError({ statusCode: 401, statusMessage: 'Invalid signature' })
   }
 

@@ -1,26 +1,42 @@
-// Thin nodemailer wrapper. Configured from runtimeConfig.smtp at first use.
+// Thin nodemailer wrapper. Configured from integration-settings (DB row →
+// env fallback) at first use, with a config-hash cache so admin updates
+// invalidate the cached transport automatically.
 //
-// Phase 1 needs only one transactional email: password reset. Phases 3–4 add
-// "license issued" and "GitHub invite sent". All of them go through this.
-//
-// In dev, point SMTP_HOST at Mailpit (`localhost:1025`) to capture mail without
-// sending. In prod, any SMTP relay (Resend SMTP, SendGrid SMTP, your own MTA).
+// In dev, point SMTP_HOST at Mailpit (`localhost:1025`) to capture mail
+// without sending. In prod, any SMTP relay (Resend SMTP, SendGrid SMTP,
+// your own MTA).
 
 import nodemailer, { type Transporter } from 'nodemailer'
+import { getSetting } from './integration-settings'
 
-let transporter: Transporter | null = null
+interface SmtpConfig { host: string; port: number; user: string | null; pass: string | null; from: string | null }
 
-function getTransporter(): Transporter {
-  if (transporter) return transporter
-  const cfg = useRuntimeConfig().smtp
-  transporter = nodemailer.createTransport({
-    host: cfg.host,
-    port: cfg.port,
-    secure: cfg.port === 465,
-    auth: cfg.user
-      ? { user: cfg.user, pass: cfg.pass }
-      : undefined
+async function loadConfig(): Promise<SmtpConfig> {
+  return {
+    host: (await getSetting('SMTP_HOST')) || '',
+    port: Number((await getSetting('SMTP_PORT')) || 465),
+    user: (await getSetting('SMTP_USER')) || null,
+    pass: (await getSetting('SMTP_PASS')) || null,
+    from: (await getSetting('SMTP_FROM')) || null
+  }
+}
+
+let cached: { hash: string; transporter: Transporter } | null = null
+
+function configHash(c: SmtpConfig): string {
+  return [c.host, c.port, c.user || '', c.pass ? '<set>' : '<none>'].join('|')
+}
+
+async function getTransporter(c: SmtpConfig): Promise<Transporter> {
+  const hash = configHash(c)
+  if (cached && cached.hash === hash) return cached.transporter
+  const transporter = nodemailer.createTransport({
+    host: c.host,
+    port: c.port,
+    secure: c.port === 465,
+    auth: c.user ? { user: c.user, pass: c.pass || '' } : undefined
   })
+  cached = { hash, transporter }
   return transporter
 }
 
@@ -32,14 +48,15 @@ export interface SendEmailOptions {
 }
 
 export async function sendEmail(opts: SendEmailOptions) {
-  const cfg = useRuntimeConfig().smtp
+  const cfg = await loadConfig()
   if (!cfg.host) {
     // Dev fallback: log instead of failing. Useful before SMTP is configured.
     console.warn('[email] SMTP_HOST not set — would send:', opts.subject, '→', opts.to)
     return { messageId: 'noop' }
   }
-  return getTransporter().sendMail({
-    from: cfg.from,
+  const transporter = await getTransporter(cfg)
+  return transporter.sendMail({
+    from: cfg.from || undefined,
     to: opts.to,
     subject: opts.subject,
     html: opts.html,
@@ -56,4 +73,18 @@ export function emailLayout(title: string, body: string): string {
     <p style="margin-top:32px;font-size:12px;color:#888">— Momentfy</p>
   </div>
 </body></html>`
+}
+
+// Used by the admin "test connection" button.
+export async function sendTestEmail(to: string) {
+  const cfg = await loadConfig()
+  if (!cfg.host) throw new Error('SMTP_HOST not configured')
+  const transporter = await getTransporter(cfg)
+  return transporter.sendMail({
+    from: cfg.from || undefined,
+    to,
+    subject: 'Momentfy SMTP test',
+    text: 'If you received this, your SMTP integration is wired up correctly.',
+    html: emailLayout('SMTP test', '<p>If you received this, your SMTP integration is wired up correctly.</p>')
+  })
 }

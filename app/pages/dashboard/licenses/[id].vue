@@ -1,77 +1,52 @@
-<script setup lang="ts">
-definePageMeta({ layout: 'dashboard', middleware: 'auth' })
-useHead({ title: 'License — Momentfy portal' })
-
-const route = useRoute()
-const id = route.params.id as string
-const toast = useToast()
-
-interface Activation {
-  id: string
-  fingerprint: string
-  hostname: string | null
-  ipAddress: string | null
-  appVersion: string | null
-  lastSeenAt: string
-  deactivatedAt: string | null
-  createdAt: string
-}
-interface LicenseDetail {
-  id: string
-  keyPrefix: string
-  plan: { id: string; slug: string; name: string }
-  status: 'ACTIVE' | 'REVOKED' | 'EXPIRED'
-  maxActivations: number
-  expiresAt: string | null
-  issuedAt: string
-  revokedAt: string | null
-  revokedReason: string | null
-  activations: Activation[]
-}
-
-const { data: license, refresh, status } = await useFetch<LicenseDetail>(`/api/portal/licenses/${id}`)
-
-const rotating = ref(false)
-const rotatedKey = ref<string | null>(null)
-const showRotateConfirm = ref(false)
-
+<script setup>
+definePageMeta({ layout: 'portal', middleware: 'auth', colorMode: 'light' });
+const chrome = useChromeCopy();
+useHead({ title: () => chrome.value.pages.dashboardLicenseDetail.docTitle });
+const route = useRoute();
+const id = route.params.id;
+const toast = useToast();
+const { data: license, refresh, status } = await useFetch(`/api/portal/licenses/${id}`);
+const rotating = ref(false);
+const rotatedKey = ref(null);
+const showRotateConfirm = ref(false);
 async function rotateKey() {
-  rotating.value = true
-  try {
-    const res = await $fetch<{ key: string; keyPrefix: string }>(`/api/portal/licenses/${id}/rotate`, {
-      method: 'POST'
-    })
-    rotatedKey.value = res.key
-    showRotateConfirm.value = false
-    await refresh()
-  } catch (err: any) {
-    toast.add({ title: 'Rotate failed', description: err.statusMessage || err.message, color: 'error' })
-  } finally {
-    rotating.value = false
-  }
+    rotating.value = true;
+    try {
+        const res = await $fetch(`/api/portal/licenses/${id}/rotate`, {
+            method: 'POST'
+        });
+        rotatedKey.value = res.key;
+        showRotateConfirm.value = false;
+        await refresh();
+    }
+    catch (err) {
+        toast.add({ title: chrome.value.pages.dashboardLicenseDetail.rotateFailed, description: err.statusMessage || err.message, color: 'error' });
+    }
+    finally {
+        rotating.value = false;
+    }
 }
-
 async function copyKey() {
-  if (!rotatedKey.value) return
-  await navigator.clipboard.writeText(rotatedKey.value)
-  toast.add({ title: 'Key copied', color: 'success' })
+    if (!rotatedKey.value)
+        return;
+    await navigator.clipboard.writeText(rotatedKey.value);
+    toast.add({ title: chrome.value.pages.dashboardLicenseDetail.keyCopied, color: 'success' });
 }
-
-function fmt(d: string | null) {
-  return d ? new Date(d).toLocaleString() : '—'
+function fmt(d) {
+    return d ? new Date(d).toLocaleString() : '—';
 }
-const statusColor: Record<string, 'success' | 'error' | 'warning'> = {
-  ACTIVE: 'success',
-  REVOKED: 'error',
-  EXPIRED: 'warning'
-}
+const statusColor = {
+    ACTIVE: 'success',
+    REVOKED: 'error',
+    EXPIRED: 'warning'
+};
 </script>
 
 <template>
   <div v-if="license" class="space-y-6 sm:space-y-8">
     <div>
       <NuxtLink to="/dashboard" class="text-sm text-gray-500 hover:text-primary inline-flex items-center gap-1.5">
-        <UIcon name="i-lucide-chevron-left" class="size-4" /> Back to licenses
+        <UIcon name="i-lucide-chevron-left" class="size-4 rtl:rotate-180" /> {{ chrome.pages.dashboardLicenseDetail.backToLicenses }}
       </NuxtLink>
       <h1 class="text-xl sm:text-2xl font-semibold mt-3 font-mono break-all">{{ license.keyPrefix }}…</h1>
       <div class="flex items-center gap-2 flex-wrap mt-2">
@@ -81,75 +56,71 @@ const statusColor: Record<string, 'success' | 'error' | 'warning'> = {
       </div>
     </div>
 
-    <!-- Rotate key — at the top so the revealed key appears inline -->
+    <!-- Rotate key -->
     <UCard v-if="license.status === 'ACTIVE'">
       <template #header>
         <div class="flex items-center gap-2">
           <UIcon name="i-lucide-key-round" class="size-5 text-secondary" />
-          <h2 class="font-semibold">Rotate key</h2>
+          <h2 class="font-semibold">{{ chrome.pages.dashboardLicenseDetail.rotateSection }}</h2>
         </div>
       </template>
 
-      <!-- State 1: freshly rotated — show the new plaintext key once -->
+      <!-- Freshly rotated -->
       <div v-if="rotatedKey">
         <div class="rounded-lg border border-secondary/30 bg-secondary/5 p-4 space-y-3">
           <div class="flex items-center gap-2 text-sm font-medium text-secondary">
             <UIcon name="i-lucide-circle-check" class="size-5" />
-            Your new license key — copy it now
+            {{ chrome.pages.dashboardLicenseDetail.newKeyHeading }}
           </div>
           <p class="text-sm text-gray-600 dark:text-gray-400">
-            This is the only time we'll show it. Store it somewhere safe. The
-            previous key has stopped working; every existing install must
-            re-activate with this new key.
+            {{ chrome.pages.dashboardLicenseDetail.newKeyExplain }}
           </p>
           <code class="block w-full px-3 py-2.5 rounded bg-black/10 dark:bg-white/10 font-mono text-sm select-all break-all">{{ rotatedKey }}</code>
           <div class="flex flex-col sm:flex-row gap-2">
-            <UButton icon="i-lucide-copy" color="secondary" @click="copyKey">Copy key</UButton>
-            <UButton variant="soft" color="neutral" @click="rotatedKey = null">Done</UButton>
+            <UButton icon="i-lucide-copy" color="secondary" @click="copyKey">{{ chrome.pages.dashboardLicenseDetail.copyKey }}</UButton>
+            <UButton variant="soft" color="neutral" @click="rotatedKey = null">{{ chrome.pages.dashboardLicenseDetail.done }}</UButton>
           </div>
         </div>
       </div>
 
-      <!-- State 2: pre-rotate prompt -->
+      <!-- Pre-rotate prompt -->
       <div v-else class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
         <div class="text-sm min-w-0">
-          <p class="font-medium">Generate a new key</p>
+          <p class="font-medium">{{ chrome.pages.dashboardLicenseDetail.generateNewKey }}</p>
           <p class="text-gray-500 mt-1">
-            Use this if you lost your key or believe it has leaked. The new key
-            is shown once — copy it immediately. The old key stops working at
-            once, and every existing install must re-activate with the new key.
+            {{ chrome.pages.dashboardLicenseDetail.rotateExplain }}
           </p>
         </div>
         <UButton v-if="!showRotateConfirm" color="secondary" variant="soft" icon="i-lucide-refresh-cw" class="w-full sm:w-auto justify-center shrink-0" @click="showRotateConfirm = true">
-          Rotate key
+          {{ chrome.pages.dashboardLicenseDetail.rotateButton }}
         </UButton>
         <div v-else class="flex flex-col sm:flex-row gap-2 shrink-0">
-          <UButton color="secondary" :loading="rotating" class="justify-center" @click="rotateKey">Confirm rotate</UButton>
-          <UButton variant="ghost" color="neutral" :disabled="rotating" class="justify-center" @click="showRotateConfirm = false">Cancel</UButton>
+          <UButton color="secondary" :loading="rotating" class="justify-center" @click="rotateKey">{{ chrome.pages.dashboardLicenseDetail.confirmRotate }}</UButton>
+          <UButton variant="ghost" color="neutral" :disabled="rotating" class="justify-center" @click="showRotateConfirm = false">{{ chrome.pages.dashboardLicenseDetail.cancel }}</UButton>
         </div>
       </div>
     </UCard>
 
     <UCard>
       <template #header>
-        <h2 class="font-semibold">Details</h2>
+        <h2 class="font-semibold">{{ chrome.pages.dashboardLicenseDetail.detailsSection }}</h2>
       </template>
       <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
         <div>
-          <dt class="text-gray-500">Plan</dt>
+          <dt class="text-gray-500">{{ chrome.pages.dashboardLicenseDetail.plan }}</dt>
           <dd>{{ license.plan.name }}</dd>
         </div>
         <div>
-          <dt class="text-gray-500">Activations</dt>
+          <dt class="text-gray-500">{{ chrome.pages.dashboardLicenseDetail.activations }}</dt>
           <dd>{{ license.activations.filter(a => !a.deactivatedAt).length }} / {{ license.maxActivations }}</dd>
         </div>
         <div>
-          <dt class="text-gray-500">Issued</dt>
+          <dt class="text-gray-500">{{ chrome.pages.dashboardLicenseDetail.issued }}</dt>
           <dd>{{ fmt(license.issuedAt) }}</dd>
         </div>
         <div>
-          <dt class="text-gray-500">Expires</dt>
-          <dd>{{ license.expiresAt ? fmt(license.expiresAt) : 'Never (perpetual)' }}</dd>
+          <dt class="text-gray-500">{{ chrome.pages.dashboardLicenseDetail.expires }}</dt>
+          <dd>{{ license.expiresAt ? fmt(license.expiresAt) : chrome.pages.dashboardLicenseDetail.neverPerpetual }}</dd>
         </div>
       </dl>
     </UCard>
@@ -159,26 +130,34 @@ const statusColor: Record<string, 'success' | 'error' | 'warning'> = {
       <template #header>
         <div class="flex items-center gap-2">
           <UIcon name="i-lucide-key-round" class="size-5 text-primary" />
-          <h2 class="font-semibold">Where is my full license key?</h2>
+          <h2 class="font-semibold">{{ chrome.pages.dashboardLicenseDetail.whereIsKey }}</h2>
         </div>
       </template>
       <div class="text-sm space-y-3">
         <p>
-          For security, we only ever show the full key
-          <strong>once — at purchase time</strong>. After that, the portal only
-          stores a one-way hash, so nobody (not even us) can recover the
-          original plaintext.
+          {{ chrome.pages.dashboardLicenseDetail.wherePara1Lead }}
+          <strong>{{ chrome.pages.dashboardLicenseDetail.wherePara1Strong }}</strong>{{ chrome.pages.dashboardLicenseDetail.wherePara1Tail }}
         </p>
-        <p>You can find your key in:</p>
+        <p>{{ chrome.pages.dashboardLicenseDetail.whereYouCanFind }}</p>
         <ul class="list-disc ps-5 space-y-1 text-gray-600 dark:text-gray-400">
-          <li>The <strong>purchase confirmation email</strong> sent when your order was completed (subject: <em>"Your license is ready"</em>). Search your inbox for <code class="font-mono bg-black/5 dark:bg-white/10 px-1 rounded">{{ license.keyPrefix }}</code>.</li>
-          <li>The password manager you saved it to at checkout.</li>
-          <li>The <strong>installer screen</strong> where you originally pasted it — the saved certificate file on that machine proves activation, even without the key.</li>
+          <li>
+            {{ chrome.pages.dashboardLicenseDetail.whereInEmailLead }}
+            <strong>{{ chrome.pages.dashboardLicenseDetail.whereInEmailStrong }}</strong>
+            {{ chrome.pages.dashboardLicenseDetail.whereInEmailTail }}
+            <em>"{{ chrome.pages.dashboardLicenseDetail.whereInEmailSubject }}"</em>{{ chrome.pages.dashboardLicenseDetail.whereInEmailSearch }}
+            <code class="font-mono bg-black/5 dark:bg-white/10 px-1 rounded">{{ license.keyPrefix }}</code>{{ chrome.pages.dashboardLicenseDetail.whereInEmailPeriod }}
+          </li>
+          <li>{{ chrome.pages.dashboardLicenseDetail.whereInPasswordManager }}</li>
+          <li>
+            {{ chrome.pages.dashboardLicenseDetail.whereInInstallerLead }}
+            <strong>{{ chrome.pages.dashboardLicenseDetail.whereInInstallerStrong }}</strong>
+            {{ chrome.pages.dashboardLicenseDetail.whereInInstallerTail }}
+          </li>
         </ul>
         <p class="text-gray-600 dark:text-gray-400">
-          If you genuinely lost the key and need to install on a new machine,
-          use <strong>Rotate key</strong> above. It generates a fresh key and
-          invalidates the old one.
+          {{ chrome.pages.dashboardLicenseDetail.whereLostLead }}
+          <strong>{{ chrome.pages.dashboardLicenseDetail.whereLostStrong }}</strong>
+          {{ chrome.pages.dashboardLicenseDetail.whereLostTail }}
         </p>
       </div>
     </UCard>
@@ -186,15 +165,15 @@ const statusColor: Record<string, 'success' | 'error' | 'warning'> = {
     <UCard>
       <template #header>
         <div class="flex items-center justify-between">
-          <h2 class="font-semibold">Active installs</h2>
+          <h2 class="font-semibold">{{ chrome.pages.dashboardLicenseDetail.activeInstalls }}</h2>
           <UButton size="xs" variant="ghost" icon="i-lucide-refresh-cw" :loading="status === 'pending'" @click="refresh" />
         </div>
       </template>
 
       <div v-if="!license.activations.length" class="text-center py-10 text-gray-500 dark:text-gray-400">
         <UIcon name="i-lucide-server-off" class="size-8 mx-auto opacity-40" />
-        <p class="mt-3 text-sm">No installs yet.</p>
-        <p class="text-xs mt-1">Activate this key on a Momentfy instance to see it here.</p>
+        <p class="mt-3 text-sm">{{ chrome.pages.dashboardLicenseDetail.noInstalls }}</p>
+        <p class="text-xs mt-1">{{ chrome.pages.dashboardLicenseDetail.noInstallsHint }}</p>
       </div>
 
       <div v-else class="divide-y divide-black/5 dark:divide-white/10 -m-4">
@@ -206,8 +185,8 @@ const statusColor: Record<string, 'success' | 'error' | 'warning'> = {
               <span v-if="a.appVersion" class="text-xs text-gray-500">v{{ a.appVersion }}</span>
             </div>
             <div class="text-xs text-gray-500 mt-0.5">
-              <span v-if="!a.deactivatedAt">last seen {{ fmt(a.lastSeenAt) }}</span>
-              <span v-else>deactivated {{ fmt(a.deactivatedAt) }}</span>
+              <span v-if="!a.deactivatedAt">{{ fillTemplate(chrome.pages.dashboardLicenseDetail.lastSeen, { date: fmt(a.lastSeenAt) }) }}</span>
+              <span v-else>{{ fillTemplate(chrome.pages.dashboardLicenseDetail.deactivated, { date: fmt(a.deactivatedAt) }) }}</span>
               <span v-if="a.ipAddress"> · {{ a.ipAddress }}</span>
             </div>
           </div>

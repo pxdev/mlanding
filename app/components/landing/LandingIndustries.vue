@@ -1,0 +1,119 @@
+<script setup>
+const copy = useLandingCopy()
+
+// Per-industry visuals + bento span. Spans are tuned so the eight tiles
+// tile cleanly into a 4-col × 4-row grid (16 cells total) without gaps:
+//
+//   ┌──────────┬──────┬──────┐
+//   │  salon   │dental│medic.│
+//   │  (2×2)   ├──────┼──────┤
+//   │          │barber│ fit. │
+//   ├──────────┼──────┴──────┤
+//   │   pet    │  therapy    │
+//   │  (2×2)   │   (2×1)     │
+//   │          ├─────────────┤
+//   │          │   photo     │
+//   │          │   (2×1)     │
+//   └──────────┴─────────────┘
+//
+// On <sm we collapse to a 2-col grid and drop the spans.
+// Photos come from picsum.photos with a deterministic seed per industry,
+// so each tile gets a stable (but different) image without us having to
+// curate real photos. Replace these with `/images/industries/{id}.webp`
+// when you ship branded photography.
+function splash(seed) { return `https://picsum.photos/seed/${seed}/900/600` }
+
+const industryVisuals = {
+  salon:   { image: splash('momentfy-salon'),   icon: 'i-lucide-scissors',        tint: 'from-pink-500/40 to-rose-600/40',     span: 'sm:col-span-2 sm:row-span-2' },
+  dental:  { image: splash('momentfy-dental'),  icon: 'i-hugeicons-dental-tooth', tint: 'from-sky-500/40 to-blue-600/40',      span: 'sm:col-span-1 sm:row-span-1' },
+  medical: { image: splash('momentfy-medical'), icon: 'i-lucide-heart-pulse',     tint: 'from-red-500/40 to-orange-600/40',    span: 'sm:col-span-1 sm:row-span-1' },
+  barber:  { image: splash('momentfy-barber'),  icon: 'i-lucide-user',            tint: 'from-stone-500/40 to-neutral-700/50', span: 'sm:col-span-1 sm:row-span-1' },
+  fitness: { image: splash('momentfy-fitness'), icon: 'i-lucide-dumbbell',        tint: 'from-lime-500/40 to-emerald-600/40',  span: 'sm:col-span-1 sm:row-span-1' },
+  pet:     { image: splash('momentfy-pet'),     icon: 'i-lucide-paw-print',       tint: 'from-amber-500/40 to-yellow-600/40',  span: 'sm:col-span-2 sm:row-span-2' },
+  therapy: { image: splash('momentfy-therapy'), icon: 'i-lucide-brain',           tint: 'from-violet-500/40 to-purple-600/40', span: 'sm:col-span-2 sm:row-span-1' },
+  photo:   { image: splash('momentfy-photo'),   icon: 'i-lucide-camera',          tint: 'from-cyan-500/40 to-teal-600/40',     span: 'sm:col-span-2 sm:row-span-1' }
+}
+
+// Hide the <img> when its src 404s so the colored fallback (icon + tint) shows through.
+function onIndustryImgError(e) {
+  e.target.style.display = 'none'
+}
+</script>
+
+<template>
+  <section class="relative py-24 sm:py-32 overflow-hidden">
+    <div aria-hidden="true" class="absolute inset-x-0 top-0 h-px bg-black/10 dark:bg-white/10" />
+
+    <div class="max-w-7xl mx-auto px-5 sm:px-8">
+      <LandingSectionHeading
+        number="3"
+        :label="copy.industries.eyebrow"
+        :heading="copy.industries.heading"
+        :sub="copy.industries.sub"
+        :count="copy.industries.items.length"
+      />
+
+      <!-- Bento grid: photo-driven tiles with text overlay. -->
+      <ul class="mt-12 sm:mt-16 grid grid-cols-2 sm:grid-cols-4 grid-flow-row-dense auto-rows-[180px] sm:auto-rows-[220px] gap-3 sm:gap-4">
+        <li
+          v-for="(ind, i) in copy.industries.items"
+          :key="ind.id"
+          :class="industryVisuals[ind.id]?.span"
+        >
+          <NuxtLink
+            :to="`/portal/showcase#${ind.id}`"
+            class="group relative block w-full h-full overflow-hidden rounded-2xl bg-gray-100 dark:bg-white/5 ring-1 ring-black/5 dark:ring-white/10 transition-all duration-300 hover:ring-secondary-500/40 hover:shadow-2xl hover:shadow-secondary-500/10"
+          >
+            <!-- Colored fallback (sits below the image; only visible when the image 404s). -->
+            <div
+              aria-hidden="true"
+              class="absolute inset-0 bg-gradient-to-br"
+              :class="industryVisuals[ind.id]?.tint"
+            />
+            <UIcon
+              :name="industryVisuals[ind.id]?.icon"
+              aria-hidden="true"
+              class="absolute inset-0 m-auto size-12 sm:size-16 text-white/40"
+            />
+
+            <!-- Real photo on top of the fallback. -->
+            <img
+              :src="industryVisuals[ind.id]?.image"
+              :alt="ind.label"
+              loading="lazy"
+              decoding="async"
+              class="relative w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              @error="onIndustryImgError"
+            >
+
+            <!-- Bottom gradient + content overlay. -->
+            <div aria-hidden="true" class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
+
+            <!-- Index chip top-start. -->
+            <span class="absolute top-3 start-3 z-10 inline-flex items-center justify-center min-w-7 h-7 px-2 rounded-full bg-white/10 backdrop-blur-sm text-[11px] font-bold tabular-nums text-white/90 ring-1 ring-white/15">
+              0{{ i + 1 }}
+            </span>
+
+            <!-- Arrow chip top-end (animates in on hover). -->
+            <span class="absolute top-3 end-3 z-10 size-9 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center text-white ring-1 ring-white/15 opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+              <UIcon name="i-lucide-arrow-up-right" class="size-4 rtl:rotate-180" />
+            </span>
+
+            <!-- Label + tagline anchored to the bottom-start. -->
+            <div class="absolute inset-x-0 bottom-0 z-10 p-4 sm:p-5">
+              <h3 class="text-white font-black tracking-tight leading-none text-xl sm:text-2xl lg:text-3xl">
+                {{ ind.label }}
+              </h3>
+              <p
+                v-if="ind.tagline"
+                class="mt-1.5 text-white/80 text-xs sm:text-sm line-clamp-2 max-w-prose"
+              >
+                {{ ind.tagline }}
+              </p>
+            </div>
+          </NuxtLink>
+        </li>
+      </ul>
+    </div>
+  </section>
+</template>

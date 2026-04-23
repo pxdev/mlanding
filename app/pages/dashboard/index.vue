@@ -1,68 +1,66 @@
-<script setup lang="ts">
-definePageMeta({ layout: 'dashboard', middleware: 'auth' })
-useHead({ title: 'Licenses — Momentfy portal' })
-
-const { user, isAdmin, displayName } = useSession()
-const route = useRoute()
-const toast = useToast()
-
+<script setup>
+definePageMeta({
+    layout: 'portal',
+    colorMode: 'light',
+    middleware: ['auth', function () {
+            // /dashboard is the customer Licenses page. Admins have a richer
+            // operator overview at /admin, so send them there. Other /dashboard/**
+            // routes (profile, license detail) stay shared between both roles.
+            const { user } = useUserSession();
+            if (user.value?.isAdmin)
+                return navigateTo('/admin', { replace: true });
+        }]
+});
+import { fillTemplate } from '~/composables/useChromeCopy';
+const chrome = useChromeCopy();
+useHead({ title: () => chrome.value.pages.dashboardLicenses.docTitle });
+const { user, isAdmin, displayName } = useSession();
+const route = useRoute();
+const toast = useToast();
 // ?purchased=<slug> → LS redirected here right after payment. The webhook
 // usually lands within seconds; show a nudge so the customer doesn't think
 // it got lost if the list still looks empty on first load.
-const justPurchased = computed(() => route.query.purchased as string | undefined)
-
-interface LicenseRow {
-  id: string
-  keyPrefix: string
-  plan: { id: string, slug: string, name: string }
-  status: 'ACTIVE' | 'REVOKED' | 'EXPIRED'
-  maxActivations: number
-  activeActivations: number
-  expiresAt: string | null
-  issuedAt: string
-  revokedAt: string | null
-}
-
-const { data: licenses, refresh, status } = await useFetch<LicenseRow[]>('/api/portal/licenses', {
-  default: () => []
-})
-
+const justPurchased = computed(() => route.query.purchased);
+const { data: licenses, refresh, status } = await useFetch('/api/portal/licenses', {
+    default: () => []
+});
 onMounted(() => {
-  if (!justPurchased.value) return
-  toast.add({
-    title: 'Thanks for your purchase!',
-    description: 'Your license is being provisioned — this takes a few seconds. We also emailed the key to you.',
-    color: 'success',
-    duration: 10000
-  })
-  let tries = 0
-  const iv = setInterval(async () => {
-    tries++
-    await refresh()
-    if ((licenses.value && licenses.value.length > 0) || tries >= 5) {
-      clearInterval(iv)
-      navigateTo({ path: route.path, query: {} }, { replace: true })
-    }
-  }, 3000)
-})
-
-function formatDate(d: string | null) {
-  return d ? new Date(d).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) : '—'
+    if (!justPurchased.value)
+        return;
+    toast.add({
+        title: chrome.value.pages.dashboardLicenses.purchasedToastTitle,
+        description: chrome.value.pages.dashboardLicenses.purchasedToastDesc,
+        color: 'success',
+        duration: 10000
+    });
+    let tries = 0;
+    const iv = setInterval(async () => {
+        tries++;
+        await refresh();
+        if ((licenses.value && licenses.value.length > 0) || tries >= 5) {
+            clearInterval(iv);
+            navigateTo({ path: route.path, query: {} }, { replace: true });
+        }
+    }, 3000);
+});
+function formatDate(d) {
+    return d ? new Date(d).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) : '—';
 }
-
-const statusColor: Record<string, 'success' | 'error' | 'warning'> = {
-  ACTIVE: 'success',
-  REVOKED: 'error',
-  EXPIRED: 'warning'
-}
-
+const statusColor = {
+    ACTIVE: 'success',
+    REVOKED: 'error',
+    EXPIRED: 'warning'
+};
 const stats = computed(() => {
-  const list = licenses.value || []
-  const active = list.filter(l => l.status === 'ACTIVE').length
-  const installs = list.reduce((sum, l) => sum + l.activeActivations, 0)
-  const capacity = list.reduce((sum, l) => sum + l.maxActivations, 0)
-  return { total: list.length, active, installs, capacity }
-})
+    const list = licenses.value || [];
+    const active = list.filter(l => l.status === 'ACTIVE').length;
+    const installs = list.reduce((sum, l) => sum + l.activeActivations, 0);
+    const capacity = list.reduce((sum, l) => sum + l.maxActivations, 0);
+    return { total: list.length, active, installs, capacity };
+});
+const welcomeHeading = computed(() => displayName.value
+    ? fillTemplate(chrome.value.pages.dashboardLicenses.welcomeNamed, { name: displayName.value })
+    : chrome.value.pages.dashboardLicenses.welcome);
 </script>
 
 <template>
@@ -70,10 +68,10 @@ const stats = computed(() => {
     <header class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
       <div class="min-w-0">
         <h1 class="text-xl sm:text-2xl font-semibold">
-          Welcome{{ displayName ? `, ${displayName}` : '' }}
+          {{ welcomeHeading }}
         </h1>
         <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
-          Manage your Momentfy licenses, source-code access and billing.
+          {{ chrome.pages.dashboardLicenses.intro }}
         </p>
       </div>
       <UButton
@@ -82,26 +80,26 @@ const stats = computed(() => {
         size="lg"
         class="w-full sm:w-auto justify-center rounded-full shrink-0"
       >
-        Buy a license
+        {{ chrome.pages.dashboardLicenses.buyLicense }}
       </UButton>
     </header>
 
     <!-- KPI row -->
     <div v-if="licenses.length" class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
       <div class="rounded-xl border border-black/5 dark:border-white/10 bg-white dark:bg-neutral-900 p-4">
-        <div class="text-xs text-gray-500 uppercase tracking-wider">Licenses</div>
+        <div class="text-xs text-gray-500 uppercase tracking-wider">{{ chrome.pages.dashboardLicenses.statTotal }}</div>
         <div class="text-2xl font-semibold mt-1">{{ stats.total }}</div>
       </div>
       <div class="rounded-xl border border-black/5 dark:border-white/10 bg-white dark:bg-neutral-900 p-4">
-        <div class="text-xs text-gray-500 uppercase tracking-wider">Active</div>
+        <div class="text-xs text-gray-500 uppercase tracking-wider">{{ chrome.pages.dashboardLicenses.statActive }}</div>
         <div class="text-2xl font-semibold mt-1 text-success">{{ stats.active }}</div>
       </div>
       <div class="rounded-xl border border-black/5 dark:border-white/10 bg-white dark:bg-neutral-900 p-4">
-        <div class="text-xs text-gray-500 uppercase tracking-wider">Installs</div>
+        <div class="text-xs text-gray-500 uppercase tracking-wider">{{ chrome.pages.dashboardLicenses.statInstalls }}</div>
         <div class="text-2xl font-semibold mt-1">{{ stats.installs }}<span class="text-sm text-gray-400 font-normal"> / {{ stats.capacity }}</span></div>
       </div>
       <div class="rounded-xl border border-black/5 dark:border-white/10 bg-white dark:bg-neutral-900 p-4">
-        <div class="text-xs text-gray-500 uppercase tracking-wider">Plans</div>
+        <div class="text-xs text-gray-500 uppercase tracking-wider">{{ chrome.pages.dashboardLicenses.statPlans }}</div>
         <div class="text-2xl font-semibold mt-1">{{ new Set(licenses.map(l => l.plan.slug)).size }}</div>
       </div>
     </div>
@@ -110,14 +108,14 @@ const stats = computed(() => {
       <template #header>
         <div class="flex items-center justify-between">
           <h2 class="font-semibold">
-            Your licenses
+            {{ chrome.pages.dashboardLicenses.yourLicenses }}
           </h2>
           <UButton
             size="xs"
             variant="ghost"
             icon="i-lucide-refresh-cw"
             :loading="status === 'pending'"
-            aria-label="Refresh"
+            :aria-label="chrome.pages.dashboardLicenses.refresh"
             @click="refresh"
           />
         </div>
@@ -132,17 +130,17 @@ const stats = computed(() => {
           class="size-10 mx-auto opacity-40"
         />
         <p class="mt-3 text-sm">
-          No licenses yet.
+          {{ chrome.pages.dashboardLicenses.emptyTitle }}
         </p>
         <p class="text-xs mt-1">
-          After you complete checkout, your license and repo invite will show up here.
+          {{ chrome.pages.dashboardLicenses.emptyHint }}
         </p>
         <UButton
           to="/portal/pricing"
           size="md"
           class="mt-4 rounded-full"
         >
-          Buy a license
+          {{ chrome.pages.dashboardLicenses.buyLicense }}
         </UButton>
       </div>
 
@@ -173,13 +171,14 @@ const stats = computed(() => {
               <span class="text-xs text-gray-500 truncate">{{ l.plan.name }}</span>
             </div>
             <div class="text-xs text-gray-500 mt-1 truncate">
-              {{ l.activeActivations }}/{{ l.maxActivations }} installs · issued {{ formatDate(l.issuedAt) }}
-              <span v-if="l.expiresAt"> · expires {{ formatDate(l.expiresAt) }}</span>
+              {{ fillTemplate(chrome.pages.dashboardLicenses.installsLabel, { n: l.activeActivations, m: l.maxActivations }) }}
+              · {{ fillTemplate(chrome.pages.dashboardLicenses.issuedShort, { date: formatDate(l.issuedAt) }) }}
+              <span v-if="l.expiresAt"> · {{ fillTemplate(chrome.pages.dashboardLicenses.expiresShort, { date: formatDate(l.expiresAt) }) }}</span>
             </div>
           </div>
           <UIcon
             name="i-lucide-chevron-right"
-            class="size-4 text-gray-400 shrink-0"
+            class="size-4 text-gray-400 shrink-0 rtl:rotate-180"
           />
         </NuxtLink>
       </div>
@@ -188,21 +187,19 @@ const stats = computed(() => {
     <UCard v-if="isAdmin">
       <template #header>
         <h2 class="font-semibold">
-          Operator
+          {{ chrome.pages.dashboardLicenses.operator }}
         </h2>
       </template>
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-        <UButton to="/admin/users" variant="soft" color="neutral" icon="i-lucide-users" block>Customers</UButton>
-        <UButton to="/admin/licenses" variant="soft" color="neutral" icon="i-lucide-shield" block>All licenses</UButton>
-        <UButton to="/admin/audit" variant="soft" color="neutral" icon="i-lucide-list" block>Audit log</UButton>
+        <UButton to="/admin/users" variant="soft" color="neutral" icon="i-lucide-users" block>{{ chrome.pages.dashboardLicenses.opCustomers }}</UButton>
+        <UButton to="/admin/licenses" variant="soft" color="neutral" icon="i-lucide-shield" block>{{ chrome.pages.dashboardLicenses.opAllLicenses }}</UButton>
+        <UButton to="/admin/audit" variant="soft" color="neutral" icon="i-lucide-list" block>{{ chrome.pages.dashboardLicenses.opAuditLog }}</UButton>
       </div>
     </UCard>
 
     <p class="text-xs text-gray-400 text-center sm:text-start">
-      Signed in as {{ user?.email }} · <NuxtLink
-        to="/"
-        class="hover:underline"
-      >Visit marketing site</NuxtLink>
+      {{ fillTemplate(chrome.pages.dashboardLicenses.signedInAs, { email: user?.email || '' }) }} ·
+      <NuxtLink to="/" class="hover:underline">{{ chrome.pages.dashboardLicenses.visitMarketing }}</NuxtLink>
     </p>
   </div>
 </template>

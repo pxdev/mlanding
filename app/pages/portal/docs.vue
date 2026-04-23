@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 definePageMeta({ layout: 'landing' })
 
 const copy = useLandingCopy()
@@ -13,40 +13,28 @@ useHead(() => ({
       : 'System requirements, hosting cost, deployment, repo access, backups, environment variables and license.'
   }]
 }))
+const chapterNav = computed(() => copy.value.docsPage.sections.map(s => ({
+  id: s.id,
+  label: s.title,
+  dot: 'bg-secondary-500',
+  count: undefined
+})))
 </script>
 
 <template>
   <!-- ═══ Hero ═══ -->
-  <section class="relative py-20 sm:py-28 overflow-hidden">
-    <div aria-hidden="true" class="absolute inset-0 -z-10">
+  <LandingPageHero
+    :crumb-label="copy.docsPage.eyebrow"
+    :headline="copy.docsPage.h1"
+    :sub="copy.docsPage.sub"
+  >
+    <template #background>
       <div class="absolute top-0 start-1/2 -translate-x-1/2 w-[40rem] h-[30rem] bg-secondary-500 blur-[150px] opacity-[0.1] rounded-full" />
-    </div>
+    </template>
+  </LandingPageHero>
 
-    <div class="max-w-7xl mx-auto px-5 sm:px-8">
-      <div class="grid grid-cols-12 gap-6">
-        <div class="col-span-12 sm:col-span-4 lg:col-span-3">
-          <p class="text-xs uppercase tracking-[0.25em] text-gray-400">—— {{ copy.docsPage.eyebrow }}</p>
-          <p class="mt-3 text-sm text-gray-500 dark:text-gray-500 max-w-[16rem]">{{ copy.docsPage.sub }}</p>
-
-          <!-- Sticky TOC -->
-          <nav class="mt-6 space-y-2 text-xs">
-            <a v-for="s in copy.docsPage.sections" :key="s.id" :href="`#${s.id}`"
-              class="group flex items-center gap-2 text-gray-500 hover:text-primary dark:hover:text-white transition-colors"
-            >
-              <span class="tabular-nums text-gray-400 shrink-0">{{ s.num }}</span>
-              <span class="size-1.5 rounded-full bg-secondary-500/40 group-hover:bg-secondary-500 transition-colors shrink-0" />
-              <span class="uppercase tracking-[0.2em] truncate">{{ s.title }}</span>
-            </a>
-          </nav>
-        </div>
-        <div class="col-span-12 sm:col-span-8 lg:col-span-9">
-          <h1 class="font-black tracking-tight leading-[0.9] text-5xl sm:text-6xl lg:text-7xl xl:text-8xl">
-            <span class="block">{{ copy.docsPage.h1 }}</span>
-          </h1>
-        </div>
-      </div>
-    </div>
-  </section>
+  <!-- Sticky chapter nav -->
+  <LandingChapterNav :items="chapterNav" />
 
   <!-- ═══ Docs body — editorial chapters ═══ -->
   <section class="py-8 sm:py-16">

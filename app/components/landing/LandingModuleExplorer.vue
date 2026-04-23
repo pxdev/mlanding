@@ -256,15 +256,8 @@ const totalIndex = computed(() => String(modules.value.length).padStart(2, '0'))
             <!-- Live mock — light-weight frame (no border), soft bg + hairline top -->
             <div class="mt-8 relative rounded-2xl bg-gray-50 dark:bg-white/[0.025] overflow-hidden">
               <div aria-hidden="true" class="h-0.5 bg-gradient-to-r opacity-80" :class="activeVisual?.color" />
-              <div class="p-5 sm:p-6">
-                <Transition
-                  enter-active-class="transition duration-500 ease-out"
-                  enter-from-class="opacity-0 scale-[0.98]"
-                  enter-to-class="opacity-100 scale-100"
-                  mode="out-in"
-                >
-                  <LandingModuleMock :key="active?.id" :id="active?.id || 'calendar'" :color="activeVisual?.color" />
-                </Transition>
+              <div class="p-5 sm:p-6 transition-opacity duration-300" :key="active?.id">
+                <LandingModuleMock :id="active?.id || 'calendar'" :color="activeVisual?.color" />
               </div>
             </div>
 

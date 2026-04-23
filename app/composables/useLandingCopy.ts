@@ -55,7 +55,7 @@ export type LandingCopy = {
   dir: 'ltr' | 'rtl'
   nav: {
     features: string; addons: string; showcase: string; pricing: string; faq: string; docs: string
-    signIn: string; getCode: string; langLabel: string
+    signIn: string; dashboard: string; getCode: string; langLabel: string
   }
   hero: {
     badge: string; h1a: string; highlight: string; h1b: string; sub: string; subStrong: string
