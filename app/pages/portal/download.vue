@@ -7,7 +7,7 @@ useHead(() => ({
     meta: [{
             name: 'description',
             content: locale.value === 'ar'
-                ? 'اشترِ كود Momentfy. دفع آمن عبر Lemon Squeezy. تنزيل فوري للمستودع، مفتاح الترخيص ووثائق التثبيت.'
+                ? 'احصل على كود Momentfy خلال دقائق. دفع آمن عبر Lemon Squeezy، ثم وصول فوري إلى المستودع، مفتاح الترخيص، ودليل التنصيب.'
                 : 'Buy the Momentfy source. Secure checkout via Lemon Squeezy. Instant download of the repo, license key and install docs.'
         }]
 }));

@@ -61,7 +61,7 @@ async function applyPromo() {
   await refreshPreview()
   if (!preview.value?.promo) {
     promoError.value = locale.value === 'ar'
-      ? 'كود غير صالح أو منتهي أو لا ينطبق على هذه الخطة.'
+      ? 'هذا الكود غير صالح أو منتهٍ أو لا يناسب هذه الخطة.'
       : 'Invalid, expired, or not applicable to this plan.'
   } else {
     promoError.value = ''
@@ -119,9 +119,9 @@ const t = computed(() => {
   const ar = locale.value === 'ar'
   return {
     eyebrow: ar ? 'مراجعة الطلب' : 'Review order',
-    heading: ar ? 'تحقق من طلبك قبل الدفع.' : 'Review before you pay.',
+    heading: ar ? 'راجع طلبك قبل الدفع.' : 'Review before you pay.',
     sub: ar
-      ? 'تأكد من الخطة والخصم والإجمالي قبل الانتقال إلى بوابة الدفع.'
+      ? 'تأكد من خطتك، خصمك، وإجماليك قبل أن ننقلك إلى بوابة الدفع الآمنة.'
       : 'Confirm the plan, any discount and the total before we hand you to the payment gateway.',
     whatsIncluded: ar ? 'ما تحصل عليه' : "What's included",
     summary: ar ? 'ملخص الطلب' : 'Order summary',
@@ -136,7 +136,7 @@ const t = computed(() => {
     proceed: ar ? 'المتابعة إلى الدفع' : 'Continue to payment',
     changePlan: ar ? 'تغيير الخطة' : 'Change plan',
     secure: ar
-      ? 'الدفع مؤمّن عبر Lemon Squeezy. سيتم تحويلك إلى موقع آمن لإتمام المعاملة.'
+      ? 'الدفع مؤمّن عبر Lemon Squeezy. سننقلك لموقع آمن لإتمام المعاملة، ولا تمر بطاقتك أبداً من خوادمنا.'
       : "You'll be redirected to Lemon Squeezy's secure checkout. No card details touch our servers.",
     oneTime: ar ? 'دفعة واحدة' : 'One-time',
     lifetime: ar ? 'تحديثات مدى الحياة' : 'Lifetime updates',

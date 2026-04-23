@@ -4,12 +4,12 @@ definePageMeta({ layout: 'landing' })
 const { locale } = useI18n()
 useHead(() => ({
   title: locale.value === 'ar'
-    ? 'Momentfy — نظام التشغيل الكامل لأعمال الحجوزات'
+    ? 'Momentfy — منصة واحدة لإدارة أعمالك كاملةً'
     : 'Momentfy — The Operating System for Booking Businesses',
   meta: [{
     name: 'description',
     content: locale.value === 'ar'
-      ? 'منصة متكاملة للحجز، نقاط البيع، المحاسبة، المخزون، الموارد البشرية، CRM وبوابة العميل. متعدد المستأجرين، ثنائي اللغة، جاهز لـ ZATCA و ETA.'
+      ? 'كل ما يحتاجه عملك في منصة واحدة: حجوزات، نقاط بيع، محاسبة، مخزون، موارد بشرية، عملاء، وبوابة بشعارك — ثنائية اللغة، وجاهزة لهيئة الزكاة و ETA.'
       : 'All-in-one booking, POS, accounting, inventory, HR, CRM and client portal platform. Multi-tenant. Bilingual. ZATCA & ETA e-invoicing ready.'
   }]
 }))

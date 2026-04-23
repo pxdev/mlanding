@@ -9,7 +9,7 @@ useHead(() => ({
   meta: [{
     name: 'description',
     content: locale.value === 'ar'
-      ? 'الترخيص وشروط الخدمة والخصوصية وسياسة البيع ومعلومات الشركة — كلها في صفحة واحدة.'
+      ? 'الترخيص، شروط الخدمة، الخصوصية، سياسة البيع، ومعلومات الشركة — كلها في صفحة واحدة، بلغة واضحة يفهمها الجميع.'
       : 'License, Terms of Service, Privacy, Sales policy and company info — all on one page, plainly written.'
   }]
 }))

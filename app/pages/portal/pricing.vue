@@ -45,7 +45,7 @@ useHead(() => ({
     meta: [{
             name: 'description',
             content: locale.value === 'ar'
-                ? 'أسعار دفعة واحدة للكود المصدري، استضافة ذاتية، مستأجرون بلا حدود. الفرق الوحيد هو مدة التحديثات.'
+                ? 'ادفع مرة واحدة وامتلك الكود. استضافة ذاتية، مستأجرون بلا حدود، وتحديثات مدى الحياة. الفرق الوحيد بين الخطتين: هل تنصّب بنفسك، أم ننصّب عنك؟'
                 : 'One-time pricing for source code, self-hosted, unlimited tenants. The only thing that differs is the update window.'
         }]
 }));

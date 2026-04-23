@@ -7,7 +7,7 @@ useHead(() => ({
     meta: [{
             name: 'description',
             content: locale.value === 'ar'
-                ? 'منصة واحدة لكل التخصصات. صالونات، سبا، عيادات أسنان وطبية، حلاقة، لياقة، بيطرة واستوديوهات تصوير.'
+                ? 'منصة واحدة تفهم كل تخصص: صالونات، سبا، عيادات أسنان وطبية، حلاقة، لياقة، بيطرة، واستوديوهات تصوير — كلها بنفس الكود، بهوية كل قطاع.'
                 : 'One platform, every vertical. Salons, spas, dental and medical clinics, barbers, gyms, pet care and photo studios.'
         }]
 }));

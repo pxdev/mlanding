@@ -9,7 +9,7 @@ useHead(() => ({
   meta: [{
     name: 'description',
     content: locale.value === 'ar'
-      ? 'متطلبات النظام، تكلفة الاستضافة، النشر، المستودع والتحديثات، النسخ الاحتياطي، والمتغيرات.'
+      ? 'متطلبات النظام، تكلفة الاستضافة، خطوات النشر، الوصول إلى المستودع، التحديثات، النسخ الاحتياطي، والمتغيرات — كل ما تحتاجه لتنطلق.'
       : 'System requirements, hosting cost, deployment, repo access, backups, environment variables and license.'
   }]
 }))

@@ -7,7 +7,7 @@ useHead(() => ({
     meta: [{
             name: 'description',
             content: locale.value === 'ar'
-                ? 'أسئلة متكررة حول Momentfy — الترخيص، النشر، التحديثات، الامتثال والدعم.'
+                ? 'إجابات واضحة على ما يهمك: الترخيص، النشر، التحديثات، الامتثال، والدعم — كل ما قد تحتاج لمعرفته قبل البدء.'
                 : 'Frequently asked questions about Momentfy — licensing, deployment, updates, compliance and support.'
         }]
 }));

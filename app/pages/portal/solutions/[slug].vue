@@ -46,7 +46,7 @@ useHead(() => ({
     meta: [{
             name: 'description',
             content: solution.value?.tagline || (locale.value === 'ar'
-                ? 'حلول Momentfy لكل قطاع وشكل عمل.'
+                ? 'حلول Momentfy — مصنوعة على مقاس كل قطاع وكل شكل عمل.'
                 : 'Momentfy solutions for every vertical and business shape.')
         }]
 }));

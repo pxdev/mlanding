@@ -7,7 +7,7 @@ useHead(() => ({
     meta: [{
             name: 'description',
             content: locale.value === 'ar'
-                ? 'ستة عشر إضافة قابلة للتفعيل: ZATCA, ETA, مساعد ذكي, مخطط أسنان, تصوير طبي, مختبرات, وصفات, سجلات طبية, ولاء وأكثر.'
+                ? 'خمس عشرة إضافة جاهزة للتفعيل: ZATCA، ETA، مساعد ذكي، مخطط أسنان، تصوير طبي، مختبرات، وصفات، سجلات طبية، نقاط ولاء، وأكثر — كلها داخل الكود نفسه.'
                 : 'Sixteen toggleable add-ons: ZATCA, ETA, AI assistant, dental chart, clinical imaging, lab orders, prescriptions, medical records, loyalty and more.'
         }]
 }));

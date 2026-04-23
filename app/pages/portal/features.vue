@@ -7,7 +7,7 @@ useHead(() => ({
     meta: [{
             name: 'description',
             content: locale.value === 'ar'
-                ? 'كل وحدة، كل شاشة. تقويم، مبيعات، مخزون، عملاء، محاسبة، موارد بشرية، تقارير، بوابة عميل وذكاء اصطناعي — في كود واحد.'
+                ? 'كل وحدة، كل شاشة، تحت سقف واحد: التقويم، المبيعات، المخزون، العملاء، المحاسبة، الموارد البشرية، التقارير، بوابة العميل، والمساعد الذكي — في كود واحد متماسك.'
                 : 'Every module, every screen. Calendar, sales, inventory, clients, accounting, HR, reports, client portal and AI — in one codebase.'
         }]
 }));
