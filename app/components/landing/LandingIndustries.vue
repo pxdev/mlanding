@@ -49,6 +49,18 @@ function onIndustryImgError(e) {
 function indexChip(i) {
   return String(i + 1).padStart(2, '0')
 }
+
+// Prefer the dedicated solution page when one exists, otherwise fall back to
+// the showcase anchor. Keeps tiles landing on real content even when a
+// vertical only lives in one of the two taxonomies (e.g. education has a
+// showcase section but no solutions page; therapy is the reverse).
+const solutionIds = computed(() => new Set(Object.keys(copy.value.solutionDetails)))
+const showcaseIds = computed(() => new Set(copy.value.showcasePage.verticals.map(v => v.id)))
+function industryTarget(id) {
+  if (solutionIds.value.has(id)) return `/portal/solutions/${id}`
+  if (showcaseIds.value.has(id)) return `/portal/showcase#${id}`
+  return '/portal/solutions'
+}
 </script>
 
 <template>
@@ -73,7 +85,7 @@ function indexChip(i) {
           class="group/tile"
         >
           <NuxtLink
-            :to="`/portal/showcase#${ind.id}`"
+            :to="industryTarget(ind.id)"
             class="group relative block w-full h-full overflow-hidden rounded-2xl bg-gray-100 dark:bg-white/5 ring-1 ring-black/5 dark:ring-white/10 transition-all duration-300 hover:ring-secondary-500/50 hover:shadow-2xl hover:shadow-secondary-500/10 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary-500"
           >
             <!-- Colored fallback (sits below the image; only visible when the image 404s). -->

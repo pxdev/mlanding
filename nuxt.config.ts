@@ -7,7 +7,7 @@ import pkg from './package.json'
 //   - Own Postgres `portal` database via Prisma — fully isolated from the main app
 export default defineNuxtConfig({
 
-  ssr: true,
+  ssr: false,
 
   // The payload cache conflicts when sibling routes share a path prefix
   // (e.g. /portal/addons is a page AND /portal/addons/:key is its children —
@@ -150,15 +150,7 @@ export default defineNuxtConfig({
         'Permissions-Policy': 'camera=(), microphone=(), geolocation=(self)'
       }
     },
-    // Marketing pages — prerender for speed + SEO. Public, no auth state.
-    '/': { prerender: true },
-    '/portal/**': { prerender: true },
-    // Auth + portal pages — render client-side. SSR is incompatible with the
-    // current @nuxt/ui v4 / reka-ui combo (PopperRoot + Label fail under SSR).
-    // Auth pages don't need SEO and middleware redirects happen on the client.
-    '/auth/**': { ssr: false },
-    '/dashboard/**': { ssr: false },
-    '/admin/**': { ssr: false }
+
   },
 
   fonts: {

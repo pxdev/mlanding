@@ -22,15 +22,5 @@ const copy = useLandingCopy()
 </template>
 
 <style>
-/* Smooth in-page anchor scrolling for the landing layout. The
-   `scroll-padding-top` keeps section anchors clear of the sticky
-   16-rem-tall LandingNav when the browser jumps to them. Honors
-   prefers-reduced-motion automatically by falling back to instant. */
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 5rem;
-}
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-}
+
 </style>

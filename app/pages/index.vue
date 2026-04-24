@@ -9,8 +9,8 @@ useHead(() => ({
   meta: [{
     name: 'description',
     content: locale.value === 'ar'
-      ? 'كل ما يحتاجه عملك في منصة واحدة: حجوزات، نقاط بيع، محاسبة، مخزون، موارد بشرية، عملاء، وبوابة بشعارك — ثنائية اللغة، وجاهزة لهيئة الزكاة و ETA.'
-      : 'All-in-one booking, POS, accounting, inventory, HR, CRM and client portal platform. Multi-tenant. Bilingual. ZATCA & ETA e-invoicing ready.'
+      ? 'كل ما يحتاجه عملك في منصة واحدة: حجوزات، نقاط بيع، محاسبة، مخزون، موارد بشرية، عملاء، وبوابة بهويتك — ثنائية اللغة وجاهزة لمتطلبات ZATCA و ETA.'
+      : 'All-in-one platform for bookings, POS, accounting, inventory, HR, CRM, and a branded client portal. Multi-tenant, bilingual, and ZATCA & ETA e-invoicing ready.'
   }]
 }))
 </script>

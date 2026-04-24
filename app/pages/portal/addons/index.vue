@@ -8,7 +8,7 @@ useHead(() => ({
             name: 'description',
             content: locale.value === 'ar'
                 ? 'خمس عشرة إضافة جاهزة للتفعيل: ZATCA، ETA، مساعد ذكي، مخطط أسنان، تصوير طبي، مختبرات، وصفات، سجلات طبية، نقاط ولاء، وأكثر — كلها داخل الكود نفسه.'
-                : 'Sixteen toggleable add-ons: ZATCA, ETA, AI assistant, dental chart, clinical imaging, lab orders, prescriptions, medical records, loyalty and more.'
+                : 'Fifteen toggleable add-ons: ZATCA, ETA, AI assistant, dental chart, clinical imaging, lab orders, prescriptions, medical records, loyalty and more.'
         }]
 }));
 const addonMeta = {
@@ -76,12 +76,12 @@ const chapterNav = computed(() => addonCategories.value.map(cat => ({
             <div class="flex items-baseline gap-3 min-w-0">
               <span aria-hidden="true" class="size-2.5 rounded-full shrink-0" :class="catPalette[cat.name].dot" />
               <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight uppercase truncate" :class="catPalette[cat.name].accent">
-                {{ cat.name }}
+                {{ copy.ui.addonCategoryLabels[cat.name] }}
               </h2>
             </div>
           </div>
           <span class="shrink-0 text-[10px] uppercase tracking-[0.25em] text-gray-400">
-            {{ String(cat.items.length).padStart(2, '0') }} / {{ cat.items.length === 1 ? 'add-on' : 'add-ons' }}
+            {{ String(cat.items.length).padStart(2, '0') }} / {{ copy.ui.addonsLabel }}
           </span>
         </div>
 

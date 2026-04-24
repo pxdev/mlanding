@@ -1,5 +1,5 @@
 <script setup>
-definePageMeta({ layout: 'landing' });
+definePageMeta({ layout: 'landing', scrollToTop: true });
 const copy = useLandingCopy();
 const { locale } = useI18n();
 const route = useRoute();
@@ -10,7 +10,8 @@ const sp = computed(() => copy.value.solutionsPage);
 // Used for prev/next pager and for the "browse all" fallback.
 const solutionOrder = [
     'salon', 'dental', 'medical', 'barber', 'fitness', 'pet',
-    'therapy', 'photo', 'nails', 'tattoo', 'wellness', 'driving', 'tutoring',
+    'therapy', 'photo', 'nails', 'events', 'wellness', 'driving', 'tutoring',
+    'professional', 'auto', 'optical', 'carwash', 'coworking',
     'multi-tenant', 'mobile', 'memberships'
 ];
 const solutions = computed(() => solutionOrder
@@ -20,27 +21,6 @@ const idx = computed(() => solutionOrder.indexOf(slug.value));
 const total = computed(() => String(solutions.value.length).padStart(2, '0'));
 const prev = computed(() => idx.value > 0 ? solutions.value[idx.value - 1] : null);
 const next = computed(() => idx.value >= 0 && idx.value < solutions.value.length - 1 ? solutions.value[idx.value + 1] : null);
-// Video URLs per solution — empty for now (placeholder state renders).
-// Swap in real YouTube / mp4 URLs once recorded.
-const solutionVideos = {
-    salon: { url: '', poster: '' },
-    dental: { url: '', poster: '' },
-    medical: { url: '', poster: '' },
-    barber: { url: '', poster: '' },
-    fitness: { url: '', poster: '' },
-    pet: { url: '', poster: '' },
-    therapy: { url: '', poster: '' },
-    photo: { url: '', poster: '' },
-    nails: { url: '', poster: '' },
-    tattoo: { url: '', poster: '' },
-    wellness: { url: '', poster: '' },
-    driving: { url: '', poster: '' },
-    tutoring: { url: '', poster: '' },
-    'multi-tenant': { url: '', poster: '' },
-    mobile: { url: '', poster: '' },
-    memberships: { url: '', poster: '' }
-};
-const video = computed(() => solutionVideos[slug.value] || {});
 useHead(() => ({
     title: solution.value ? `${solution.value.title} — Momentfy` : 'Solutions — Momentfy',
     meta: [{
@@ -50,11 +30,9 @@ useHead(() => ({
                 : 'Momentfy solutions for every vertical and business shape.')
         }]
 }));
-onMounted(() => {
-    if (!solution.value && typeof window !== 'undefined') {
-        navigateTo('/portal/solutions');
-    }
-});
+if (!solution.value) {
+    throw createError({ statusCode: 404, statusMessage: 'Solution not found', fatal: true });
+}
 </script>
 
 <template>
@@ -96,13 +74,21 @@ onMounted(() => {
           {{ solution.tagline }}
         </p>
 
-        <!-- Video showcase -->
-        <LandingVideoShowcase
-          :video-url="video.url"
-          :poster-url="video.poster"
-          :accent="solution.accent"
-          :label="`${solution.title} product tour`"
-        />
+        <!-- Hero CTA row -->
+        <div class="flex flex-wrap items-center gap-4 sm:gap-5">
+          <NuxtLink to="/portal/pricing"
+            class="group inline-flex items-center gap-3 h-12 ps-4 pe-5 rounded-full bg-primary text-white dark:bg-white dark:text-primary text-sm font-bold transition-transform hover:-translate-y-0.5"
+          >
+            <span>{{ sp.ctaPrimary }}</span>
+            <UIcon name="i-lucide-arrow-right" class="size-4 rtl:rotate-180 transition-transform group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5" />
+          </NuxtLink>
+          <NuxtLink to="/portal/features"
+            class="inline-flex items-center gap-2 h-12 px-4 text-sm text-gray-600 hover:text-primary dark:text-gray-300 dark:hover:text-white transition-colors"
+          >
+            <span>{{ sp.ctaSecondary }}</span>
+            <UIcon name="i-lucide-arrow-up-right" class="size-3.5" />
+          </NuxtLink>
+        </div>
       </div>
     </section>
 

@@ -54,7 +54,7 @@ type Stat = { k: string; v: string }
 export type LandingCopy = {
   dir: 'ltr' | 'rtl'
   nav: {
-    features: string; addons: string; showcase: string; pricing: string; faq: string; docs: string
+    features: string; addons: string; showcase: string; pricing: string; faq: string; docs: string; manual: string
     signIn: string; dashboard: string; getCode: string; langLabel: string
   }
   hero: {

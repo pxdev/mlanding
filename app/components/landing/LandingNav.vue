@@ -44,6 +44,7 @@ const navItems = computed(() => [
   { label: copy.value.nav.addons, to: '/portal/addons' },
   { label: copy.value.nav.showcase, to: '/portal/showcase' },
   { label: copy.value.nav.pricing, to: '/portal/pricing' },
+  { label: copy.value.nav.manual, to: '/portal/manual' },
   { label: copy.value.nav.docs, to: '/portal/docs' },
   { label: copy.value.nav.faq, to: '/portal/faq' }
 ])

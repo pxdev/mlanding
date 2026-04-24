@@ -16,8 +16,10 @@ const visuals = {
     calendar: { icon: 'i-lucide-calendar-days', color: 'from-violet-500 to-fuchsia-500' },
     sales: { icon: 'i-lucide-store', color: 'from-amber-500 to-orange-600' },
     clients: { icon: 'i-lucide-users-round', color: 'from-sky-500 to-blue-600' },
+    marketing: { icon: 'i-lucide-megaphone', color: 'from-orange-500 to-red-500' },
     catalogue: { icon: 'i-lucide-layers', color: 'from-pink-500 to-rose-600' },
     inventory: { icon: 'i-lucide-package', color: 'from-teal-500 to-emerald-600' },
+    events: { icon: 'i-lucide-ticket', color: 'from-purple-500 to-violet-600' },
     team: { icon: 'i-lucide-user-check', color: 'from-indigo-500 to-purple-600' },
     accounting: { icon: 'i-lucide-book-open', color: 'from-stone-500 to-neutral-700' },
     reports: { icon: 'i-lucide-bar-chart-3', color: 'from-cyan-500 to-sky-600' },
@@ -122,8 +124,9 @@ function detailLink(id) {
         </p>
       </div>
 
-      <NuxtLink
-        :to="detailLink(spotlight.id) || '#'"
+      <component
+        :is="detailLink(spotlight.id) ? 'NuxtLink' : 'div'"
+        :to="detailLink(spotlight.id) || undefined"
         class="group relative block overflow-hidden rounded-3xl bg-white dark:bg-white/[0.03] ring-1 ring-black/10 dark:ring-white/10 hover:ring-secondary-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-secondary-500/15 hover:-translate-y-0.5"
       >
         <!-- Soft brand wash bleeding from the end -->
@@ -213,7 +216,7 @@ function detailLink(id) {
             </div>
           </div>
         </div>
-      </NuxtLink>
+      </component>
     </div>
 
     <!-- Marquee strip — every feature title cycling, sense-of-breadth -->

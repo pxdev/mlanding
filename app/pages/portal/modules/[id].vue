@@ -1,5 +1,5 @@
 <script setup>
-definePageMeta({ layout: 'landing' });
+definePageMeta({ layout: 'landing', scrollToTop: true });
 const copy = useLandingCopy();
 const { locale } = useI18n();
 const route = useRoute();
@@ -30,11 +30,8 @@ const integrations = {
 };
 // Video URL per module — accepts YouTube URLs (youtube.com/watch · youtu.be)
 // or direct .mp4/.webm paths. Empty values render the "coming soon" state.
-//
-// Calendar has a sample YouTube URL wired up so the style can be reviewed.
-// Swap in your own recordings once they're ready.
 const moduleVideos = {
-    calendar: { url: 'https://www.youtube.com/watch?v=aqz-KE-bpKQ', poster: '' }, // sample · replace with the real calendar tour
+    calendar: { url: '', poster: '' },
     sales: { url: '', poster: '' },
     clients: { url: '', poster: '' },
     catalogue: { url: '', poster: '' },
@@ -66,12 +63,9 @@ useHead(() => ({
             content: feature.value?.summary || moduleEntry.value?.blurb || 'Momentfy module'
         }]
 }));
-// If the id is unknown, redirect to /portal/features
-onMounted(() => {
-    if (!moduleEntry.value && typeof window !== 'undefined') {
-        navigateTo('/portal/features');
-    }
-});
+if (!moduleEntry.value) {
+    throw createError({ statusCode: 404, statusMessage: 'Module not found', fatal: true });
+}
 </script>
 
 <template>

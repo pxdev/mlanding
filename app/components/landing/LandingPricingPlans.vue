@@ -1,5 +1,5 @@
 <script setup>
-// Shared "Pick your update window" plans grid. Used both on the landing
+// Shared "Pick your installation path" plans grid. Used both on the landing
 // home (read-only, links to /portal/pricing) and on the dedicated pricing
 // page (interactive — emits `select` so the page can trigger checkout).
 //

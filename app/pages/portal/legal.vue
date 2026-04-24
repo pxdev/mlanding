@@ -48,7 +48,7 @@ useHead(() => ({
           <div v-if="s.can?.length || s.cannot?.length" class="grid grid-cols-1 sm:grid-cols-2 gap-10 max-w-4xl">
             <div v-if="s.can?.length">
               <p class="text-[11px] uppercase tracking-[0.25em] font-bold text-emerald-600 dark:text-emerald-400 mb-4">
-                You can
+                {{ copy.ui.legalCan }}
               </p>
               <ul>
                 <li v-for="item in s.can" :key="item"
@@ -61,7 +61,7 @@ useHead(() => ({
             </div>
             <div v-if="s.cannot?.length">
               <p class="text-[11px] uppercase tracking-[0.25em] font-bold text-red-600 dark:text-red-400 mb-4">
-                You cannot
+                {{ copy.ui.legalCannot }}
               </p>
               <ul>
                 <li v-for="item in s.cannot" :key="item"

@@ -37,9 +37,9 @@ async function submitContact() {
         sent.value = true;
     }
     catch (err) {
-        submitError.value = err.statusMessage || err.data?.statusMessage || err.message || 'Could not send — try again.';
+        submitError.value = err.statusMessage || err.data?.statusMessage || err.message || copy.value.ui.contactSendError;
         toast.add({
-            title: 'Message not sent',
+            title: copy.value.ui.contactSendErrorTitle,
             description: submitError.value,
             color: 'error',
             duration: 6000

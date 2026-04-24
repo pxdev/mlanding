@@ -1,6 +1,3 @@
-// Session shape augmentation for nuxt-auth-utils.
-// Single declaration shared between server and client.
-
 declare module '#auth-utils' {
   interface User {
     id: string

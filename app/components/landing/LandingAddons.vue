@@ -131,7 +131,7 @@ const addonCategories = computed(() => {
               </div>
             </div>
             <span class="shrink-0 text-[10px] uppercase tracking-[0.25em] text-gray-400">
-              {{ String(cat.items.length).padStart(2, '0') }} / {{ cat.items.length === 1 ? 'add-on' : 'add-ons' }}
+              {{ String(cat.items.length).padStart(2, '0') }} / {{ copy.ui.addonsLabel }}
             </span>
           </div>
 

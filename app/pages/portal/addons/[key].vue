@@ -1,5 +1,5 @@
 <script setup>
-definePageMeta({ layout: 'landing' });
+definePageMeta({ layout: 'landing', scrollToTop: true });
 const copy = useLandingCopy();
 const { locale } = useI18n();
 const route = useRoute();
@@ -39,14 +39,12 @@ useHead(() => ({
     title: addonItem.value ? `${addonItem.value.label} — Momentfy` : 'Add-on — Momentfy',
     meta: [{
             name: 'description',
-            content: detail.value?.long || addonItem.value?.desc || 'Momentfy add-on'
+            content: detail.value?.long || addonItem.value?.desc || ''
         }]
 }));
-onMounted(() => {
-    if (!addonItem.value && typeof window !== 'undefined') {
-        navigateTo('/portal/addons');
-    }
-});
+if (!addonItem.value || !detail.value) {
+    throw createError({ statusCode: 404, statusMessage: 'Add-on not found', fatal: true });
+}
 </script>
 
 <template>
@@ -64,7 +62,7 @@ onMounted(() => {
           <UIcon name="i-lucide-chevron-right" class="size-3 rtl:rotate-180" />
           <span class="uppercase tracking-[0.2em] inline-flex items-center gap-1.5">
             <span class="size-1.5 rounded-full" :class="meta?.dot" />
-            {{ meta?.cat }}
+            {{ meta?.cat ? copy.ui.addonCategoryLabels[meta.cat] : '' }}
           </span>
           <UIcon name="i-lucide-chevron-right" class="size-3 rtl:rotate-180" />
           <span class="uppercase tracking-[0.2em]">{{ String(addonIndex + 1).padStart(2, '0') }} / {{ totalAddons }}</span>
@@ -76,7 +74,7 @@ onMounted(() => {
             <div class="size-20 rounded-3xl bg-gradient-to-br text-white flex items-center justify-center shadow-2xl mb-8" :class="meta?.accent">
               <UIcon :name="meta?.icon" class="size-10" />
             </div>
-            <LandingSectionEyebrow class="mb-2">{{ meta?.cat }} {{ copy.ui.addonCategorySuffix }}</LandingSectionEyebrow>
+            <LandingSectionEyebrow class="mb-2">{{ meta?.cat ? copy.ui.addonCategoryLabels[meta.cat] : '' }} {{ copy.ui.addonCategorySuffix }}</LandingSectionEyebrow>
             <p class="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-[0.2em] font-bold text-emerald-600 dark:text-emerald-400">
               <UIcon name="i-lucide-check-circle-2" class="size-3" />
               {{ copy.ui.includedInEveryPlan }}

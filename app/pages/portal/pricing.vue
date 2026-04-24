@@ -45,8 +45,8 @@ useHead(() => ({
     meta: [{
             name: 'description',
             content: locale.value === 'ar'
-                ? 'ادفع مرة واحدة وامتلك الكود. استضافة ذاتية، مستأجرون بلا حدود، وتحديثات مدى الحياة. الفرق الوحيد بين الخطتين: هل تنصّب بنفسك، أم ننصّب عنك؟'
-                : 'One-time pricing for source code, self-hosted, unlimited tenants. The only thing that differs is the update window.'
+                ? 'ادفع مرة واحدة وامتلك الكود. استضافة ذاتية، حسابات ومنشآت بلا حدود، وتحديثات مدى الحياة. الفرق الوحيد بين الخطتين: هل تنصّب بنفسك، أم ننصّب عنك؟'
+                : 'One-time pricing for self-hosted source code with unlimited tenants and lifetime updates. The only difference is whether you install it yourself or we install it for you.'
         }]
 }));
 const includedIcons = ['i-lucide-code', 'i-lucide-globe', 'i-lucide-infinity', 'i-lucide-server', 'i-lucide-shield-check', 'i-lucide-smartphone', 'i-lucide-sparkles', 'i-lucide-book-open'];
@@ -79,7 +79,7 @@ const includedIcons = ['i-lucide-code', 'i-lucide-globe', 'i-lucide-infinity', '
     </div>
   </LandingPageHero>
 
-  <!-- ═══ A) Pick your update window — plans up top so the price sits above the fold ═══ -->
+  <!-- ═══ A) Pick your installation path — plans up top so the price sits above the fold ═══ -->
   <section class="py-16 sm:py-20 border-t border-black/10 dark:border-white/10">
     <div class="max-w-7xl mx-auto px-5 sm:px-8">
       <div class="flex items-baseline gap-3 mb-12 pb-4 border-b border-black/10 dark:border-white/10">
