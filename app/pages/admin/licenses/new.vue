@@ -5,6 +5,7 @@ const chrome = useChromeCopy();
 const t = computed(() => chrome.value.admin.licensesNewPage);
 useHead({ title: () => chrome.value.admin.licensesNewPage.docTitle });
 const toast = useToast();
+const localePath = useLocalePath();
 const { data: plans } = await useFetch('/api/portal/admin/plans', { default: () => [] });
 const search = ref('');
 const searchDebounced = ref('');
@@ -68,7 +69,7 @@ async function copyKey() {
 function done() {
     const keyPrefix = issuedKey.value?.slice(0, 8) || '';
     issuedKey.value = null;
-    navigateTo(keyPrefix ? `/admin/licenses?q=${encodeURIComponent(keyPrefix)}` : '/admin/licenses');
+    navigateTo(keyPrefix ? `${localePath('/admin/licenses')}?q=${encodeURIComponent(keyPrefix)}` : localePath('/admin/licenses'));
 }
 function customerName(c) {
     return [c.firstName, c.lastName].filter(Boolean).join(' ') || c.email;

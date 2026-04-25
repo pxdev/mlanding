@@ -7,8 +7,10 @@ definePageMeta({
             // operator overview at /admin, so send them there. Other /dashboard/**
             // routes (profile, license detail) stay shared between both roles.
             const { user } = useUserSession();
-            if (user.value?.isAdmin)
-                return navigateTo('/admin', { replace: true });
+            if (user.value?.isAdmin) {
+                const localePath = useLocalePath();
+                return navigateTo(localePath('/admin'), { replace: true });
+            }
         }]
 });
 import { fillTemplate } from '~/composables/useChromeCopy';
