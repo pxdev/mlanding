@@ -2,6 +2,7 @@
 export default defineNuxtRouteMiddleware(() => {
   const { user } = useUserSession()
   if (!user.value?.isAdmin) {
-    return navigateTo('/dashboard')
+    const localePath = useLocalePath()
+    return navigateTo(localePath('/dashboard'))
   }
 })

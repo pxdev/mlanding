@@ -112,13 +112,14 @@ export function useLandingCopy() {
 
 export function useLandingLocale() {
   const { locale, locales, setLocale } = useI18n()
-  const localeItems = computed(() => [
-    (locales.value as Array<{ code: string; name: string }>).map((l) => ({
-      label: l.name,
-      icon: locale.value === l.code ? 'i-lucide-check' : undefined,
-      onSelect: () => setLocale(l.code as any)
-    }))
-  ])
-  const currentLocale = computed(() => (locales.value as Array<{ code: string; name: string }>).find(l => l.code === locale.value))
-  return { locale, currentLocale, localeItems, setLocale }
+  const list = computed(() => locales.value as Array<{ code: string; name: string }>)
+  const currentLocale = computed(() => list.value.find(l => l.code === locale.value))
+  // The "other" locale — for the EN/AR toggle button we render the language
+  // we'd switch *to*, not the one we're already in.
+  const otherLocale = computed(() => list.value.find(l => l.code !== locale.value) ?? list.value[0])
+  function toggleLocale() {
+    const next = otherLocale.value?.code
+    if (next) setLocale(next as any)
+  }
+  return { locale, currentLocale, otherLocale, toggleLocale, setLocale }
 }

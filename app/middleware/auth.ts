@@ -3,6 +3,7 @@
 export default defineNuxtRouteMiddleware((to) => {
   const { loggedIn } = useUserSession()
   if (!loggedIn.value) {
-    return navigateTo(`/auth/login?redirect=${encodeURIComponent(to.fullPath)}`)
+    const localePath = useLocalePath()
+    return navigateTo(`${localePath('/auth/login')}?redirect=${encodeURIComponent(to.fullPath)}`)
   }
 })

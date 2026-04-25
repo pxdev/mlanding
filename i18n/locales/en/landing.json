@@ -7,7 +7,6 @@
       "showcase": "Showcase",
       "pricing": "Pricing",
       "roi": "ROI",
-      "customers": "Customers",
       "faq": "FAQ",
       "docs": "Docs",
       "manual": "Manual",
@@ -150,6 +149,8 @@
       "eyebrow": "Industries",
       "heading": "One platform. Every vertical.",
       "sub": "Each vertical can enable the add-ons it needs — all 15 are included in the base source.",
+      "ctaLabel": "See each industry's mockups and workflows",
+      "ctaHref": "/portal/showcase",
       "items": [
         {
           "id": "salon",
@@ -1725,7 +1726,7 @@
         "accent": "from-blue-500 to-indigo-600",
         "dot": "bg-blue-500",
         "category": "Business shape",
-        "long": "Field teams — mobile beauty, home physio, on-site IT, at-home grooming — need one app that plans the day and closes the invoice at the customer's door. Momentfy installs on any phone as a PWA, routes jobs by address, captures signatures on the device, and turns each visit into a sent invoice before the van drives away.",
+        "long": "Field teams — mobile beauty, home physio, on-site IT, at-home grooming — need one tool that plans the day and closes the invoice at the customer's door. Momentfy runs in the browser on any phone, routes jobs by address, captures signatures on the device, and turns each visit into a sent invoice before the van leaves the address.",
         "pains": [
           "Calendar out of sync with dispatcher",
           "Invoices sent hours after the job ends",
@@ -1733,7 +1734,7 @@
           "No paper trail for on-site signatures"
         ],
         "capabilities": [
-          "Installable PWA — every team member carries the same tool",
+          "Mobile-first web app — every team member carries the same tool",
           "Route-optimised day plan per team member",
           "On-the-way ETA sent by SMS automatically",
           "In-van POS that invoices and takes card at the door",
@@ -1831,7 +1832,7 @@
       "eyebrow": "Solutions",
       "h1a": "Built for your",
       "h1b": "field of work.",
-      "sub": "Sixteen ready-shaped configurations — from salons to driving schools to multi-location chains. Pick yours, ship in a day.",
+      "sub": "Ready-shaped configurations — from salons to driving schools to multi-location chains. Pick yours, ship in a day.",
       "chaptersLabel": "Chapters",
       "industriesLabel": "Industries",
       "businessShapesLabel": "Business shapes",
@@ -1857,40 +1858,10 @@
       "notFoundBody": "We don't have a page for that solution yet — browse the full list."
     },
     "portal": {
-      "eyebrow": "Client Portal",
-      "heading": "Every tenant gets a branded PWA.",
-      "sub": "Your clients book appointments, pay invoices, see their memberships, track loyalty points, download prescriptions, review visits and chat with the in-app AI — from their phone, with your logo, installed like a native app.",
-      "bullets": [
-        "Installable PWA with the tenant's logo",
-        "Booking, invoicing, loyalty, memberships",
-        "Lab results & prescriptions download",
-        "Reviews, tickets, AI chat assistant",
-        "Arabic RTL and English LTR"
-      ],
-      "cta": "See the portal tour",
-      "cardTag": "Lina's Spa",
       "welcomeBack": "Welcome back",
-      "loyalty": "Loyalty balance",
-      "ptsShort": "pts",
-      "nextAppt": "Next appointment",
-      "quickActions": "Quick actions",
-      "actionBook": "Book",
-      "actionInvoices": "Invoices",
-      "actionRx": "Rx",
-      "askAi": "Ask the AI assistant…",
-      "apptTitle": "Color & Cut",
-      "apptMeta": "Tue · 14:00 · Lina H.",
-      "apptStatus": "Confirmed"
+      "nextAppt": "Next appointment"
     },
     "pricing": {
-      "eyebrow": "Two plans. Same product.",
-      "heading": "Buy once. Own it.",
-      "sub": "Both plans ship the identical codebase with lifetime updates included. The only thing that changes is whether you install it — or we do.",
-      "billing": {
-        "onetime": "One-time",
-        "updates": "+ lifetime updates",
-        "save": "all plans"
-      },
       "includedAllLabel": "What you get (identical in every plan)",
       "includedAll": [
         "Full source code",
@@ -1959,7 +1930,7 @@
       "heading": "Built by operators, shipped with operators.",
       "sub": "Real teams, real businesses, real numbers — running on Momentfy today.",
       "ctaCases": "Read all case studies",
-      "ctaCasesHref": "/portal/customers",
+      "ctaCasesHref": "/portal/showcase",
       "starsLabel": "Verified",
       "featured": {
         "metric": "3×",
@@ -2119,10 +2090,6 @@
             {
               "label": "ROI calculator",
               "to": "/portal/roi"
-            },
-            {
-              "label": "Customers",
-              "to": "/portal/customers"
             },
             {
               "label": "FAQ",
@@ -2308,6 +2275,8 @@
       "backToTop": "back to top",
       "readAbout": "Read about",
       "exploreVerb": "Explore",
+      "prev": "Previous",
+      "next": "Next",
       "whatsappLabel": "Chat on WhatsApp",
       "whatsappGreeting": "Hi! I'm interested in Momentfy and want to learn more.",
       "tryDemoNow": "Try the live demo",
@@ -2357,10 +2326,6 @@
       "colHost": "Host",
       "colStat": "Stat",
       "chaptersLabel": "Chapters:",
-      "appRatingLabel": "App rating",
-      "timeToBookLabel": "Time to book",
-      "pwaReadyLabel": "PWA ready",
-      "offlineLabel": "Offline",
       "revenueLabel": "revenue",
       "oneSourceThreeBrands": "One source. Three brands.",
       "threeBrandsTagline": "Same codebase, same release — every tenant with their own hostname, theme, and content.",
@@ -2375,6 +2340,7 @@
       "buyCloneTagline": "Buy the source, clone the repo.",
       "readLicense": "Read the license",
       "fullFaq": "Full FAQ",
+      "fullPricingDetails": "Full pricing details",
       "stepLabel": "Step",
       "swipeHint": "Swipe ←→ to compare tenants",
       "explorerPaused": "paused · hover to resume",
@@ -2628,10 +2594,10 @@
         {
           "id": "portal",
           "group": "Clients",
-          "title": "Client Portal (PWA)",
-          "summary": "A branded app for every tenant — installable, offline-ready, and always on your brand, never ours.",
+          "title": "Client Portal",
+          "summary": "A branded web app for every tenant — installable on any device, and always on your brand, never ours.",
           "bullets": [
-            "Installable PWA with offline support on iOS, Android, tablet and desktop",
+            "Branded web app, installable on iOS, Android, tablet and desktop",
             "Online booking with service, staff and date/time selection — matched to your real availability rules",
             "Event, class and workshop booking with seat counts and waitlists",
             "Pay invoices, view receipts and download PDF statements",
@@ -2755,7 +2721,7 @@
     },
     "addonsPage": {
       "eyebrow": "Add-ons",
-      "h1": "Fifteen modules. One codebase.",
+      "h1": "Fifteen add-ons. One codebase.",
       "sub": "Toggle per tenant. Ship for salons, clinics, gyms or studios with the same install.",
       "filterAll": "all"
     },
@@ -2764,18 +2730,6 @@
       "h1a": "Buy once.",
       "h1b": "Own it forever.",
       "sub": "No per-seat pricing. No per-tenant pricing. No monthly rent that grows with your success.",
-      "everywhereTitle": "Included everywhere",
-      "everywhereHeading": "Every plan ships with the lot.",
-      "included": [
-        "Full source code",
-        "Arabic + English",
-        "Unlimited users",
-        "Self-host anywhere",
-        "ZATCA + ETA ready",
-        "PWA client portal",
-        "AI assistant",
-        "Accounting engine"
-      ],
       "compareEyebrow": "Why not SaaS?",
       "compareHeading": "Do the math.",
       "compareBody": "What typical booking SaaS costs over 3 years for a 3-location chain:",
@@ -2879,30 +2833,11 @@
         "cta": "Run the numbers on your business"
       }
     },
-    "customersPage": {
-      "eyebrow": "Customers",
-      "h1": "Operators shipping with Momentfy.",
-      "sub": "Real businesses, named teams, verified deployments. Each story below is a customer running their full operation on Momentfy today.",
-      "verifiedLabel": "Verified deployment",
-      "viewAllLabel": "All case studies",
-      "founding": {
-        "eyebrow": "Founding operator program",
-        "heading": "Be one of the first 10 — and stay free for life.",
-        "sub": "If you're an early operator willing to be named publicly, we trade lifetime free upgrades, priority support, and co-marketing for your real story and verified metrics.",
-        "perks": [
-          "Free lifetime updates — every release, no renewal",
-          "Priority support channel — direct line to the engineers",
-          "Co-marketing — your logo on the homepage, your story in the press kit"
-        ],
-        "ctaLabel": "Apply to be a founding operator",
-        "ctaHref": "/portal/download#contact"
-      }
-    },
     "showcasePage": {
       "eyebrow": "Showcase",
       "h1a": "One platform.",
       "h1b": "Every vertical.",
-      "sub": "Flip the switches. Ship the product. Six industries, identical source code.",
+      "sub": "Flip the switches. Ship the product. Every industry, identical source code.",
       "shipsWith": "Ships with",
       "painsTitle": "Pains it removes",
       "capsTitle": "What's inside",

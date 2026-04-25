@@ -1,5 +1,18 @@
 <script setup>
 const copy = useLandingCopy()
+const localePath = useLocalePath()
+
+// Same flow as /portal/pricing — clicking a card jumps straight to the
+// /portal/checkout/[slug] review page instead of bouncing through the
+// pricing page first.
+const checkoutLoading = ref(null)
+async function goToReview(idx, plan) {
+  const slug = plan?.slug
+  if (!slug) return
+  checkoutLoading.value = idx
+  await navigateTo(localePath(`/portal/checkout/${slug}`))
+  checkoutLoading.value = null
+}
 </script>
 
 <template>
@@ -18,11 +31,24 @@ const copy = useLandingCopy()
 
     <div class="relative max-w-7xl mx-auto px-5 sm:px-8">
       <LandingSectionHeading
-        number="7"
-        :label="copy.pricing.eyebrow"
-        :heading="copy.pricing.heading"
-        :sub="copy.pricing.sub"
-      />
+        number="6"
+        :label="copy.pricingPage.eyebrow"
+        :heading="`${copy.pricingPage.h1a} ${copy.pricingPage.h1b}`"
+        :sub="copy.pricingPage.sub"
+      >
+        <template #meta>
+          <NuxtLink
+            to="/portal/pricing"
+            class="ms-auto group inline-flex items-center gap-1.5 text-xs text-gray-500 hover:text-primary dark:hover:text-white transition-colors"
+          >
+            <span class="relative">
+              {{ copy.ui.fullPricingDetails }}
+              <span aria-hidden="true" class="absolute -bottom-0.5 inset-x-0 h-px bg-current opacity-0 group-hover:opacity-100 transition-opacity" />
+            </span>
+            <UIcon name="i-lucide-arrow-right" class="size-3 rtl:rotate-180" />
+          </NuxtLink>
+        </template>
+      </LandingSectionHeading>
 
       <!-- Trust badges — horizontal row -->
       <div class="flex flex-wrap gap-x-6 gap-y-2 text-xs text-gray-500 mb-16 sm:mb-20">
@@ -81,7 +107,12 @@ const copy = useLandingCopy()
           </p>
         </div>
 
-        <LandingPricingPlans to="/portal/pricing" />
+        <LandingPricingPlans
+          interactive
+          show-features
+          :loading-index="checkoutLoading"
+          @select="goToReview"
+        />
       </div>
 
       <!-- Footer -->

@@ -76,14 +76,15 @@ function clearPromo() {
 // Proceed → Lemon Squeezy. We keep this here rather than in pricing.vue
 // because the review page is the canonical "last step before payment".
 const submitting = ref(false)
+const localePath = useLocalePath()
 async function proceedToPayment() {
   if (!planSlug.value) return
   if (!session.loggedIn.value) {
     // Carry both the plan and the promo through register so the review
     // page re-renders with the discount after the round-trip.
     const q = applied.value ? `?promo=${encodeURIComponent(applied.value.code)}` : ''
-    const back = `/portal/checkout/${planSlug.value}${q}`
-    return navigateTo(`/auth/register?redirect=${encodeURIComponent(back)}`)
+    const back = `${localePath(`/portal/checkout/${planSlug.value}`)}${q}`
+    return navigateTo(`${localePath('/auth/register')}?redirect=${encodeURIComponent(back)}`)
   }
   submitting.value = true
   try {

@@ -20,13 +20,13 @@ const currencyFmt = computed(() => new Intl.NumberFormat(
 </script>
 
 <template>
-  <section class="relative py-24 sm:py-32 overflow-hidden">
+  <section class="relative py-24 sm:py-32 overflow-hidden bg-gray-50 dark:bg-white/[0.02]">
     <div aria-hidden="true" class="absolute inset-x-0 top-0 h-px bg-black/10 dark:bg-white/10" />
     <div aria-hidden="true" class="absolute -top-20 start-1/2 -translate-x-1/2 w-[36rem] h-[36rem] rounded-full bg-emerald-500 blur-[130px] opacity-[0.08]" />
 
     <div class="max-w-7xl mx-auto px-5 sm:px-8">
       <LandingSectionHeading
-        number="9"
+        number="7"
         :label="copy.roiPage.homeSection.eyebrow"
         :heading="copy.roiPage.homeSection.heading"
       />

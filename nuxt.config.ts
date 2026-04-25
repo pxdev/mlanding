@@ -104,20 +104,30 @@ export default defineNuxtConfig({
     url: process.env.NUXT_PUBLIC_SITE_URL || 'https://momentfy.com',
     name: 'Momentfy',
     description: 'All-in-one platform for bookings, POS, accounting, inventory, HR, CRM, and a branded client portal. Bilingual (AR/EN), ZATCA & ETA e-invoicing ready, self-hosted with lifetime updates.',
-    defaultLocale: 'ar'
+    defaultLocale: 'en'
   },
 
   modules: ['@nuxt/eslint', '@nuxt/ui', '@nuxtjs/i18n', '@nuxtjs/seo', 'nuxt-auth-utils', 'nuxt-authorization', '@nuxt/fonts'],
 
   // Keep authenticated/admin surfaces out of the sitemap and robots index.
-  // Marketing pages under `/` and `/portal/**` stay indexable.
+  // Marketing pages under `/` and `/portal/**` stay indexable. Patterns are
+  // duplicated under each locale prefix because @nuxtjs/i18n's `prefix`
+  // strategy mounts every route under both /en/** and /ar/**.
   sitemap: {
     exclude: [
       '/auth/**',
       '/dashboard/**',
       '/admin/**',
       '/api/**',
-      '/portal/checkout/**'
+      '/portal/checkout/**',
+      '/en/auth/**',
+      '/ar/auth/**',
+      '/en/dashboard/**',
+      '/ar/dashboard/**',
+      '/en/admin/**',
+      '/ar/admin/**',
+      '/en/portal/checkout/**',
+      '/ar/portal/checkout/**'
     ]
   },
 
@@ -127,7 +137,15 @@ export default defineNuxtConfig({
       '/dashboard',
       '/admin',
       '/api',
-      '/portal/checkout'
+      '/portal/checkout',
+      '/en/auth',
+      '/ar/auth',
+      '/en/dashboard',
+      '/ar/dashboard',
+      '/en/admin',
+      '/ar/admin',
+      '/en/portal/checkout',
+      '/ar/portal/checkout'
     ]
   },
 
@@ -174,11 +192,17 @@ export default defineNuxtConfig({
   // compiler, which trips on literal `@` in emails and `{...}` placeholders.
   i18n: {
     locales: [
-      { code: 'ar', name: 'العربية', dir: 'rtl' },
-      { code: 'en', name: 'English', dir: 'ltr' }
+      { code: 'en', name: 'English', dir: 'ltr' },
+      { code: 'ar', name: 'العربية', dir: 'rtl' }
     ],
-    defaultLocale: 'ar',
-    strategy: 'no_prefix',
+    // `en` is only the static fallback. detectBrowserLanguage below routes
+    // first-time visitors to `/ar/` or `/en/` based on their browser
+    // Accept-Language, then a cookie remembers their explicit choice from
+    // the toggle button.
+    defaultLocale: 'en',
+    // Prefix strategy: every page is reachable at /ar/... and /en/...,
+    // root `/` redirects to the user's preferred language.
+    strategy: 'prefix',
     detectBrowserLanguage: {
       useCookie: true,
       cookieKey: 'i18n_redirected',
@@ -219,14 +243,23 @@ export default defineNuxtConfig({
 
     // Session-gated surfaces: SPA-only. Skipping SSR avoids running
     // auth/session/DB code during server render, and these pages don't
-    // need SEO anyway.
+    // need SEO anyway. Mirrored under /en/** and /ar/** because the i18n
+    // prefix strategy mounts every page under both locale prefixes.
     '/auth/**': { ssr: false },
     '/dashboard/**': { ssr: false },
     '/admin/**': { ssr: false },
+    '/en/auth/**': { ssr: false },
+    '/ar/auth/**': { ssr: false },
+    '/en/dashboard/**': { ssr: false },
+    '/ar/dashboard/**': { ssr: false },
+    '/en/admin/**': { ssr: false },
+    '/ar/admin/**': { ssr: false },
 
     // Checkout hits the licensing DB + Lemon Squeezy — skip SSR so the
     // page mounts client-side with a live session.
-    '/portal/checkout/**': { ssr: false }
+    '/portal/checkout/**': { ssr: false },
+    '/en/portal/checkout/**': { ssr: false },
+    '/ar/portal/checkout/**': { ssr: false }
   },
 
   fonts: {

@@ -7,7 +7,8 @@
 
 const route = useRoute()
 const { user, isAdmin, displayName, clear } = useSession()
-const { localeItems, currentLocale } = useLandingLocale()
+const { currentLocale, otherLocale, toggleLocale } = useLandingLocale()
+const localePath = useLocalePath()
 const chrome = useChromeCopy()
 
 const isSubMenuOpen = ref(true)
@@ -105,7 +106,7 @@ const userMenuItems = computed(() => {
 async function onLogout() {
   await $fetch('/api/auth/logout', { method: 'POST' })
   await clear()
-  await navigateTo('/auth/login')
+  await navigateTo(localePath('/auth/login'))
 }
 </script>
 
@@ -222,20 +223,20 @@ async function onLogout() {
 
         <div class="flex items-center gap-1">
           <ClientOnly>
-            <UDropdownMenu :items="localeItems" :ui="{ content: 'w-40' }">
-              <button
-                class="hidden sm:inline-flex items-center gap-1.5 h-9 px-3 rounded-full text-sm font-semibold text-gray-500 hover:bg-black/5 dark:hover:bg-white/10 transition"
-                :aria-label="chrome.common.language"
-              >
-                <UIcon name="i-lucide-languages" class="size-4" />
-                <span class="uppercase tracking-wider text-[11px] font-bold">{{ currentLocale?.code }}</span>
-                <UIcon name="i-lucide-chevron-down" class="size-3 opacity-50" />
-              </button>
-            </UDropdownMenu>
+            <button
+              type="button"
+              class="hidden sm:inline-flex items-center gap-1.5 h-9 px-3 rounded-full text-sm font-semibold text-gray-500 hover:bg-black/5 dark:hover:bg-white/10 transition"
+              :aria-label="chrome.common.language"
+              :title="otherLocale?.name"
+              @click="toggleLocale"
+            >
+              <UIcon name="i-lucide-globe" class="size-4" />
+              <span class="text-sm font-bold">{{ otherLocale?.name }}</span>
+            </button>
             <template #fallback>
               <span class="hidden sm:inline-flex items-center gap-1.5 h-9 px-3 rounded-full text-sm font-semibold text-gray-500">
-                <UIcon name="i-lucide-languages" class="size-4" />
-                <span class="uppercase tracking-wider text-[11px] font-bold">{{ currentLocale?.code }}</span>
+                <UIcon name="i-lucide-globe" class="size-4" />
+                <span class="text-sm font-bold">{{ currentLocale?.name }}</span>
               </span>
             </template>
           </ClientOnly>
@@ -311,13 +312,15 @@ async function onLogout() {
             </nav>
             <div class="p-3 border-t border-black/5 dark:border-white/10 space-y-1">
               <ClientOnly>
-                <UDropdownMenu :items="localeItems" :ui="{ content: 'w-full' }">
-                  <button class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-600 dark:text-gray-400 hover:bg-black/5 dark:hover:bg-white/10">
-                    <UIcon name="i-lucide-languages" class="size-4" />
-                    {{ currentLocale?.name }}
-                    <UIcon name="i-lucide-chevron-down" class="size-3.5 ms-auto opacity-50" />
-                  </button>
-                </UDropdownMenu>
+                <button
+                  type="button"
+                  class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-600 dark:text-gray-400 hover:bg-black/5 dark:hover:bg-white/10"
+                  @click="toggleLocale"
+                >
+                  <UIcon name="i-lucide-globe" class="size-4" />
+                  <span>{{ otherLocale?.name }}</span>
+                  <UIcon name="i-lucide-arrow-right-left" class="size-3.5 ms-auto opacity-60" />
+                </button>
               </ClientOnly>
               <button
                 class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-600 dark:text-gray-400 hover:bg-black/5 dark:hover:bg-white/10"

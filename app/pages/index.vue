@@ -38,12 +38,10 @@ useSchemaOrg([
     <LandingWhy />
     <LandingModuleExplorer />
     <LandingIndustries />
-    <LandingAddons />
     <LandingPortalShowcase />
     <LandingTrust />
     <LandingPricing />
     <LandingROI />
-    <LandingTestimonials />
     <LandingFaq />
     <LandingCTA />
   </div>

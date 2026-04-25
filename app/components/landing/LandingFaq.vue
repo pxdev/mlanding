@@ -12,7 +12,7 @@ const faqOpen = ref(0)
 
     <div class="max-w-6xl mx-auto px-5 sm:px-8">
       <LandingSectionHeading
-        number="9"
+        number="8"
         :label="copy.faq.eyebrow"
         :heading="copy.faq.heading"
         :sub="copy.ui.cantFindFaq"

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const chrome = useChromeCopy()
-const { localeItems, currentLocale } = useLandingLocale()
+const { currentLocale, otherLocale, toggleLocale } = useLandingLocale()
 </script>
 
 <template>
@@ -12,20 +12,20 @@ const { localeItems, currentLocale } = useLandingLocale()
       </NuxtLink>
       <div class="ms-auto flex items-center gap-1">
         <ClientOnly>
-          <UDropdownMenu :items="localeItems" :ui="{ content: 'w-40' }">
-            <button
-              class="inline-flex items-center gap-1.5 h-9 px-3 rounded-full text-sm font-semibold text-gray-600 dark:text-gray-400 hover:bg-black/5 dark:hover:bg-white/10 transition"
-              :aria-label="chrome.common.language"
-            >
-              <UIcon name="i-lucide-languages" class="size-4" />
-              <span class="uppercase tracking-wider text-[11px] font-bold">{{ currentLocale?.code }}</span>
-              <UIcon name="i-lucide-chevron-down" class="size-3 opacity-50" />
-            </button>
-          </UDropdownMenu>
+          <button
+            type="button"
+            class="inline-flex items-center gap-1.5 h-9 px-3 rounded-full text-sm font-semibold text-gray-600 dark:text-gray-400 hover:bg-black/5 dark:hover:bg-white/10 transition"
+            :aria-label="chrome.common.language"
+            :title="otherLocale?.name"
+            @click="toggleLocale"
+          >
+            <UIcon name="i-lucide-globe" class="size-4" />
+            <span class="text-sm font-bold">{{ otherLocale?.name }}</span>
+          </button>
           <template #fallback>
             <span class="inline-flex items-center gap-1.5 h-9 px-3 rounded-full text-sm font-semibold text-gray-600 dark:text-gray-400">
-              <UIcon name="i-lucide-languages" class="size-4" />
-              <span class="uppercase tracking-wider text-[11px] font-bold">{{ currentLocale?.code }}</span>
+              <UIcon name="i-lucide-globe" class="size-4" />
+              <span class="text-sm font-bold">{{ currentLocale?.name }}</span>
             </span>
           </template>
         </ClientOnly>

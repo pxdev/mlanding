@@ -5,7 +5,7 @@ const copy = useLandingCopy()
 <template>
   <section
     id="trust"
-    class="relative py-24 sm:py-32 overflow-hidden"
+    class="relative py-24 sm:py-32 overflow-hidden bg-gray-50 dark:bg-white/[0.02]"
   >
     <div
       aria-hidden="true"
@@ -14,7 +14,7 @@ const copy = useLandingCopy()
 
     <div class="max-w-7xl mx-auto px-5 sm:px-8">
       <LandingSectionHeading
-        number="6"
+        number="5"
         :label="copy.trust.eyebrow"
         :heading="copy.trust.heading"
         :sub="copy.trust.sub"

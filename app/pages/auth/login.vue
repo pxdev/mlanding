@@ -6,9 +6,10 @@ useHead({ title: () => chrome.value.auth.signIn.docTitle });
 const { fetch: fetchSession } = useUserSession();
 const toast = useToast();
 const route = useRoute();
+const localePath = useLocalePath();
 const redirectTo = computed(() => {
     const r = route.query.redirect;
-    return r && r.startsWith('/') && !r.startsWith('//') ? r : '/dashboard';
+    return r && r.startsWith('/') && !r.startsWith('//') ? r : localePath('/dashboard');
 });
 const schema = z.object({
     email: z.string().email('Invalid email address'),

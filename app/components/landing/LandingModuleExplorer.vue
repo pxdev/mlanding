@@ -1,9 +1,7 @@
 <script setup lang="ts">
-// Nine-modules section — auto-rotating explorer, editorial styling.
-// Left rail: hairline-separated tab list.
-// Right stage: flowing preview (no outer card frame), just a colored
-// backdrop wash + a small accent stripe above the mock.
-// Progress bar sits under the active tab and drives the auto-advance.
+// Unified Platform section — tabbed between core modules and add-ons.
+// Core tab: auto-rotating explorer with mocks (preserved from previous design).
+// Add-ons tab: category-grouped directory with a sticky chapter rail.
 const copy = useLandingCopy()
 
 type ModuleVisual = { icon: string; color: string; check: string }
@@ -19,6 +17,37 @@ const visuals: Record<string, ModuleVisual> = {
   portal:     { icon: 'i-lucide-smartphone',    color: 'from-lime-500 to-green-600',      check: 'text-lime-500' }
 }
 
+type AddonKey = 'zatca' | 'eta' | 'ai' | 'gcal' | 'insurance' | 'dental' | 'imaging' | 'labs' | 'rx' | 'records' | 'resources' | 'attendance' | 'loyalty' | 'events' | 'followup'
+type AddonCat = 'Compliance' | 'Clinical' | 'Intelligence' | 'Operations' | 'Growth'
+
+const addonMeta: Record<AddonKey, { icon: string; cat: AddonCat }> = {
+  zatca:      { icon: 'i-lucide-shield-check',    cat: 'Compliance' },
+  eta:        { icon: 'i-lucide-file-check',      cat: 'Compliance' },
+  ai:         { icon: 'i-lucide-sparkles',        cat: 'Intelligence' },
+  gcal:       { icon: 'i-lucide-calendar-check',  cat: 'Intelligence' },
+  insurance:  { icon: 'i-lucide-heart-pulse',     cat: 'Clinical' },
+  dental:     { icon: 'i-hugeicons-dental-tooth', cat: 'Clinical' },
+  imaging:    { icon: 'i-lucide-scan',            cat: 'Clinical' },
+  labs:       { icon: 'i-lucide-flask-conical',   cat: 'Clinical' },
+  rx:         { icon: 'i-lucide-pill',            cat: 'Clinical' },
+  records:    { icon: 'i-lucide-folder-heart',    cat: 'Clinical' },
+  resources:  { icon: 'i-lucide-armchair',        cat: 'Operations' },
+  attendance: { icon: 'i-lucide-log-in',          cat: 'Operations' },
+  loyalty:    { icon: 'i-lucide-award',           cat: 'Growth' },
+  events:     { icon: 'i-lucide-calendar-heart',  cat: 'Growth' },
+  followup:   { icon: 'i-lucide-list-checks',     cat: 'Growth' }
+}
+
+const catPalette: Record<AddonCat, { accent: string; iconBg: string; iconText: string; dot: string }> = {
+  Compliance:   { accent: 'text-emerald-600 dark:text-emerald-400', iconBg: 'bg-emerald-500/10', iconText: 'text-emerald-600 dark:text-emerald-400', dot: 'bg-emerald-500' },
+  Clinical:     { accent: 'text-sky-600 dark:text-sky-400',         iconBg: 'bg-sky-500/10',     iconText: 'text-sky-600 dark:text-sky-400',         dot: 'bg-sky-500' },
+  Intelligence: { accent: 'text-violet-600 dark:text-violet-400',   iconBg: 'bg-violet-500/10',  iconText: 'text-violet-600 dark:text-violet-400',   dot: 'bg-violet-500' },
+  Operations:   { accent: 'text-amber-600 dark:text-amber-400',     iconBg: 'bg-amber-500/10',   iconText: 'text-amber-600 dark:text-amber-400',     dot: 'bg-amber-500' },
+  Growth:       { accent: 'text-rose-600 dark:text-rose-400',       iconBg: 'bg-rose-500/10',    iconText: 'text-rose-600 dark:text-rose-400',       dot: 'bg-rose-500' }
+}
+
+const CAT_ORDER: AddonCat[] = ['Compliance', 'Clinical', 'Intelligence', 'Operations', 'Growth']
+
 const modules = computed(() => copy.value.modules.items)
 const activeIndex = ref(0)
 const active = computed(() => modules.value[activeIndex.value])
@@ -31,6 +60,24 @@ const activeHighlights = computed(() => {
   return feature?.bullets.slice(0, 4) ?? []
 })
 
+// Tabs — 'core' shows the auto-rotating explorer, 'addons' shows the directory
+const activeTab = ref<'core' | 'addons'>('core')
+const activeCat = ref<AddonCat | 'all'>('all')
+
+const addonCategories = computed(() => {
+  return CAT_ORDER.map(cat => ({
+    name: cat,
+    items: copy.value.addons.items.filter((a: { key: string }) => addonMeta[a.key as AddonKey]?.cat === cat)
+  })).filter(c => c.items.length > 0)
+})
+
+const visibleAddons = computed(() => {
+  if (activeCat.value === 'all') {
+    return addonCategories.value
+  }
+  return addonCategories.value.filter(c => c.name === activeCat.value)
+})
+
 // Auto-rotate (rAF-driven so the progress bar stays visually in sync).
 const DURATION = 6000
 const paused = ref(false)
@@ -41,7 +88,8 @@ let startedAt: number | null = null
 function tick(now: number) {
   if (startedAt === null) startedAt = now
   const elapsed = now - startedAt
-  if (!paused.value) {
+  // Pause auto-advance when the addons tab is showing — the explorer is hidden.
+  if (!paused.value && activeTab.value === 'core') {
     const p = Math.min(elapsed / DURATION, 1)
     progress.value = p
     if (p >= 1) {
@@ -50,7 +98,6 @@ function tick(now: number) {
       progress.value = 0
     }
   } else {
-    // Freeze the clock so progress doesn't jump when resuming.
     startedAt = now - progress.value * DURATION
   }
   rafId = requestAnimationFrame(tick)
@@ -60,6 +107,14 @@ function selectModule(i: number) {
   activeIndex.value = i
   startedAt = null
   progress.value = 0
+}
+
+function setTab(t: 'core' | 'addons') {
+  activeTab.value = t
+  if (t === 'core') {
+    startedAt = null
+    progress.value = 0
+  }
 }
 
 onMounted(() => {
@@ -84,23 +139,81 @@ const totalIndex = computed(() => String(modules.value.length).padStart(2, '0'))
 
       <LandingSectionHeading
         number="2"
-        :label="copy.modules.eyebrow"
+        :label="`${copy.modules.eyebrow} · ${copy.addons.eyebrow}`"
         :heading="copy.modules.heading"
         :sub="copy.modules.sub"
       />
 
-      <NuxtLink to="/portal/features" class="group inline-flex items-center gap-3 text-sm font-bold mb-16 lg:mb-20">
-        <span class="size-10 rounded-full bg-primary text-white dark:bg-white dark:text-primary flex items-center justify-center transition-transform group-hover:scale-110">
-          <UIcon name="i-lucide-arrow-right" class="size-4 rtl:rotate-180" />
-        </span>
-        <span class="relative">
-          {{ copy.modules.linkAll }}
-          <span aria-hidden="true" class="absolute -bottom-0.5 inset-x-0 h-px bg-current group-hover:bg-secondary-500 transition-colors" />
-        </span>
-      </NuxtLink>
+      <!-- ═══ Tab switcher · Core / Add-ons ═══ -->
+      <div class="flex flex-wrap items-center gap-3 sm:gap-4 mb-12 lg:mb-16">
+        <div
+          class="inline-flex items-center gap-1 p-1 rounded-full bg-black/[0.04] dark:bg-white/[0.05] ring-1 ring-black/5 dark:ring-white/10"
+          role="tablist"
+          aria-label="Platform features"
+        >
+          <button
+            type="button"
+            role="tab"
+            :aria-selected="activeTab === 'core'"
+            class="inline-flex items-center gap-2 px-4 sm:px-5 h-10 rounded-full text-sm font-bold transition-all"
+            :class="activeTab === 'core'
+              ? 'bg-primary text-white shadow-md shadow-primary/20 dark:bg-white dark:text-primary'
+              : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'"
+            @click="setTab('core')"
+          >
+            {{ copy.modules.eyebrow }}
+            <span
+              class="inline-flex items-center justify-center min-w-[1.5rem] h-5 px-1.5 rounded-full text-[10px] font-black tabular-nums"
+              :class="activeTab === 'core'
+                ? 'bg-white/20 text-white dark:bg-primary/15 dark:text-primary'
+                : 'bg-black/10 text-gray-700 dark:bg-white/10 dark:text-gray-300'"
+            >
+              {{ modules.length }}
+            </span>
+          </button>
+          <button
+            type="button"
+            role="tab"
+            :aria-selected="activeTab === 'addons'"
+            class="inline-flex items-center gap-2 px-4 sm:px-5 h-10 rounded-full text-sm font-bold transition-all"
+            :class="activeTab === 'addons'
+              ? 'bg-primary text-white shadow-md shadow-primary/20 dark:bg-white dark:text-primary'
+              : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'"
+            @click="setTab('addons')"
+          >
+            {{ copy.addons.eyebrow }}
+            <span
+              class="inline-flex items-center justify-center min-w-[1.5rem] h-5 px-1.5 rounded-full text-[10px] font-black tabular-nums"
+              :class="activeTab === 'addons'
+                ? 'bg-white/20 text-white dark:bg-primary/15 dark:text-primary'
+                : 'bg-black/10 text-gray-700 dark:bg-white/10 dark:text-gray-300'"
+            >
+              {{ copy.addons.items.length }}
+            </span>
+          </button>
+        </div>
 
-      <!-- ═══ Explorer ═══ -->
+        <span aria-hidden="true" class="hidden sm:inline-block h-8 w-px bg-black/10 dark:bg-white/10 mx-1" />
+
+        <NuxtLink
+          :to="activeTab === 'core' ? '/portal/features' : '/portal/addons'"
+          class="group inline-flex items-center gap-3 text-sm font-bold"
+        >
+          <span class="size-9 rounded-full bg-primary text-white dark:bg-white dark:text-primary flex items-center justify-center transition-transform group-hover:scale-110">
+            <UIcon name="i-lucide-arrow-right" class="size-4 rtl:rotate-180" />
+          </span>
+          <span class="relative">
+            {{ activeTab === 'core' ? copy.modules.linkAll : copy.addons.linkAll }}
+            <span aria-hidden="true" class="absolute -bottom-0.5 inset-x-0 h-px bg-current group-hover:bg-secondary-500 transition-colors" />
+          </span>
+        </NuxtLink>
+      </div>
+
+      <!-- ═══ Tab panel — CORE MODULES ═══ -->
       <div
+        v-show="activeTab === 'core'"
+        role="tabpanel"
+        :aria-hidden="activeTab !== 'core'"
         class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12"
         @mouseenter="paused = true"
         @mouseleave="paused = false"
@@ -256,7 +369,7 @@ const totalIndex = computed(() => String(modules.value.length).padStart(2, '0'))
             <!-- Live mock — light-weight frame (no border), soft bg + hairline top -->
             <div class="mt-8 relative rounded-2xl bg-gray-50 dark:bg-white/[0.025] overflow-hidden">
               <div aria-hidden="true" class="h-0.5 bg-gradient-to-r opacity-80" :class="activeVisual?.color" />
-              <div class="p-5 sm:p-6 transition-opacity duration-300" :key="active?.id">
+              <div :key="active?.id" class="p-5 sm:p-6 transition-opacity duration-300">
                 <LandingModuleMock :id="active?.id || 'calendar'" :color="activeVisual?.color" />
               </div>
             </div>
@@ -300,6 +413,125 @@ const totalIndex = computed(() => String(modules.value.length).padStart(2, '0'))
             </div>
           </div>
         </div>
+      </div>
+
+      <!-- ═══ Tab panel — ADD-ONS ═══ -->
+      <div
+        v-show="activeTab === 'addons'"
+        role="tabpanel"
+        :aria-hidden="activeTab !== 'addons'"
+      >
+        <!-- Category filter chips — All + 5 categories -->
+        <div class="flex flex-wrap items-center gap-2 mb-12 sm:mb-14">
+          <span class="text-xs uppercase tracking-[0.2em] text-gray-400 me-2">{{ copy.ui.chaptersLabel }}</span>
+          <button
+            type="button"
+            class="inline-flex items-center gap-2 px-3.5 h-9 rounded-full text-xs font-bold uppercase tracking-[0.18em] transition-all"
+            :class="activeCat === 'all'
+              ? 'bg-primary text-white shadow-md shadow-primary/20 dark:bg-white dark:text-primary'
+              : 'bg-black/[0.04] text-gray-700 dark:bg-white/[0.05] dark:text-gray-300 hover:bg-black/[0.07] dark:hover:bg-white/[0.08]'"
+            @click="activeCat = 'all'"
+          >
+            <span aria-hidden="true" class="size-1.5 rounded-full bg-gradient-to-br from-emerald-500 via-violet-500 to-rose-500" />
+            All
+            <span class="text-[10px] tabular-nums opacity-70">{{ copy.addons.items.length }}</span>
+          </button>
+          <button
+            v-for="cat in addonCategories"
+            :key="cat.name"
+            type="button"
+            class="inline-flex items-center gap-2 px-3.5 h-9 rounded-full text-xs font-bold uppercase tracking-[0.18em] transition-all"
+            :class="activeCat === cat.name
+              ? 'bg-primary text-white shadow-md shadow-primary/20 dark:bg-white dark:text-primary'
+              : 'bg-black/[0.04] text-gray-700 dark:bg-white/[0.05] dark:text-gray-300 hover:bg-black/[0.07] dark:hover:bg-white/[0.08]'"
+            @click="activeCat = cat.name"
+          >
+            <span
+              aria-hidden="true"
+              class="size-1.5 rounded-full"
+              :class="catPalette[cat.name].dot"
+            />
+            {{ copy.ui.addonCategoryLabels[cat.name] }}
+            <span class="text-[10px] tabular-nums opacity-70">{{ cat.items.length }}</span>
+          </button>
+        </div>
+
+        <!-- Directory chapters — compact -->
+        <div class="space-y-12 sm:space-y-16">
+          <div
+            v-for="(cat, ci) in visibleAddons"
+            :id="`addons-${cat.name.toLowerCase()}`"
+            :key="cat.name"
+          >
+            <!-- Chapter header: hairline + medium-weight category title -->
+            <div class="flex items-end justify-between pb-4 mb-8 border-b border-black/10 dark:border-white/10">
+              <div class="flex items-baseline gap-3 sm:gap-5 min-w-0">
+                <span class="shrink-0 text-xs tabular-nums text-gray-400">{{ String(ci + 1).padStart(2, '0') }}</span>
+                <div class="flex items-baseline gap-3 min-w-0">
+                  <span
+                    aria-hidden="true"
+                    class="size-2 rounded-full shrink-0"
+                    :class="catPalette[cat.name].dot"
+                  />
+                  <h3
+                    class="text-2xl sm:text-3xl font-black tracking-tight uppercase truncate"
+                    :class="catPalette[cat.name].accent"
+                  >
+                    {{ copy.ui.addonCategoryLabels[cat.name] }}
+                  </h3>
+                </div>
+              </div>
+              <span class="shrink-0 text-[10px] uppercase tracking-[0.25em] text-gray-400">
+                {{ String(cat.items.length).padStart(2, '0') }} / {{ copy.ui.addonsLabel }}
+              </span>
+            </div>
+
+            <!-- Addon grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-8">
+              <NuxtLink
+                v-for="a in cat.items"
+                :key="a.key"
+                :to="`/portal/addons/${a.key}`"
+                class="group relative flex items-start gap-4"
+              >
+                <div
+                  class="shrink-0 size-11 flex items-center justify-center rounded-xl transition-all duration-300 group-hover:scale-110"
+                  :class="catPalette[cat.name].iconBg"
+                >
+                  <UIcon
+                    :name="addonMeta[a.key as AddonKey]?.icon"
+                    class="size-5"
+                    :class="catPalette[cat.name].iconText"
+                  />
+                </div>
+                <div class="flex-1 min-w-0">
+                  <h4 class="text-sm sm:text-base font-bold leading-tight">
+                    <span class="relative inline-block align-baseline">
+                      {{ a.label }}
+                      <span
+                        aria-hidden="true"
+                        class="absolute -bottom-0.5 inset-x-0 h-[1.5px] origin-start scale-x-0 group-hover:scale-x-100 transition-transform duration-300"
+                        :class="catPalette[cat.name].dot"
+                      />
+                    </span>
+                  </h4>
+                  <p class="mt-1.5 text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-relaxed">{{ a.desc }}</p>
+                </div>
+                <UIcon
+                  aria-hidden="true"
+                  name="i-lucide-arrow-up-right"
+                  class="hidden sm:block shrink-0 mt-1.5 size-4 text-gray-300 dark:text-gray-700 group-hover:text-primary dark:group-hover:text-white transition-colors"
+                />
+              </NuxtLink>
+            </div>
+          </div>
+        </div>
+
+        <!-- Closing tagline -->
+        <p class="mt-16 flex items-center justify-center gap-2 text-xs text-gray-500 uppercase tracking-[0.25em]">
+          <span class="size-1.5 rounded-full bg-emerald-500" />
+          {{ copy.ui.allSixteenShip }}
+        </p>
       </div>
     </div>
   </section>

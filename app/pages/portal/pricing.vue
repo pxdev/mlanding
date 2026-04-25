@@ -14,6 +14,7 @@ const PLAN_SLUGS = computed(() =>
 );
 
 const checkoutLoading = ref(null);
+const localePath = useLocalePath();
 // Clicking a plan navigates to the dedicated /portal/checkout/[slug]
 // review page. That page is responsible for entering/validating promo
 // codes and pushing to Lemon Squeezy. The pricing page stays purely
@@ -28,7 +29,7 @@ async function goToReview(idx) {
     const carried = typeof route.query.promo === 'string' ? route.query.promo : '';
     const q = carried ? { promo: carried } : undefined;
     checkoutLoading.value = idx;
-    await navigateTo({ path: `/portal/checkout/${slug}`, query: q });
+    await navigateTo({ path: localePath(`/portal/checkout/${slug}`), query: q });
     checkoutLoading.value = null;
 }
 // Legacy deep-links with ?buy=<slug> land here; forward to the review

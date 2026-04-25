@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const route = useRoute()
 const copy = useLandingCopy()
-const { localeItems, currentLocale } = useLandingLocale()
+const { currentLocale, otherLocale, toggleLocale } = useLandingLocale()
 const { loggedIn } = useUserSession()
 
 const mobileOpen = ref(false)
@@ -35,14 +35,13 @@ onBeforeUnmount(() => {
   if (rafId) cancelAnimationFrame(rafId)
 })
 
-// Lean header — only the four conversion-critical surfaces. Everything else
+// Lean header — only the conversion-critical surfaces. Everything else
 // (Add-ons, ROI, Manual, Docs, FAQ) is reachable from the footer columns and
 // in-page CTAs.
 const navItems = computed(() => [
   { label: copy.value.nav.features, to: '/portal/features' },
   { label: copy.value.nav.showcase, to: '/portal/showcase' },
-  { label: copy.value.nav.pricing, to: '/portal/pricing' },
-  { label: copy.value.nav.customers, to: '/portal/customers' }
+  { label: copy.value.nav.pricing, to: '/portal/pricing' }
 ])
 
 function isActive(to: string) {
@@ -82,22 +81,22 @@ function isActive(to: string) {
 
       <!-- Actions -->
       <div class="flex items-center gap-1 sm:gap-2 ms-auto">
-        <!-- Utility cluster: language + theme -->
+        <!-- Utility cluster: language toggle (EN ↔ AR) -->
         <ClientOnly>
-          <UDropdownMenu :items="localeItems">
-            <button
-              class="hidden sm:inline-flex items-center gap-1.5 h-9 px-3 rounded-full text-sm font-semibold text-gray-600 dark:text-gray-400 hover:bg-black/5 dark:hover:bg-white/10 transition"
-              :aria-label="copy.nav.langLabel"
-            >
-              <UIcon name="i-lucide-languages" class="size-4" />
-              <span class="uppercase tracking-wider text-[11px] font-bold">{{ currentLocale?.code }}</span>
-              <UIcon name="i-lucide-chevron-down" class="size-3 opacity-50" />
-            </button>
-          </UDropdownMenu>
+          <button
+            type="button"
+            class="hidden sm:inline-flex items-center gap-1.5 h-9 px-3 rounded-full text-sm font-semibold text-gray-600 dark:text-gray-400 hover:bg-black/5 dark:hover:bg-white/10 transition"
+            :aria-label="copy.nav.langLabel"
+            :title="otherLocale?.name"
+            @click="toggleLocale"
+          >
+            <UIcon name="i-lucide-globe" class="size-4" />
+            <span class="text-sm font-bold">{{ otherLocale?.name }}</span>
+          </button>
           <template #fallback>
             <span class="hidden sm:inline-flex items-center gap-1.5 h-9 px-3 rounded-full text-sm font-semibold text-gray-600 dark:text-gray-400">
-              <UIcon name="i-lucide-languages" class="size-4" />
-              <span class="uppercase tracking-wider text-[11px] font-bold">{{ currentLocale?.code }}</span>
+              <UIcon name="i-lucide-globe" class="size-4" />
+              <span class="text-sm font-bold">{{ currentLocale?.name }}</span>
             </span>
           </template>
         </ClientOnly>
@@ -193,17 +192,19 @@ function isActive(to: string) {
                 : 'text-gray-700 dark:text-gray-300 hover:bg-black/5 dark:hover:bg-white/10'"
             >{{ item.label }}</NuxtLink>
 
-            <!-- Preferences: language + theme -->
+            <!-- Preferences: language toggle (EN ↔ AR) -->
             <div class="mt-4 pt-4 border-t border-black/5 dark:border-white/10 space-y-2">
               <p class="px-4 text-[11px] font-bold uppercase tracking-wider text-gray-400">{{ copy.nav.langLabel }}</p>
               <ClientOnly>
-                <UDropdownMenu :items="localeItems" :ui="{ content: 'w-full' }">
-                  <button class="w-full flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-medium bg-black/5 dark:bg-white/10">
-                    <UIcon name="i-lucide-languages" class="size-4" />
-                    {{ currentLocale?.name }}
-                    <UIcon name="i-lucide-chevron-down" class="size-3.5 ms-auto opacity-50" />
-                  </button>
-                </UDropdownMenu>
+                <button
+                  type="button"
+                  class="w-full flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-medium bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/15 transition"
+                  @click="toggleLocale"
+                >
+                  <UIcon name="i-lucide-globe" class="size-4" />
+                  <span>{{ otherLocale?.name }}</span>
+                  <UIcon name="i-lucide-arrow-right-left" class="size-3.5 ms-auto opacity-60" />
+                </button>
               </ClientOnly>
             </div>
           </nav>

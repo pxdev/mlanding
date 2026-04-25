@@ -8,7 +8,7 @@ const whyIcons = ['i-lucide-package-2', 'i-lucide-server', 'i-lucide-languages',
 <template>
   <section
     id="why"
-    class="relative py-24 sm:py-32 overflow-hidden"
+    class="relative py-24 sm:py-32 overflow-hidden bg-gray-50 dark:bg-white/[0.02]"
   >
     <!-- Giant decorative numeral -->
     <div
