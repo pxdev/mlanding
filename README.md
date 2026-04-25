@@ -88,7 +88,7 @@ To edit copy, change the JSON file and the page updates on next reload.
 **Recommended — env bootstrap:** set `PORTAL_ADMIN_EMAILS` to a comma-separated allowlist. Matching accounts are auto-promoted on register, or on the next login if they already exist.
 
 ```env
-PORTAL_ADMIN_EMAILS=you@momentfy.io,ops@momentfy.io
+PORTAL_ADMIN_EMAILS=you@momentfy.com,ops@momentfy.com
 ```
 
 Seed-only — removing an email does **not** demote; the DB flag sticks until you toggle it off.
@@ -101,7 +101,7 @@ npm run db:studio
 ```
 
 ```sql
-UPDATE "Account" SET "isAdmin" = true WHERE email = 'you@momentfy.io';
+UPDATE "Account" SET "isAdmin" = true WHERE email = 'you@momentfy.com';
 ```
 
 ## Deployment

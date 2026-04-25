@@ -2,15 +2,16 @@
 definePageMeta({ layout: 'landing' });
 const copy = useLandingCopy();
 const { locale } = useI18n();
-useHead(() => ({
-    title: locale.value === 'ar' ? 'المميزات — Momentfy' : 'Features — Momentfy',
-    meta: [{
-            name: 'description',
-            content: locale.value === 'ar'
-                ? 'كل وحدة، كل شاشة، تحت سقف واحد: التقويم، المبيعات، المخزون، العملاء، المحاسبة، الموارد البشرية، التقارير، بوابة العميل، والمساعد الذكي — في كود واحد متماسك.'
-                : 'Every module, every screen. Calendar, sales, inventory, clients, accounting, HR, reports, client portal and AI — in one codebase.'
-        }]
-}));
+useLandingSeo({
+    ar: {
+        title: 'المميزات — Momentfy',
+        description: 'كل وحدة، كل شاشة، تحت سقف واحد: التقويم، المبيعات، المخزون، العملاء، المحاسبة، الموارد البشرية، التقارير، بوابة العميل، والمساعد الذكي — في كود واحد متماسك.'
+    },
+    en: {
+        title: 'Features — Momentfy',
+        description: 'Every module, every screen. Calendar, sales, inventory, clients, accounting, HR, reports, client portal and AI — in one codebase.'
+    }
+});
 // ── Icons + gradients per feature id
 const visuals = {
     calendar: { icon: 'i-lucide-calendar-days', color: 'from-violet-500 to-fuchsia-500' },

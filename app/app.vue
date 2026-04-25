@@ -18,6 +18,12 @@ useHead({
     dir: computed(() => uiLocale.value?.dir ?? 'ltr')
   }
 })
+
+// Force light mode site-wide. Color-mode toggle UI has been removed — this
+// also resets returning users whose localStorage still holds a stale 'dark'
+// preference from before the toggle was disabled.
+const colorMode = useColorMode()
+if (colorMode.preference !== 'light') colorMode.preference = 'light'
 </script>
 
 <template>

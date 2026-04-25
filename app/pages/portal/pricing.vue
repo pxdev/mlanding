@@ -40,15 +40,16 @@ onMounted(async () => {
         if (idx >= 0) await goToReview(idx);
     }
 });
-useHead(() => ({
-    title: locale.value === 'ar' ? 'الأسعار — Momentfy' : 'Pricing — Momentfy',
-    meta: [{
-            name: 'description',
-            content: locale.value === 'ar'
-                ? 'ادفع مرة واحدة وامتلك الكود. استضافة ذاتية، حسابات ومنشآت بلا حدود، وتحديثات مدى الحياة. الفرق الوحيد بين الخطتين: هل تنصّب بنفسك، أم ننصّب عنك؟'
-                : 'One-time pricing for self-hosted source code with unlimited tenants and lifetime updates. The only difference is whether you install it yourself or we install it for you.'
-        }]
-}));
+useLandingSeo({
+    ar: {
+        title: 'الأسعار — Momentfy',
+        description: 'ادفع مرة واحدة وامتلك الكود. استضافة ذاتية، حسابات ومنشآت بلا حدود، وتحديثات مدى الحياة. الفرق الوحيد بين الخطتين: هل تنصّب بنفسك، أم ننصّب عنك؟'
+    },
+    en: {
+        title: 'Pricing — Momentfy',
+        description: 'One-time pricing for self-hosted source code with unlimited tenants and lifetime updates. The only difference is whether you install it yourself or we install it for you.'
+    }
+});
 const includedIcons = ['i-lucide-code', 'i-lucide-globe', 'i-lucide-infinity', 'i-lucide-server', 'i-lucide-shield-check', 'i-lucide-smartphone', 'i-lucide-sparkles', 'i-lucide-book-open'];
 </script>
 

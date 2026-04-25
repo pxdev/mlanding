@@ -1,9 +1,5 @@
 <script setup lang="ts">
 const route = useRoute()
-const colorMode = useColorMode()
-const isDark = computed(() => colorMode.value === 'dark')
-function toggleColorMode() { colorMode.preference = isDark.value ? 'light' : 'dark' }
-
 const copy = useLandingCopy()
 const { localeItems, currentLocale } = useLandingLocale()
 const { loggedIn } = useUserSession()
@@ -39,14 +35,14 @@ onBeforeUnmount(() => {
   if (rafId) cancelAnimationFrame(rafId)
 })
 
+// Lean header — only the four conversion-critical surfaces. Everything else
+// (Add-ons, ROI, Manual, Docs, FAQ) is reachable from the footer columns and
+// in-page CTAs.
 const navItems = computed(() => [
   { label: copy.value.nav.features, to: '/portal/features' },
-  { label: copy.value.nav.addons, to: '/portal/addons' },
   { label: copy.value.nav.showcase, to: '/portal/showcase' },
   { label: copy.value.nav.pricing, to: '/portal/pricing' },
-  { label: copy.value.nav.manual, to: '/portal/manual' },
-  { label: copy.value.nav.docs, to: '/portal/docs' },
-  { label: copy.value.nav.faq, to: '/portal/faq' }
+  { label: copy.value.nav.customers, to: '/portal/customers' }
 ])
 
 function isActive(to: string) {
@@ -106,16 +102,8 @@ function isActive(to: string) {
           </template>
         </ClientOnly>
 
-        <button
-          class="hidden sm:flex size-9 items-center justify-center rounded-full text-gray-600 dark:text-gray-400 hover:bg-black/5 dark:hover:bg-white/10 transition"
-          :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
-          @click="toggleColorMode"
-        >
-          <UIcon :name="isDark ? 'i-lucide-sun' : 'i-lucide-moon'" class="size-4" />
-        </button>
-
         <!-- Divider between utility and auth cluster -->
-        <span aria-hidden="true" class="hidden sm:block h-6 w-px bg-black/10 dark:bg-white/10 mx-1" />
+        <span aria-hidden="true" class="hidden sm:block h-6 w-px bg-black/10 mx-1" />
 
         <!-- Auth cluster -->
         <ClientOnly>
@@ -217,13 +205,6 @@ function isActive(to: string) {
                   </button>
                 </UDropdownMenu>
               </ClientOnly>
-              <button
-                class="w-full flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-medium bg-black/5 dark:bg-white/10"
-                @click="toggleColorMode"
-              >
-                <UIcon :name="isDark ? 'i-lucide-sun' : 'i-lucide-moon'" class="size-4" />
-                {{ isDark ? 'Light mode' : 'Dark mode' }}
-              </button>
             </div>
           </nav>
 

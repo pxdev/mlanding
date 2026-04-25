@@ -1,11 +1,11 @@
 // Marketing-site contact form. Delivers the message to the inbox advertised
-// on the legal page (hello@momentfy.io) with Reply-To set to the visitor.
+// on the legal page (hello@momentfy.com) with Reply-To set to the visitor.
 // Rate-limited per IP; a hidden honeypot field swallows most bot submits.
 
 import { contactSchema, validateBody } from '../../utils/validation'
 import { sendEmail, emailLayout } from '../../utils/email'
 
-const INBOX = 'hello@momentfy.io'
+const INBOX = 'hello@momentfy.com'
 
 export default defineEventHandler(async (event) => {
   enforceRateLimit(event, { max: 3, windowSeconds: 60 })

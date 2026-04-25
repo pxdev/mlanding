@@ -7,7 +7,11 @@ import pkg from './package.json'
 //   - Own Postgres `portal` database via Prisma — fully isolated from the main app
 export default defineNuxtConfig({
 
-  ssr: false,
+  // Marketing surface SSRs so Google, Bing, and social-preview crawlers (which
+  // do NOT execute JS) see full meta, canonical, OG, and JSON-LD in the
+  // source HTML. Auth/dashboard/admin stay SPA via routeRules below — they're
+  // session-gated and don't benefit from SSR.
+  ssr: true,
 
   // The payload cache conflicts when sibling routes share a path prefix
   // (e.g. /portal/addons is a page AND /portal/addons/:key is its children —
@@ -64,7 +68,7 @@ export default defineNuxtConfig({
       port: Number(process.env.SMTP_PORT || 465),
       user: process.env.SMTP_USER || '',
       pass: process.env.SMTP_PASS || '',
-      from: process.env.SMTP_FROM || 'Momentfy <noreply@momentfy.io>'
+      from: process.env.SMTP_FROM || 'Momentfy <noreply@momentfy.com>'
     },
     lemonSqueezy: {
       apiKey: process.env.LEMON_SQUEEZY_API_KEY || '',
@@ -79,23 +83,85 @@ export default defineNuxtConfig({
     },
     public: {
       appVersion: pkg.version,
-      // Where the "Try demo" CTA sends visitors. Hosted on a separate domain
-      // running the Momentfy app.
-      demoUrl: process.env.NUXT_PUBLIC_DEMO_URL || 'https://demo.momentfy.com',
+      // Where the "Try demo" CTA sends visitors. Lives at /demo on the
+      // primary domain — same Nuxt deployment serves the marketing portal
+      // and proxies to the demo Momentfy instance.
+      demoUrl: process.env.NUXT_PUBLIC_DEMO_URL || 'https://momentfy.com/demo',
       // Hosted checkout fallback (Phase 3 will replace with portal-mediated checkout).
       checkoutUrl: process.env.NUXT_PUBLIC_CHECKOUT_URL || 'https://momentfy.lemonsqueezy.com',
       // Public base URL self-hosted Momentfy instances POST to for license validation.
-      portalUrl: process.env.NUXT_PUBLIC_PORTAL_URL || ''
+      portalUrl: process.env.NUXT_PUBLIC_PORTAL_URL || '',
+      // Sales WhatsApp number in international format (e.g. 966500000000),
+      // no leading +. Blank disables the floating chat widget.
+      whatsappNumber: process.env.NUXT_PUBLIC_WHATSAPP_NUMBER || ''
     }
   },
 
-  modules: [
-    '@nuxt/eslint',
-    '@nuxt/ui',
-    '@nuxtjs/i18n',
-    'nuxt-auth-utils',
-    'nuxt-authorization'
-  ],
+  // @nuxtjs/seo bundles: @nuxtjs/sitemap, @nuxtjs/robots, nuxt-og-image,
+  // nuxt-schema-org, nuxt-seo-utils, nuxt-link-checker. It reads the
+  // top-level `site` block below for shared identity (URL, name, locale).
+  site: {
+    url: process.env.NUXT_PUBLIC_SITE_URL || 'https://momentfy.com',
+    name: 'Momentfy',
+    description: 'All-in-one platform for bookings, POS, accounting, inventory, HR, CRM, and a branded client portal. Bilingual (AR/EN), ZATCA & ETA e-invoicing ready, self-hosted with lifetime updates.',
+    defaultLocale: 'ar'
+  },
+
+  modules: ['@nuxt/eslint', '@nuxt/ui', '@nuxtjs/i18n', '@nuxtjs/seo', 'nuxt-auth-utils', 'nuxt-authorization', '@nuxt/fonts'],
+
+  // Keep authenticated/admin surfaces out of the sitemap and robots index.
+  // Marketing pages under `/` and `/portal/**` stay indexable.
+  sitemap: {
+    exclude: [
+      '/auth/**',
+      '/dashboard/**',
+      '/admin/**',
+      '/api/**',
+      '/portal/checkout/**'
+    ]
+  },
+
+  robots: {
+    disallow: [
+      '/auth',
+      '/dashboard',
+      '/admin',
+      '/api',
+      '/portal/checkout'
+    ]
+  },
+
+  // OG image: Satori-rendered at build/runtime from the default Nuxt Seo
+  // template. Each page can override via `defineOgImage()` in <script setup>.
+  //
+  // compatibility.runtime.chromium=false avoids the first-run interactive
+  // prompt and forces the lightweight Satori renderer (no headless Chrome
+  // dependency — works on any Nitro deployment target, including edge).
+  ogImage: {
+    compatibility: {
+      runtime: {
+        chromium: false
+      }
+    },
+    defaults: {
+      component: 'NuxtSeo',
+      props: {
+        theme: '#000000',
+        colorMode: 'light'
+      }
+    }
+  },
+
+  schemaOrg: {
+    identity: {
+      type: 'Organization',
+      name: 'Momentfy',
+      logo: '/pwa-512x512.png',
+      sameAs: [
+        // Fill in as social presence grows
+      ]
+    }
+  },
 
   // PWA was wired up while this was a marketing-only static site. The portal
   // now has SSR + auth and isn't an install target — the *main app* is what
@@ -124,10 +190,10 @@ export default defineNuxtConfig({
     mode: 'svg'
   },
 
-  // Default to light mode. Users can still toggle; once they pick a
-  // preference it's stored in a cookie and respected. Without this
-  // override @nuxtjs/color-mode defaults to `system`, which hands
-  // dark-OS users dark on first visit.
+  // Light mode only. Toggle UI was removed; @nuxtjs/color-mode is kept
+  // because @nuxt/ui depends on it. `app.vue` re-asserts preference=light
+  // on boot so any stale localStorage value from when the toggle existed
+  // is overwritten for returning users.
   colorMode: {
     preference: 'light',
     fallback: 'light'
@@ -151,6 +217,16 @@ export default defineNuxtConfig({
       }
     },
 
+    // Session-gated surfaces: SPA-only. Skipping SSR avoids running
+    // auth/session/DB code during server render, and these pages don't
+    // need SEO anyway.
+    '/auth/**': { ssr: false },
+    '/dashboard/**': { ssr: false },
+    '/admin/**': { ssr: false },
+
+    // Checkout hits the licensing DB + Lemon Squeezy — skip SSR so the
+    // page mounts client-side with a live session.
+    '/portal/checkout/**': { ssr: false }
   },
 
   fonts: {

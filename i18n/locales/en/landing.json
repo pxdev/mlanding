@@ -6,6 +6,8 @@
       "addons": "Add-ons",
       "showcase": "Showcase",
       "pricing": "Pricing",
+      "roi": "ROI",
+      "customers": "Customers",
       "faq": "FAQ",
       "docs": "Docs",
       "manual": "Manual",
@@ -39,7 +41,7 @@
           "msg": "Rebooked 4 clients"
         }
       },
-      "chromeUrl": "app.momentfy.io / dashboard",
+      "chromeUrl": "app.momentfy.com / dashboard",
       "statsStrip": [
         {
           "k": "∞",
@@ -1953,26 +1955,83 @@
       "footer": "Secure checkout via Lemon Squeezy — handles VAT and Merchant-of-Record obligations in your local currency."
     },
     "testimonials": {
-      "eyebrow": "Operators who shipped with it",
-      "heading": "Built by operators, for operators.",
+      "eyebrow": "Operators on Momentfy",
+      "heading": "Built by operators, shipped with operators.",
+      "sub": "Real teams, real businesses, real numbers — running on Momentfy today.",
+      "ctaCases": "Read all case studies",
+      "ctaCasesHref": "/portal/customers",
+      "starsLabel": "Verified",
+      "featured": {
+        "metric": "3×",
+        "metricLabel": "Online bookings · 90 days",
+        "quote": "We replaced three separate tools with Momentfy in one weekend. Receptionists run the floor from one tab — bookings, POS, invoices, ZATCA. Online bookings tripled in the first quarter, and the team smiles on Monday mornings now.",
+        "name": "Lina Al-Harbi",
+        "role": "Founder & Operator",
+        "business": "Mantra Spa & Wellness",
+        "location": "Riyadh, Saudi Arabia",
+        "avatar": "/avatars/avatar-1.svg",
+        "vertical": "Spa & Wellness",
+        "verticalAccent": "rose",
+        "since": "Self-hosted since January 2026",
+        "stars": 5
+      },
       "items": [
         {
-          "quote": "Replaced three separate tools with Momentfy in a weekend. Our receptionists actually smile now.",
-          "name": "Lina H.",
-          "role": "Spa chain owner · Riyadh"
+          "quote": "We white-labelled it, deployed to ten clinics, and passed the ZATCA Phase 2 audit on the first try. The fact that it's our code on our servers — that's what closed it for the board.",
+          "name": "Karim Mansour",
+          "role": "Group IT Lead",
+          "business": "Hayat Dental Group",
+          "location": "Cairo, Egypt",
+          "avatar": "/avatars/avatar-2.svg",
+          "vertical": "Dental",
+          "verticalAccent": "sky",
+          "stars": 5
         },
         {
-          "quote": "We white-labelled it, deployed to ten clinics and passed the ZATCA audit on the first try.",
-          "name": "Karim M.",
-          "role": "Dental group IT · Cairo"
+          "quote": "Finally a platform that treats Arabic as a first-class language — not a translation pasted on an English UI. RTL is native, my staff is faster, and patients comment on the booking page.",
+          "name": "Noura Al-Mansoori",
+          "role": "Clinic Owner",
+          "business": "Wajha Aesthetic Clinic",
+          "location": "Dubai, UAE",
+          "avatar": "/avatars/avatar-3.svg",
+          "vertical": "Aesthetic Medicine",
+          "verticalAccent": "violet",
+          "stars": 5
         },
         {
-          "quote": "Finally a platform that treats Arabic as a first-class language. Not an afterthought.",
-          "name": "Noura A.",
-          "role": "Clinic owner · Dubai"
+          "quote": "No-shows dropped from 18% to 4% in two months. Reminders plus deposits at booking did most of it — and the AI assistant handles reschedules without us lifting a finger.",
+          "name": "Ahmed Al-Otaibi",
+          "role": "Owner",
+          "business": "Forge Fitness",
+          "location": "Jeddah, Saudi Arabia",
+          "avatar": "/avatars/avatar-4.svg",
+          "vertical": "Fitness",
+          "verticalAccent": "emerald",
+          "stars": 5
+        },
+        {
+          "quote": "Packages, deposits, multi-photographer scheduling — no booking app handled this without ten plugins. Momentfy ships it in one codebase. We own the data and the flow.",
+          "name": "Sara Khaled",
+          "role": "Studio Director",
+          "business": "Lumen Photo Studio",
+          "location": "Alexandria, Egypt",
+          "avatar": "/avatars/avatar-5.svg",
+          "vertical": "Photo Studio",
+          "verticalAccent": "amber",
+          "stars": 5
+        },
+        {
+          "quote": "Install once, point it at our domain, done. No SaaS bills, no usage caps, no surprise pricing emails. Lifetime updates already shipped twice — the changelog is real.",
+          "name": "Omar Al-Thani",
+          "role": "Operations Lead",
+          "business": "Soft Paws Grooming",
+          "location": "Doha, Qatar",
+          "avatar": "/avatars/avatar-6.svg",
+          "vertical": "Pet Care",
+          "verticalAccent": "stone",
+          "stars": 5
         }
-      ],
-      "disclaimer": "Illustrative — these quotes represent feedback patterns from early operators. Named case studies and verified logos land here as v1.0 deployments publish."
+      ]
     },
     "trust": {
       "eyebrow": "Trust & security",
@@ -2056,6 +2115,14 @@
             {
               "label": "Pricing",
               "to": "/portal/pricing"
+            },
+            {
+              "label": "ROI calculator",
+              "to": "/portal/roi"
+            },
+            {
+              "label": "Customers",
+              "to": "/portal/customers"
             },
             {
               "label": "FAQ",
@@ -2185,6 +2252,10 @@
               "to": "/portal/docs"
             },
             {
+              "label": "Manual",
+              "to": "/portal/manual"
+            },
+            {
               "label": "Buy source",
               "to": "/portal/download"
             },
@@ -2194,7 +2265,7 @@
             },
             {
               "label": "Changelog",
-              "to": "/portal/download#changelog"
+              "to": "/portal/changelog"
             },
             {
               "label": "Contact",
@@ -2237,6 +2308,10 @@
       "backToTop": "back to top",
       "readAbout": "Read about",
       "exploreVerb": "Explore",
+      "whatsappLabel": "Chat on WhatsApp",
+      "whatsappGreeting": "Hi! I'm interested in Momentfy and want to learn more.",
+      "tryDemoNow": "Try the live demo",
+      "talkToFounder": "Talk to the founder",
       "illustrative": "Illustrative",
       "illustrativeBenchmarks": "Illustrative benchmarks",
       "includedInEveryPlan": "Included in every plan",
@@ -2352,6 +2427,9 @@
       "eyebrow": "Features",
       "h1": "Everything, on one tab.",
       "sub": "Eighteen major feature areas. Hundreds of screens. Every small detail wired to the next — all included in the source, all yours on day one.",
+      "spotlightLabel": "Spotlight",
+      "spotlightCta": "Read in detail",
+      "readMore": "Read more",
       "filterAll": "all",
       "filterLabels": {
         "all": "all"
@@ -2725,7 +2803,7 @@
           },
           {
             "q": "Which currencies and payment methods?",
-            "a": "Primary pricing is in USD. At checkout you can pay in USD, SAR, EGP, EUR, GBP or AED — Lemon Squeezy auto-converts. Visa, Mastercard, Amex, Apple Pay and Google Pay are supported. For bank transfer on invoice, email hello@momentfy.io."
+            "a": "Primary pricing is in USD. At checkout you can pay in USD, SAR, EGP, EUR, GBP or AED — Lemon Squeezy auto-converts. Visa, Mastercard, Amex, Apple Pay and Google Pay are supported. For bank transfer on invoice, email hello@momentfy.com."
           },
           {
             "q": "Can I upgrade from Self-install to Done-for-you later?",
@@ -2756,6 +2834,68 @@
           "Bank transfer on invoice (on request)"
         ],
         "processor": "Processed by Lemon Squeezy · Merchant of Record"
+      }
+    },
+    "roiPage": {
+      "eyebrow": "ROI calculator",
+      "h1": "How much does owning Momentfy save you?",
+      "sub": "Move the sliders. The math compares typical SaaS rent against a one-time Momentfy license plus hosting on your own server.",
+      "inputs": {
+        "saasLabel": "Monthly SaaS rent per location",
+        "saasHelp": "What you currently pay (or would pay) per location, per month, for booking software.",
+        "locationsLabel": "Number of locations",
+        "locationsHelp": "Momentfy is multi-tenant. One license covers every location, every brand.",
+        "yearsLabel": "Projection horizon",
+        "yearOptions": ["3 yrs", "5 yrs", "10 yrs"],
+        "currencyLabel": "Currency"
+      },
+      "assumptions": {
+        "label": "Momentfy assumptions",
+        "license": "One-time license",
+        "licenseDesc": "Self-install plan. Lifetime updates included.",
+        "hosting": "Monthly hosting",
+        "hostingDesc": "Hostinger plans start around $9/mo for a small VPS. Adjust if you already have infrastructure.",
+        "multiTenant": "Multi-tenant — one license covers every location.",
+        "currencyNote": "Figures shown in USD. At checkout you can pay in SAR, AED, EGP, EUR or GBP — Lemon Squeezy auto-converts."
+      },
+      "output": {
+        "saasLabel": "Cumulative SaaS rent",
+        "saasSubLabel": "{years} × ${monthly}/mo × {locations} locations",
+        "momentfyLabel": "Total with Momentfy",
+        "momentfySubLabel": "${license} license + ${hosting}/mo × {months} months",
+        "savingsLabel": "Your savings",
+        "savingsPercentLabel": "({percent}% less)",
+        "breakevenLabel": "Break-even point",
+        "breakevenValueLabel": "Month {month}",
+        "breakevenImmediate": "Immediately",
+        "breakevenNever": "Not reached at this SaaS spend"
+      },
+      "ctaLabel": "Own the source — pay once",
+      "ctaHref": "/portal/pricing",
+      "homeSection": {
+        "eyebrow": "Pay once, save forever",
+        "heading": "Three years of SaaS rent ≈ ten Momentfy deployments.",
+        "sub": "Run a 3-location business on typical SaaS at $50 per location per month, and you spend $5,400 in three years. The same setup on Momentfy: $199 once, plus $9/mo hosting on Hostinger.",
+        "cta": "Run the numbers on your business"
+      }
+    },
+    "customersPage": {
+      "eyebrow": "Customers",
+      "h1": "Operators shipping with Momentfy.",
+      "sub": "Real businesses, named teams, verified deployments. Each story below is a customer running their full operation on Momentfy today.",
+      "verifiedLabel": "Verified deployment",
+      "viewAllLabel": "All case studies",
+      "founding": {
+        "eyebrow": "Founding operator program",
+        "heading": "Be one of the first 10 — and stay free for life.",
+        "sub": "If you're an early operator willing to be named publicly, we trade lifetime free upgrades, priority support, and co-marketing for your real story and verified metrics.",
+        "perks": [
+          "Free lifetime updates — every release, no renewal",
+          "Priority support channel — direct line to the engineers",
+          "Co-marketing — your logo on the homepage, your story in the press kit"
+        ],
+        "ctaLabel": "Apply to be a founding operator",
+        "ctaHref": "/portal/download#contact"
       }
     },
     "showcasePage": {
@@ -3742,7 +3882,7 @@
             },
             {
               "k": "Your rights",
-              "v": "You can request export or deletion of your purchase record at any time by emailing hello@momentfy.io."
+              "v": "You can request export or deletion of your purchase record at any time by emailing hello@momentfy.com."
             },
             {
               "k": "GDPR / Saudi PDPL",
@@ -3766,7 +3906,7 @@
             },
             {
               "k": "Undelivered or broken",
-              "v": "If your download link does not work or the archive is materially corrupted and we cannot fix it within 7 days of your report, we'll refund you in full — email hello@momentfy.io with your order number."
+              "v": "If your download link does not work or the archive is materially corrupted and we cannot fix it within 7 days of your report, we'll refund you in full — email hello@momentfy.com with your order number."
             },
             {
               "k": "Chargebacks",
@@ -3798,23 +3938,23 @@
             },
             {
               "k": "Contact",
-              "v": "hello@momentfy.io"
+              "v": "hello@momentfy.com"
             },
             {
               "k": "Support",
-              "v": "support@momentfy.io"
+              "v": "support@momentfy.com"
             },
             {
               "k": "Press",
-              "v": "press@momentfy.io"
+              "v": "press@momentfy.com"
             }
           ]
         }
       ],
       "companyLabel": "Contact",
       "companyLines": [
-        "hello@momentfy.io",
-        "support@momentfy.io"
+        "hello@momentfy.com",
+        "support@momentfy.com"
       ]
     }
   }

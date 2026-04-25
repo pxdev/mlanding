@@ -27,7 +27,7 @@ const CHECKS: EnvCheck[] = [
 
   // Phase 1 — soft (password reset + license emails silently no-op without it)
   { name: 'SMTP_HOST', required: 'optional', feature: 'transactional email', description: 'SMTP relay host' },
-  { name: 'SMTP_FROM', required: 'optional', feature: 'transactional email', description: 'From header, e.g. "Momentfy <noreply@momentfy.io>"' },
+  { name: 'SMTP_FROM', required: 'optional', feature: 'transactional email', description: 'From header, e.g. "Momentfy <noreply@momentfy.com>"' },
 
   // Phase 3 — checkout + webhook
   { name: 'LEMON_SQUEEZY_API_KEY', required: 'optional', feature: 'checkout', description: 'LS API key (portal-mediated checkouts)' },

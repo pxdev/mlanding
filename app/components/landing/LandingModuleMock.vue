@@ -791,7 +791,7 @@ defineProps<{ id: string; color?: string }>()
       <div class="size-7 rounded-lg bg-gradient-to-br flex items-center justify-center text-white text-[9px] font-black" :class="t.c">{{ t.n.charAt(0) }}</div>
       <div class="flex-1 min-w-0">
         <p class="text-[10px] font-bold truncate">{{ t.n }}</p>
-        <p class="text-[8px] text-gray-400">{{ t.s }}.momentfy.io</p>
+        <p class="text-[8px] text-gray-400">{{ t.s }}.momentfy.com</p>
       </div>
       <div class="text-end">
         <span class="text-[8px] px-1.5 py-0.5 rounded bg-secondary-500/15 text-secondary-600 font-semibold">{{ t.plan }}</span>

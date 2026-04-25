@@ -24,21 +24,21 @@ const copy = useLandingCopy()
 function splash(seed) { return `https://picsum.photos/seed/${seed}/900/600` }
 
 const industryVisuals = {
-  salon:        { image: splash('momentfy-salon'),        icon: 'i-lucide-scissors',        tint: 'from-pink-500/45 to-rose-600/45',         span: 'sm:col-span-2 sm:row-span-2' },
-  dental:       { image: splash('momentfy-dental'),       icon: 'i-hugeicons-dental-tooth', tint: 'from-sky-500/45 to-blue-600/45',          span: 'sm:col-span-2 sm:row-span-1' },
-  medical:      { image: splash('momentfy-medical'),      icon: 'i-lucide-heart-pulse',     tint: 'from-red-500/45 to-orange-600/45',        span: '' },
-  barber:       { image: splash('momentfy-barber'),       icon: 'i-lucide-user',            tint: 'from-stone-500/45 to-neutral-700/50',     span: '' },
-  fitness:      { image: splash('momentfy-fitness'),      icon: 'i-lucide-dumbbell',        tint: 'from-lime-500/45 to-emerald-600/45',      span: '' },
-  pet:          { image: splash('momentfy-pet'),          icon: 'i-lucide-paw-print',       tint: 'from-amber-500/45 to-yellow-600/45',      span: 'sm:col-span-2 sm:row-span-2' },
-  therapy:      { image: splash('momentfy-therapy'),      icon: 'i-lucide-brain',           tint: 'from-violet-500/45 to-purple-600/45',     span: 'sm:col-span-2 sm:row-span-1' },
-  photo:        { image: splash('momentfy-photo'),        icon: 'i-lucide-camera',          tint: 'from-cyan-500/45 to-teal-600/45',         span: 'sm:col-span-2 sm:row-span-1' },
-  education:    { image: splash('momentfy-education'),    icon: 'i-lucide-graduation-cap',  tint: 'from-indigo-500/45 to-blue-600/45',       span: '' },
-  professional: { image: splash('momentfy-professional'), icon: 'i-lucide-briefcase',       tint: 'from-slate-500/45 to-gray-700/50',        span: '' },
-  auto:         { image: splash('momentfy-auto'),         icon: 'i-lucide-car',             tint: 'from-orange-500/45 to-red-600/45',        span: '' },
-  optical:      { image: splash('momentfy-optical'),      icon: 'i-lucide-glasses',         tint: 'from-emerald-500/45 to-teal-600/45',      span: '' },
-  carwash:      { image: splash('momentfy-carwash'),      icon: 'i-lucide-droplets',        tint: 'from-blue-500/45 to-indigo-600/45',       span: '' },
-  wellness:     { image: splash('momentfy-wellness'),     icon: 'i-lucide-flower-2',        tint: 'from-fuchsia-500/45 to-pink-600/45',      span: '' },
-  coworking:    { image: splash('momentfy-coworking'),    icon: 'i-lucide-building-2',      tint: 'from-yellow-500/45 to-orange-600/45',     span: '' }
+  salon:        { image: 'images/salon_spa.png',        icon: 'i-lucide-scissors',        tint: 'from-pink-500/45 to-rose-600/45',         span: 'sm:col-span-2 sm:row-span-2' },
+  dental:       { image: 'images/dental.png',       icon: 'i-hugeicons-dental-tooth', tint: 'from-sky-500/45 to-blue-600/45',          span: 'sm:col-span-2 sm:row-span-1' },
+  medical:      { image: 'images/medical_clinics.png',      icon: 'i-lucide-heart-pulse',     tint: 'from-red-500/45 to-orange-600/45',        span: '' },
+  barber:       { image: 'images/barber.png',       icon: 'i-lucide-user',            tint: 'from-stone-500/45 to-neutral-700/50',     span: '' },
+  fitness:      { image: 'images/training.png',      icon: 'i-lucide-dumbbell',        tint: 'from-lime-500/45 to-emerald-600/45',      span: '' },
+  pet:          { image: 'images/pet.png',          icon: 'i-lucide-paw-print',       tint: 'from-amber-500/45 to-yellow-600/45',      span: 'sm:col-span-2 sm:row-span-2' },
+  therapy:      { image: 'images/therapy.png',      icon: 'i-lucide-brain',           tint: 'from-violet-500/45 to-purple-600/45',     span: 'sm:col-span-2 sm:row-span-1' },
+  photo:        { image: 'images/photo.png',        icon: 'i-lucide-camera',          tint: 'from-cyan-500/45 to-teal-600/45',         span: 'sm:col-span-2 sm:row-span-1' },
+  education:    { image: 'images/education.png',    icon: 'i-lucide-graduation-cap',  tint: 'from-indigo-500/45 to-blue-600/45',       span: '' },
+  professional: { image: 'images/prof.png', icon: 'i-lucide-briefcase',       tint: 'from-slate-500/45 to-gray-700/50',        span: '' },
+  auto:         { image: 'images/auto.png',         icon: 'i-lucide-car',             tint: 'from-orange-500/45 to-red-600/45',        span: '' },
+  optical:      { image: 'images/optical.png',      icon: 'i-lucide-glasses',         tint: 'from-emerald-500/45 to-teal-600/45',      span: '' },
+  carwash:      { image: 'images/wash.png',      icon: 'i-lucide-droplets',        tint: 'from-blue-500/45 to-indigo-600/45',       span: '' },
+  wellness:     { image: 'images/wellness.png',     icon: 'i-lucide-flower-2',        tint: 'from-fuchsia-500/45 to-pink-600/45',      span: '' },
+  coworking:    { image: 'images/coworking.png',    icon: 'i-lucide-building-2',      tint: 'from-yellow-500/45 to-orange-600/45',     span: '' }
 }
 
 // Hide the <img> when its src 404s so the colored fallback (icon + tint) shows through.

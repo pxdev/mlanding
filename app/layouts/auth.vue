@@ -1,6 +1,4 @@
 <script setup lang="ts">
-const colorMode = useColorMode()
-const isDark = computed(() => colorMode.value === 'dark')
 const chrome = useChromeCopy()
 const { localeItems, currentLocale } = useLandingLocale()
 </script>
@@ -31,13 +29,6 @@ const { localeItems, currentLocale } = useLandingLocale()
             </span>
           </template>
         </ClientOnly>
-        <button
-          class="size-9 flex items-center justify-center rounded-full text-gray-600 dark:text-gray-400 hover:bg-black/5 dark:hover:bg-white/10 transition"
-          :aria-label="isDark ? chrome.common.switchToLight : chrome.common.switchToDark"
-          @click="colorMode.preference = isDark ? 'light' : 'dark'"
-        >
-          <UIcon :name="isDark ? 'i-lucide-sun' : 'i-lucide-moon'" class="size-4" />
-        </button>
       </div>
     </header>
     <main class="flex-1 grid place-items-center px-5 py-10">

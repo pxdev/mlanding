@@ -18,6 +18,7 @@ const copy = useLandingCopy()
       <slot />
     </main>
     <LandingFooter />
+    <LandingWhatsApp />
   </div>
 </template>
 

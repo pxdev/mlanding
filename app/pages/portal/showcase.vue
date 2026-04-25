@@ -2,15 +2,16 @@
 definePageMeta({ layout: 'landing' });
 const copy = useLandingCopy();
 const { locale } = useI18n();
-useHead(() => ({
-    title: locale.value === 'ar' ? 'القطاعات — Momentfy' : 'Showcase — Momentfy',
-    meta: [{
-            name: 'description',
-            content: locale.value === 'ar'
-                ? 'منصة واحدة تفهم كل تخصص: صالونات، سبا، عيادات أسنان وطبية، حلاقة، لياقة، بيطرة، واستوديوهات تصوير — كلها بنفس الكود، بهوية كل قطاع.'
-                : 'One platform, every vertical. Salons, spas, dental and medical clinics, barbers, gyms, pet care and photo studios.'
-        }]
-}));
+useLandingSeo({
+    ar: {
+        title: 'القطاعات — Momentfy',
+        description: 'منصة واحدة تفهم كل تخصص: صالونات، سبا، عيادات أسنان وطبية، حلاقة، لياقة، بيطرة، واستوديوهات تصوير — كلها بنفس الكود، بهوية كل قطاع.'
+    },
+    en: {
+        title: 'Showcase — Momentfy',
+        description: 'One platform, every vertical. Salons, spas, dental and medical clinics, barbers, gyms, pet care and photo studios.'
+    }
+});
 const visuals = {
     salon: { icon: 'i-lucide-scissors', accent: 'from-pink-500 to-rose-600', mockId: 'calendar', dot: 'bg-rose-500', soft: 'bg-rose-500/8', text: 'text-rose-600 dark:text-rose-400' },
     dental: { icon: 'i-hugeicons-dental-tooth', accent: 'from-sky-500 to-blue-600', mockId: 'dental', dot: 'bg-sky-500', soft: 'bg-sky-500/8', text: 'text-sky-600 dark:text-sky-400' },

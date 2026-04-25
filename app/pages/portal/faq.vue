@@ -2,15 +2,25 @@
 definePageMeta({ layout: 'landing' });
 const copy = useLandingCopy();
 const { locale } = useI18n();
-useHead(() => ({
-    title: locale.value === 'ar' ? 'أسئلة شائعة — Momentfy' : 'FAQ — Momentfy',
-    meta: [{
-            name: 'description',
-            content: locale.value === 'ar'
-                ? 'إجابات واضحة على ما يهمك: الترخيص، النشر، التحديثات، الامتثال، والدعم — كل ما قد تحتاج لمعرفته قبل البدء.'
-                : 'Frequently asked questions about Momentfy — licensing, deployment, updates, compliance and support.'
-        }]
-}));
+
+useLandingSeo({
+    ar: {
+        title: 'أسئلة شائعة — Momentfy',
+        description: 'إجابات واضحة على ما يهمك: الترخيص، النشر، التحديثات، الامتثال، والدعم — كل ما قد تحتاج لمعرفته قبل البدء.'
+    },
+    en: {
+        title: 'FAQ — Momentfy',
+        description: 'Frequently asked questions about Momentfy — licensing, deployment, updates, compliance and support.'
+    }
+});
+
+// Flatten all FAQ sections into a single FAQPage — Google treats the schema
+// as page-level, not per-section.
+useSchemaOrg(
+    copy.value.faqPage.sections
+        .flatMap(s => s.items)
+        .map(it => defineQuestion({ name: it.q, acceptedAnswer: it.a }))
+);
 const sectionDots = ['bg-secondary-500', 'bg-amber-500', 'bg-violet-500', 'bg-emerald-500', 'bg-sky-500', 'bg-rose-500'];
 const openSet = ref(new Set());
 function toggle(key) {

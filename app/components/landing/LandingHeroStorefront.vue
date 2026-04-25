@@ -215,7 +215,7 @@ const activeTenant = computed(() => tenants.value[active.value]!)
         </div>
         <div class="mx-auto flex items-center gap-1.5 px-3 h-6 rounded-full bg-black/5 dark:bg-white/5 text-[11px] text-gray-500 dark:text-gray-400 font-mono tabular-nums tracking-tight transition-all">
           <UIcon name="i-lucide-lock" class="size-3 text-emerald-500" />
-          <span dir="ltr">{{ activeTenant.slug }}.momentfy.io/book</span>
+          <span dir="ltr">{{ activeTenant.slug }}.momentfy.com/book</span>
         </div>
         <div class="hidden sm:inline-flex items-center gap-1.5 shrink-0 text-[10px] uppercase tracking-[0.2em] text-rose-500 font-bold">
           <span class="size-1.5 rounded-full bg-rose-500 animate-pulse" />
@@ -349,7 +349,7 @@ const activeTenant = computed(() => tenants.value[active.value]!)
           </div>
           <div class="flex-1 min-w-0">
             <p class="text-[10px] font-black">{{ labels.subdomainTag }}</p>
-            <p class="text-[9px] text-gray-500 dark:text-gray-400 truncate font-mono" dir="ltr">{{ activeTenant.slug }}.momentfy.io</p>
+            <p class="text-[9px] text-gray-500 dark:text-gray-400 truncate font-mono" dir="ltr">{{ activeTenant.slug }}.momentfy.com</p>
           </div>
         </div>
         <div class="mt-2 flex items-center gap-1.5 text-[9px] text-emerald-600 dark:text-emerald-400 font-bold">

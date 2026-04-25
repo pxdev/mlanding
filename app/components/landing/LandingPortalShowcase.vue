@@ -188,7 +188,7 @@ const tenantBrands = [
                   </div>
                   <div class="mx-auto flex items-center gap-1.5 px-2.5 h-5 rounded-full bg-black/5 dark:bg-white/5 text-[10px] text-gray-500 dark:text-gray-400 font-medium">
                     <UIcon name="i-lucide-lock" class="size-2.5 text-emerald-500" />
-                    <span class="truncate max-w-[180px]">{{ t.slug }}.momentfy.io</span>
+                    <span class="truncate max-w-[180px]">{{ t.slug }}.momentfy.com</span>
                   </div>
                   <UIcon name="i-lucide-more-horizontal" class="size-3.5 text-gray-400 shrink-0" />
                 </div>
@@ -356,7 +356,7 @@ const tenantBrands = [
                 {{ t.name }}
               </h4>
               <p class="mt-0.5 text-xs text-gray-500 font-mono">
-                {{ t.slug }}.momentfy.io
+                {{ t.slug }}.momentfy.com
               </p>
             </figcaption>
           </figure>

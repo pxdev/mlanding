@@ -2,15 +2,16 @@
 definePageMeta({ layout: 'landing' });
 const copy = useLandingCopy();
 const { locale } = useI18n();
-useHead(() => ({
-    title: locale.value === 'ar' ? 'احصل على الكود — Momentfy' : 'Get the source — Momentfy',
-    meta: [{
-            name: 'description',
-            content: locale.value === 'ar'
-                ? 'احصل على كود Momentfy خلال دقائق. دفع آمن عبر Lemon Squeezy، ثم وصول فوري إلى المستودع، مفتاح الترخيص، ودليل التنصيب.'
-                : 'Buy the Momentfy source. Secure checkout via Lemon Squeezy. Instant download of the repo, license key and install docs.'
-        }]
-}));
+useLandingSeo({
+    ar: {
+        title: 'احصل على الكود — Momentfy',
+        description: 'احصل على كود Momentfy خلال دقائق. دفع آمن عبر Lemon Squeezy، ثم وصول فوري إلى المستودع، مفتاح الترخيص، ودليل التنصيب.'
+    },
+    en: {
+        title: 'Get the source — Momentfy',
+        description: 'Buy the Momentfy source. Secure checkout via Lemon Squeezy. Instant download of the repo, license key and install docs.'
+    }
+});
 const contactName = ref('');
 const contactEmail = ref('');
 const contactMessage = ref('');
