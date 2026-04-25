@@ -49,7 +49,7 @@ const chapterNav = computed(() => copy.value.faqPage.sections.map((s, i) => ({
     :sub="copy.faqPage.sub"
   >
     <template #background>
-      <div class="absolute top-0 start-1/2 -translate-x-1/2 w-[40rem] h-[30rem] bg-secondary-500 blur-[150px] opacity-[0.1] rounded-full" />
+      <div class="absolute top-0 start-1/2 -translate-x-1/2 w-[min(40rem,90vw)] h-[min(30rem,60vw)] sm:h-[30rem] bg-secondary-500 blur-[150px] opacity-[0.1] rounded-full" />
     </template>
 
     <p class="mt-4 text-sm sm:text-base text-gray-500 dark:text-gray-400 max-w-2xl leading-relaxed">
@@ -70,7 +70,7 @@ const chapterNav = computed(() => copy.value.faqPage.sections.map((s, i) => ({
             <span class="shrink-0 text-sm tabular-nums text-gray-400">{{ String(si + 1).padStart(2, '0') }}</span>
             <div class="flex items-baseline gap-3 min-w-0">
               <span aria-hidden="true" class="size-2.5 rounded-full shrink-0" :class="sectionDots[si % sectionDots.length]" />
-              <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight uppercase truncate">
+              <h2 class="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight uppercase truncate">
                 {{ section.title }}
               </h2>
             </div>
@@ -88,19 +88,17 @@ const chapterNav = computed(() => copy.value.faqPage.sections.map((s, i) => ({
           >
             <button
               type="button"
-              class="w-full grid grid-cols-12 gap-4 items-center py-6 sm:py-7 px-3 sm:px-6 text-start transition-colors"
+              class="w-full flex items-center gap-3 sm:gap-6 py-6 sm:py-7 px-3 sm:px-6 text-start transition-colors"
               :aria-expanded="openSet.has(section.title + '|' + it.q)"
               :aria-controls="`faq-panel-${si}-${ii}`"
               @click="toggle(section.title + '|' + it.q)"
             >
-              <span class="col-span-2 sm:col-span-1 text-xs tabular-nums text-gray-400">{{ String(ii + 1).padStart(2, '0') }}</span>
-              <span class="col-span-8 sm:col-span-10 text-base sm:text-lg lg:text-xl font-bold tracking-tight leading-tight">{{ it.q }}</span>
-              <span class="col-span-2 sm:col-span-1 flex justify-end">
-                <span class="size-9 rounded-full flex items-center justify-center transition-all border border-black/10 dark:border-white/15"
-                  :class="openSet.has(section.title + '|' + it.q) ? 'bg-primary text-white border-primary rotate-180' : 'group-hover:border-secondary-500/40'"
-                >
-                  <UIcon :name="openSet.has(section.title + '|' + it.q) ? 'i-lucide-minus' : 'i-lucide-plus'" class="size-4" />
-                </span>
+              <span class="hidden sm:inline-block w-6 shrink-0 text-xs tabular-nums text-gray-400">{{ String(ii + 1).padStart(2, '0') }}</span>
+              <span class="flex-1 min-w-0 text-base sm:text-lg lg:text-xl font-bold tracking-tight leading-tight">{{ it.q }}</span>
+              <span class="shrink-0 size-9 rounded-full flex items-center justify-center transition-all border border-black/10 dark:border-white/15"
+                :class="openSet.has(section.title + '|' + it.q) ? 'bg-primary text-white border-primary rotate-180' : 'group-hover:border-secondary-500/40'"
+              >
+                <UIcon :name="openSet.has(section.title + '|' + it.q) ? 'i-lucide-minus' : 'i-lucide-plus'" class="size-4" />
               </span>
             </button>
             <Transition
@@ -111,9 +109,8 @@ const chapterNav = computed(() => copy.value.faqPage.sections.map((s, i) => ({
               leave-from-class="opacity-100 max-h-96"
               leave-to-class="opacity-0 max-h-0"
             >
-              <div v-if="openSet.has(section.title + '|' + it.q)" :id="`faq-panel-${si}-${ii}`" role="region" class="grid grid-cols-12 gap-4 pb-6 sm:pb-8 px-3 sm:px-6">
-                <div class="col-span-2 sm:col-span-1" />
-                <p class="col-span-10 text-sm sm:text-base text-gray-600 dark:text-gray-400 leading-relaxed max-w-3xl">{{ it.a }}</p>
+              <div v-if="openSet.has(section.title + '|' + it.q)" :id="`faq-panel-${si}-${ii}`" role="region" class="pb-6 sm:pb-8 px-3 sm:px-6 sm:ps-[3.75rem]">
+                <p class="text-sm sm:text-base text-gray-600 dark:text-gray-400 leading-relaxed max-w-3xl">{{ it.a }}</p>
               </div>
             </Transition>
           </div>

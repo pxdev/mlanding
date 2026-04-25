@@ -31,7 +31,7 @@ useHead(() => ({
   <!-- ═══ Hero ═══ -->
   <section class="relative py-20 sm:py-28 overflow-hidden">
     <div aria-hidden="true" class="absolute inset-0 -z-10">
-      <div class="absolute top-0 start-1/2 -translate-x-1/2 w-[50rem] h-[30rem] bg-secondary-500 blur-[150px] opacity-[0.12] rounded-full" />
+      <div class="absolute top-0 start-1/2 -translate-x-1/2 w-[min(50rem,90vw)] h-[min(30rem,60vw)] sm:h-[30rem] bg-secondary-500 blur-[150px] opacity-[0.12] rounded-full" />
     </div>
 
     <div class="max-w-7xl mx-auto px-5 sm:px-8">
@@ -67,7 +67,7 @@ useHead(() => ({
           </div>
         </div>
         <div class="col-span-12 sm:col-span-8 lg:col-span-9">
-          <h1 class="font-black tracking-tight leading-[0.9] text-5xl sm:text-6xl lg:text-7xl xl:text-8xl">
+          <h1 class="font-black tracking-tight leading-[0.9] text-4xl sm:text-6xl lg:text-7xl xl:text-8xl break-words">
             <span class="block">{{ sp.h1a }}</span>
             <span class="block italic text-black/20 dark:text-white/20">{{ sp.h1b }}</span>
           </h1>

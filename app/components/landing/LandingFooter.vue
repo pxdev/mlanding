@@ -157,7 +157,7 @@ function scrollToTop() {
 
       <!-- ═══ 04 · Meta rail — single elegant line with spec tags + back-to-top ═══ -->
       <div class="py-5 border-t border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs text-white/60">
-        <p class="truncate">{{ bottomText }}</p>
+        <p class="sm:truncate">{{ bottomText }}</p>
 
         <div class="flex items-center gap-3 text-[11px] uppercase tracking-[0.22em] text-white/60">
           <span class="inline-flex items-center gap-1.5">

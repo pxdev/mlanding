@@ -68,12 +68,12 @@ const tenantBrands = [
         :sub="copy.ui.threeBrandsTagline"
       />
 
-      <!-- Browser mocks — horizontal scroll on mobile, 3-col grid on desktop -->
-      <div class="flex lg:grid lg:grid-cols-3 gap-6 lg:gap-8 overflow-x-auto lg:overflow-visible scrollbar-none snap-x lg:snap-none pb-4 lg:pb-0 -mx-5 px-5 lg:mx-0 lg:px-0">
+      <!-- Browser mocks — stacked on mobile, 3-col grid on tablet+ -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6 lg:gap-8">
         <figure
           v-for="(t, i) in tenantBrands"
           :key="t.slug"
-          class="group shrink-0 lg:shrink snap-center w-[88%] sm:w-[70%] lg:w-auto"
+          class="group"
         >
           <!-- Browser window -->
           <div class="relative">
@@ -268,10 +268,6 @@ const tenantBrands = [
         </figure>
       </div>
 
-      <!-- Mobile scroll hint -->
-      <p class="mt-6 lg:hidden text-center text-[10px] uppercase tracking-[0.25em] text-gray-400">
-        {{ copy.ui.swipeHint }}
-      </p>
     </div>
   </section>
 </template>

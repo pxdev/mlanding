@@ -65,7 +65,7 @@ const chapterNav = computed(() => copy.value.showcasePage.verticals.map(v => ({
     :sub="copy.showcasePage.sub"
   >
     <template #background>
-      <div class="absolute top-0 start-1/2 -translate-x-1/2 w-[50rem] h-[30rem] bg-secondary-500 blur-[150px] opacity-[0.12] rounded-full" />
+      <div class="absolute top-0 start-1/2 -translate-x-1/2 w-[min(50rem,90vw)] h-[min(30rem,60vw)] sm:h-[30rem] bg-secondary-500 blur-[150px] opacity-[0.12] rounded-full" />
     </template>
 
     <div class="mt-6 flex items-start gap-2 text-[11px] text-gray-500 dark:text-gray-500">
@@ -199,7 +199,7 @@ const chapterNav = computed(() => copy.value.showcasePage.verticals.map(v => ({
               <span class="text-[10px] uppercase tracking-[0.25em] text-emerald-600 dark:text-emerald-400 font-bold">{{ copy.showcasePage.capsTitle }}</span>
               <span class="ms-auto text-[10px] tabular-nums text-gray-400">{{ v.capabilities.length }}</span>
             </div>
-            <ul class="grid sm:grid-cols-2 gap-x-6 gap-y-3">
+            <ul class="grid sm:grid-cols-2 gap-x-4 gap-y-2.5 sm:gap-x-6 sm:gap-y-3">
               <li v-for="c in v.capabilities" :key="c" class="flex items-start gap-2.5 text-sm leading-relaxed">
                 <UIcon name="i-lucide-check" class="size-4 shrink-0 mt-0.5 text-emerald-500" />
                 <span class="text-gray-800 dark:text-gray-200">{{ c }}</span>

@@ -88,7 +88,7 @@ function onClick(idx, p) {
 </script>
 
 <template>
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
     <component
       :is="interactive ? 'button' : NuxtLinkRef"
       v-for="(p, idx) in plans"
@@ -99,7 +99,7 @@ function onClick(idx, p) {
       :class="[
         'group block text-start w-full overflow-hidden rounded-3xl transition-all',
         p.featured
-          ? 'relative bg-gradient-to-br from-secondary-500 via-secondary-600 to-primary text-white ring-1 ring-white/10 shadow-2xl shadow-secondary-500/30 lg:scale-[1.02]'
+          ? 'relative bg-gradient-to-br from-secondary-500 via-secondary-600 to-primary text-white ring-1 ring-white/10 shadow-2xl shadow-secondary-500/30 md:scale-[1.02]'
           : 'relative bg-white dark:bg-white/[0.02] text-primary dark:text-white ring-1 ring-black/10 dark:ring-white/10 shadow-xl shadow-black/5',
         interactive && loadingIndex !== null ? 'cursor-wait' : ''
       ]"
@@ -146,7 +146,7 @@ function onClick(idx, p) {
           <span
             class="font-black tracking-tight tabular-nums"
             :class="[
-              p.durationValue === '∞' ? 'text-8xl sm:text-9xl' : 'text-7xl sm:text-8xl',
+              p.durationValue === '∞' ? 'text-7xl sm:text-8xl lg:text-9xl' : 'text-6xl sm:text-7xl lg:text-8xl',
               p.featured ? 'text-white' : 'text-primary dark:text-white'
             ]"
           >{{ p.durationValue }}</span>

@@ -26,7 +26,7 @@ async function goToReview(idx, plan) {
     />
     <div
       aria-hidden="true"
-      class="absolute top-1/2 start-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-secondary-500 blur-[150px] opacity-[0.08] dark:opacity-15 rounded-full"
+      class="absolute top-1/2 start-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(800px,90vw)] h-[min(400px,60vw)] sm:h-[400px] bg-secondary-500 blur-[150px] opacity-[0.08] dark:opacity-15 rounded-full"
     />
 
     <div class="relative max-w-7xl mx-auto px-5 sm:px-8">

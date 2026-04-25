@@ -40,7 +40,7 @@ if (!solution.value) {
     <!-- ═══ Hero — compact title block + autoplay video ═══ -->
     <section class="relative pt-10 sm:pt-14 pb-10 sm:pb-14 overflow-hidden">
       <div aria-hidden="true" class="absolute inset-0 -z-10">
-        <div class="absolute top-0 start-1/2 -translate-x-1/2 w-[40rem] h-[30rem] blur-[160px] opacity-20 rounded-full bg-gradient-to-br" :class="solution.accent" />
+        <div class="absolute top-0 start-1/2 -translate-x-1/2 w-[min(40rem,90vw)] h-[min(30rem,60vw)] sm:h-[30rem] blur-[160px] opacity-20 rounded-full bg-gradient-to-br" :class="solution.accent" />
       </div>
 
       <div class="max-w-7xl mx-auto px-5 sm:px-8">

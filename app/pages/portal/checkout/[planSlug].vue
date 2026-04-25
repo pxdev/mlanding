@@ -150,7 +150,7 @@ const t = computed(() => {
   <section class="relative py-16 sm:py-20 lg:py-28 overflow-hidden">
     <!-- Soft backdrop -->
     <div aria-hidden="true" class="absolute inset-0 -z-10">
-      <div class="absolute top-0 start-1/2 -translate-x-1/2 w-[40rem] h-[30rem] bg-secondary-500 blur-[160px] opacity-[0.10] rounded-full" />
+      <div class="absolute top-0 start-1/2 -translate-x-1/2 w-[min(40rem,90vw)] h-[min(30rem,60vw)] sm:h-[30rem] bg-secondary-500 blur-[160px] opacity-[0.10] rounded-full" />
     </div>
 
     <div class="max-w-6xl mx-auto px-5 sm:px-8">
@@ -281,9 +281,9 @@ const t = computed(() => {
                 <dt class="opacity-90">{{ t.discount }} · {{ applied.code }}</dt>
                 <dd class="tabular-nums font-bold">−{{ totals.discountDisplay }}</dd>
               </div>
-              <div class="flex items-baseline justify-between pt-3 border-t border-white/20">
+              <div class="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-2 pt-3 border-t border-white/20">
                 <dt class="text-[11px] uppercase tracking-[0.2em] opacity-70 font-bold">{{ t.total }}</dt>
-                <dd class="tabular-nums font-black text-4xl sm:text-5xl leading-none">{{ totals.totalDisplay }}</dd>
+                <dd class="tabular-nums font-black text-3xl sm:text-4xl lg:text-5xl leading-none break-words">{{ totals.totalDisplay }}</dd>
               </div>
               <p v-if="applied" class="text-[11px] opacity-80 text-end">
                 {{ t.youSave }} {{ totals.discountDisplay }}

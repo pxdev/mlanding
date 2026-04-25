@@ -123,7 +123,7 @@ const addonCategories = computed(() => {
                   :class="catPalette[cat.name].dot"
                 />
                 <h3
-                  class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight uppercase truncate"
+                  class="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight uppercase truncate"
                   :class="catPalette[cat.name].accent"
                 >
                   {{ copy.ui.addonCategoryLabels[cat.name] }}

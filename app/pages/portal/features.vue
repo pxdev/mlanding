@@ -101,8 +101,8 @@ function detailLink(id) {
     :sub="copy.featuresPage.sub"
   >
     <template #background>
-      <div class="absolute -top-20 start-1/4 w-[32rem] h-[32rem] bg-secondary-500 blur-[140px] opacity-[0.10] rounded-full" />
-      <div class="absolute top-40 end-1/4 w-[28rem] h-[28rem] bg-sky-500 blur-[140px] opacity-[0.08] rounded-full" />
+      <div class="absolute -top-20 start-1/4 w-[min(32rem,80vw)] h-[min(32rem,80vw)] bg-secondary-500 blur-[140px] opacity-[0.10] rounded-full" />
+      <div class="absolute top-40 end-1/4 w-[min(28rem,80vw)] h-[min(28rem,80vw)] bg-sky-500 blur-[140px] opacity-[0.08] rounded-full" />
     </template>
 
     <!-- Stat ribbon -->

@@ -22,7 +22,7 @@ const currencyFmt = computed(() => new Intl.NumberFormat(
 <template>
   <section class="relative py-24 sm:py-32 overflow-hidden bg-gray-50 dark:bg-white/[0.02]">
     <div aria-hidden="true" class="absolute inset-x-0 top-0 h-px bg-black/10 dark:bg-white/10" />
-    <div aria-hidden="true" class="absolute -top-20 start-1/2 -translate-x-1/2 w-[36rem] h-[36rem] rounded-full bg-emerald-500 blur-[130px] opacity-[0.08]" />
+    <div aria-hidden="true" class="absolute -top-20 start-1/2 -translate-x-1/2 w-[min(36rem,90vw)] h-[min(36rem,90vw)] rounded-full bg-emerald-500 blur-[130px] opacity-[0.08]" />
 
     <div class="max-w-7xl mx-auto px-5 sm:px-8">
       <LandingSectionHeading
@@ -42,7 +42,7 @@ const currencyFmt = computed(() => new Intl.NumberFormat(
               <UIcon name="i-lucide-trending-up" class="size-3.5" />
               {{ copy.roiPage.output.saasLabel }}
             </p>
-            <p class="mt-4 text-5xl sm:text-6xl font-black tracking-tight tabular-nums text-rose-700 dark:text-rose-400 leading-none">
+            <p class="mt-4 text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight tabular-nums text-rose-700 dark:text-rose-400 leading-none break-words">
               {{ currencyFmt.format(saasTotal) }}
             </p>
           </div>
@@ -58,7 +58,7 @@ const currencyFmt = computed(() => new Intl.NumberFormat(
               <UIcon name="i-lucide-server" class="size-3.5" />
               {{ copy.roiPage.output.momentfyLabel }}
             </p>
-            <p class="mt-4 text-5xl sm:text-6xl font-black tracking-tight tabular-nums text-emerald-700 dark:text-emerald-400 leading-none">
+            <p class="mt-4 text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight tabular-nums text-emerald-700 dark:text-emerald-400 leading-none break-words">
               {{ currencyFmt.format(momentfyTotal) }}
             </p>
           </div>
@@ -74,7 +74,7 @@ const currencyFmt = computed(() => new Intl.NumberFormat(
               <UIcon name="i-lucide-piggy-bank" class="size-3.5" />
               {{ copy.roiPage.output.savingsLabel }}
             </p>
-            <p class="mt-4 text-5xl sm:text-6xl font-black tracking-tight tabular-nums leading-none">
+            <p class="mt-4 text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight tabular-nums leading-none break-words">
               {{ currencyFmt.format(savings) }}
             </p>
             <p class="mt-2 text-sm font-semibold opacity-80 tabular-nums">

@@ -13,7 +13,7 @@ const subtitleText = computed(() => props.subtitle ?? copy.value.cta.sub)
 <template>
   <section class="relative isolate overflow-hidden">
     <div class="max-w-7xl mx-auto px-5 sm:px-8 pb-24">
-      <div class="relative overflow-hidden rounded-[2.5rem] bg-primary p-10 sm:p-16 text-white">
+      <div class="relative overflow-hidden rounded-[2.5rem] bg-primary p-6 sm:p-10 lg:p-16 text-white">
         <!-- Grain -->
         <div aria-hidden="true" class="pointer-events-none absolute inset-0 opacity-[0.07] mix-blend-overlay"
           style="background-image:url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22><filter id=%22n%22><feTurbulence baseFrequency=%220.9%22 numOctaves=%222%22 /></filter><rect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23n)%22/></svg>')" />
@@ -26,7 +26,7 @@ const subtitleText = computed(() => props.subtitle ?? copy.value.cta.sub)
             <span class="size-1 rounded-full bg-secondary-300" />
             {{ eyebrowText }}
           </div>
-          <h2 class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.05]">
+          <h2 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.05]">
             {{ titleText }}
           </h2>
           <p class="mt-5 text-lg text-white/70 max-w-xl leading-relaxed">

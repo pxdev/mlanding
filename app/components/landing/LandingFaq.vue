@@ -46,21 +46,18 @@ const faqOpen = ref(0)
           :class="faqOpen === i ? 'bg-black/[0.02] dark:bg-white/[0.02]' : 'hover:bg-black/[0.015] dark:hover:bg-white/[0.01]'"
         >
           <button
-            class="w-full grid grid-cols-12 gap-4 items-center py-6 sm:py-7 px-3 sm:px-6 text-start transition-colors"
+            class="w-full flex items-center gap-3 sm:gap-6 py-6 sm:py-7 px-3 sm:px-6 text-start transition-colors"
             @click="faqOpen = faqOpen === i ? -1 : i"
           >
-            <span class="col-span-2 sm:col-span-1 text-xs tabular-nums text-gray-400">0{{ i + 1 }}</span>
-            <span class="col-span-8 sm:col-span-10 text-lg sm:text-xl lg:text-2xl font-bold tracking-tight leading-tight">{{ f.q }}</span>
-            <span class="col-span-2 sm:col-span-1 flex justify-end">
-              <span
-                class="size-9 rounded-full flex items-center justify-center transition-all border border-black/10 dark:border-white/15"
-                :class="faqOpen === i ? 'bg-primary text-white border-primary rotate-180' : 'group-hover:border-secondary-500/40'"
-              >
-                <UIcon
-                  :name="faqOpen === i ? 'i-lucide-minus' : 'i-lucide-plus'"
-                  class="size-4"
-                />
-              </span>
+            <span class="hidden sm:inline-block w-6 shrink-0 text-xs tabular-nums text-gray-400">0{{ i + 1 }}</span>
+            <span class="flex-1 min-w-0 text-base sm:text-xl lg:text-2xl font-bold tracking-tight leading-tight">{{ f.q }}</span>
+            <span class="shrink-0 size-9 rounded-full flex items-center justify-center transition-all border border-black/10 dark:border-white/15"
+              :class="faqOpen === i ? 'bg-primary text-white border-primary rotate-180' : 'group-hover:border-secondary-500/40'"
+            >
+              <UIcon
+                :name="faqOpen === i ? 'i-lucide-minus' : 'i-lucide-plus'"
+                class="size-4"
+              />
             </span>
           </button>
           <Transition
@@ -73,10 +70,9 @@ const faqOpen = ref(0)
           >
             <div
               v-if="faqOpen === i"
-              class="grid grid-cols-12 gap-4 pb-6 sm:pb-8 px-3 sm:px-6"
+              class="pb-6 sm:pb-8 px-3 sm:px-6 sm:ps-[3.75rem]"
             >
-              <div class="col-span-2 sm:col-span-1" />
-              <p class="col-span-10 text-base sm:text-lg text-gray-600 dark:text-gray-400 leading-relaxed max-w-3xl">
+              <p class="text-base sm:text-lg text-gray-600 dark:text-gray-400 leading-relaxed max-w-3xl">
                 {{ f.a }}
               </p>
             </div>

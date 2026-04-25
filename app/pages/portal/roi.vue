@@ -85,7 +85,7 @@ const saasPresets = [25, 50, 100, 200]
     :sub="copy.roiPage.sub"
   >
     <template #background>
-      <div class="absolute top-0 start-1/2 -translate-x-1/2 w-[40rem] h-[30rem] bg-emerald-500 blur-[150px] opacity-[0.1] rounded-full" />
+      <div class="absolute top-0 start-1/2 -translate-x-1/2 w-[min(40rem,90vw)] h-[min(30rem,60vw)] sm:h-[30rem] bg-emerald-500 blur-[150px] opacity-[0.1] rounded-full" />
     </template>
   </LandingPageHero>
 
@@ -98,9 +98,9 @@ const saasPresets = [25, 50, 100, 200]
           <div class="rounded-2xl border border-black/10 dark:border-white/10 bg-white dark:bg-black/40 p-6 sm:p-8 space-y-7">
             <!-- SaaS monthly -->
             <div>
-              <label for="saasMonthly" class="flex items-baseline justify-between gap-3">
+              <label for="saasMonthly" class="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
                 <span class="text-sm font-bold tracking-tight">{{ copy.roiPage.inputs.saasLabel }}</span>
-                <span class="text-3xl font-black tabular-nums text-rose-600 dark:text-rose-400">
+                <span class="text-2xl sm:text-3xl font-black tabular-nums text-rose-600 dark:text-rose-400">
                   ${{ numberFmt.format(saasMonthly) }}
                 </span>
               </label>
@@ -131,9 +131,9 @@ const saasPresets = [25, 50, 100, 200]
 
             <!-- Locations -->
             <div class="pt-7 border-t border-black/10 dark:border-white/10">
-              <label for="locations" class="flex items-baseline justify-between gap-3">
+              <label for="locations" class="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
                 <span class="text-sm font-bold tracking-tight">{{ copy.roiPage.inputs.locationsLabel }}</span>
-                <span class="text-3xl font-black tabular-nums">{{ numberFmt.format(locations) }}</span>
+                <span class="text-2xl sm:text-3xl font-black tabular-nums">{{ numberFmt.format(locations) }}</span>
               </label>
               <p class="mt-1.5 text-xs text-gray-500 dark:text-gray-400">
                 {{ copy.roiPage.inputs.locationsHelp }}
@@ -229,7 +229,7 @@ const saasPresets = [25, 50, 100, 200]
               <UIcon name="i-lucide-trending-down" class="size-3.5" />
               {{ copy.roiPage.output.savingsLabel }}
             </p>
-            <p class="mt-3 text-6xl sm:text-7xl lg:text-8xl font-black tracking-tight tabular-nums text-emerald-600 dark:text-emerald-400 leading-none">
+            <p class="mt-3 text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-black tracking-tight tabular-nums text-emerald-600 dark:text-emerald-400 leading-none break-words">
               {{ currencyFmt.format(savings) }}
             </p>
             <p class="mt-3 text-sm sm:text-base font-semibold text-emerald-700/80 dark:text-emerald-400/80">

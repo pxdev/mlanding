@@ -75,7 +75,7 @@ const chapterNav = computed(() => addonCategories.value.map(cat => ({
             <span class="shrink-0 text-sm tabular-nums text-gray-400">{{ String(ci + 1).padStart(2, '0') }}</span>
             <div class="flex items-baseline gap-3 min-w-0">
               <span aria-hidden="true" class="size-2.5 rounded-full shrink-0" :class="catPalette[cat.name].dot" />
-              <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight uppercase truncate" :class="catPalette[cat.name].accent">
+              <h2 class="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight uppercase truncate" :class="catPalette[cat.name].accent">
                 {{ copy.ui.addonCategoryLabels[cat.name] }}
               </h2>
             </div>

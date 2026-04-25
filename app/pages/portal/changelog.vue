@@ -75,7 +75,7 @@ const dateFormat = computed(() => new Intl.DateTimeFormat(
       : '\'Lifetime updates\' isn\'t a slogan — this is the real log of every feature and fix since v1.0.'"
   >
     <template #background>
-      <div class="absolute top-0 start-1/2 -translate-x-1/2 w-[40rem] h-[30rem] bg-secondary-500 blur-[150px] opacity-[0.1] rounded-full" />
+      <div class="absolute top-0 start-1/2 -translate-x-1/2 w-[min(40rem,90vw)] h-[min(30rem,60vw)] sm:h-[30rem] bg-secondary-500 blur-[150px] opacity-[0.1] rounded-full" />
     </template>
   </LandingPageHero>
 

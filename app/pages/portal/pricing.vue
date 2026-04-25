@@ -62,7 +62,7 @@ const includedIcons = ['i-lucide-code', 'i-lucide-globe', 'i-lucide-infinity', '
     :sub="copy.pricingPage.sub"
   >
     <template #background>
-      <div class="absolute top-0 start-1/2 -translate-x-1/2 w-[40rem] h-[30rem] bg-secondary-500 blur-[150px] opacity-[0.15] rounded-full" />
+      <div class="absolute top-0 start-1/2 -translate-x-1/2 w-[min(40rem,90vw)] h-[min(30rem,60vw)] sm:h-[30rem] bg-secondary-500 blur-[150px] opacity-[0.15] rounded-full" />
     </template>
 
     <div class="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-xs text-gray-500">
@@ -131,12 +131,12 @@ const includedIcons = ['i-lucide-code', 'i-lucide-globe', 'i-lucide-infinity', '
       <div class="grid grid-cols-1 md:grid-cols-2 gap-10 sm:gap-16 border-t border-black/10 dark:border-white/10 pt-10">
         <div>
           <p class="text-xs uppercase tracking-[0.25em] text-red-500 font-bold">{{ copy.pricingPage.saasLabel }}</p>
-          <p class="mt-4 text-6xl sm:text-7xl font-black tracking-tight text-red-600 dark:text-red-400 leading-none">{{ copy.pricingPage.saasValue }}</p>
+          <p class="mt-4 text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight text-red-600 dark:text-red-400 leading-none break-words">{{ copy.pricingPage.saasValue }}</p>
           <p class="mt-4 text-sm text-gray-600 dark:text-gray-400 max-w-sm leading-relaxed">{{ copy.pricingPage.saasBody }}</p>
         </div>
         <div class="md:border-s md:border-black/10 md:dark:border-white/10 md:ps-10 sm:md:ps-16 rtl:md:border-s-0 rtl:md:border-e rtl:md:ps-0 rtl:md:pe-10 sm:rtl:md:pe-16">
           <p class="text-xs uppercase tracking-[0.25em] text-emerald-600 dark:text-emerald-400 font-bold">{{ copy.pricingPage.momentfyLabel }}</p>
-          <p class="mt-4 text-6xl sm:text-7xl font-black tracking-tight bg-gradient-to-br from-emerald-500 to-emerald-600 bg-clip-text text-transparent leading-none">{{ copy.pricingPage.momentfyValue }}</p>
+          <p class="mt-4 text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight bg-gradient-to-br from-emerald-500 to-emerald-600 bg-clip-text text-transparent leading-none break-words">{{ copy.pricingPage.momentfyValue }}</p>
           <p class="mt-4 text-sm text-gray-600 dark:text-gray-400 max-w-sm leading-relaxed">{{ copy.pricingPage.momentfyBody }}</p>
         </div>
       </div>
@@ -167,19 +167,16 @@ const includedIcons = ['i-lucide-code', 'i-lucide-globe', 'i-lucide-infinity', '
         <details v-for="(f, i) in copy.pricingPage.faq.items" :key="f.q"
           class="group border-b border-black/10 dark:border-white/10 open:bg-black/[0.02] dark:open:bg-white/[0.02] transition-colors"
         >
-          <summary class="list-none cursor-pointer grid grid-cols-12 gap-4 items-center py-5 px-3 sm:px-5">
-            <span class="col-span-2 sm:col-span-1 text-xs tabular-nums text-gray-400">{{ String(i + 1).padStart(2, '0') }}</span>
-            <span class="col-span-8 sm:col-span-10 text-base sm:text-lg font-bold tracking-tight leading-snug">{{ f.q }}</span>
-            <span class="col-span-2 sm:col-span-1 flex justify-end">
-              <span class="size-8 rounded-full flex items-center justify-center border border-black/10 dark:border-white/15 transition-all group-open:bg-primary group-open:text-white group-open:border-primary group-open:rotate-180">
-                <UIcon name="i-lucide-plus" class="size-3.5 group-open:hidden" />
-                <UIcon name="i-lucide-minus" class="size-3.5 hidden group-open:block" />
-              </span>
+          <summary class="list-none cursor-pointer flex items-center gap-3 sm:gap-4 py-5 px-3 sm:px-5">
+            <span class="hidden sm:inline-block w-6 shrink-0 text-xs tabular-nums text-gray-400">{{ String(i + 1).padStart(2, '0') }}</span>
+            <span class="flex-1 min-w-0 text-base sm:text-lg font-bold tracking-tight leading-snug">{{ f.q }}</span>
+            <span class="shrink-0 size-8 rounded-full flex items-center justify-center border border-black/10 dark:border-white/15 transition-all group-open:bg-primary group-open:text-white group-open:border-primary group-open:rotate-180">
+              <UIcon name="i-lucide-plus" class="size-3.5 group-open:hidden" />
+              <UIcon name="i-lucide-minus" class="size-3.5 hidden group-open:block" />
             </span>
           </summary>
-          <div class="grid grid-cols-12 gap-4 pb-5 px-3 sm:px-5">
-            <div class="col-span-2 sm:col-span-1" />
-            <p class="col-span-10 text-sm sm:text-base text-gray-600 dark:text-gray-400 leading-relaxed max-w-3xl">{{ f.a }}</p>
+          <div class="pb-5 px-3 sm:px-5 sm:ps-[3.25rem]">
+            <p class="text-sm sm:text-base text-gray-600 dark:text-gray-400 leading-relaxed max-w-3xl">{{ f.a }}</p>
           </div>
         </details>
       </div>

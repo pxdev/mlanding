@@ -184,7 +184,7 @@ function isActive(to: string) {
           role="dialog"
           aria-modal="true"
           aria-label="Main menu"
-          class="fixed inset-y-0 end-0 z-50 w-80 bg-white dark:bg-black shadow-2xl lg:hidden flex flex-col"
+          class="fixed inset-y-0 end-0 z-50 w-[min(20rem,calc(100vw-2.5rem))] max-w-sm bg-white dark:bg-black shadow-2xl lg:hidden flex flex-col"
         >
           <div class="h-16 px-5 flex items-center justify-between border-b border-black/5 dark:border-white/10">
             <LandingNavBrand />

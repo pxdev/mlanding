@@ -52,7 +52,7 @@ if (!addonItem.value || !detail.value) {
     <!-- ═══ Hero ═══ -->
     <section class="relative py-20 sm:py-28 overflow-hidden">
       <div aria-hidden="true" class="absolute inset-0 -z-10">
-        <div class="absolute top-0 start-1/2 -translate-x-1/2 w-[40rem] h-[30rem] blur-[160px] opacity-20 rounded-full bg-gradient-to-br" :class="meta?.accent" />
+        <div class="absolute top-0 start-1/2 -translate-x-1/2 w-[min(40rem,90vw)] h-[min(30rem,60vw)] sm:h-[30rem] blur-[160px] opacity-20 rounded-full bg-gradient-to-br" :class="meta?.accent" />
       </div>
 
       <div class="max-w-7xl mx-auto px-5 sm:px-8">
@@ -81,7 +81,7 @@ if (!addonItem.value || !detail.value) {
             </p>
           </div>
           <div class="col-span-12 sm:col-span-8 lg:col-span-9">
-            <h1 class="font-black tracking-tight leading-[0.9] text-5xl sm:text-6xl lg:text-7xl xl:text-8xl">
+            <h1 class="font-black tracking-tight leading-[0.9] text-4xl sm:text-6xl lg:text-7xl xl:text-8xl break-words">
               <span class="block">{{ addonItem.label }}</span>
             </h1>
             <p class="mt-6 text-lg sm:text-xl lg:text-2xl text-gray-600 dark:text-gray-400 leading-relaxed max-w-2xl font-light">

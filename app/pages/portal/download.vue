@@ -60,7 +60,7 @@ async function submitContact() {
     :sub="copy.downloadPage.sub"
   >
     <template #background>
-      <div class="absolute top-0 start-1/2 -translate-x-1/2 w-[50rem] h-[30rem] bg-secondary-500 blur-[150px] opacity-[0.15] rounded-full" />
+      <div class="absolute top-0 start-1/2 -translate-x-1/2 w-[min(50rem,90vw)] h-[min(30rem,60vw)] sm:h-[30rem] bg-secondary-500 blur-[150px] opacity-[0.15] rounded-full" />
     </template>
 
     <!-- CTAs -->
