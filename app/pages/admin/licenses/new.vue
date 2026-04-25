@@ -82,7 +82,7 @@ const maxActivationsHint = computed(() => selectedPlan.value
 <template>
   <div class="p-6 max-w-3xl mx-auto space-y-6">
     <div>
-      <NuxtLink to="/admin/licenses" class="text-sm text-muted hover:text-primary inline-flex items-center gap-1.5">
+      <NuxtLink :to="localePath('/admin/licenses')" class="text-sm text-muted hover:text-primary inline-flex items-center gap-1.5">
         <UIcon name="i-lucide-chevron-left" class="size-4 rtl:rotate-180" /> {{ t.backToLicenses }}
       </NuxtLink>
       <h1 class="text-2xl font-bold mt-2">{{ t.title }}</h1>
@@ -166,7 +166,7 @@ const maxActivationsHint = computed(() => selectedPlan.value
         <template #footer>
           <div class="flex gap-2">
             <UButton :loading="issuing" :disabled="!planId" icon="i-lucide-key-round" @click="issue">{{ t.issueBtn }}</UButton>
-            <UButton variant="ghost" to="/admin/licenses">{{ t.cancelBtn }}</UButton>
+            <UButton variant="ghost" :to="localePath('/admin/licenses')">{{ t.cancelBtn }}</UButton>
           </div>
         </template>
       </UCard>

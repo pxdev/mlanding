@@ -1449,6 +1449,7 @@
         "toc": [
           { "id": "overview", "label": "Overview" },
           { "id": "business-info", "label": "Business info" },
+          { "id": "external-links", "label": "External links" },
           { "id": "date-time", "label": "Date & time" },
           { "id": "calendar-settings", "label": "Calendar settings" },
           { "id": "payment-methods", "label": "Payment methods" },
@@ -1458,6 +1459,7 @@
           { "id": "online-booking", "label": "Online booking" },
           { "id": "locations", "label": "Locations" },
           { "id": "zoom", "label": "Zoom integration" },
+          { "id": "notifications", "label": "Notifications & messaging" },
           { "id": "storage", "label": "Storage" },
           { "id": "menu-manager", "label": "Menu manager" },
           { "id": "permission-templates", "label": "Permission templates" },
@@ -1474,7 +1476,17 @@
           { "id": "business-info", "num": "02", "title": "Business info", "blocks": [
             { "type": "para", "text": "The root identity of your workspace — name, logo, country, and currency. Also the team and client default languages (controls the UI language for new team members and the default booking site language) and number-format preferences (Western 1,234.56 vs Arabic-Indic ١٢٣٤٫٥٦)." }
           ]},
-          { "id": "date-time", "num": "03", "title": "Date & time", "blocks": [
+          { "id": "external-links", "num": "03", "title": "External links", "blocks": [
+            { "type": "para", "text": "Public brand links shown on the booking portal and the printed/PDF receipts. Drop in the full URLs (https://...) and Momentfy will surface them as clickable icons or footer entries where appropriate." },
+            { "type": "kv", "items": [
+              { "k": "Facebook", "v": "Full URL of your Facebook page." },
+              { "k": "Twitter / X", "v": "Full URL of your X profile." },
+              { "k": "Instagram", "v": "Full URL of your Instagram account." },
+              { "k": "Website", "v": "Marketing site or landing page — used as the brand link on receipts." }
+            ]},
+            { "type": "tip", "title": "Leave blank if you don't want it shown", "body": "Empty fields are simply hidden — no broken icons, no placeholder URLs. Only fill in the channels you actually maintain." }
+          ]},
+          { "id": "date-time", "num": "04", "title": "Date & time", "blocks": [
             { "type": "kv", "items": [
               { "k": "Timezone", "v": "All appointments, sales, and reports are stored in UTC but rendered in this timezone." },
               { "k": "Time format", "v": "12-hour (9:00 PM) or 24-hour (21:00)." },
@@ -1482,7 +1494,7 @@
               { "k": "First day of week", "v": "Monday or Sunday. Feeds the Calendar's week view and the Month view grid." }
             ]}
           ]},
-          { "id": "calendar-settings", "num": "04", "title": "Calendar settings", "blocks": [
+          { "id": "calendar-settings", "num": "05", "title": "Calendar settings", "blocks": [
             { "type": "para", "text": "See the Calendar module docs for the full behaviour. The key switches live here:" },
             { "type": "bullets", "items": [
               "Display processing time blocks — shows the pre/post buffer on the grid.",
@@ -1494,10 +1506,10 @@
               "Appointment status colours — customise the colour for each status."
             ]}
           ]},
-          { "id": "payment-methods", "num": "05", "title": "Payment methods", "blocks": [
+          { "id": "payment-methods", "num": "06", "title": "Payment methods", "blocks": [
             { "type": "para", "text": "Toggle which payment methods appear at checkout: Cash, Card, Bank Transfer, Online, Installments (Tabby, Tamara), Gift Card, Loyalty Points, Insurance, Other. Disabled methods don't show up on the POS or the booking portal." }
           ]},
-          { "id": "tax-rates", "num": "06", "title": "Tax rates", "blocks": [
+          { "id": "tax-rates", "num": "07", "title": "Tax rates", "blocks": [
             { "type": "steps", "items": [
               "Open Settings → Tax Rates and click Add Tax Rate.",
               "Give it a name (VAT 15%), the rate percentage, and mark it as Default if it should auto-apply to new services and products.",
@@ -1505,13 +1517,13 @@
             ]},
             { "type": "tip", "title": "Inclusive or exclusive", "body": "The toggle under Business Info → \"Retail prices include tax\" decides whether your catalogue prices already include VAT or not. Flip it once at the start — changing it later means repricing the whole catalogue." }
           ]},
-          { "id": "receipts", "num": "07", "title": "Receipts", "blocks": [
+          { "id": "receipts", "num": "08", "title": "Receipts", "blocks": [
             { "type": "para", "text": "Pick the receipt template (A4 Standard or POS Thermal), show or hide the logo, and add header/footer text. Auto-send receipt via email toggles whether completed sales trigger an automatic email to the client. Preview renders a sample receipt so you can eyeball it before committing." }
           ]},
-          { "id": "tipping", "num": "08", "title": "Tipping", "blocks": [
+          { "id": "tipping", "num": "09", "title": "Tipping", "blocks": [
             { "type": "para", "text": "Enable tipping at checkout and provide preset percentages (e.g. 10, 15, 20). Clients see those as quick buttons plus a Custom option. Tips attribute to the team member on the sale — feed through to commissions and pay runs." }
           ]},
-          { "id": "online-booking", "num": "09", "title": "Online booking", "blocks": [
+          { "id": "online-booking", "num": "10", "title": "Online booking", "blocks": [
             { "type": "para", "text": "Configure the public booking portal — the thing your clients see." },
             { "type": "bullets", "items": [
               "Enable / disable the whole portal.",
@@ -1525,7 +1537,7 @@
               "Live booking link — copyable URL for sharing."
             ]}
           ]},
-          { "id": "locations", "num": "10", "title": "Locations", "blocks": [
+          { "id": "locations", "num": "11", "title": "Locations", "blocks": [
             { "type": "para", "text": "Multi-branch? This is where each branch is defined." },
             { "type": "steps", "items": [
               "Open Settings → Locations and click Add Location.",
@@ -1537,20 +1549,38 @@
               "Save. Mark one location as the Default for cases where a location isn't explicitly chosen."
             ]}
           ]},
-          { "id": "zoom", "num": "11", "title": "Zoom integration", "blocks": [
+          { "id": "zoom", "num": "12", "title": "Zoom integration", "blocks": [
             { "type": "para", "text": "Connect a Zoom account and online appointments auto-generate Zoom links — no more copy/paste into the notes field. Toggles for waiting room, cloud recording, and which appointment types auto-generate links. Connect is an OAuth flow; the connected account email is shown once connected." }
           ]},
-          { "id": "storage", "num": "12", "title": "Storage", "blocks": [
+          { "id": "notifications", "num": "13", "title": "Notifications & messaging", "blocks": [
+            { "type": "para", "text": "Everything that decides how Momentfy talks to your clients and your team. Four channels — In-app, Email, SMS, WhatsApp — each one independently switchable, with provider plugins so you can use the platform default or bring your own keys per tenant." },
+            { "type": "h3", "text": "Channels" },
+            { "type": "bullets", "items": [
+              "Email — SMTP (any host), SendGrid, or Resend.",
+              "SMS — Twilio.",
+              "WhatsApp — Twilio for WhatsApp, or Meta Business Cloud API.",
+              "In-app — always on; surfaces inside the dashboard bell tray.",
+              "Each channel has a Test Send button that fires a sample message before you switch it on for real traffic."
+            ]},
+            { "type": "h3", "text": "Rules" },
+            { "type": "para", "text": "Per-event audiences: pick which channels notify staff and which channels notify clients for each event. 30+ events ship out of the box — appointment confirmed / reminder / cancelled / rescheduled / no-show, online booking, new client, low / out-of-stock, daily summary, ticket reply, subscription expiring, event registration, loyalty points expiring, follow-up due, birthday greeting, win-back, thank-you-tip, and more." },
+            { "type": "h3", "text": "Templates" },
+            { "type": "para", "text": "Edit subject + body per event and channel, in both English and Arabic. Each event exposes named variables (clientName, serviceName, staffName, date, time, locationName, totalPrice, currency, cancellationLink, …) — drop them in with double curly braces and Momentfy substitutes the live values at send time. Hit Reset to default if you want to roll back a template." },
+            { "type": "h3", "text": "Logs" },
+            { "type": "para", "text": "Every outbound message is logged with channel, recipient, event, status (sent / delivered / failed), and timestamp. Failed messages can be retried straight from the log row." },
+            { "type": "tip", "title": "Personal preferences", "body": "Each team member can also override their own per-channel notification preferences from their profile — the rules engine is the floor, not the ceiling." }
+          ]},
+          { "id": "storage", "num": "14", "title": "Storage", "blocks": [
             { "type": "para", "text": "Where uploaded files (photos, logos, receipts) are stored. Local disk is the default — easy, no setup, but the server grows with your data. S3-compatible (AWS S3, DigitalOcean Spaces, MinIO) or Cloudinary are the two alternatives; both offload storage and serve images via CDN." },
             { "type": "warn", "title": "Migration", "body": "Changing storage providers after you've already uploaded content is non-trivial. Pick your target at the start if you can." }
           ]},
-          { "id": "menu-manager", "num": "13", "title": "Menu manager", "blocks": [
+          { "id": "menu-manager", "num": "15", "title": "Menu manager", "blocks": [
             { "type": "para", "text": "Customize the dashboard sidebar. Reorder items, hide what you don't use, promote frequently-used add-ons to the top level, and pin Quick Access links to specific pages. Reset to defaults undoes everything." }
           ]},
-          { "id": "permission-templates", "num": "14", "title": "Permission templates", "blocks": [
+          { "id": "permission-templates", "num": "16", "title": "Permission templates", "blocks": [
             { "type": "para", "text": "Build permission presets once, apply them to every new member. Useful if you have the same role across many staff (\"Senior Stylist\", \"Reception\") with the same access pattern. Templates are editable later; updating a template does not auto-apply to members already set up from it." }
           ]},
-          { "id": "data-retention", "num": "15", "title": "Data retention", "blocks": [
+          { "id": "data-retention", "num": "17", "title": "Data retention", "blocks": [
             { "type": "para", "text": "Compliance-friendly purge rules." },
             { "type": "kv", "items": [
               { "k": "Deleted records", "v": "How long soft-deleted rows are kept before being purged." },
@@ -1560,10 +1590,10 @@
               { "k": "GDPR right to erasure", "v": "Lets clients request full deletion of their data from the portal." }
             ]}
           ]},
-          { "id": "bnpl", "num": "16", "title": "BNPL (Tabby/Tamara)", "blocks": [
+          { "id": "bnpl", "num": "18", "title": "BNPL (Tabby/Tamara)", "blocks": [
             { "type": "para", "text": "Buy Now Pay Later — Tabby and Tamara. Enable one or both, choose sandbox or live, enter the credentials provided by the BNPL partner (public key, secret key, webhook secret, API token), and pick the number of installments. Test connection sanity-checks the integration before you take a live payment." }
           ]},
-          { "id": "backup", "num": "17", "title": "Backup & restore", "blocks": [
+          { "id": "backup", "num": "19", "title": "Backup & restore", "blocks": [
             { "type": "para", "text": "Full business export and import." },
             { "type": "steps", "items": [
               "Export: download a JSON backup that includes clients, services, products, appointments, sales, inventory, locations, discounts, memberships, schedule, ZATCA data, gift cards, reviews, activity logs, and settings.",
@@ -1572,10 +1602,10 @@
             ]},
             { "type": "warn", "title": "Restore is destructive", "body": "A restore replaces the current workspace data. Always back up the current state first, then restore. For partial imports, use the CSV imports in Clients or Catalogue instead." }
           ]},
-          { "id": "security", "num": "18", "title": "Account & password", "blocks": [
+          { "id": "security", "num": "20", "title": "Account & password", "blocks": [
             { "type": "para", "text": "Your personal account credentials — separate from workspace settings. Current password, new password, confirm, save. Use a password manager; never share the owner account." }
           ]},
-          { "id": "tips", "num": "19", "title": "Tips", "blocks": [
+          { "id": "tips", "num": "21", "title": "Tips", "blocks": [
             { "type": "bullets", "items": [
               "Set up Business Info, Date & Time, Tax Rates, and Payment Methods first. Every other area depends on those.",
               "Keep receipts crisp — logo, phone, and a one-line thank-you are enough. Busy receipts get thrown away.",

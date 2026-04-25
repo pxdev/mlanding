@@ -1,6 +1,7 @@
 <script setup>
 definePageMeta({ layout: 'portal', middleware: ['auth', 'admin'], colorMode: 'light' });
 const chrome = useChromeCopy();
+const localePath = useLocalePath();
 const t = computed(() => chrome.value.admin.userDetailPage);
 useHead({ title: () => chrome.value.admin.userDetailPage.docTitle });
 const route = useRoute();
@@ -92,7 +93,7 @@ const statusColor = {
 <template>
   <div v-if="user" class="p-6 max-w-6xl mx-auto space-y-6">
     <div>
-      <NuxtLink to="/admin/users" class="text-sm text-muted hover:text-primary inline-flex items-center gap-1.5">
+      <NuxtLink :to="localePath('/admin/users')" class="text-sm text-muted hover:text-primary inline-flex items-center gap-1.5">
         <UIcon name="i-lucide-chevron-left" class="size-4 rtl:rotate-180" /> {{ t.backToCustomers }}
       </NuxtLink>
       <h1 class="text-2xl font-bold mt-2">{{ ((user.firstName || '') + ' ' + (user.lastName || '')).trim() || user.email }}</h1>
@@ -182,7 +183,7 @@ const statusColor = {
       </div>
       <div v-else class="divide-y divide-default -m-4">
         <NuxtLink
-          v-for="l in user.licenses" :key="l.id" :to="`/admin/licenses?q=${l.keyPrefix}`"
+          v-for="l in user.licenses" :key="l.id" :to="`${localePath('/admin/licenses')}?q=${l.keyPrefix}`"
           class="flex items-center gap-4 px-4 py-3 hover:bg-elevated transition"
         >
           <UIcon name="i-lucide-key" class="size-5 text-primary" />
@@ -212,7 +213,7 @@ const statusColor = {
       <div v-else class="divide-y divide-default -m-4">
         <NuxtLink
           v-for="o in user.orders" :key="o.id"
-          :to="`/admin/orders/${o.id}`"
+          :to="localePath(`/admin/orders/${o.id}`)"
           class="flex items-center gap-4 px-4 py-3 hover:bg-elevated transition"
         >
           <UIcon name="i-lucide-receipt" class="size-5 text-primary" />

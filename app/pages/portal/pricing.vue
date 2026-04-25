@@ -144,46 +144,11 @@ const includedIcons = ['i-lucide-code', 'i-lucide-globe', 'i-lucide-infinity', '
     </div>
   </section>
 
-  <!-- ═══ Payments & checkout ═══ -->
-  <section class="py-16 sm:py-20 border-t border-black/10 dark:border-white/10">
-    <div class="max-w-7xl mx-auto px-5 sm:px-8">
-      <LandingSectionHeading
-        number="4"
-        :label="copy.pricingPage.payments.eyebrow"
-        :heading="copy.pricingPage.payments.heading"
-        :sub="copy.pricingPage.payments.sub"
-      />
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-12 border-t border-black/10 dark:border-white/10 pt-10">
-        <div>
-          <UIcon name="i-lucide-banknote" class="size-5 text-secondary-500 mb-3" />
-          <p class="text-[11px] uppercase tracking-[0.25em] text-gray-400 mb-2">{{ copy.ui.currencyLabel }}</p>
-          <p class="text-base sm:text-lg font-semibold leading-relaxed">{{ copy.pricingPage.payments.currency }}</p>
-        </div>
-        <div>
-          <UIcon name="i-lucide-credit-card" class="size-5 text-secondary-500 mb-3" />
-          <p class="text-[11px] uppercase tracking-[0.25em] text-gray-400 mb-2">{{ copy.ui.methodsLabel }}</p>
-          <ul class="space-y-2">
-            <li v-for="m in copy.pricingPage.payments.methods" :key="m" class="flex items-start gap-2 text-base font-semibold leading-relaxed">
-              <UIcon name="i-lucide-check" class="size-4 shrink-0 mt-1 text-emerald-500" />
-              <span>{{ m }}</span>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <UIcon name="i-lucide-shield-check" class="size-5 text-secondary-500 mb-3" />
-          <p class="text-[11px] uppercase tracking-[0.25em] text-gray-400 mb-2">{{ copy.ui.processorLabel }}</p>
-          <p class="text-base sm:text-lg font-semibold leading-relaxed">{{ copy.pricingPage.payments.processor }}</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- ═══ Pricing FAQ ═══ -->
   <section class="py-16 sm:py-20 border-t border-black/10 dark:border-white/10">
     <div class="max-w-7xl mx-auto px-5 sm:px-8">
       <LandingSectionHeading
-        number="5"
+        number="4"
         :label="copy.pricingPage.faq.eyebrow"
         :heading="copy.pricingPage.faq.heading"
       >
@@ -198,7 +163,7 @@ const includedIcons = ['i-lucide-code', 'i-lucide-globe', 'i-lucide-infinity', '
         </template>
       </LandingSectionHeading>
 
-      <div class="max-w-4xl border-t border-black/10 dark:border-white/10">
+      <div class="border-t border-black/10 dark:border-white/10">
         <details v-for="(f, i) in copy.pricingPage.faq.items" :key="f.q"
           class="group border-b border-black/10 dark:border-white/10 open:bg-black/[0.02] dark:open:bg-white/[0.02] transition-colors"
         >

@@ -1,6 +1,7 @@
 <script setup>
 definePageMeta({ layout: 'portal', middleware: ['auth', 'admin'], colorMode: 'light' });
 const chrome = useChromeCopy();
+const localePath = useLocalePath();
 const t = computed(() => chrome.value.admin.invitesPage);
 useHead({ title: () => chrome.value.admin.invitesPage.docTitle });
 const toast = useToast();
@@ -70,7 +71,7 @@ const statusFilters = computed(() => [
                 <span v-if="i.attempts > 1" class="text-xs text-muted">{{ fillTemplate(t.attemptsLabel, { n: i.attempts }) }}</span>
               </div>
               <div class="text-xs text-muted mt-0.5">
-                <NuxtLink :to="`/admin/users/${i.account.id}`" class="hover:text-primary">{{ i.account.email }}</NuxtLink>
+                <NuxtLink :to="localePath(`/admin/users/${i.account.id}`)" class="hover:text-primary">{{ i.account.email }}</NuxtLink>
                 · {{ t.sentPrefix }} {{ fmt(i.sentAt) }}
                 <span v-if="i.acceptedAt"> · {{ t.acceptedPrefix }} {{ fmt(i.acceptedAt) }}</span>
               </div>

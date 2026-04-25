@@ -1,6 +1,7 @@
 <script setup>
 definePageMeta({ layout: 'portal', middleware: ['auth', 'admin'], colorMode: 'light' });
 const chrome = useChromeCopy();
+const localePath = useLocalePath();
 const t = computed(() => chrome.value.admin.settingsPage);
 useHead({ title: () => chrome.value.admin.settingsPage.docTitle });
 const { data: cfg } = await useFetch('/api/portal/admin/settings/integrations');
@@ -119,7 +120,7 @@ const prodWarnings = computed(() => {
         <p class="font-semibold text-sm">{{ t.integrationsTitle }}</p>
         <p class="text-xs text-muted mt-0.5">{{ t.integrationsDesc }}</p>
       </div>
-      <UButton to="/admin/settings/integrations" trailing-icon="i-lucide-arrow-right" variant="soft" size="sm">{{ t.integrationsOpen }}</UButton>
+      <UButton :to="localePath('/admin/settings/integrations')" trailing-icon="i-lucide-arrow-right" variant="soft" size="sm">{{ t.integrationsOpen }}</UButton>
     </div>
 
     <div class="flex items-center justify-between p-4 rounded-xl bg-elevated">
@@ -127,7 +128,7 @@ const prodWarnings = computed(() => {
         <p class="font-semibold text-sm">{{ chrome.admin.backupPage.title }}</p>
         <p class="text-xs text-muted mt-0.5">{{ chrome.admin.backupPage.subtitle }}</p>
       </div>
-      <UButton to="/admin/settings/backup" trailing-icon="i-lucide-arrow-right" variant="soft" size="sm">{{ t.integrationsOpen }}</UButton>
+      <UButton :to="localePath('/admin/settings/backup')" trailing-icon="i-lucide-arrow-right" variant="soft" size="sm">{{ t.integrationsOpen }}</UButton>
     </div>
   </div>
 </template>

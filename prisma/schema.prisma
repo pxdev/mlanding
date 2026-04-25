@@ -41,6 +41,8 @@ model Account {
   auditLogs       AuditLog[]
   repoInvites     RepoInvite[]
   integrationSettings IntegrationSetting[]
+  supportTickets        SupportTicket[]
+  supportMessagesSent   SupportTicketMessage[] @relation("SupportTicketMessageSender")
 
   @@index([email])
   @@index([githubUsername])
@@ -323,4 +325,79 @@ model AuditLog {
   @@index([actorId])
   @@index([targetType, targetId])
   @@index([createdAt])
+}
+
+
+// ─── Support tickets ───────────────────────────────────────────────
+//
+// Single store for two intake paths:
+//   1. CONTACT — anonymous visitor uses the marketing-site contact form.
+//      No accountId; we record name+email so admins can still reply by mail.
+//   2. CUSTOMER — an authenticated portal user opens a support request
+//      from /dashboard/support. accountId is set; email/name are mirrored
+//      from the account at create time so admin search works the same.
+enum SupportTicketSource {
+  CONTACT
+  CUSTOMER
+}
+
+enum SupportTicketStatus {
+  OPEN            // newly created, awaiting admin
+  AWAITING_USER   // admin replied, waiting on user
+  RESOLVED        // closed by user or admin after the issue was fixed
+  CLOSED          // closed without resolution / by admin moderation
+}
+
+model SupportTicket {
+  id        String              @id @default(cuid())
+  // Set for CUSTOMER tickets; null for anonymous CONTACT tickets.
+  accountId String?
+  account   Account?            @relation(fields: [accountId], references: [id])
+  // Always populated — for CUSTOMER tickets it's mirrored from the account
+  // so admins can list/search both intake paths the same way.
+  email     String
+  name      String?
+
+  source    SupportTicketSource @default(CONTACT)
+  subject   String
+  status    SupportTicketStatus @default(OPEN)
+
+  // Unread flags drive bell counts without scanning messages.
+  unreadByUser  Boolean   @default(false)
+  unreadByAdmin Boolean   @default(true)
+
+  // Sort/filter helpers populated by the messages.post handler.
+  lastUserReplyAt  DateTime?
+  lastAdminReplyAt DateTime?
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  closedAt  DateTime?
+
+  messages  SupportTicketMessage[]
+
+  @@index([accountId, status])
+  @@index([email])
+  @@index([source, status])
+  @@index([status, updatedAt])
+}
+
+model SupportTicketMessage {
+  id       String        @id @default(cuid())
+  ticketId String
+  ticket   SupportTicket @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+
+  // null for the anonymous initial message of a CONTACT ticket;
+  // otherwise the Account that wrote the message.
+  senderAccountId String?
+  senderAccount   Account? @relation("SupportTicketMessageSender", fields: [senderAccountId], references: [id])
+  // Authoritative — drives styling and unread flags. Mirrors
+  // senderAccount.isAdmin at the moment the message was written so a later
+  // role flip doesn't rewrite history.
+  isAdmin   Boolean       @default(false)
+
+  body      String        @db.Text
+  createdAt DateTime      @default(now())
+
+  @@index([ticketId, createdAt])
 }

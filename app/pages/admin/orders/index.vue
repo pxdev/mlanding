@@ -2,6 +2,7 @@
 import { fillTemplate } from '~/composables/useChromeCopy';
 definePageMeta({ layout: 'portal', middleware: ['auth', 'admin'], colorMode: 'light' });
 const chrome = useChromeCopy();
+const localePath = useLocalePath();
 const t = computed(() => chrome.value.admin.ordersPage);
 useHead({ title: () => chrome.value.admin.ordersPage.docTitle });
 const route = useRoute();
@@ -58,7 +59,7 @@ const statusFilters = computed(() => [
       <div v-else class="divide-y divide-default -m-4">
         <NuxtLink
           v-for="o in orders" :key="o.id"
-          :to="`/admin/orders/${o.id}`"
+          :to="localePath(`/admin/orders/${o.id}`)"
           class="flex items-center gap-4 px-4 py-3 hover:bg-elevated transition"
         >
           <UIcon name="i-lucide-receipt" class="size-5 text-muted shrink-0" />

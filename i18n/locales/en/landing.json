@@ -2374,7 +2374,7 @@
       "mockNetRevenue": "Net revenue · 342 tickets",
       "liveLabel": "Live",
       "threeTenantsLabel": "Three tenants",
-      "allFeatureAreas": "All 18 feature areas",
+      "allFeatureAreas": "All 20 feature areas",
       "addonCategoryLabels": {
         "Compliance": "Compliance",
         "Clinical": "Clinical",
@@ -2392,7 +2392,7 @@
     "featuresPage": {
       "eyebrow": "Features",
       "h1": "Everything, on one tab.",
-      "sub": "Eighteen major feature areas. Hundreds of screens. Every small detail wired to the next — all included in the source, all yours on day one.",
+      "sub": "Twenty major feature areas. Hundreds of screens. Every small detail wired to the next — all included in the source, all yours on day one.",
       "spotlightLabel": "Spotlight",
       "spotlightCta": "Read in detail",
       "readMore": "Read more",
@@ -2716,6 +2716,40 @@
             "Expiring points surfaced to clients in their portal wallet before they lapse",
             "Segments for top spenders and dormant clients, ready to target with campaigns"
           ]
+        },
+        {
+          "id": "notifications",
+          "group": "Operations",
+          "title": "Notifications & Messaging",
+          "summary": "Per-event notification rules — staff vs client, by channel, with editable templates — delivered through your own provider keys.",
+          "bullets": [
+            "Four channels — In-app, Email, SMS, WhatsApp — toggle each per tenant",
+            "Provider plugins: SMTP, SendGrid or Resend (email); Twilio (SMS); Twilio or Meta Business (WhatsApp)",
+            "Use the platform default for any channel, or supply your own keys per tenant for full deliverability control",
+            "Per-event rules across 30+ event types — appointments, sales, inventory, events, loyalty, follow-ups, tickets, subscriptions — with separate audiences for staff and clients",
+            "Editable bilingual templates (subject + body) per event and channel, with named variables for clientName, serviceName, dates, totals and branding",
+            "Delivery logs with sent / delivered / failed status, fully retryable from the UI",
+            "Test-send any channel before going live, with sandboxes per provider",
+            "Personal alert preferences per team member — opt out of non-essential noise"
+          ]
+        },
+        {
+          "id": "workspace-control",
+          "group": "Platform",
+          "title": "Workspace Control",
+          "summary": "The settings panel — brand, locations, permissions, retention, backup, storage, BNPL credentials, sidebar layout — all in one place.",
+          "bullets": [
+            "Business profile: name, logo, country, currency, default languages and number formats (Western or Arabic-Indic)",
+            "Multi-location with per-branch hours, capacity, address and team assignment",
+            "External brand links — Facebook, Instagram, Twitter/X, website — surfaced on the booking portal and receipts",
+            "Menu manager — reorder, hide, pin items in the sidebar per tenant; promote frequently-used add-ons",
+            "Permission templates — reusable role presets (Senior Stylist, Reception) applied at member onboarding",
+            "Data retention rules — soft-deleted records, read notifications, activity logs, cancelled appointments — with GDPR right-to-erasure on the client portal",
+            "Backup & restore — JSON export of the entire workspace; restore replaces current state with a confirmation gate",
+            "Storage providers — local disk, S3-compatible (AWS S3, DigitalOcean Spaces, MinIO) or Cloudinary, switchable per tenant",
+            "Receipt templates (A4 standard or POS thermal), payment-method toggles, tax rates, tipping presets",
+            "Buy-now-pay-later credentials — Tabby and Tamara — with sandbox/live modes and a built-in connection test"
+          ]
         }
       ]
     },
@@ -2757,7 +2791,7 @@
           },
           {
             "q": "Which currencies and payment methods?",
-            "a": "Primary pricing is in USD. At checkout you can pay in USD, SAR, EGP, EUR, GBP or AED — Lemon Squeezy auto-converts. Visa, Mastercard, Amex, Apple Pay and Google Pay are supported. For bank transfer on invoice, email hello@momentfy.com."
+            "a": "Primary pricing is in USD. At checkout you can pay in USD, SAR, EGP, EUR, GBP or AED — Lemon Squeezy auto-converts. Visa, Mastercard, Amex, Apple Pay and Google Pay are supported. For bank transfer on invoice, email support@momentfy.com."
           },
           {
             "q": "Can I upgrade from Self-install to Done-for-you later?",
@@ -3817,7 +3851,7 @@
             },
             {
               "k": "Your rights",
-              "v": "You can request export or deletion of your purchase record at any time by emailing hello@momentfy.com."
+              "v": "You can request export or deletion of your purchase record at any time by emailing support@momentfy.com."
             },
             {
               "k": "GDPR / Saudi PDPL",
@@ -3841,7 +3875,7 @@
             },
             {
               "k": "Undelivered or broken",
-              "v": "If your download link does not work or the archive is materially corrupted and we cannot fix it within 7 days of your report, we'll refund you in full — email hello@momentfy.com with your order number."
+              "v": "If your download link does not work or the archive is materially corrupted and we cannot fix it within 7 days of your report, we'll refund you in full — email support@momentfy.com with your order number."
             },
             {
               "k": "Chargebacks",
@@ -3873,7 +3907,7 @@
             },
             {
               "k": "Contact",
-              "v": "hello@momentfy.com"
+              "v": "support@momentfy.com"
             },
             {
               "k": "Support",
@@ -3888,7 +3922,7 @@
       ],
       "companyLabel": "Contact",
       "companyLines": [
-        "hello@momentfy.com",
+        "support@momentfy.com",
         "support@momentfy.com"
       ]
     }

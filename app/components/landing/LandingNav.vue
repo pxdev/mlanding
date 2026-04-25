@@ -3,6 +3,7 @@ const route = useRoute()
 const copy = useLandingCopy()
 const { currentLocale, otherLocale, toggleLocale } = useLandingLocale()
 const { loggedIn } = useUserSession()
+const localePath = useLocalePath()
 
 const mobileOpen = ref(false)
 watch(() => route.fullPath, () => { mobileOpen.value = false })
@@ -39,9 +40,9 @@ onBeforeUnmount(() => {
 // (Add-ons, ROI, Manual, Docs, FAQ) is reachable from the footer columns and
 // in-page CTAs.
 const navItems = computed(() => [
-  { label: copy.value.nav.features, to: '/portal/features' },
-  { label: copy.value.nav.showcase, to: '/portal/showcase' },
-  { label: copy.value.nav.pricing, to: '/portal/pricing' }
+  { label: copy.value.nav.features, to: localePath('/portal/features') },
+  { label: copy.value.nav.showcase, to: localePath('/portal/showcase') },
+  { label: copy.value.nav.pricing, to: localePath('/portal/pricing') }
 ])
 
 function isActive(to: string) {
@@ -53,85 +54,99 @@ function isActive(to: string) {
   <header
     class="fixed top-0 inset-x-0 z-40 transition-all duration-300"
     :class="scrolled
-      ? 'bg-white/70 dark:bg-black/60 backdrop-blur-xl border-b border-black/5 dark:border-white/10'
-      : 'bg-transparent border-b border-transparent'"
+      ? 'bg-white/80 dark:bg-black/70 backdrop-blur-xl shadow-[0_1px_0_0_rgba(0,0,0,0.04)] dark:shadow-[0_1px_0_0_rgba(255,255,255,0.06)]'
+      : 'bg-transparent'"
   >
-    <div class="max-w-7xl mx-auto px-5 sm:px-8 h-16 flex items-center gap-6 lg:gap-8">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8 h-16 flex items-center gap-4 lg:gap-8">
       <LandingNavBrand />
 
-      <!-- Desktop Nav -->
-      <nav class="hidden lg:flex items-center gap-1 flex-1" aria-label="Primary">
+      <!-- Desktop Nav — pill rail centered between brand and actions -->
+      <nav
+        class="hidden lg:flex items-center gap-0.5 flex-1 justify-center"
+        aria-label="Primary"
+      >
         <NuxtLink
           v-for="item in navItems" :key="item.to"
           :to="item.to"
           :aria-current="isActive(item.to) ? 'page' : undefined"
-          class="relative px-3 py-2 text-sm font-medium transition-colors"
+          class="group relative px-4 py-2 text-sm font-semibold rounded-full transition-colors duration-200"
           :class="isActive(item.to)
             ? 'text-primary dark:text-white'
-            : 'text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-white'"
+            : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'"
         >
-          {{ item.label }}
+          <!-- Soft pill background on active + hover (sits behind text) -->
           <span
             aria-hidden="true"
-            class="absolute inset-x-3 -bottom-0.5 h-0.5 rounded-full bg-gradient-to-r from-secondary-500 to-secondary-400 transition-opacity"
-            :class="isActive(item.to) ? 'opacity-100' : 'opacity-0'"
+            class="absolute inset-0 rounded-full bg-black/[0.04] dark:bg-white/[0.06] transition-opacity duration-200"
+            :class="isActive(item.to) ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'"
           />
+          <!-- Active accent dot (only on active item) -->
+          <span class="relative inline-flex items-center gap-1.5">
+            <span
+              v-if="isActive(item.to)"
+              aria-hidden="true"
+              class="size-1.5 rounded-full bg-gradient-to-br from-secondary-500 to-secondary-400 shadow-[0_0_0_3px] shadow-secondary-500/15"
+            />
+            {{ item.label }}
+          </span>
         </NuxtLink>
       </nav>
 
       <!-- Actions -->
-      <div class="flex items-center gap-1 sm:gap-2 ms-auto">
-        <!-- Utility cluster: language toggle (EN ↔ AR) -->
+      <div class="flex items-center gap-1 sm:gap-1.5 ms-auto">
+        <!-- Utility cluster: language toggle (EN ↔ AR) — compact icon pill -->
         <ClientOnly>
           <button
             type="button"
-            class="hidden sm:inline-flex items-center gap-1.5 h-9 px-3 rounded-full text-sm font-semibold text-gray-600 dark:text-gray-400 hover:bg-black/5 dark:hover:bg-white/10 transition"
+            class="hidden sm:inline-flex items-center gap-1.5 h-9 px-3 rounded-full text-sm font-semibold text-gray-600 dark:text-gray-400 ring-1 ring-transparent hover:ring-black/[0.06] hover:bg-black/[0.04] dark:hover:bg-white/[0.06] dark:hover:ring-white/10 transition"
             :aria-label="copy.nav.langLabel"
             :title="otherLocale?.name"
             @click="toggleLocale"
           >
-            <UIcon name="i-lucide-globe" class="size-4" />
-            <span class="text-sm font-bold">{{ otherLocale?.name }}</span>
+            <UIcon name="i-lucide-globe" class="size-4 opacity-70" />
+            <span class="text-[13px] font-bold tracking-tight">{{ otherLocale?.name }}</span>
           </button>
           <template #fallback>
             <span class="hidden sm:inline-flex items-center gap-1.5 h-9 px-3 rounded-full text-sm font-semibold text-gray-600 dark:text-gray-400">
-              <UIcon name="i-lucide-globe" class="size-4" />
-              <span class="text-sm font-bold">{{ currentLocale?.name }}</span>
+              <UIcon name="i-lucide-globe" class="size-4 opacity-70" />
+              <span class="text-[13px] font-bold tracking-tight">{{ currentLocale?.name }}</span>
             </span>
           </template>
         </ClientOnly>
 
-        <!-- Divider between utility and auth cluster -->
-        <span aria-hidden="true" class="hidden sm:block h-6 w-px bg-black/10 mx-1" />
-
-        <!-- Auth cluster -->
+        <!-- Auth cluster — ghost button -->
         <ClientOnly>
           <NuxtLink
-            :to="loggedIn ? '/dashboard' : '/auth/login'"
-            class="hidden sm:inline-flex items-center px-4 h-9 rounded-full text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-black/5 dark:hover:bg-white/10 transition"
+            :to="loggedIn ? localePath('/dashboard') : localePath('/auth/login')"
+            class="hidden sm:inline-flex items-center h-9 px-4 rounded-full text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition"
           >
             {{ loggedIn ? copy.nav.dashboard : copy.nav.signIn }}
           </NuxtLink>
           <template #fallback>
             <NuxtLink
-              to="/auth/login"
-              class="hidden sm:inline-flex items-center px-4 h-9 rounded-full text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-black/5 dark:hover:bg-white/10 transition"
+              :to="localePath('/auth/login')"
+              class="hidden sm:inline-flex items-center h-9 px-4 rounded-full text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition"
             >
               {{ copy.nav.signIn }}
             </NuxtLink>
           </template>
         </ClientOnly>
 
+        <!-- Primary CTA — gradient pill that picks up the brand secondary on hover -->
         <NuxtLink
-          to="/portal/pricing"
-          class="inline-flex items-center gap-1.5 px-4 h-9 rounded-full text-sm font-semibold bg-primary text-white shadow-lg shadow-primary/20 hover:shadow-primary/40 hover:scale-[1.02] transition-all"
+          :to="localePath('/portal/pricing')"
+          class="group relative inline-flex items-center gap-1.5 h-9 ps-4 pe-3 rounded-full text-sm font-bold text-white shadow-md shadow-primary/25 hover:shadow-lg hover:shadow-primary/40 hover:-translate-y-0.5 transition-all overflow-hidden"
         >
-          {{ copy.nav.getCode }}
-          <UIcon name="i-lucide-arrow-right" class="size-3.5 rtl:rotate-180" />
+          <span aria-hidden="true" class="absolute inset-0 bg-primary" />
+          <span aria-hidden="true" class="absolute inset-0 bg-gradient-to-r from-primary via-secondary-700 to-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <span class="relative">{{ copy.nav.getCode }}</span>
+          <span class="relative inline-flex items-center justify-center size-5 rounded-full bg-white/15 group-hover:bg-white/25 transition-colors">
+            <UIcon name="i-lucide-arrow-right" class="size-3 rtl:rotate-180" />
+          </span>
         </NuxtLink>
 
         <button
-          class="lg:hidden size-9 flex items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10"
+          class="lg:hidden size-9 flex items-center justify-center rounded-full hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition"
           aria-label="Open menu"
           aria-controls="landing-mobile-menu"
           :aria-expanded="mobileOpen"
@@ -182,26 +197,37 @@ function isActive(to: string) {
             </button>
           </div>
 
-          <nav class="flex-1 overflow-y-auto p-4 space-y-1" aria-label="Main">
+          <nav class="flex-1 overflow-y-auto p-4 space-y-1.5" aria-label="Main">
             <NuxtLink
               v-for="item in navItems" :key="item.to" :to="item.to"
               :aria-current="isActive(item.to) ? 'page' : undefined"
-              class="block px-4 py-3 rounded-xl text-base font-medium transition-colors"
+              class="flex items-center gap-3 px-4 py-3 rounded-2xl text-base font-semibold transition-colors"
               :class="isActive(item.to)
-                ? 'bg-primary text-white'
-                : 'text-gray-700 dark:text-gray-300 hover:bg-black/5 dark:hover:bg-white/10'"
-            >{{ item.label }}</NuxtLink>
+                ? 'bg-primary text-white shadow-md shadow-primary/20'
+                : 'text-gray-700 dark:text-gray-200 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]'"
+            >
+              <span
+                aria-hidden="true"
+                class="size-1.5 rounded-full"
+                :class="isActive(item.to) ? 'bg-white' : 'bg-gradient-to-br from-secondary-500 to-secondary-400'"
+              />
+              {{ item.label }}
+              <UIcon
+                name="i-lucide-chevron-right"
+                class="size-4 ms-auto rtl:rotate-180 opacity-50"
+              />
+            </NuxtLink>
 
             <!-- Preferences: language toggle (EN ↔ AR) -->
-            <div class="mt-4 pt-4 border-t border-black/5 dark:border-white/10 space-y-2">
-              <p class="px-4 text-[11px] font-bold uppercase tracking-wider text-gray-400">{{ copy.nav.langLabel }}</p>
+            <div class="mt-6 pt-4 border-t border-black/5 dark:border-white/10 space-y-2">
+              <p class="px-4 text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400">{{ copy.nav.langLabel }}</p>
               <ClientOnly>
                 <button
                   type="button"
-                  class="w-full flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-medium bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/15 transition"
+                  class="w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] transition"
                   @click="toggleLocale"
                 >
-                  <UIcon name="i-lucide-globe" class="size-4" />
+                  <UIcon name="i-lucide-globe" class="size-4 opacity-70" />
                   <span>{{ otherLocale?.name }}</span>
                   <UIcon name="i-lucide-arrow-right-left" class="size-3.5 ms-auto opacity-60" />
                 </button>
@@ -211,14 +237,17 @@ function isActive(to: string) {
 
           <div class="p-4 border-t border-black/5 dark:border-white/10 space-y-2">
             <ClientOnly>
-              <NuxtLink :to="loggedIn ? '/dashboard' : '/auth/login'" class="block text-center px-4 py-3 rounded-xl text-sm font-medium bg-black/5 dark:bg-white/10">
+              <NuxtLink :to="loggedIn ? localePath('/dashboard') : localePath('/auth/login')" class="block text-center px-4 py-3 rounded-2xl text-sm font-semibold text-gray-800 dark:text-gray-100 bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] transition">
                 {{ loggedIn ? copy.nav.dashboard : copy.nav.signIn }}
               </NuxtLink>
               <template #fallback>
-                <NuxtLink to="/auth/login" class="block text-center px-4 py-3 rounded-xl text-sm font-medium bg-black/5 dark:bg-white/10">{{ copy.nav.signIn }}</NuxtLink>
+                <NuxtLink :to="localePath('/auth/login')" class="block text-center px-4 py-3 rounded-2xl text-sm font-semibold text-gray-800 dark:text-gray-100 bg-black/[0.04] dark:bg-white/[0.06]">{{ copy.nav.signIn }}</NuxtLink>
               </template>
             </ClientOnly>
-            <NuxtLink to="/portal/pricing" class="block text-center px-4 py-3 rounded-xl text-sm font-semibold bg-primary text-white">{{ copy.nav.getCode }}</NuxtLink>
+            <NuxtLink :to="localePath('/portal/pricing')" class="flex items-center justify-center gap-2 px-4 py-3 rounded-2xl text-sm font-bold bg-primary text-white shadow-lg shadow-primary/25 hover:shadow-primary/40 transition">
+              {{ copy.nav.getCode }}
+              <UIcon name="i-lucide-arrow-right" class="size-4 rtl:rotate-180" />
+            </NuxtLink>
           </div>
         </aside>
       </Transition>

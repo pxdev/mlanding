@@ -15,6 +15,7 @@ definePageMeta({
 });
 import { fillTemplate } from '~/composables/useChromeCopy';
 const chrome = useChromeCopy();
+const localePath = useLocalePath();
 useHead({ title: () => chrome.value.pages.dashboardLicenses.docTitle });
 const { user, isAdmin, displayName } = useSession();
 const route = useRoute();
@@ -77,7 +78,7 @@ const welcomeHeading = computed(() => displayName.value
         </p>
       </div>
       <UButton
-        to="/portal/pricing"
+        :to="localePath('/portal/pricing')"
         icon="i-lucide-shopping-cart"
         size="lg"
         class="w-full sm:w-auto justify-center rounded-full shrink-0"
@@ -138,7 +139,7 @@ const welcomeHeading = computed(() => displayName.value
           {{ chrome.pages.dashboardLicenses.emptyHint }}
         </p>
         <UButton
-          to="/portal/pricing"
+          :to="localePath('/portal/pricing')"
           size="md"
           class="mt-4 rounded-full"
         >
@@ -153,7 +154,7 @@ const welcomeHeading = computed(() => displayName.value
         <NuxtLink
           v-for="l in licenses"
           :key="l.id"
-          :to="`/dashboard/licenses/${l.id}`"
+          :to="localePath(`/dashboard/licenses/${l.id}`)"
           class="flex items-center gap-3 sm:gap-4 px-4 py-3 hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition"
         >
           <div class="size-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
@@ -193,15 +194,15 @@ const welcomeHeading = computed(() => displayName.value
         </h2>
       </template>
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-        <UButton to="/admin/users" variant="soft" color="neutral" icon="i-lucide-users" block>{{ chrome.pages.dashboardLicenses.opCustomers }}</UButton>
-        <UButton to="/admin/licenses" variant="soft" color="neutral" icon="i-lucide-shield" block>{{ chrome.pages.dashboardLicenses.opAllLicenses }}</UButton>
-        <UButton to="/admin/audit" variant="soft" color="neutral" icon="i-lucide-list" block>{{ chrome.pages.dashboardLicenses.opAuditLog }}</UButton>
+        <UButton :to="localePath('/admin/users')" variant="soft" color="neutral" icon="i-lucide-users" block>{{ chrome.pages.dashboardLicenses.opCustomers }}</UButton>
+        <UButton :to="localePath('/admin/licenses')" variant="soft" color="neutral" icon="i-lucide-shield" block>{{ chrome.pages.dashboardLicenses.opAllLicenses }}</UButton>
+        <UButton :to="localePath('/admin/audit')" variant="soft" color="neutral" icon="i-lucide-list" block>{{ chrome.pages.dashboardLicenses.opAuditLog }}</UButton>
       </div>
     </UCard>
 
     <p class="text-xs text-gray-400 text-center sm:text-start">
       {{ fillTemplate(chrome.pages.dashboardLicenses.signedInAs, { email: user?.email || '' }) }} ·
-      <NuxtLink to="/" class="hover:underline">{{ chrome.pages.dashboardLicenses.visitMarketing }}</NuxtLink>
+      <NuxtLink :to="localePath('/')" class="hover:underline">{{ chrome.pages.dashboardLicenses.visitMarketing }}</NuxtLink>
     </p>
   </div>
 </template>

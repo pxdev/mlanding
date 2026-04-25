@@ -68,7 +68,7 @@ export default defineNuxtConfig({
       port: Number(process.env.SMTP_PORT || 465),
       user: process.env.SMTP_USER || '',
       pass: process.env.SMTP_PASS || '',
-      from: process.env.SMTP_FROM || 'Momentfy <noreply@momentfy.com>'
+      from: process.env.SMTP_FROM || 'Momentfy <support@momentfy.com>'
     },
     lemonSqueezy: {
       apiKey: process.env.LEMON_SQUEEZY_API_KEY || '',
@@ -200,9 +200,12 @@ export default defineNuxtConfig({
     // Accept-Language, then a cookie remembers their explicit choice from
     // the toggle button.
     defaultLocale: 'en',
-    // Prefix strategy: every page is reachable at /ar/... and /en/...,
-    // root `/` redirects to the user's preferred language.
-    strategy: 'prefix',
+    // prefix_and_default — both /portal/foo (default locale, English) and
+    // /en/portal/foo and /ar/portal/foo all resolve to a real route. This
+    // keeps every existing <NuxtLink to="/portal/..."> working for English
+    // visitors while still giving Arabic visitors explicit /ar/ URLs and
+    // the user a way to deep-link either locale by hand.
+    strategy: 'prefix_and_default',
     detectBrowserLanguage: {
       useCookie: true,
       cookieKey: 'i18n_redirected',

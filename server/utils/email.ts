@@ -45,6 +45,10 @@ export interface SendEmailOptions {
   subject: string
   html: string
   text?: string
+  // When set, recipients hitting "Reply" land at this address instead of
+  // the SMTP From: header. Used for ticket reply notifications so admins
+  // can reply directly to the customer from their own mail client.
+  replyTo?: string
 }
 
 export async function sendEmail(opts: SendEmailOptions) {
@@ -60,7 +64,8 @@ export async function sendEmail(opts: SendEmailOptions) {
     to: opts.to,
     subject: opts.subject,
     html: opts.html,
-    text: opts.text
+    text: opts.text,
+    replyTo: opts.replyTo
   })
 }
 

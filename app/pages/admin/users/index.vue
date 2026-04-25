@@ -2,6 +2,7 @@
 import { fillTemplate } from '~/composables/useChromeCopy';
 definePageMeta({ layout: 'portal', middleware: ['auth', 'admin'], colorMode: 'light' });
 const chrome = useChromeCopy();
+const localePath = useLocalePath();
 const t = computed(() => chrome.value.admin.usersPage);
 useHead({ title: () => chrome.value.admin.usersPage.docTitle });
 const q = ref('');
@@ -42,7 +43,7 @@ function pluralOrder(n) {
       </div>
       <div v-else class="divide-y divide-default -m-4">
         <NuxtLink
-          v-for="u in users" :key="u.id" :to="`/admin/users/${u.id}`"
+          v-for="u in users" :key="u.id" :to="localePath(`/admin/users/${u.id}`)"
           class="flex items-center gap-4 px-4 py-3 hover:bg-elevated transition"
         >
           <div class="size-10 rounded-full bg-primary/10 text-primary flex items-center justify-center font-semibold">

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const copy = useLandingCopy()
+const localePath = useLocalePath()
 const year = new Date().getFullYear()
 const bottomText = computed(() => copy.value.footer.bottom.replace('{year}', String(year)))
 
@@ -13,6 +14,15 @@ const tickerItems = computed(() => {
   const labels = (solutionsCol.value?.links || []).map(l => l.label)
   return [...labels, ...labels]
 })
+
+// Wrap any in-app path with localePath so footer links keep visitors in
+// their current locale (the bare path resolves to the default locale only).
+// External URLs (http://...) and hash anchors (#foo) pass through unchanged.
+function resolve(to: string) {
+  if (!to) return to
+  if (/^(https?:|mailto:|tel:|#)/.test(to)) return to
+  return localePath(to)
+}
 
 function scrollToTop() {
   if (typeof window !== 'undefined') {
@@ -32,7 +42,7 @@ function scrollToTop() {
       <div class="flex whitespace-nowrap py-3 sm:py-4 animate-marquee-slow group-hover:[animation-play-state:paused]">
         <NuxtLink
           v-for="(label, i) in tickerItems" :key="`${label}-${i}`"
-          :to="solutionsCol?.links[i % solutionsCol.links.length]?.to || '/portal/solutions'"
+          :to="resolve(solutionsCol?.links[i % solutionsCol.links.length]?.to || '/portal/solutions')"
           class="inline-flex items-center gap-4 px-5 text-xs uppercase tracking-[0.28em] text-white/60 hover:text-white transition-colors shrink-0"
         >
           <span aria-hidden="true" class="size-1 rounded-full bg-white/30" />
@@ -79,7 +89,7 @@ function scrollToTop() {
             </span>
             {{ copy.footer.badge }}
           </span>
-          <NuxtLink to="/portal/pricing" class="group inline-flex items-center gap-3 text-sm font-bold">
+          <NuxtLink :to="localePath('/portal/pricing')" class="group inline-flex items-center gap-3 text-sm font-bold">
             <span class="size-10 rounded-full bg-white text-primary flex items-center justify-center transition-transform group-hover:scale-110">
               <UIcon name="i-lucide-arrow-right" class="size-4 rtl:rotate-180" />
             </span>
@@ -106,7 +116,7 @@ function scrollToTop() {
             <ul class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2.5">
               <li v-for="l in solutionsCol.links" :key="l.label">
                 <NuxtLink
-                  :to="l.to"
+                  :to="resolve(l.to)"
                   class="group inline-flex items-center text-sm text-white/70 hover:text-white transition-colors"
                 >
                   <span aria-hidden="true" class="h-px w-0 bg-secondary-300 me-0 group-hover:w-3 group-hover:me-2 transition-all duration-300" />
@@ -133,7 +143,7 @@ function scrollToTop() {
             <ul class="space-y-2.5">
               <li v-for="l in col.links" :key="l.label">
                 <NuxtLink
-                  :to="l.to"
+                  :to="resolve(l.to)"
                   class="group inline-flex items-center text-sm text-white/70 hover:text-white transition-colors"
                 >
                   <span aria-hidden="true" class="h-px w-0 bg-secondary-300 me-0 group-hover:w-3 group-hover:me-2 transition-all duration-300" />

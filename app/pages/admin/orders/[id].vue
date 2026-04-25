@@ -2,6 +2,7 @@
 import { fillTemplate } from '~/composables/useChromeCopy';
 definePageMeta({ layout: 'portal', middleware: ['auth', 'admin'], colorMode: 'light' });
 const chrome = useChromeCopy();
+const localePath = useLocalePath();
 const t = computed(() => chrome.value.admin.orderDetailPage);
 const route = useRoute();
 const id = route.params.id;
@@ -26,7 +27,7 @@ const showRaw = ref(false);
 <template>
   <div v-if="!order" class="p-6 max-w-4xl mx-auto text-sm text-muted">{{ t.loading }}</div>
   <div v-else class="p-6 max-w-4xl mx-auto space-y-6">
-    <NuxtLink to="/admin/orders" class="text-sm text-muted hover:text-primary inline-flex items-center gap-1.5">
+    <NuxtLink :to="localePath('/admin/orders')" class="text-sm text-muted hover:text-primary inline-flex items-center gap-1.5">
       <UIcon name="i-lucide-chevron-left" class="size-4 rtl:rotate-180" /> {{ t.backToPurchases }}
     </NuxtLink>
 
@@ -58,7 +59,7 @@ const showRaw = ref(false);
       <template #header>
         <h3 class="font-semibold">{{ t.secCustomer }}</h3>
       </template>
-      <NuxtLink :to="`/admin/users/${order.account.id}`" class="flex items-center gap-3 hover:bg-elevated -m-2 p-2 rounded-lg transition">
+      <NuxtLink :to="localePath(`/admin/users/${order.account.id}`)" class="flex items-center gap-3 hover:bg-elevated -m-2 p-2 rounded-lg transition">
         <div class="size-10 rounded-full bg-primary/10 text-primary flex items-center justify-center font-semibold">
           {{ (order.account.firstName?.[0] || order.account.email[0] || '?').toUpperCase() }}
         </div>
@@ -105,7 +106,7 @@ const showRaw = ref(false);
       <div v-else class="divide-y divide-default -m-4">
         <NuxtLink
           v-for="l in order.licenses" :key="l.id"
-          :to="`/admin/licenses?q=${l.keyPrefix}`"
+          :to="`${localePath('/admin/licenses')}?q=${l.keyPrefix}`"
           class="flex items-center gap-3 px-4 py-3 hover:bg-elevated transition"
         >
           <UIcon name="i-lucide-key" class="size-4 text-primary" />

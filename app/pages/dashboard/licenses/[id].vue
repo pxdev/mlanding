@@ -1,6 +1,7 @@
 <script setup>
 definePageMeta({ layout: 'portal', middleware: 'auth', colorMode: 'light' });
 const chrome = useChromeCopy();
+const localePath = useLocalePath();
 useHead({ title: () => chrome.value.pages.dashboardLicenseDetail.docTitle });
 const route = useRoute();
 const id = route.params.id;
@@ -45,7 +46,7 @@ const statusColor = {
 <template>
   <div v-if="license" class="space-y-6 sm:space-y-8">
     <div>
-      <NuxtLink to="/dashboard" class="text-sm text-gray-500 hover:text-primary inline-flex items-center gap-1.5">
+      <NuxtLink :to="localePath('/dashboard')" class="text-sm text-gray-500 hover:text-primary inline-flex items-center gap-1.5">
         <UIcon name="i-lucide-chevron-left" class="size-4 rtl:rotate-180" /> {{ chrome.pages.dashboardLicenseDetail.backToLicenses }}
       </NuxtLink>
       <h1 class="text-xl sm:text-2xl font-semibold mt-3 font-mono break-all">{{ license.keyPrefix }}…</h1>

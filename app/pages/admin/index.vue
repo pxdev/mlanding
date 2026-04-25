@@ -1,6 +1,7 @@
 <script setup>
 definePageMeta({ layout: 'portal', middleware: ['auth', 'admin'], colorMode: 'light' });
 const chrome = useChromeCopy();
+const localePath = useLocalePath();
 const t = computed(() => chrome.value.admin.indexPage);
 useHead({ title: () => chrome.value.admin.indexPage.docTitle });
 const { data: stats } = await useFetch('/api/portal/admin/stats');
@@ -69,7 +70,7 @@ const statusColor = {
     <section class="mt-8">
       <div class="flex items-center justify-between mb-3">
         <h2 class="text-lg font-semibold">{{ t.recentTitle }}</h2>
-        <NuxtLink to="/admin/orders" class="text-sm text-primary hover:underline inline-flex items-center gap-1">
+        <NuxtLink :to="localePath('/admin/orders')" class="text-sm text-primary hover:underline inline-flex items-center gap-1">
           {{ t.viewAll }} <UIcon name="i-lucide-arrow-right" class="size-3.5 rtl:rotate-180" />
         </NuxtLink>
       </div>
@@ -81,7 +82,7 @@ const statusColor = {
         <div v-else class="divide-y divide-default -m-4">
           <NuxtLink
             v-for="o in stats.recentOrders" :key="o.id"
-            :to="`/admin/orders/${o.id}`"
+            :to="localePath(`/admin/orders/${o.id}`)"
             class="flex items-center gap-4 px-4 py-3 hover:bg-elevated transition"
           >
             <UIcon name="i-lucide-receipt" class="size-5 text-muted shrink-0" />

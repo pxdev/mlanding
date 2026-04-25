@@ -1,6 +1,7 @@
 <script setup>
 definePageMeta({ layout: 'portal', middleware: ['auth', 'admin'], colorMode: 'light' });
 const chrome = useChromeCopy();
+const localePath = useLocalePath();
 const t = computed(() => chrome.value.admin.licensesPage);
 useHead({ title: () => chrome.value.admin.licensesPage.docTitle });
 const route = useRoute();
@@ -81,7 +82,7 @@ const statusFilters = computed(() => [
         <h1 class="text-2xl font-bold">{{ t.title }}</h1>
         <p class="text-sm text-muted mt-1">{{ t.subtitle }}</p>
       </div>
-      <UButton to="/admin/licenses/new" icon="i-lucide-plus" size="sm">{{ t.issueNew }}</UButton>
+      <UButton :to="localePath('/admin/licenses/new')" icon="i-lucide-plus" size="sm">{{ t.issueNew }}</UButton>
     </header>
 
     <div class="flex flex-wrap gap-2">
@@ -106,7 +107,7 @@ const statusFilters = computed(() => [
                 <span class="text-xs text-muted">{{ l.plan.name }}</span>
               </div>
               <div class="text-xs text-muted mt-0.5">
-                <NuxtLink :to="`/admin/users/${l.account.id}`" class="hover:text-primary">{{ l.account.email }}</NuxtLink>
+                <NuxtLink :to="localePath(`/admin/users/${l.account.id}`)" class="hover:text-primary">{{ l.account.email }}</NuxtLink>
                 · {{ l.activeActivations }}/{{ l.maxActivations }} {{ t.installsSuffix }} · {{ fmt(l.issuedAt) }}
                 <span v-if="l.notes"> · "{{ l.notes }}"</span>
               </div>
