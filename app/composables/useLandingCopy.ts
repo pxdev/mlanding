@@ -17,7 +17,7 @@ type Module = { id: string; label: string; blurb: string }
 type Addon = { key: string; label: string; desc: string; tag?: string }
 type AddonDetail = {
   long: string
-  bullets: string[]
+  sections: FeatureSection[]
   whoFor: string
   setupSteps: string[]
   integrates: string[]
@@ -48,7 +48,8 @@ type Plan = {
   durationProgress: number
   tagline: string
 }
-type Feature = { id: string; group: string; title: string; summary: string; bullets: string[] }
+type FeatureSection = { heading: string; body: string }
+type Feature = { id: string; group: string; title: string; summary: string; sections: FeatureSection[] }
 type Stat = { k: string; v: string }
 
 export type LandingCopy = {

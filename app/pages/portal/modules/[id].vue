@@ -49,6 +49,7 @@ const modules = computed(() => copy.value.modules.items);
 const moduleIndex = computed(() => modules.value.findIndex(m => m.id === moduleId.value));
 const totalModules = computed(() => String(modules.value.length).padStart(2, '0'));
 const visual = computed(() => visuals[moduleId.value]);
+const manualHref = computed(() => manualLinkForFeature(moduleId.value));
 const relatedIds = computed(() => integrations[moduleId.value] || []);
 const relatedModules = computed(() => relatedIds.value.map(id => modules.value.find(m => m.id === id)).filter(Boolean));
 // prev / next navigation
@@ -103,9 +104,19 @@ if (!moduleEntry.value) {
             </h1>
           </div>
         </div>
-        <p class="text-base sm:text-lg text-gray-600 dark:text-gray-400 leading-relaxed max-w-3xl mb-8 sm:mb-10">
+        <p class="text-base sm:text-lg text-gray-600 dark:text-gray-400 leading-relaxed max-w-3xl mb-6 sm:mb-7">
           {{ moduleEntry.blurb }}
         </p>
+
+        <!-- Manual deep-link — only when a manual article exists for this module -->
+        <NuxtLink v-if="manualHref"
+          :to="manualHref"
+          class="group inline-flex items-center gap-2 ps-3 pe-4 h-9 rounded-full bg-black/[0.04] dark:bg-white/[0.06] ring-1 ring-black/10 dark:ring-white/10 text-sm font-semibold hover:bg-primary hover:text-white dark:hover:bg-white dark:hover:text-primary transition-colors mb-8 sm:mb-10"
+        >
+          <UIcon name="i-lucide-book-open" class="size-4" />
+          <span>{{ copy.ui.readTheManual }}</span>
+          <UIcon name="i-lucide-arrow-right" class="size-3.5 rtl:rotate-180 transition-transform group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5" />
+        </NuxtLink>
 
         <!-- ═══ Video showcase — sits directly under the hero title, above the fold ═══ -->
         <LandingVideoShowcase
@@ -129,15 +140,16 @@ if (!moduleEntry.value) {
             </div>
           </div>
           <div class="col-span-12 lg:col-span-7">
-            <ul class="border-t border-black/10 dark:border-white/10">
-              <li v-for="(b, bi) in feature.bullets" :key="b"
-                class="group flex items-start gap-4 py-5 border-b border-black/10 dark:border-white/10"
+            <dl class="border-t border-black/10 dark:border-white/10">
+              <div v-for="(s, bi) in feature.sections" :key="s.heading"
+                class="group grid grid-cols-[2.5rem_1fr] sm:grid-cols-[3rem_1fr] gap-x-3 sm:gap-x-4 gap-y-1.5 py-6 border-b border-black/10 dark:border-white/10"
               >
-                <span class="text-xs tabular-nums text-gray-400 w-6 shrink-0 mt-0.5">{{ String(bi + 1).padStart(2, '0') }}</span>
-                <UIcon name="i-lucide-check" class="size-5 shrink-0 mt-0.5 text-emerald-500" />
-                <span class="text-base sm:text-lg text-gray-800 dark:text-gray-200 leading-relaxed">{{ b }}</span>
-              </li>
-            </ul>
+                <span class="text-xs tabular-nums text-gray-400 mt-1">{{ String(bi + 1).padStart(2, '0') }}</span>
+                <dt class="text-base sm:text-lg font-bold text-gray-900 dark:text-white leading-snug">{{ s.heading }}</dt>
+                <span aria-hidden="true" />
+                <dd class="text-sm sm:text-base text-gray-600 dark:text-gray-400 leading-relaxed">{{ s.body }}</dd>
+              </div>
+            </dl>
           </div>
         </div>
       </div>
@@ -156,7 +168,6 @@ if (!moduleEntry.value) {
         </div>
 
         <div class="relative rounded-2xl bg-gray-50 dark:bg-white/[0.025] overflow-hidden">
-          <div aria-hidden="true" class="h-0.5 bg-gradient-to-r opacity-80" :class="visual?.color" />
           <div class="p-6 sm:p-10">
             <LandingModuleMock :id="moduleEntry.id" :color="visual?.color" />
           </div>

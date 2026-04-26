@@ -139,7 +139,7 @@ const gradientClass = computed(() => props.article.gradient || 'from-primary to-
 
               <div
                 v-else-if="block.type === 'tip'"
-                class="rounded-xl border border-sky-200 dark:border-sky-500/30 bg-sky-50 dark:bg-sky-500/10 p-4 flex items-start gap-3"
+                class="rounded-xl border border-black/10 dark:border-white/10 bg-sky-50 dark:bg-sky-500/10 p-4 flex items-start gap-3"
               >
                 <UIcon name="i-lucide-lightbulb" class="size-5 shrink-0 text-sky-600 dark:text-sky-400 mt-0.5" />
                 <div>
@@ -150,7 +150,7 @@ const gradientClass = computed(() => props.article.gradient || 'from-primary to-
 
               <div
                 v-else-if="block.type === 'warn'"
-                class="rounded-xl border border-amber-200 dark:border-amber-500/30 bg-amber-50 dark:bg-amber-500/10 p-4 flex items-start gap-3"
+                class="rounded-xl border border-black/10 dark:border-white/10 bg-amber-50 dark:bg-amber-500/10 p-4 flex items-start gap-3"
               >
                 <UIcon name="i-lucide-alert-triangle" class="size-5 shrink-0 text-amber-600 dark:text-amber-400 mt-0.5" />
                 <div>

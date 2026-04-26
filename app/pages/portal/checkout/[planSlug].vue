@@ -183,7 +183,7 @@ const t = computed(() => {
       <div v-if="!plan && !error" class="py-10 text-center text-gray-500">
         <UIcon name="i-lucide-loader-circle" class="size-5 animate-spin" />
       </div>
-      <div v-else-if="error || !plan" class="rounded-2xl border border-red-500/30 bg-red-500/5 p-8 text-center">
+      <div v-else-if="error || !plan" class="rounded-2xl border border-black/10 dark:border-white/10 bg-red-500/5 p-8 text-center">
         <UIcon name="i-lucide-alert-triangle" class="size-6 mx-auto text-red-600 dark:text-red-400 mb-3" />
         <p class="text-lg font-black mb-2">
           {{ locale === 'ar' ? 'الخطة غير موجودة' : 'Plan not found' }}

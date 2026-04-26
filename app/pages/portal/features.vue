@@ -31,7 +31,10 @@ const visuals = {
     zatca: { icon: 'i-lucide-shield-check', color: 'from-emerald-500 to-green-600' },
     eta: { icon: 'i-lucide-file-check', color: 'from-amber-500 to-yellow-600' },
     ai: { icon: 'i-lucide-sparkles', color: 'from-violet-500 to-indigo-600' },
-    'reviews-loyalty': { icon: 'i-lucide-award', color: 'from-yellow-500 to-amber-600' }
+    'reviews-loyalty': { icon: 'i-lucide-award', color: 'from-yellow-500 to-amber-600' },
+    notifications: { icon: 'i-lucide-bell', color: 'from-sky-500 to-blue-600' },
+    'workspace-control': { icon: 'i-lucide-settings', color: 'from-slate-500 to-zinc-700' },
+    'activity-logs': { icon: 'i-lucide-history', color: 'from-rose-500 to-pink-600' }
 };
 // Official authority logos shown under the mock for compliance features
 const featureLogos = {
@@ -90,6 +93,9 @@ function detailLink(id) {
     if (addonKeys.value.has(id))
         return `/portal/addons/${id}`;
     return null;
+}
+function manualLink(id) {
+    return manualLinkForFeature(id);
 }
 </script>
 
@@ -166,14 +172,14 @@ function detailLink(id) {
               <p class="mt-2 text-sm sm:text-base text-gray-600 dark:text-gray-400 leading-relaxed">
                 {{ spotlight.summary }}
               </p>
-              <ul v-if="spotlight.bullets?.length" class="mt-3 flex flex-wrap gap-x-4 gap-y-1.5 text-xs text-gray-500 dark:text-gray-400">
+              <ul v-if="spotlight.sections?.length" class="mt-3 flex flex-wrap gap-x-4 gap-y-1.5 text-xs text-gray-500 dark:text-gray-400">
                 <li
-                  v-for="b in spotlight.bullets.slice(0, 3)"
-                  :key="b"
+                  v-for="s in spotlight.sections.slice(0, 3)"
+                  :key="s.heading"
                   class="inline-flex items-center gap-1.5"
                 >
                   <UIcon name="i-lucide-check" class="size-3 text-emerald-500 shrink-0" />
-                  <span class="truncate">{{ b }}</span>
+                  <span class="truncate font-semibold">{{ s.heading }}</span>
                 </li>
               </ul>
               <!-- Explicit CTA pill -->
@@ -264,32 +270,38 @@ function detailLink(id) {
           <h2 class="font-black tracking-tight leading-[0.95] text-3xl sm:text-4xl lg:text-5xl">{{ f.title }}</h2>
           <p class="mt-4 text-base sm:text-lg text-gray-600 dark:text-gray-400 leading-relaxed max-w-xl">{{ f.summary }}</p>
 
-          <!-- Hairline + bullet list -->
-          <ul class="mt-8 pt-6 border-t border-black/10 dark:border-white/10 grid sm:grid-cols-2 gap-x-8 gap-y-3 max-w-2xl">
-            <li v-for="b in f.bullets" :key="b" class="flex items-start gap-2.5 text-sm">
-              <UIcon name="i-lucide-check" class="size-4 shrink-0 mt-0.5 text-emerald-500" />
-              <span class="text-gray-700 dark:text-gray-300 leading-relaxed">{{ b }}</span>
-            </li>
-          </ul>
+          <!-- Hairline + section list (submenu heading + description) -->
+          <dl class="mt-8 pt-6 border-t border-black/10 dark:border-white/10 grid sm:grid-cols-2 gap-x-8 gap-y-6 max-w-2xl">
+            <div v-for="s in f.sections" :key="s.heading" class="flex flex-col gap-1.5">
+              <dt class="flex items-center gap-2 text-sm font-bold text-gray-900 dark:text-white">
+                <span aria-hidden="true" class="size-1.5 rounded-full bg-secondary-500 shrink-0" />
+                <span>{{ s.heading }}</span>
+              </dt>
+              <dd class="ps-3.5 text-sm text-gray-600 dark:text-gray-400 leading-relaxed">{{ s.body }}</dd>
+            </div>
+          </dl>
 
-          <!-- "Read in detail" link to the dedicated module or add-on page (only when one exists) -->
-          <NuxtLink v-if="detailLink(f.id)" :to="detailLink(f.id)"
-            class="group/read mt-8 inline-flex items-center gap-3 text-sm font-bold self-start"
-          >
-            <span class="size-10 rounded-full bg-primary text-white dark:bg-white dark:text-primary flex items-center justify-center transition-transform group-hover/read:scale-110">
-              <UIcon name="i-lucide-arrow-right" class="size-4 rtl:rotate-180" />
-            </span>
-            <span class="relative">
-              {{ copy.ui.readAbout }} {{ f.title }}
-              <span aria-hidden="true" class="absolute -bottom-0.5 inset-x-0 h-px bg-current group-hover/read:bg-secondary-500 transition-colors" />
-            </span>
-          </NuxtLink>
+          <!-- "Read in detail" + manual links — pill row, same height, vertically aligned -->
+          <div class="mt-8 flex flex-wrap items-center gap-3">
+            <NuxtLink v-if="detailLink(f.id)" :to="detailLink(f.id)"
+              class="group/read inline-flex items-center h-10 gap-2 ps-4 pe-4 rounded-full bg-primary text-white dark:bg-white dark:text-primary text-sm font-bold transition-transform hover:-translate-y-0.5"
+            >
+              <span>{{ copy.ui.readAbout }} {{ f.title }}</span>
+              <UIcon name="i-lucide-arrow-right" class="size-4 rtl:rotate-180 transition-transform group-hover/read:translate-x-0.5 rtl:group-hover/read:-translate-x-0.5" />
+            </NuxtLink>
+            <NuxtLink v-if="manualLink(f.id)" :to="manualLink(f.id)"
+              class="group/manual inline-flex items-center h-10 gap-2 ps-3 pe-4 rounded-full bg-black/[0.04] dark:bg-white/[0.06] ring-1 ring-black/10 dark:ring-white/10 text-sm font-semibold hover:bg-primary hover:text-white dark:hover:bg-white dark:hover:text-primary transition-colors"
+            >
+              <UIcon name="i-lucide-book-open" class="size-4" />
+              <span>{{ copy.ui.openInManual }}</span>
+              <UIcon name="i-lucide-arrow-right" class="size-3.5 rtl:rotate-180 transition-transform group-hover/manual:translate-x-0.5 rtl:group-hover/manual:-translate-x-0.5" />
+            </NuxtLink>
+          </div>
         </div>
 
         <!-- Right: mock, soft-bg frame + gradient accent stripe (no border) -->
         <div class="col-span-12 lg:col-span-5 relative">
           <div class="sticky top-32 rounded-2xl bg-gray-50 dark:bg-white/[0.025] overflow-hidden">
-            <div aria-hidden="true" class="h-0.5 bg-gradient-to-r opacity-80" :class="visuals[f.id]?.color" />
             <div class="p-5 sm:p-6">
               <LandingModuleMock :id="f.id" :color="visuals[f.id]?.color" />
             </div>

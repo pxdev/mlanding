@@ -27,6 +27,7 @@ const meta = computed(() => addonMeta[addonKey.value]);
 const allAddons = computed(() => copy.value.addons.items);
 const addonIndex = computed(() => allAddons.value.findIndex(a => a.key === addonKey.value));
 const totalAddons = computed(() => String(allAddons.value.length).padStart(2, '0'));
+const manualHref = computed(() => manualLinkForAddon(addonKey.value));
 const prevAddon = computed(() => addonIndex.value > 0 ? allAddons.value[addonIndex.value - 1] : null);
 const nextAddon = computed(() => addonIndex.value < allAddons.value.length - 1 ? allAddons.value[addonIndex.value + 1] : null);
 // Sibling add-ons in the same category
@@ -87,6 +88,14 @@ if (!addonItem.value || !detail.value) {
             <p class="mt-6 text-lg sm:text-xl lg:text-2xl text-gray-600 dark:text-gray-400 leading-relaxed max-w-2xl font-light">
               {{ addonItem.desc }}
             </p>
+            <NuxtLink v-if="manualHref"
+              :to="manualHref"
+              class="mt-6 group inline-flex items-center gap-2 ps-3 pe-4 h-9 rounded-full bg-black/[0.04] dark:bg-white/[0.06] ring-1 ring-black/10 dark:ring-white/10 text-sm font-semibold hover:bg-primary hover:text-white dark:hover:bg-white dark:hover:text-primary transition-colors"
+            >
+              <UIcon name="i-lucide-book-open" class="size-4" />
+              <span>{{ copy.ui.readTheManual }}</span>
+              <UIcon name="i-lucide-arrow-right" class="size-3.5 rtl:rotate-180 transition-transform group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5" />
+            </NuxtLink>
           </div>
         </div>
       </div>
@@ -117,15 +126,19 @@ if (!addonItem.value || !detail.value) {
             </div>
           </div>
           <div class="col-span-12 lg:col-span-7">
-            <ul class="border-t border-black/10 dark:border-white/10">
-              <li v-for="(b, bi) in detail.bullets" :key="b"
-                class="flex items-start gap-4 py-5 border-b border-black/10 dark:border-white/10"
+            <dl class="border-t border-black/10 dark:border-white/10">
+              <div v-for="(s, bi) in detail.sections" :key="s.heading"
+                class="grid grid-cols-[2.5rem_1fr] sm:grid-cols-[3rem_1fr] gap-x-3 sm:gap-x-4 gap-y-2 py-7 border-b border-black/10 dark:border-white/10"
               >
-                <span class="text-xs tabular-nums text-gray-400 w-6 shrink-0 mt-0.5">{{ String(bi + 1).padStart(2, '0') }}</span>
-                <UIcon name="i-lucide-check" class="size-5 shrink-0 mt-0.5" :class="meta?.iconText" />
-                <span class="text-base sm:text-lg text-gray-800 dark:text-gray-200 leading-relaxed">{{ b }}</span>
-              </li>
-            </ul>
+                <span class="text-xs tabular-nums text-gray-400 mt-1.5">{{ String(bi + 1).padStart(2, '0') }}</span>
+                <dt class="flex items-start gap-2 text-base sm:text-lg font-bold text-gray-900 dark:text-white leading-snug">
+                  <UIcon name="i-lucide-check" class="size-5 shrink-0 mt-0.5" :class="meta?.iconText" />
+                  <span>{{ s.heading }}</span>
+                </dt>
+                <span aria-hidden="true" />
+                <dd class="ps-7 text-sm sm:text-base text-gray-600 dark:text-gray-400 leading-relaxed">{{ s.body }}</dd>
+              </div>
+            </dl>
           </div>
         </div>
       </div>

@@ -52,7 +52,7 @@ useHead(() => ({
               </p>
               <ul>
                 <li v-for="item in s.can" :key="item"
-                  class="flex items-start gap-3 py-2.5 border-t border-emerald-500/20 first:border-t-emerald-500 last:border-b last:border-b-emerald-500/20"
+                  class="flex items-start gap-3 py-2.5 border-t border-black/10 dark:border-white/10 last:border-b last:border-b-black/10 dark:last:border-b-white/10"
                 >
                   <UIcon name="i-lucide-check" class="size-4 shrink-0 mt-0.5 text-emerald-500" />
                   <span class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">{{ item }}</span>
@@ -65,7 +65,7 @@ useHead(() => ({
               </p>
               <ul>
                 <li v-for="item in s.cannot" :key="item"
-                  class="flex items-start gap-3 py-2.5 border-t border-red-500/20 first:border-t-red-500 last:border-b last:border-b-red-500/20"
+                  class="flex items-start gap-3 py-2.5 border-t border-black/10 dark:border-white/10 last:border-b last:border-b-black/10 dark:last:border-b-white/10"
                 >
                   <UIcon name="i-lucide-x" class="size-4 shrink-0 mt-0.5 text-red-500" />
                   <span class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">{{ item }}</span>

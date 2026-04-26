@@ -83,9 +83,6 @@ function onPause() { isPlaying.value = false }
 
 <template>
   <div class="relative rounded-2xl overflow-hidden group bg-gray-50 dark:bg-white/[0.025]">
-    <!-- Accent stripe tied to the module / addon color -->
-    <div aria-hidden="true" class="h-0.5 bg-gradient-to-r opacity-80" :class="accent" />
-
     <!-- ═══ YouTube iframe (autoplay muted loop via embed params) ═══ -->
     <div v-if="isYouTube" class="relative">
       <iframe

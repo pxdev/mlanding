@@ -271,6 +271,69 @@ defineProps<{ id: string; color?: string }>()
     </div>
   </div>
 
+  <!-- ════ Marketing & Campaigns — composer preview + channel send + delivery stats ════ -->
+  <div v-else-if="id === 'marketing'" class="w-full text-[9px] space-y-2.5">
+    <!-- Header strip: campaign meta + status -->
+    <div class="flex items-center justify-between">
+      <div>
+        <p class="text-sm font-black text-gray-900 dark:text-white tracking-tight leading-none">Spring Promo</p>
+        <p class="text-[10px] text-gray-500 mt-0.5">Audience · Top spenders · 1,284</p>
+      </div>
+      <span class="inline-flex items-center gap-1 ps-1.5 pe-2 py-0.5 rounded-full bg-amber-500/10 text-amber-700 dark:text-amber-300 text-[9px] font-bold uppercase tracking-wider ring-1 ring-amber-500/30">
+        <span class="size-1 rounded-full bg-amber-500 animate-pulse" />
+        Scheduled
+      </span>
+    </div>
+
+    <!-- Channel mix -->
+    <div class="grid grid-cols-4 gap-1.5">
+      <div class="p-1.5 rounded-md bg-emerald-500/10 ring-1 ring-emerald-500/20 flex flex-col items-center gap-0.5">
+        <UIcon name="i-lucide-message-square" class="size-3 text-emerald-600 dark:text-emerald-400" />
+        <span class="text-[9px] font-bold">SMS</span>
+      </div>
+      <div class="p-1.5 rounded-md bg-sky-500/10 ring-1 ring-sky-500/20 flex flex-col items-center gap-0.5">
+        <UIcon name="i-lucide-mail" class="size-3 text-sky-600 dark:text-sky-400" />
+        <span class="text-[9px] font-bold">Email</span>
+      </div>
+      <div class="p-1.5 rounded-md bg-green-500/10 ring-1 ring-green-500/20 flex flex-col items-center gap-0.5">
+        <UIcon name="i-simple-icons-whatsapp" class="size-3 text-green-600 dark:text-green-400" />
+        <span class="text-[9px] font-bold">WA</span>
+      </div>
+      <div class="p-1.5 rounded-md bg-violet-500/10 ring-1 ring-violet-500/20 flex flex-col items-center gap-0.5">
+        <UIcon name="i-lucide-bell" class="size-3 text-violet-600 dark:text-violet-400" />
+        <span class="text-[9px] font-bold">Push</span>
+      </div>
+    </div>
+
+    <!-- Composer preview row -->
+    <div class="rounded-lg ring-1 ring-black/10 dark:ring-white/10 bg-gray-50 dark:bg-white/[0.025] p-2.5">
+      <div class="flex items-center gap-1.5 mb-1">
+        <UIcon name="i-lucide-edit-3" class="size-3 text-gray-400" />
+        <span class="text-[9px] uppercase tracking-wider text-gray-400 font-bold">Template · EN</span>
+        <span class="ms-auto text-[9px] text-gray-400 tabular-nums">2 vars</span>
+      </div>
+      <p class="text-[10px] leading-snug text-gray-700 dark:text-gray-200">
+        Hi <span class="px-1 py-0.5 rounded bg-orange-500/15 text-orange-700 dark:text-orange-300 font-bold">{name}</span>, enjoy 20% off your next visit before <span class="px-1 py-0.5 rounded bg-orange-500/15 text-orange-700 dark:text-orange-300 font-bold">{date}</span>.
+      </p>
+    </div>
+
+    <!-- Delivery stats -->
+    <div class="grid grid-cols-3 gap-1.5">
+      <div class="p-1.5 rounded-md bg-black/[0.03] dark:bg-white/[0.04]">
+        <p class="text-[9px] text-gray-500 uppercase tracking-wider font-bold">Sent</p>
+        <p class="text-[11px] font-black tabular-nums text-gray-900 dark:text-white">1,284</p>
+      </div>
+      <div class="p-1.5 rounded-md bg-emerald-500/[0.08]">
+        <p class="text-[9px] text-emerald-700 dark:text-emerald-400 uppercase tracking-wider font-bold">Delivered</p>
+        <p class="text-[11px] font-black tabular-nums text-emerald-700 dark:text-emerald-300">98%</p>
+      </div>
+      <div class="p-1.5 rounded-md bg-orange-500/[0.08]">
+        <p class="text-[9px] text-orange-700 dark:text-orange-400 uppercase tracking-wider font-bold">Rebook</p>
+        <p class="text-[11px] font-black tabular-nums text-orange-700 dark:text-orange-300">+34%</p>
+      </div>
+    </div>
+  </div>
+
   <!-- ════ Catalogue — category tabs + service rows with icons + footer ════ -->
   <div v-else-if="id === 'catalogue'" class="w-full text-[9px]">
     <!-- Top bar -->
@@ -428,6 +491,67 @@ defineProps<{ id: string; color?: string }>()
         <UIcon name="i-lucide-check-circle-2" class="size-2.5" />
         COGS auto-posted
       </span>
+    </div>
+  </div>
+
+  <!-- ════ Events & Ticketing — event card + capacity bar + ticket tiers + check-in QR ════ -->
+  <div v-else-if="id === 'events'" class="w-full text-[9px] space-y-2.5">
+    <!-- Header -->
+    <div class="flex items-center justify-between">
+      <div>
+        <p class="text-sm font-black text-gray-900 dark:text-white tracking-tight leading-none">Yoga Flow · Sat 7am</p>
+        <p class="text-[10px] text-gray-500 mt-0.5">Studio A · 60 min</p>
+      </div>
+      <span class="inline-flex items-center gap-1 ps-1.5 pe-2 py-0.5 rounded-full bg-purple-500/10 text-purple-700 dark:text-purple-300 text-[9px] font-bold uppercase tracking-wider ring-1 ring-purple-500/30">
+        <UIcon name="i-lucide-ticket" class="size-2.5" />
+        Live
+      </span>
+    </div>
+
+    <!-- Capacity bar -->
+    <div class="rounded-lg ring-1 ring-black/10 dark:ring-white/10 p-2.5">
+      <div class="flex items-center justify-between mb-1.5">
+        <span class="text-[10px] font-bold uppercase tracking-wider text-gray-500">Capacity</span>
+        <span class="text-[11px] font-black tabular-nums">10 / 12</span>
+      </div>
+      <div class="h-1.5 bg-black/[0.06] dark:bg-white/10 rounded-full overflow-hidden">
+        <div class="h-full bg-gradient-to-r from-purple-500 to-violet-500 rounded-full" style="width:83%" />
+      </div>
+      <div class="mt-1.5 flex items-center justify-between text-[9px] text-gray-500">
+        <span>Sold-out in 6 min</span>
+        <span class="inline-flex items-center gap-1 text-amber-600 dark:text-amber-400">
+          <UIcon name="i-lucide-users" class="size-2.5" />
+          3 waitlist
+        </span>
+      </div>
+    </div>
+
+    <!-- Ticket tiers -->
+    <div class="space-y-1.5">
+      <div class="flex items-center gap-2 p-1.5 rounded-md bg-emerald-500/[0.06] ring-1 ring-emerald-500/20">
+        <span class="size-1.5 rounded-full bg-emerald-500" />
+        <span class="text-[10px] font-bold flex-1">Drop-in</span>
+        <span class="text-[10px] tabular-nums text-gray-500">8 sold</span>
+        <span class="text-[10px] font-black tabular-nums">SAR 80</span>
+      </div>
+      <div class="flex items-center gap-2 p-1.5 rounded-md bg-violet-500/[0.06] ring-1 ring-violet-500/20">
+        <span class="size-1.5 rounded-full bg-violet-500" />
+        <span class="text-[10px] font-bold flex-1">Member</span>
+        <span class="text-[10px] tabular-nums text-gray-500">2 sold</span>
+        <span class="text-[10px] font-black tabular-nums">Free</span>
+      </div>
+    </div>
+
+    <!-- Check-in row -->
+    <div class="flex items-center gap-2 pt-1.5 border-t border-black/10 dark:border-white/10">
+      <div class="size-7 rounded-md bg-black/5 dark:bg-white/10 flex items-center justify-center">
+        <UIcon name="i-lucide-qr-code" class="size-3.5 text-gray-600 dark:text-gray-300" />
+      </div>
+      <div class="flex-1">
+        <p class="text-[10px] font-bold leading-tight">Per-ticket QR</p>
+        <p class="text-[9px] text-gray-500 leading-tight">Door check-in via kiosk or staff phone</p>
+      </div>
+      <span class="text-[9px] font-black tabular-nums text-emerald-600 dark:text-emerald-400">7 in</span>
     </div>
   </div>
 
@@ -934,6 +1058,180 @@ defineProps<{ id: string; color?: string }>()
       <p class="mt-1 text-xl font-black">1,240 <span class="text-[9px] opacity-70">pts</span></p>
       <div class="mt-1.5 h-1 bg-white/20 rounded-full overflow-hidden"><div class="h-full w-[62%] bg-white/80 rounded-full" /></div>
       <p class="mt-1 text-[9px] opacity-80">260 pts to Gold tier</p>
+    </div>
+  </div>
+
+  <!-- ════ Notifications & Messaging — per-event rules + multi-channel + delivery log ════ -->
+  <div v-else-if="id === 'notifications'" class="w-full text-[9px] space-y-2.5">
+    <!-- Header -->
+    <div class="flex items-center justify-between">
+      <div>
+        <p class="text-sm font-black text-gray-900 dark:text-white tracking-tight leading-none">appointment.confirmed</p>
+        <p class="text-[10px] text-gray-500 mt-0.5">Audience · Client + Assigned staff</p>
+      </div>
+      <span class="inline-flex items-center gap-1 ps-1.5 pe-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 text-[9px] font-bold uppercase tracking-wider ring-1 ring-emerald-500/30">
+        <span class="size-1 rounded-full bg-emerald-500" />
+        Active
+      </span>
+    </div>
+
+    <!-- Channel toggles -->
+    <div class="rounded-lg ring-1 ring-black/10 dark:ring-white/10 p-2 space-y-1.5">
+      <div class="flex items-center gap-2">
+        <UIcon name="i-lucide-bell" class="size-3 text-violet-500" />
+        <span class="text-[10px] font-semibold flex-1">In-app</span>
+        <span class="text-[9px] text-gray-400">always</span>
+        <span class="size-3 rounded-full bg-violet-500 ring-2 ring-violet-500/30" />
+      </div>
+      <div class="flex items-center gap-2">
+        <UIcon name="i-lucide-mail" class="size-3 text-sky-500" />
+        <span class="text-[10px] font-semibold flex-1">Email</span>
+        <span class="text-[9px] text-gray-400">SendGrid</span>
+        <span class="size-3 rounded-full bg-sky-500 ring-2 ring-sky-500/30" />
+      </div>
+      <div class="flex items-center gap-2">
+        <UIcon name="i-lucide-message-square" class="size-3 text-emerald-500" />
+        <span class="text-[10px] font-semibold flex-1">SMS</span>
+        <span class="text-[9px] text-gray-400">Twilio</span>
+        <span class="size-3 rounded-full bg-emerald-500 ring-2 ring-emerald-500/30" />
+      </div>
+      <div class="flex items-center gap-2 opacity-60">
+        <UIcon name="i-simple-icons-whatsapp" class="size-3 text-green-500" />
+        <span class="text-[10px] font-semibold flex-1">WhatsApp</span>
+        <span class="text-[9px] text-gray-400">off</span>
+        <span class="size-3 rounded-full bg-black/10 dark:bg-white/15" />
+      </div>
+    </div>
+
+    <!-- Delivery log -->
+    <div class="rounded-lg bg-black/[0.03] dark:bg-white/[0.04] p-2">
+      <div class="flex items-center gap-1.5 mb-1.5">
+        <UIcon name="i-lucide-activity" class="size-3 text-gray-400" />
+        <span class="text-[9px] uppercase tracking-wider font-bold text-gray-400">Last hour</span>
+      </div>
+      <div class="grid grid-cols-3 gap-1.5">
+        <div>
+          <p class="text-[11px] font-black tabular-nums text-emerald-600 dark:text-emerald-400">142</p>
+          <p class="text-[9px] text-gray-500">delivered</p>
+        </div>
+        <div>
+          <p class="text-[11px] font-black tabular-nums text-amber-600 dark:text-amber-400">3</p>
+          <p class="text-[9px] text-gray-500">retrying</p>
+        </div>
+        <div>
+          <p class="text-[11px] font-black tabular-nums text-gray-600 dark:text-gray-400">0</p>
+          <p class="text-[9px] text-gray-500">failed</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════ Workspace Control — settings panel with branding, locations, retention, BNPL ════ -->
+  <div v-else-if="id === 'workspace-control'" class="w-full text-[9px] space-y-2">
+    <!-- Brand row -->
+    <div class="flex items-center gap-2 p-2 rounded-lg ring-1 ring-black/10 dark:ring-white/10">
+      <div class="size-8 rounded-lg bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center text-white font-black text-[11px]">M</div>
+      <div class="flex-1 min-w-0">
+        <p class="text-[11px] font-black tracking-tight">Momentfy Studio</p>
+        <p class="text-[9px] text-gray-500">SAR · ar/en · Asia/Riyadh</p>
+      </div>
+      <UIcon name="i-lucide-settings" class="size-3.5 text-gray-400" />
+    </div>
+
+    <!-- Settings rows -->
+    <div class="space-y-1">
+      <div class="flex items-center gap-2 p-1.5 rounded-md bg-black/[0.03] dark:bg-white/[0.04]">
+        <UIcon name="i-lucide-map-pin" class="size-3 text-sky-500" />
+        <span class="text-[10px] font-semibold flex-1">Locations</span>
+        <span class="text-[9px] tabular-nums text-gray-500">3 branches</span>
+      </div>
+      <div class="flex items-center gap-2 p-1.5 rounded-md bg-black/[0.03] dark:bg-white/[0.04]">
+        <UIcon name="i-lucide-shield-check" class="size-3 text-emerald-500" />
+        <span class="text-[10px] font-semibold flex-1">Permissions</span>
+        <span class="text-[9px] tabular-nums text-gray-500">4 templates</span>
+      </div>
+      <div class="flex items-center gap-2 p-1.5 rounded-md bg-black/[0.03] dark:bg-white/[0.04]">
+        <UIcon name="i-lucide-database-backup" class="size-3 text-amber-500" />
+        <span class="text-[10px] font-semibold flex-1">Backup</span>
+        <span class="text-[9px] tabular-nums text-gray-500">last · 02:04</span>
+      </div>
+      <div class="flex items-center gap-2 p-1.5 rounded-md bg-black/[0.03] dark:bg-white/[0.04]">
+        <UIcon name="i-lucide-archive" class="size-3 text-violet-500" />
+        <span class="text-[10px] font-semibold flex-1">Retention</span>
+        <span class="text-[9px] tabular-nums text-gray-500">90d / GDPR</span>
+      </div>
+      <div class="flex items-center gap-2 p-1.5 rounded-md bg-black/[0.03] dark:bg-white/[0.04]">
+        <UIcon name="i-lucide-credit-card" class="size-3 text-orange-500" />
+        <span class="text-[10px] font-semibold flex-1">BNPL</span>
+        <span class="inline-flex items-center gap-1 text-[9px] font-bold text-emerald-600 dark:text-emerald-400">
+          <span class="size-1 rounded-full bg-emerald-500" />
+          Tabby + Tamara
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════ Activity Logs & Audit — filter chips + audit trail rows + hash-chain footer ════ -->
+  <div v-else-if="id === 'activity-logs'" class="w-full text-[9px] space-y-2">
+    <!-- Filter chips -->
+    <div class="flex items-center gap-1 flex-wrap">
+      <span class="inline-flex items-center gap-1 ps-1.5 pe-2 py-0.5 rounded-full bg-primary text-white dark:bg-white dark:text-primary text-[9px] font-bold">
+        Today
+      </span>
+      <span class="inline-flex items-center gap-1 ps-1.5 pe-2 py-0.5 rounded-full bg-black/[0.06] dark:bg-white/10 text-[9px] font-semibold">
+        All members
+      </span>
+      <span class="inline-flex items-center gap-1 ps-1.5 pe-2 py-0.5 rounded-full bg-black/[0.06] dark:bg-white/10 text-[9px] font-semibold">
+        Sensitive
+      </span>
+      <span class="ms-auto text-[9px] tabular-nums text-gray-400 font-bold">1,284 events</span>
+    </div>
+
+    <!-- Audit rows -->
+    <div class="space-y-1">
+      <div class="flex items-start gap-2 p-1.5 rounded-md bg-rose-500/[0.06] ring-1 ring-rose-500/15">
+        <span class="size-1.5 mt-1 rounded-full bg-rose-500 shrink-0" />
+        <div class="flex-1 min-w-0">
+          <p class="text-[10px] leading-tight">
+            <span class="font-bold">Lina H.</span>
+            <span class="text-gray-500"> deleted invoice</span>
+            <span class="font-bold tabular-nums"> #INV-2031</span>
+          </p>
+          <p class="text-[9px] text-gray-400 mt-0.5">11:42 · IP 41.32.•.•</p>
+        </div>
+        <UIcon name="i-lucide-trash-2" class="size-3 text-rose-500 shrink-0" />
+      </div>
+      <div class="flex items-start gap-2 p-1.5 rounded-md bg-amber-500/[0.06] ring-1 ring-amber-500/15">
+        <span class="size-1.5 mt-1 rounded-full bg-amber-500 shrink-0" />
+        <div class="flex-1 min-w-0">
+          <p class="text-[10px] leading-tight">
+            <span class="font-bold">Owner</span>
+            <span class="text-gray-500"> impersonated</span>
+            <span class="font-bold"> Noura A.</span>
+          </p>
+          <p class="text-[9px] text-gray-400 mt-0.5">11:08 · session 14m</p>
+        </div>
+        <UIcon name="i-lucide-key" class="size-3 text-amber-500 shrink-0" />
+      </div>
+      <div class="flex items-start gap-2 p-1.5 rounded-md bg-sky-500/[0.06] ring-1 ring-sky-500/15">
+        <span class="size-1.5 mt-1 rounded-full bg-sky-500 shrink-0" />
+        <div class="flex-1 min-w-0">
+          <p class="text-[10px] leading-tight">
+            <span class="font-bold">Reception</span>
+            <span class="text-gray-500"> changed role for</span>
+            <span class="font-bold"> Yasmine</span>
+          </p>
+          <p class="text-[9px] text-gray-400 mt-0.5">10:21 · Staff → Manager</p>
+        </div>
+        <UIcon name="i-lucide-user-cog" class="size-3 text-sky-500 shrink-0" />
+      </div>
+    </div>
+
+    <!-- Hash-chain footer -->
+    <div class="flex items-center gap-1.5 px-2 py-1.5 rounded-md bg-emerald-500/[0.08] ring-1 ring-emerald-500/20">
+      <UIcon name="i-lucide-shield-check" class="size-3 text-emerald-600 dark:text-emerald-400 shrink-0" />
+      <span class="text-[9px] font-bold text-emerald-700 dark:text-emerald-300">Hash-chain · ledger sealed</span>
+      <span class="ms-auto font-mono text-[9px] tabular-nums text-emerald-700 dark:text-emerald-400">7e2a…b91c</span>
     </div>
   </div>
 

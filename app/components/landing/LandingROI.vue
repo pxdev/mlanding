@@ -36,7 +36,7 @@ const currencyFmt = computed(() => new Intl.NumberFormat(
 
       <div class="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-5">
         <!-- SaaS card -->
-        <article class="lg:col-span-4 rounded-2xl border border-rose-500/20 bg-gradient-to-br from-rose-500/5 via-white to-transparent dark:from-rose-500/10 dark:via-black/40 dark:to-transparent p-7 sm:p-8 flex flex-col justify-between">
+        <article class="lg:col-span-4 rounded-2xl border border-black/10 dark:border-white/10 bg-gradient-to-br from-rose-500/5 via-white to-transparent dark:from-rose-500/10 dark:via-black/40 dark:to-transparent p-7 sm:p-8 flex flex-col justify-between">
           <div>
             <p class="text-[10px] uppercase tracking-[0.2em] font-bold text-rose-600 dark:text-rose-400 inline-flex items-center gap-2">
               <UIcon name="i-lucide-trending-up" class="size-3.5" />
@@ -52,7 +52,7 @@ const currencyFmt = computed(() => new Intl.NumberFormat(
         </article>
 
         <!-- Momentfy card -->
-        <article class="lg:col-span-4 rounded-2xl border border-emerald-500/30 bg-gradient-to-br from-emerald-500/5 via-white to-transparent dark:from-emerald-500/10 dark:via-black/40 dark:to-transparent p-7 sm:p-8 flex flex-col justify-between">
+        <article class="lg:col-span-4 rounded-2xl border border-black/10 dark:border-white/10 bg-gradient-to-br from-emerald-500/5 via-white to-transparent dark:from-emerald-500/10 dark:via-black/40 dark:to-transparent p-7 sm:p-8 flex flex-col justify-between">
           <div>
             <p class="text-[10px] uppercase tracking-[0.2em] font-bold text-emerald-600 dark:text-emerald-400 inline-flex items-center gap-2">
               <UIcon name="i-lucide-server" class="size-3.5" />

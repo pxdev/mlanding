@@ -53,11 +53,11 @@ const activeIndex = ref(0)
 const active = computed(() => modules.value[activeIndex.value])
 const activeVisual = computed(() => active.value ? visuals[active.value.id] : undefined)
 
-// Pull the first four bullets from the matching feature for the highlight list.
+// Pull the first four section headings from the matching feature for the highlight list.
 const activeHighlights = computed(() => {
   if (!active.value) return []
   const feature = copy.value.featuresPage.items.find(f => f.id === active.value.id)
-  return feature?.bullets.slice(0, 4) ?? []
+  return feature?.sections.slice(0, 4).map(s => s.heading) ?? []
 })
 
 // Tabs — 'core' shows the auto-rotating explorer, 'addons' shows the directory
@@ -368,7 +368,6 @@ const totalIndex = computed(() => String(modules.value.length).padStart(2, '0'))
 
             <!-- Live mock — light-weight frame (no border), soft bg + hairline top -->
             <div class="mt-8 relative rounded-2xl bg-gray-50 dark:bg-white/[0.025] overflow-hidden">
-              <div aria-hidden="true" class="h-0.5 bg-gradient-to-r opacity-80" :class="activeVisual?.color" />
               <div :key="active?.id" class="p-5 sm:p-6 transition-opacity duration-300">
                 <LandingModuleMock :id="active?.id || 'calendar'" :color="activeVisual?.color" />
               </div>

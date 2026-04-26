@@ -315,15 +315,6 @@
     "addonDetails": {
       "zatca": {
         "long": "Saudi Arabia's ZATCA Phase 2 e-invoicing rules require invoices to be cryptographically signed, QR-stamped, and submitted to the Zakat, Tax and Customs Authority in real time. Momentfy includes the complete flow — CSR, CSID issuance, UBL signing, clearance, and reporting — without relying on an external SaaS layer.",
-        "bullets": [
-          "CSR generation and CSID issuance via ZATCA's production endpoints",
-          "UBL 2.1 XML signing — private keys stay on your server",
-          "QR code stamped on every printed and PDF invoice",
-          "Real-time clearance (B2B) and reporting (B2C) flows",
-          "Pending queue re-processed hourly by cron, with errors retained on every invoice",
-          "Full archival of cleared invoices with submission UUIDs",
-          "Saudi Riyal currency glyph (U+20C1) bundled"
-        ],
         "whoFor": "Any Saudi-registered business with a Tax Registration Number issuing VAT invoices.",
         "setupSteps": [
           "Enter your TRN on the tenant settings page",
@@ -335,18 +326,40 @@
           "Sales & POS",
           "Accounting",
           "Client Portal"
+        ],
+        "sections": [
+          {
+            "heading": "CSR & CSID issuance",
+            "body": "Generate a Certificate Signing Request directly from the admin panel and submit it to ZATCA's Fatoora compliance endpoint. Paste the returned CSID back into Momentfy to authorise the device — sandbox certificates for testing, production for live clearance, switched with a single toggle."
+          },
+          {
+            "heading": "UBL 2.1 signing on your server",
+            "body": "Every invoice is built as a UBL 2.1 XML document, hashed with SHA-256, signed and stamped on your own server using the device private key. The keys never leave your infrastructure — no SaaS signer, no per-invoice fee, no vendor in the cryptographic chain."
+          },
+          {
+            "heading": "QR stamp on every receipt",
+            "body": "A TLV-encoded QR carrying seller name, VAT number, timestamp, total and VAT amount is stamped on every printed thermal receipt, A4 invoice and PDF download. The code is generated locally, so it works even when the connection to ZATCA is down."
+          },
+          {
+            "heading": "B2B clearance & B2C reporting",
+            "body": "B2B standard invoices flow through real-time clearance — the invoice is held until ZATCA returns the cleared XML and stamp. B2C simplified invoices use the reporting flow — printed instantly with the QR, then submitted within 24 hours per ZATCA rules."
+          },
+          {
+            "heading": "Hourly retry queue",
+            "body": "Failed or pending submissions land in a queue that an hourly cron re-processes automatically. Each retry records the error code and ZATCA response so support can audit exactly why a particular invoice was rejected."
+          },
+          {
+            "heading": "Cleared-invoice archival",
+            "body": "Cleared invoices are archived alongside the signed XML, the SHA-256 hash, the cryptographic stamp and the ZATCA UUID. Auditors get the full chain of custody — issuance, clearance, retention — straight from the database."
+          },
+          {
+            "heading": "Saudi Riyal glyph (U+20C1)",
+            "body": "The new SAR symbol is bundled as a custom font and rendered correctly on every receipt, invoice and PDF — including thermal printers that don't carry it natively. Receipts print compliant from the day you flip the switch."
+          }
         ]
       },
       "eta": {
         "long": "Egypt's ETA (Egyptian Tax Authority) requires every B2B invoice to be mapped to item and customer codes before it is submitted to the authority portal. Momentfy builds the full ETA document structure, signs and submits it, tracks status per invoice, and resubmits rejections automatically.",
-        "bullets": [
-          "Item and customer code mapping configured in tenant settings",
-          "Document-builder covers the ETA schema end-to-end before signing",
-          "Signed submission with status tracking (submitted → accepted → cleared)",
-          "Credit notes (c) and debit notes (d) supported via ETA document-type flags",
-          "ETA UUID, long-id and submission status retained on every invoice",
-          "Automatic retries on transient ETA API failures"
-        ],
         "whoFor": "Any Egypt-registered business required to submit ETA e-invoices.",
         "setupSteps": [
           "Obtain your ETA client secret and upload to tenant settings",
@@ -358,18 +371,36 @@
           "Sales & POS",
           "Accounting",
           "Clients & CRM"
+        ],
+        "sections": [
+          {
+            "heading": "Item & customer code mapping",
+            "body": "Map each tax rate, SKU and customer to the corresponding ETA codes in tenant settings — once per item, once per customer. The mapping table accepts CSV bulk-upload so you don't recode the catalogue by hand."
+          },
+          {
+            "heading": "End-to-end document builder",
+            "body": "Momentfy builds the full ETA JSON document — header, lines, tax breakdown, payment terms — straight from the invoice you already created. No external middleware, no second portal to keep in sync."
+          },
+          {
+            "heading": "Signed submission with status",
+            "body": "Each invoice is signed with your ETA client secret and submitted to the authority portal. Status flows live on the invoice — submitted → accepted → cleared — with the UUID and long-id retained for accounting exports."
+          },
+          {
+            "heading": "Credit & debit notes",
+            "body": "Credit (c) and debit (d) note types are supported via ETA's document-type flag, with the original invoice referenced for audit. Reverse a sale and the ETA submission flows automatically."
+          },
+          {
+            "heading": "UUID, long-id & status retained",
+            "body": "Every ETA-tracked invoice keeps the UUID, long-id, internal-id and submission status on the record itself — queryable per invoice, exportable for the accountant, defensible during audit."
+          },
+          {
+            "heading": "Auto-resubmission on failure",
+            "body": "Transient ETA API failures trigger an automatic retry with exponential backoff. Permanent rejections stay on the invoice with the error message intact, so you can correct and resubmit without losing the trail."
+          }
         ]
       },
       "ai": {
         "long": "An AI assistant built on the Vercel AI SDK for the client booking flow and branded portal. Bring any OpenAI-compatible endpoint — OpenAI, Gemini, Groq, DeepSeek, x.ai, Together, or a local Ollama / LM Studio model. The assistant is grounded in your services, opening hours, prices and policies so it guides bookings without inventing availability.",
-        "bullets": [
-          "In-app chat widget on the booking site and client portal",
-          "Grounded on your real services, opening hours, staff and prices",
-          "Guides a client through booking end-to-end and creates confirmed appointments",
-          "Per-tenant brand voice via a system-prompt suffix, dialect and tone",
-          "Configurable provider and model — any OpenAI-compatible endpoint",
-          "Bring-your-own API key — requests go direct from your server to the provider"
-        ],
         "whoFor": "Any business that wants a 24/7 assistant without hiring extra receptionists.",
         "setupSteps": [
           "Enable the AI Assistant add-on from tenant settings",
@@ -381,18 +412,36 @@
           "Client Portal",
           "Calendar",
           "Clients & CRM"
+        ],
+        "sections": [
+          {
+            "heading": "In-app chat widget",
+            "body": "Drop-in chat surface on the public booking site and inside the branded client portal. Clients ask questions in their own language and get answers grounded in your real services and policies — not the assistant's training data."
+          },
+          {
+            "heading": "Grounded on real availability",
+            "body": "The assistant reads from your live calendar, services, staff schedule and price list. It will never offer a slot you can't deliver, a service you don't sell or a price you didn't set."
+          },
+          {
+            "heading": "Books appointments end-to-end",
+            "body": "The assistant guides clients through service selection, staff preference, date and time — and creates a confirmed appointment when the client agrees. The handoff to your calendar is real, not a lead form."
+          },
+          {
+            "heading": "Brand voice & dialect per tenant",
+            "body": "A per-tenant system-prompt suffix lets you set tone (warm / professional / playful), dialect (Gulf, Egyptian, MSA, English) and brand-specific phrasing. The assistant sounds like your business, not like a generic chatbot."
+          },
+          {
+            "heading": "Any OpenAI-compatible provider",
+            "body": "Pick your provider per tenant — OpenAI, Google Gemini, Groq, DeepSeek, x.ai, Together, or a local Ollama / LM Studio model. The Vercel AI SDK abstracts the wire format so swapping providers is a settings change, not a deploy."
+          },
+          {
+            "heading": "Bring-your-own API key",
+            "body": "Requests go directly from your server to the provider you chose. No mark-up, no rate-limiting through us, and your token usage and bill stay between you and the provider."
+          }
         ]
       },
       "gcal": {
         "long": "Two-way sync between each staff member's Google Calendar and their Momentfy schedule. Appointments booked in Momentfy appear on their Google Calendar instantly; busy blocks from Google are pulled in so nobody gets double-booked.",
-        "bullets": [
-          "Per-staff OAuth — each team member authorizes their own calendar",
-          "Outbound: Momentfy appointments → Google events within seconds",
-          "Inbound: busy blocks from Google become blocked-time in Momentfy",
-          "Timezone-aware — safe across DST and traveling staff",
-          "Re-auth flow on the staff profile if a member revokes and re-grants access",
-          "Works with personal Gmail and Google Workspace calendars"
-        ],
         "whoFor": "Teams where staff already live in Google Calendar for personal commitments.",
         "setupSteps": [
           "Enable the Google Calendar add-on",
@@ -403,18 +452,36 @@
         "integrates": [
           "Calendar",
           "Team & HR"
+        ],
+        "sections": [
+          {
+            "heading": "Per-staff OAuth",
+            "body": "Each team member authorises their own Google account from their staff profile — the tenant doesn't share a single connection across the team. Revoking access for one member doesn't break sync for the others."
+          },
+          {
+            "heading": "Outbound: Momentfy → Google",
+            "body": "Appointments booked, edited or cancelled in Momentfy push to the assigned staff member’s Google Calendar within seconds. The event includes the client name, service, location and a deep link back to the appointment in Momentfy."
+          },
+          {
+            "heading": "Inbound: Google → blocked time",
+            "body": "Busy blocks from the staff member’s Google Calendar are pulled in as blocked-time on the Momentfy schedule. Personal commitments, school runs and holidays automatically protect availability without anyone keying them in twice."
+          },
+          {
+            "heading": "Timezone-aware sync",
+            "body": "The sync respects the tenant timezone, the staff timezone and Google’s recurring-event quirks. DST transitions, traveling staff and cross-timezone clients are handled cleanly."
+          },
+          {
+            "heading": "Re-auth from staff profile",
+            "body": "If a staff member revokes access — or Google expires the token — a clear re-auth banner appears on their profile. Reconnect in two clicks; sync resumes automatically and missed events backfill."
+          },
+          {
+            "heading": "Personal & Workspace accounts",
+            "body": "Works equally well with free Gmail accounts and Google Workspace. Permissions, scopes and incremental authorisation are handled the same way for either account type."
+          }
         ]
       },
       "insurance": {
         "long": "Insurance classes, coverage rules, and claim-ready invoices for clinics that split a single visit between patient and insurer. Every service can have per-class coverage percentages, co-pays, and visit caps.",
-        "bullets": [
-          "Define insurance classes with tiered coverage (e.g. BUPA Gold, Tawuniya Silver)",
-          "Per-service coverage percentages and per-visit caps",
-          "Automatic co-pay calculation at POS checkout",
-          "Claim-ready invoice exports with insurance & patient splits",
-          "Client profile stores insurance class, policy number, validity",
-          "Claims dashboard with per-class and per-provider breakdowns"
-        ],
         "whoFor": "Dental, medical and aesthetics clinics with mixed-insurance patients.",
         "setupSteps": [
           "Create insurance classes under Catalogue → Insurance",
@@ -426,18 +493,36 @@
           "Clients & CRM",
           "Sales & POS",
           "Accounting"
+        ],
+        "sections": [
+          {
+            "heading": "Tiered insurance classes",
+            "body": "Define unlimited insurance classes — BUPA Gold, Tawuniya Silver, Allianz Plus — each with its own coverage profile. Classes are reusable across patients and can be edited centrally without touching individual records."
+          },
+          {
+            "heading": "Per-service coverage rules",
+            "body": "Set coverage percentage per service per class, with optional per-visit caps and annual ceilings. Cosmetic services can be excluded outright; specialist procedures can require pre-approval."
+          },
+          {
+            "heading": "Auto co-pay at POS",
+            "body": "Co-pay is calculated at checkout based on the patient's class, the service rules and any deductible already met this period. Reception sees the patient share, the insurer share and the visit total without lifting a calculator."
+          },
+          {
+            "heading": "Claim-ready invoice exports",
+            "body": "Each invoice exports a claim package with the insurer-share line, patient-share line, service codes and supporting documents. The format is ready for the insurer portal — or the printable claim form, if that is what your provider still wants."
+          },
+          {
+            "heading": "Patient policy on profile",
+            "body": "Each client carries their insurance class, policy number and validity period on their profile. Expired policies surface as a warning at checkout so reception verifies before serving — never after."
+          },
+          {
+            "heading": "Claims dashboard",
+            "body": "A dedicated dashboard shows claims volume by class, by provider and by status — submitted, paid, partially paid, rejected. Aging tells you which insurers are dragging payment so you can apply pressure where it matters."
+          }
         ]
       },
       "dental": {
         "long": "Interactive odontogram for adult and pediatric patients with surface-level tracking. Click any tooth (or surface) to log caries, fillings, crowns, root canals, bridges, veneers or sealants. Each tooth links to a medical record for full audit.",
-        "bullets": [
-          "FDI numbering with adult (32) and pediatric (20) dentition — switchable per client",
-          "5-surface tracking per tooth (mesial, distal, occlusal, buccal, lingual)",
-          "Colour-coded conditions: caries, filling, crown, missing, implant, root canal, bridge, veneer, sealant",
-          "Surface-level notes attached to every tooth condition",
-          "Chart tied to the client record, viewable alongside visits",
-          "Printable odontogram attached to the patient's medical record"
-        ],
         "whoFor": "Dental clinics — general, pediatric, orthodontic.",
         "setupSteps": [
           "Enable the Dental Chart add-on",
@@ -449,18 +534,36 @@
           "Clients & CRM",
           "Medical Records",
           "Calendar"
+        ],
+        "sections": [
+          {
+            "heading": "Adult & pediatric dentition",
+            "body": "FDI numbering with full adult dentition (32 teeth) and pediatric dentition (20 teeth), switchable per chart. The chart auto-detects the right layout based on the patient age but can be overridden case-by-case."
+          },
+          {
+            "heading": "5-surface tracking per tooth",
+            "body": "Every tooth supports the five clinical surfaces — mesial, distal, occlusal, buccal and lingual — recorded individually. A two-surface filling on tooth 16 reads exactly as the dentist documented it, not as a generic mark."
+          },
+          {
+            "heading": "Color-coded conditions",
+            "body": "Caries, fillings, crowns, missing teeth, implants, root canals, bridges, veneers and sealants each render in a distinct colour on the chart. A glance reveals the patient’s history before the dentist reads a single note."
+          },
+          {
+            "heading": "Surface-level notes",
+            "body": "Attach a note to any specific surface of any specific tooth — material used, shade, follow-up needed. Notes travel with the chart between visits and surface in the timeline view."
+          },
+          {
+            "heading": "Tied to the medical record",
+            "body": "Every chart change is linked to a medical-records entry, complete with the timestamp, the practitioner and the visit. The chart becomes legally defensible documentation, not just a visual aid."
+          },
+          {
+            "heading": "Printable & PDF export",
+            "body": "Export the chart as a print-ready PDF on the clinic letterhead — for referrals, second opinions, insurance claims or the patient's own records."
+          }
         ]
       },
       "imaging": {
         "long": "A built-in DICOM viewer so X-rays, panoramics, and intra-oral images live inside the patient's file — not on a separate computer. Upload a DICOM, view it with proper window/level/zoom/pan, annotate, and attach to a visit.",
-        "bullets": [
-          "DICOM parser that handles .dcm inputs (via dicom-parser)",
-          "Annotations: arrows, circles, rectangles, text, measurements and freehand",
-          "Each image attached to a specific patient visit",
-          "Paired before/after comparison via image pairing",
-          "Thumbnail generated on upload for fast mobile access in portal",
-          "Clinical images stored on S3 with per-tenant isolation"
-        ],
         "whoFor": "Dental and medical clinics that generate DICOM imaging (X-ray, CBCT, ultrasound).",
         "setupSteps": [
           "Enable the Clinical Imaging add-on",
@@ -471,18 +574,36 @@
         "integrates": [
           "Clients & CRM",
           "Medical Records"
+        ],
+        "sections": [
+          {
+            "heading": "DICOM parser built-in",
+            "body": "Accepts standard .dcm files generated by intra-oral sensors, panoramic units, CBCT scanners and ultrasound. Pixel data, window/level, modality and patient header are parsed via dicom-parser and rendered in the browser."
+          },
+          {
+            "heading": "Window / level / zoom / pan",
+            "body": "Full diagnostic viewer controls — adjust window/level for soft-tissue vs. bone contrast, zoom for fine caries detection, pan around large CBCT volumes. Keyboard shortcuts and touch gestures both work."
+          },
+          {
+            "heading": "Annotations toolkit",
+            "body": "Mark up images with arrows, circles, rectangles, text labels, distance and angle measurements, and freehand drawing. Annotations save with the image and travel into the patient timeline."
+          },
+          {
+            "heading": "Linked to the visit",
+            "body": "Each image is attached to a specific patient visit and shows up alongside the SOAP note and prescription on that day. The visit is the unit of clinical truth — not a folder of orphaned files."
+          },
+          {
+            "heading": "Before/after pairing",
+            "body": "Pair pre-treatment and post-treatment images for visual comparison — orthodontic progress, restorative work, surgical outcomes. The paired view is one-click for case presentation or insurance submission."
+          },
+          {
+            "heading": "S3-isolated storage",
+            "body": "DICOM files are stored on S3-compatible object storage with strict per-tenant isolation. Thumbnails are generated on upload for fast portal access on mobile, and the full-resolution image is fetched on demand."
+          }
         ]
       },
       "labs": {
         "long": "Order clinical lab tests from a visit, receive results back (CSV, PDF, or manually entered), and optionally publish them to the patient's portal. Ships with a configurable lab catalogue and reference-range validation.",
-        "bullets": [
-          "Structured lab test catalogue with normal-range (min / max) fields",
-          "Order from within a visit in one click",
-          "Status tracking: ordered → sent-to-lab → results-received → reviewed",
-          "Results captured as structured values with HIGH / LOW / NORMAL / ABNORMAL flags",
-          "PDF and file attachments per lab order",
-          "Published results linked to the client portal with flagged out-of-range values"
-        ],
         "whoFor": "Clinics that order blood work, microbiology, or path tests through external labs.",
         "setupSteps": [
           "Enable the Lab Orders add-on",
@@ -494,18 +615,36 @@
           "Clients & CRM",
           "Medical Records",
           "Client Portal"
+        ],
+        "sections": [
+          {
+            "heading": "Structured test catalogue",
+            "body": "Build or import a lab catalogue with test name, units, normal-range minimum and maximum and gender/age modifiers. Reference ranges drive the auto-flagging when results come back."
+          },
+          {
+            "heading": "Order from a visit",
+            "body": "Click \"Order labs\" from any visit — pick tests from the catalogue, add notes for the lab, and the order is generated with patient demographics already attached. The visit timeline shows the order alongside notes and prescriptions."
+          },
+          {
+            "heading": "Status workflow",
+            "body": "A clear pipeline — ordered → sent-to-lab → results-received → reviewed-by-clinician — drives the queue. Reception, lab tech and clinician each act on the queue from their own dashboard."
+          },
+          {
+            "heading": "Structured + flagged results",
+            "body": "Results are captured as structured numeric values (with units) and free text where needed. Out-of-range values auto-flag as HIGH, LOW or ABNORMAL based on the catalogue’s reference range."
+          },
+          {
+            "heading": "PDFs & file attachments",
+            "body": "External lab reports — PDFs, scanned forms, raw analyser exports — attach to the order and stay linked to the patient's record forever. No more chasing emails for last quarter's CBC."
+          },
+          {
+            "heading": "Portal publishing",
+            "body": "Publish reviewed results to the client portal with a single click, with abnormal values highlighted clearly. Clients see what their doctor wants them to see — nothing accidental, nothing premature."
+          }
         ]
       },
       "rx": {
         "long": "Author prescriptions during the visit and download or print them on a branded prescription pad. Patients can access their full prescription history in the client portal.",
-        "bullets": [
-          "Drug catalogue with dosage presets per medication",
-          "Multi-item prescriptions with per-item dose, frequency, duration and quantity",
-          "Print-ready prescription tied to the patient and the visit",
-          "Patient access via portal; tenant copy in the visit record",
-          "Auto-generated prescription number for traceability",
-          "Prescribed-by and created/updated timestamps on every prescription"
-        ],
         "whoFor": "Any clinic that prescribes — GPs, dentists, specialists.",
         "setupSteps": [
           "Enable the Prescriptions add-on",
@@ -517,18 +656,36 @@
           "Medical Records",
           "Client Portal",
           "Calendar"
+        ],
+        "sections": [
+          {
+            "heading": "Drug catalogue with presets",
+            "body": "Build a catalogue of medications with default dosage, frequency, duration and units per drug. Common prescriptions become two-click entries instead of free-text writing every time."
+          },
+          {
+            "heading": "Multi-item prescriptions",
+            "body": "Compose a prescription with multiple items, each with its own dose, frequency, duration and quantity. The print layout follows the conventional Rx pad format clinicians and pharmacists already read at a glance."
+          },
+          {
+            "heading": "Branded prescription pad",
+            "body": "Print on the clinic letterhead — your logo, doctor name, license number, signature placeholder and the auto-generated prescription number. PDF download for cases where printing is offsite."
+          },
+          {
+            "heading": "Tied to patient & visit",
+            "body": "Every prescription anchors to the specific patient and the specific visit, with prescriber and timestamp recorded. The patient timeline shows the full prescribing history in one place."
+          },
+          {
+            "heading": "Auto-numbered for traceability",
+            "body": "A monotonic prescription number is generated at issue, retained on print copies and surfaced in audit logs. Lost prescriptions are reissued with a new number and the old one is voided cleanly."
+          },
+          {
+            "heading": "Patient access in portal",
+            "body": "Patients can view their full prescription history in the branded client portal — pull up the previous Rx, share it with a pharmacy, or screenshot it for travel. The clinic's tenant copy stays authoritative."
+          }
         ]
       },
       "records": {
         "long": "Structured electronic medical records (EMR) with SOAP-style note templates, vitals logging, and allergy/diagnosis tracking. Each visit lives on the patient timeline with full attachment support.",
-        "bullets": [
-          "Clinical note fields: chief complaint, examination, diagnosis and notes",
-          "Custom templates per specialty — build one per clinic type",
-          "Vitals captured as structured fields (BP, HR, temperature, respiration, weight, height)",
-          "Allergies on the patient record and ICD-10 code field on diagnoses",
-          "Attachments: images, PDFs, and links to DICOM clinical images and lab orders",
-          "Visit timeline: one patient's entire history in chronological order"
-        ],
         "whoFor": "Clinics that want a real EMR without paying for a separate system.",
         "setupSteps": [
           "Enable the Medical Records add-on",
@@ -541,18 +698,36 @@
           "Calendar",
           "Lab Orders",
           "Prescriptions"
+        ],
+        "sections": [
+          {
+            "heading": "SOAP-style note structure",
+            "body": "Each note follows the Subjective / Objective / Assessment / Plan structure clinicians actually use — chief complaint, examination findings, diagnosis with codes and treatment plan. Templates speed up routine visit types without removing flexibility."
+          },
+          {
+            "heading": "Custom templates per specialty",
+            "body": "Build templates per specialty — pediatric well-visit, orthodontic adjustment, dermatology consult — and pre-fill the structure on every new visit. Templates are tenant-owned and editable as the practice evolves."
+          },
+          {
+            "heading": "Vitals as structured fields",
+            "body": "Capture blood pressure, heart rate, temperature, respiration, weight and height as numeric fields, not free text. Trends graph automatically across visits — pediatric growth charts, hypertension monitoring, weight management."
+          },
+          {
+            "heading": "Allergies & ICD-10 diagnoses",
+            "body": "Allergies are flagged on the patient header so they're visible the moment any clinician opens the chart. Diagnoses carry an ICD-10 code field for insurance claims and structured reporting."
+          },
+          {
+            "heading": "Attachments anywhere",
+            "body": "Attach images, PDFs, scanned forms and external reports to any visit — and link to DICOM clinical images and lab orders without re-uploading. Each attachment stays with the visit it belongs to."
+          },
+          {
+            "heading": "Patient timeline view",
+            "body": "The patient's entire history rolls up into a single chronological timeline — every visit, prescription, lab order, image and SOAP note in one scroll. Onboarding a new clinician to a complex case takes minutes, not an afternoon."
+          }
         ]
       },
       "resources": {
         "long": "Book rooms, chairs, equipment, or any physical asset alongside staff. A haircut needs a chair; a root canal needs a chair + hygienist; a class needs a room. Resources make all of this bookable and conflict-aware.",
-        "bullets": [
-          "Define resource types (room, chair, machine) with quantity per location",
-          "Assign required resource types to each service via junction rules",
-          "Availability checks prevent double-booking of resources alongside staff",
-          "Block resources for maintenance, cleaning, or downtime — with a reason field",
-          "Resource reservations tied to appointments for full traceability",
-          "Per-location resource capacity feeds into booking availability"
-        ],
         "whoFor": "Any business where the physical asset matters as much as the staff.",
         "setupSteps": [
           "Enable the Resources add-on",
@@ -564,18 +739,36 @@
           "Calendar",
           "Catalogue",
           "Reports"
+        ],
+        "sections": [
+          {
+            "heading": "Resource types per location",
+            "body": "Define resource types per location — chairs, dental units, treatment rooms, ultrasound machines, photography studios. Quantity is tracked per type per branch so capacity reflects reality."
+          },
+          {
+            "heading": "Required-resource rules",
+            "body": "Each service can declare which resource types it needs — a haircut needs a chair, a root canal needs a chair plus a hygienist station, a yoga class needs a studio. Booking enforces the rule automatically."
+          },
+          {
+            "heading": "Conflict-aware booking",
+            "body": "When a service is booked, both the staff calendar and the assigned resource are checked. The system refuses double-bookings even when the staff member is technically free, because the chair isn’t."
+          },
+          {
+            "heading": "Maintenance & downtime blocks",
+            "body": "Block a resource for cleaning, maintenance or downtime — with a reason field and a duration. Blocked resources disappear from booking availability until the block clears."
+          },
+          {
+            "heading": "Tied to appointment record",
+            "body": "Each appointment carries the resource reservation alongside the staff assignment, so the audit trail shows exactly which chair, room or machine was used and when."
+          },
+          {
+            "heading": "Capacity feeds availability",
+            "body": "The booking site's slot calculation accounts for resource capacity per location. If you have three chairs and three are full at 2pm, 2pm is unavailable — even when the next stylist is free."
+          }
         ]
       },
       "attendance": {
         "long": "Track client check-ins for gyms, schools, and any recurring program where attendance matters more than booking a time slot. Includes a kiosk-friendly check-in flow, per-client history and NO_SHOW capture.",
-        "bullets": [
-          "One-tap check-in via client phone, QR code, or kiosk",
-          "Check-in history linked to each appointment and client",
-          "Attendance queries per client, class, or date range",
-          "NO_SHOW status captured on check-ins for booked but absent clients",
-          "Stale-appointment resolver flags no-shows automatically",
-          "Attendance records queryable via API for school or HR audits"
-        ],
         "whoFor": "Gyms, yoga studios, schools, martial-arts clubs, tutoring centres.",
         "setupSteps": [
           "Enable the Client Attendance add-on",
@@ -587,18 +780,36 @@
           "Clients & CRM",
           "Catalogue",
           "Events & Classes"
+        ],
+        "sections": [
+          {
+            "heading": "One-tap check-in",
+            "body": "Clients check in via their phone, a kiosk tablet at the door, or a QR code on the wall. The flow is designed for speed — under three seconds from arrival to recorded attendance."
+          },
+          {
+            "heading": "Per-client attendance history",
+            "body": "Every check-in is linked to the appointment, the membership and the client record. The client's attendance history is queryable by date range, by class, by membership cycle."
+          },
+          {
+            "heading": "NO_SHOW capture",
+            "body": "Booked clients who never check in are automatically flagged as NO_SHOW after the appointment window closes. Charge fees, deduct credits or trigger a follow-up message based on tenant policy."
+          },
+          {
+            "heading": "Stale-appointment resolver",
+            "body": "A nightly job sweeps any appointment that finished without a check-in or a manual completion and resolves it to either COMPLETED or NO_SHOW based on tenant rules. The schedule never carries old open appointments forward."
+          },
+          {
+            "heading": "Per-membership attendance counts",
+            "body": "Memberships with 'unlimited' or 'N visits per month' rules tally check-ins automatically. The client portal shows visits used and visits remaining; reception sees the same number at the door."
+          },
+          {
+            "heading": "API for HR / school audits",
+            "body": "Attendance records are queryable via the platform API — useful for schools that need term-end attendance reports, gyms that audit corporate-wellness contracts, and tutoring centres that bill on session counts."
+          }
         ]
       },
       "loyalty": {
         "long": "Points-based loyalty with earning rules, redemptions, expiry, and a wallet view in the client portal. Turns one-time customers into recurring ones without discounting every visit.",
-        "bullets": [
-          "Earn points on sale with configurable per-tenant rules",
-          "Redemption with minimum balance and expiry-window settings per tenant",
-          "Points expiry with automatic clean-up and client notification",
-          "Wallet view in the client portal with full transaction history",
-          "Segments for top spenders and dormant clients — targetable via campaigns",
-          "Loyalty stats endpoint and points-ledger exports"
-        ],
         "whoFor": "Any business where repeat visits matter — salons, cafés, clinics.",
         "setupSteps": [
           "Enable the Loyalty Points add-on",
@@ -610,18 +821,36 @@
           "Clients & CRM",
           "Sales & POS",
           "Campaigns"
+        ],
+        "sections": [
+          {
+            "heading": "Earn rules per tenant",
+            "body": "Configure earning rules per service or per unit spent — flat points per visit, multipliers for retail, bonuses for first-time visits. Rules are tenant-scoped and live, so you can re-balance the program without a re-deploy."
+          },
+          {
+            "heading": "Redemption rules",
+            "body": "Set a minimum balance before redemption is possible, an expiry window per earned points batch, and which services or products are eligible for redemption. The cashier sees what's redeemable at checkout — no manual look-up."
+          },
+          {
+            "heading": "Auto-expiry with notification",
+            "body": "Points expire on a per-tenant schedule. Clients receive an in-portal warning and a configurable channel notification before lapse, so dormant clients return to spend before they lose what they earned."
+          },
+          {
+            "heading": "Wallet view in client portal",
+            "body": "Clients see their balance, full earning history, redemption ledger and expiring-point breakdown inside their branded portal. Transparency builds trust and removes \"what happened to my points?\" support tickets."
+          },
+          {
+            "heading": "Targetable segments",
+            "body": "Top spenders, dormant high-value clients and lapsing-points clients are pre-built segments — ready for campaigns, ready for reactivation flows, ready to reward in person at the next visit."
+          },
+          {
+            "heading": "Stats endpoint & ledger export",
+            "body": "Loyalty performance — issuance rate, redemption rate, expiry rate, ROI by segment — is exposed via API and exportable to CSV. The loyalty manager can prove the program’s impact, not just hope for it."
+          }
         ]
       },
       "events": {
         "long": "Group classes, workshops, and scheduled events with capacity, waitlists, and attendee check-in. A yoga class at 7am with 12 seats — Momentfy sells them, confirms them, and checks them in.",
-        "bullets": [
-          "One-off and scheduled events with capacity limits and waitlist opt-in",
-          "Waitlist with position tracking and promotion slots as seats free up",
-          "Per-ticket QR code and check-in by staff, kiosk or client app",
-          "Per-event and per-ticket-type pricing (fixed, free, member-only)",
-          "Tickets-sold, available-spots and waitlist counts live on every listing",
-          "Tickets linked to sales and the ledger for revenue recognition"
-        ],
         "whoFor": "Fitness studios, cooking schools, workshop hosts, community centres.",
         "setupSteps": [
           "Enable the Events & Classes add-on",
@@ -633,18 +862,36 @@
           "Calendar",
           "Catalogue",
           "Client Attendance"
+        ],
+        "sections": [
+          {
+            "heading": "One-off & recurring events",
+            "body": "Create a one-time workshop or schedule a recurring class with capacity, ticket types and pricing. Each occurrence is a separate bookable event with its own seat count, so cancellations and waitlists work per session."
+          },
+          {
+            "heading": "Capacity & waitlist",
+            "body": "Sold-out events automatically open a waitlist with position tracking. As cancellations free up seats, the next person on the list is notified and given a configurable window to confirm before the seat moves on."
+          },
+          {
+            "heading": "Per-ticket QR & check-in",
+            "body": "Each ticket carries its own QR code. Door staff check attendees in via a kiosk or staff phone — under two seconds per ticket — and the count of attendees-on-site is live for the instructor's clipboard."
+          },
+          {
+            "heading": "Tiered ticket pricing",
+            "body": "Configure ticket tiers per event — free, fixed price, member-only, early-bird. Tiers carry their own capacity caps so you can sell 10 early-bird seats and 20 standard ones from the same event."
+          },
+          {
+            "heading": "Sales & ledger integration",
+            "body": "Tickets flow through the sales system — invoiced, taxed, ZATCA-cleared where applicable — and revenue lands in the right ledger account automatically. Refunds for cancellations create credit notes the same way."
+          },
+          {
+            "heading": "Live counts on every listing",
+            "body": "Tickets-sold, available-spots and waitlist length update on the public event page in real time. The page never offers a seat that has just been claimed elsewhere."
+          }
         ]
       },
       "followup": {
         "long": "An automated queue of follow-up tasks so nothing slips through. 'Call Sarah about her post-op checkup.' 'Ask Karim for a review after his third visit.' Rules generate the tasks; assigned staff close them.",
-        "bullets": [
-          "Recurrence rules (daily, weekly, monthly) generate scheduled tasks",
-          "Tasks assigned to specific staff with due-date SLA",
-          "Bulk status patch endpoint for batch-close (e.g. \"mark all called\")",
-          "Status, outcome and snooze-until fields on every task",
-          "Per-member queue with status counts and priority enum",
-          "Stats endpoint for follow-up performance"
-        ],
         "whoFor": "Any operator who says \"we forgot to call them back\".",
         "setupSteps": [
           "Enable the Follow-up Tasks add-on",
@@ -656,6 +903,32 @@
           "Clients & CRM",
           "Calendar",
           "Campaigns"
+        ],
+        "sections": [
+          {
+            "heading": "Rule-driven generation",
+            "body": "Define rules — \"call 2 days after first visit\", \"follow up post-op on day 7\", \"ask for a review after the third visit\" — and the system generates the tasks automatically. Rules accept relative dates, segment filters and channel preferences."
+          },
+          {
+            "heading": "Assigned with SLA",
+            "body": "Every task is assigned to a specific staff member with a due date. Overdue tasks surface on the team dashboard so nothing rots in someone’s queue unnoticed."
+          },
+          {
+            "heading": "Status & outcome capture",
+            "body": "When a staff member closes a task, they record the outcome — answered, voicemail, rescheduled, no-interest. Outcomes feed the analytics and inform whether the rule itself is working."
+          },
+          {
+            "heading": "Snooze with reason",
+            "body": "Tasks can be snoozed to a later date with a reason — patient was in surgery, client was abroad, line was busy. Snoozes preserve the trail and keep the next attempt visible without filling the daily queue."
+          },
+          {
+            "heading": "Bulk batch close",
+            "body": "Mark a batch of completed calls in one action — \"all called, all answered, all rebooked\". Reception clears a morning of follow-ups in seconds instead of clicking through individually."
+          },
+          {
+            "heading": "Per-member queue & stats",
+            "body": "Each team member's queue shows their open, overdue, snoozed and completed counts at a glance. A stats endpoint exposes follow-up performance for the operator who is investing in the program."
+          }
         ]
       }
     },
@@ -2046,7 +2319,7 @@
         },
         {
           "q": "Do I pay monthly?",
-      "a": "No. One payment gives you a lifetime license, unlimited tenants, unlimited users, and lifetime updates. Optional paid support or implementation help is available separately."
+          "a": "No. One payment gives you a lifetime license, unlimited tenants, unlimited users, and lifetime updates. Optional paid support or implementation help is available separately."
         },
         {
           "q": "Which countries is it ready for?",
@@ -2274,6 +2547,14 @@
       "skipToMain": "Skip to main content",
       "backToTop": "back to top",
       "readAbout": "Read about",
+      "openInManual": "Open in manual",
+      "readTheManual": "Read the manual",
+      "navFilterLabel": "Filter",
+      "navSectionsLabel": "Sections",
+      "navBrowseGroups": "Browse groups",
+      "navBrowseSections": "Browse sections",
+      "navAllGroups": "All groups",
+      "navAllSections": "All sections",
       "exploreVerb": "Explore",
       "prev": "Previous",
       "next": "Next",
@@ -2420,19 +2701,55 @@
           "group": "Front of house",
           "title": "Calendar & Scheduling",
           "summary": "The command center of every service business — one shared calendar across every team member, every location, and every room, chair and piece of equipment they touch.",
-          "bullets": [
-            "Five views built for five kinds of shift — day, 3-day, week, month and agenda — each with auto-scroll to the current working window and a live 'now' line",
-            "Multi-service, multi-member bookings: a single appointment can span several staff, back-to-back or in parallel",
-            "Multi-location scheduling with per-location staff availability, working hours and holidays",
-            "Six-stage appointment lifecycle — Scheduled, Confirmed, In-progress, Completed, Cancelled, No-show — each colour-customizable by status, category, staff or service",
-            "Smart quick-filter chips, instant search and keyboard shortcuts tuned for the busiest front desks",
-            "Blocked time with daily, weekly or monthly recurrence — vacation, training, lunch, equipment maintenance",
-            "Waitlist panel, walk-in flow, and QR check-in at the front desk",
-            "Scan an appointment QR — from a printed slip, receipt or the client's phone — to jump straight to that booking on the calendar (uses the device camera, native BarcodeDetector with a jsQR fallback, plus manual ID lookup)",
-            "Resource reservations — chairs, rooms, dental units, studios — scheduled alongside staff so no one ever double-books equipment",
-            "Timezone-aware across every tenant, location, reminder and campaign",
-            "Public booking link with online payment (Tabby, Tamara, Stripe, Tap, Paymob), two-way Google Calendar sync and auto-generated Zoom meeting URLs on confirmation",
-            "Appointment reminders delivered over SMS, email, WhatsApp and push — from your brand, at your cadence"
+          "sections": [
+            {
+              "heading": "Five-view calendar",
+              "body": "Five views built for five kinds of shift — day, 3-day, week, month and agenda — each with auto-scroll to the current working window and a live 'now' line"
+            },
+            {
+              "heading": "Multi-staff bookings",
+              "body": "Multi-service, multi-member bookings: a single appointment can span several staff, back-to-back or in parallel"
+            },
+            {
+              "heading": "Multi-location schedules",
+              "body": "Multi-location scheduling with per-location staff availability, working hours and holidays"
+            },
+            {
+              "heading": "Appointment lifecycle",
+              "body": "Six-stage appointment lifecycle — Scheduled, Confirmed, In-progress, Completed, Cancelled, No-show — each colour-customizable by status, category, staff or service"
+            },
+            {
+              "heading": "Filters, search & shortcuts",
+              "body": "Smart quick-filter chips, instant search and keyboard shortcuts tuned for the busiest front desks"
+            },
+            {
+              "heading": "Blocked time",
+              "body": "Blocked time with daily, weekly or monthly recurrence — vacation, training, lunch, equipment maintenance"
+            },
+            {
+              "heading": "Waitlist & walk-ins",
+              "body": "Waitlist panel, walk-in flow, and QR check-in at the front desk"
+            },
+            {
+              "heading": "QR scan to find an appointment",
+              "body": "Scan an appointment QR — from a printed slip, receipt or the client's phone — to jump straight to that booking on the calendar (uses the device camera, native BarcodeDetector with a jsQR fallback, plus manual ID lookup)"
+            },
+            {
+              "heading": "Resource reservations",
+              "body": "Resource reservations — chairs, rooms, dental units, studios — scheduled alongside staff so no one ever double-books equipment"
+            },
+            {
+              "heading": "Timezone awareness",
+              "body": "Timezone-aware across every tenant, location, reminder and campaign"
+            },
+            {
+              "heading": "Public booking link",
+              "body": "Public booking link with online payment (Tabby, Tamara, Stripe, Tap, Paymob), two-way Google Calendar sync and auto-generated Zoom meeting URLs on confirmation"
+            },
+            {
+              "heading": "Reminders",
+              "body": "Appointment reminders delivered over SMS, email, WhatsApp and push — from your brand, at your cadence"
+            }
           ]
         },
         {
@@ -2440,18 +2757,51 @@
           "group": "Money",
           "title": "Sales, POS & Invoicing",
           "summary": "A cash register, a full point of sale, and a complete invoicing suite — all in one tab, all wired to accounting from the very first receipt.",
-          "bullets": [
-            "Sell services, products, packages, memberships and gift cards from a single open ticket",
-            "POS ticketing with open tabs, parked sales, barcode scanning and split payments across unlimited methods",
-            "Invoices, estimates, recurring invoices (daily, weekly, monthly, quarterly, yearly), credit notes and refunds with pending-approval states",
-            "Automated dunning for overdue invoices — scheduled reminders, escalation steps and a public pay-online link per invoice",
-            "Expense tracking with category rules, vendor capture and auto-journal posting",
-            "Cash register open/close sessions with variance reporting and end-of-day reconciliation",
-            "Payments: cash, card, Tabby, Tamara, bank transfer, store credit, gift cards, and any custom method you define",
-            "Buy-now-pay-later built in — Tabby and Tamara — with installment state visible on the ticket",
-            "Tax rates, discounts, tips, service charges and smart pricing (peak, off-peak, member, seasonal)",
-            "Multi-currency invoicing with per-tenant default currency and per-bank-account currency snapshots",
-            "Print-ready receipts tuned for thermal printers, plus a public receipt and invoice link on every transaction"
+          "sections": [
+            {
+              "heading": "Open ticket",
+              "body": "Sell services, products, packages, memberships and gift cards from a single open ticket"
+            },
+            {
+              "heading": "POS ticketing",
+              "body": "POS ticketing with open tabs, parked sales, barcode scanning and split payments across unlimited methods"
+            },
+            {
+              "heading": "Invoices, Estimates & Recurring Invoices",
+              "body": "Invoices, estimates, recurring invoices (daily, weekly, monthly, quarterly, yearly), credit notes and refunds with pending-approval states"
+            },
+            {
+              "heading": "Automated dunning",
+              "body": "Automated dunning for overdue invoices — scheduled reminders, escalation steps and a public pay-online link per invoice"
+            },
+            {
+              "heading": "Expenses",
+              "body": "Expense tracking with category rules, vendor capture and auto-journal posting"
+            },
+            {
+              "heading": "Cash Register",
+              "body": "Cash register open/close sessions with variance reporting and end-of-day reconciliation"
+            },
+            {
+              "heading": "Payments",
+              "body": "Payments: cash, card, Tabby, Tamara, bank transfer, store credit, gift cards, and any custom method you define"
+            },
+            {
+              "heading": "BNPL (Tabby & Tamara)",
+              "body": "Buy-now-pay-later built in — Tabby and Tamara — with installment state visible on the ticket"
+            },
+            {
+              "heading": "Tax, tips & smart pricing",
+              "body": "Tax rates, discounts, tips, service charges and smart pricing (peak, off-peak, member, seasonal)"
+            },
+            {
+              "heading": "Multi-currency invoicing",
+              "body": "Multi-currency invoicing with per-tenant default currency and per-bank-account currency snapshots"
+            },
+            {
+              "heading": "Receipts",
+              "body": "Print-ready receipts tuned for thermal printers, plus a public receipt and invoice link on every transaction"
+            }
           ]
         },
         {
@@ -2459,16 +2809,43 @@
           "group": "Relationships",
           "title": "Clients & CRM",
           "summary": "Know every client. Nudge the right ones at the right moment. Keep the ones you already earned.",
-          "bullets": [
-            "Rich client profiles — visit history, lifetime value, tags, allergies, emergency contacts and a document vault per client",
-            "Rule-based segments (spend, recency, tags, age, location, membership) — saved, named, and re-queried on demand",
-            "Loyalty wallet per client — earning history, redemption ledger, and expiring points visible to the client in their own portal",
-            "Follow-up engine with assignees, due dates and SLA timers — rule-generated or scheduled manually",
-            "Reviews captured after completed appointments, with moderation before anything is published",
-            "Support tickets with thread view, staff assignment and status tracking",
-            "Birthday greetings in each client's local timezone, plus win-back campaigns for dormant clients",
-            "CSV and Excel import/export, and GDPR-ready personal-data export",
-            "Client statements and activity timeline, with subscription and sensitive-action audit logs"
+          "sections": [
+            {
+              "heading": "Client profiles",
+              "body": "Rich client profiles — visit history, lifetime value, tags, allergies, emergency contacts and a document vault per client"
+            },
+            {
+              "heading": "Segments",
+              "body": "Rule-based segments (spend, recency, tags, age, location, membership) — saved, named, and re-queried on demand"
+            },
+            {
+              "heading": "Loyalty wallet",
+              "body": "Loyalty wallet per client — earning history, redemption ledger, and expiring points visible to the client in their own portal"
+            },
+            {
+              "heading": "Follow-ups",
+              "body": "Follow-up engine with assignees, due dates and SLA timers — rule-generated or scheduled manually"
+            },
+            {
+              "heading": "Reviews",
+              "body": "Reviews captured after completed appointments, with moderation before anything is published"
+            },
+            {
+              "heading": "Support tickets",
+              "body": "Support tickets with thread view, staff assignment and status tracking"
+            },
+            {
+              "heading": "Birthdays & win-back",
+              "body": "Birthday greetings in each client's local timezone, plus win-back campaigns for dormant clients"
+            },
+            {
+              "heading": "Import / export & GDPR",
+              "body": "CSV and Excel import/export, and GDPR-ready personal-data export"
+            },
+            {
+              "heading": "Statements & timeline",
+              "body": "Client statements and activity timeline, with subscription and sensitive-action audit logs"
+            }
           ]
         },
         {
@@ -2476,15 +2853,39 @@
           "group": "Growth",
           "title": "Marketing & Campaigns",
           "summary": "Turn your client list into repeat revenue — with campaigns that fire on the right channel, at the right moment, in your own brand's voice.",
-          "bullets": [
-            "SMS, email, WhatsApp and push campaigns to any segment — one-off or scheduled in advance",
-            "Automation flows built in: post-visit review requests, birthday greetings, win-back for dormant clients, and appointment reminders",
-            "Editable message templates per tenant across every channel — with dynamic variables for names, dates, services, balances and branding",
-            "Delivery logs, open-rate tracking and automatic retry on transient failures",
-            "Marketing dashboard with rebook rate, cohort retention and campaign ROI at a glance",
-            "Referral tracking and top-referrer campaigns with automatic reward attribution",
-            "Scheduled sends in each tenant's timezone, with full opt-out and unsubscribe compliance",
-            "Bring your own providers — Twilio, SendGrid, local SMS aggregators, WhatsApp Business, or the SMTP of your choice"
+          "sections": [
+            {
+              "heading": "Multi-channel campaigns",
+              "body": "SMS, email, WhatsApp and push campaigns to any segment — one-off or scheduled in advance"
+            },
+            {
+              "heading": "Automation flows",
+              "body": "Automation flows built in: post-visit review requests, birthday greetings, win-back for dormant clients, and appointment reminders"
+            },
+            {
+              "heading": "Editable templates",
+              "body": "Editable message templates per tenant across every channel — with dynamic variables for names, dates, services, balances and branding"
+            },
+            {
+              "heading": "Delivery logs",
+              "body": "Delivery logs, open-rate tracking and automatic retry on transient failures"
+            },
+            {
+              "heading": "Marketing dashboard",
+              "body": "Marketing dashboard with rebook rate, cohort retention and campaign ROI at a glance"
+            },
+            {
+              "heading": "Referral tracking",
+              "body": "Referral tracking and top-referrer campaigns with automatic reward attribution"
+            },
+            {
+              "heading": "Scheduled sends",
+              "body": "Scheduled sends in each tenant's timezone, with full opt-out and unsubscribe compliance"
+            },
+            {
+              "heading": "Bring-your-own providers",
+              "body": "Bring your own providers — Twilio, SendGrid, local SMS aggregators, WhatsApp Business, or the SMTP of your choice"
+            }
           ]
         },
         {
@@ -2492,15 +2893,39 @@
           "group": "Offering",
           "title": "Catalogue",
           "summary": "Your entire offering — services, products, packages, memberships and gift cards — structured once and priced with precision.",
-          "bullets": [
-            "Services with duration, buffer time, required staff, required resources and per-location pricing",
-            "Bundles and packages with discounted pricing, session counters and automatic revenue recognition",
-            "Memberships — prepaid, unlimited, session-based — with auto-renewal, expiry reminders and a portal-visible wallet",
-            "Gift cards with balance tracking, expiry dates and in-portal redemption",
-            "Retail products with SKU, barcode, units of measure, expiry dates and batch tracking",
-            "Smart pricing — peak, off-peak, member, seasonal and rule-based tiers",
-            "Discount codes, coupons, stacking rules and eligibility conditions",
-            "Category taxonomy, public menus and full branding control per tenant"
+          "sections": [
+            {
+              "heading": "Services",
+              "body": "Services with duration, buffer time, required staff, required resources and per-location pricing"
+            },
+            {
+              "heading": "Bundles & packages",
+              "body": "Bundles and packages with discounted pricing, session counters and automatic revenue recognition"
+            },
+            {
+              "heading": "Memberships",
+              "body": "Memberships — prepaid, unlimited, session-based — with auto-renewal, expiry reminders and a portal-visible wallet"
+            },
+            {
+              "heading": "Gift cards",
+              "body": "Gift cards with balance tracking, expiry dates and in-portal redemption"
+            },
+            {
+              "heading": "Retail products",
+              "body": "Retail products with SKU, barcode, units of measure, expiry dates and batch tracking"
+            },
+            {
+              "heading": "Smart pricing",
+              "body": "Smart pricing — peak, off-peak, member, seasonal and rule-based tiers"
+            },
+            {
+              "heading": "Discounts & coupons",
+              "body": "Discount codes, coupons, stacking rules and eligibility conditions"
+            },
+            {
+              "heading": "Categories & menus",
+              "body": "Category taxonomy, public menus and full branding control per tenant"
+            }
           ]
         },
         {
@@ -2508,17 +2933,47 @@
           "group": "Operations",
           "title": "Inventory & Supply",
           "summary": "Stock you can trust — across every location, with the audit trail to prove it to the auditor.",
-          "bullets": [
-            "Real-time stock levels per location with low-stock alerts routed to the right staff",
-            "SKU, barcode and unit tracking per product — with barcode generation, print and scan",
-            "Stock transfers with in-transit status and confirmation on arrival",
-            "Stocktakes with variance reporting and single-click adjustment posting",
-            "Supplier management with stock orders, approval workflows and linked supplier payments",
-            "Variant-level tracking per product (size, colour, batch) via SKU",
-            "Stock comparison across periods, weeks or locations",
-            "Cost of goods auto-journaled to accounting on every sale — no manual reconciliation",
-            "Inventory valuation, movement, and stock-vs-sales reports, all exportable to Excel",
-            "CSV and Excel import/export for bulk catalogue updates"
+          "sections": [
+            {
+              "heading": "Stock levels",
+              "body": "Real-time stock levels per location with low-stock alerts routed to the right staff"
+            },
+            {
+              "heading": "SKU & barcode",
+              "body": "SKU, barcode and unit tracking per product — with barcode generation, print and scan"
+            },
+            {
+              "heading": "Stock transfers",
+              "body": "Stock transfers with in-transit status and confirmation on arrival"
+            },
+            {
+              "heading": "Stocktakes",
+              "body": "Stocktakes with variance reporting and single-click adjustment posting"
+            },
+            {
+              "heading": "Suppliers & stock orders",
+              "body": "Supplier management with stock orders, approval workflows and linked supplier payments"
+            },
+            {
+              "heading": "Variants",
+              "body": "Variant-level tracking per product (size, colour, batch) via SKU"
+            },
+            {
+              "heading": "Stock comparison",
+              "body": "Stock comparison across periods, weeks or locations"
+            },
+            {
+              "heading": "COGS auto-journal",
+              "body": "Cost of goods auto-journaled to accounting on every sale — no manual reconciliation"
+            },
+            {
+              "heading": "Inventory reports",
+              "body": "Inventory valuation, movement, and stock-vs-sales reports, all exportable to Excel"
+            },
+            {
+              "heading": "Import / export",
+              "body": "CSV and Excel import/export for bulk catalogue updates"
+            }
           ]
         },
         {
@@ -2526,14 +2981,35 @@
           "group": "Front of house",
           "title": "Events & Ticketing",
           "summary": "Sell out your classes, workshops and events — with capacity, check-in, waitlists and automated reminders built in.",
-          "bullets": [
-            "Create events with schedule, capacity and tiered ticket pricing",
-            "Public event page with live seat counts and a share link your socials will love",
-            "Waitlist for sold-out events with position tracking and promotion as seats free up",
-            "Ticket sales through the portal with per-ticket QR code and door check-in",
-            "Tickets link directly into sales and the ledger — revenue lands where it belongs",
-            "Cancellations tracked per event with attendee state updates",
-            "Capacity, tickets-sold and availability live on every event listing"
+          "sections": [
+            {
+              "heading": "Event setup",
+              "body": "Create events with schedule, capacity and tiered ticket pricing"
+            },
+            {
+              "heading": "Public event page",
+              "body": "Public event page with live seat counts and a share link your socials will love"
+            },
+            {
+              "heading": "Waitlist",
+              "body": "Waitlist for sold-out events with position tracking and promotion as seats free up"
+            },
+            {
+              "heading": "Tickets & QR check-in",
+              "body": "Ticket sales through the portal with per-ticket QR code and door check-in"
+            },
+            {
+              "heading": "Sales & ledger integration",
+              "body": "Tickets link directly into sales and the ledger — revenue lands where it belongs"
+            },
+            {
+              "heading": "Cancellations",
+              "body": "Cancellations tracked per event with attendee state updates"
+            },
+            {
+              "heading": "Capacity tracking",
+              "body": "Capacity, tickets-sold and availability live on every event listing"
+            }
           ]
         },
         {
@@ -2541,19 +3017,55 @@
           "group": "People",
           "title": "Team & HR",
           "summary": "From shift to payslip — one tab per member of the team, no spreadsheet required.",
-          "bullets": [
-            "Roles and granular permissions — Owner / Admin / Staff / custom — with per-member templates you can copy between hires",
-            "Weekly schedules with per-location shifts, breaks and blocked times",
-            "Attendance with clock-in / clock-out, break tracking and QR self-check",
-            "Leave requests, leave types and approval workflows",
-            "Timesheets that feed directly into the next pay run",
-            "Commission engine — per service, per staff, per split — with tip handling built in",
-            "Pay runs with payslips and CSV export for banks or third-party payroll",
-            "Staff KPIs — rebook rate, utilization and revenue per member — on the team dashboard",
-            "Audit trails on subscription and sensitive admin actions, plus per-member login history",
-            "Internal team tickets — assign, thread and track operational requests across roles and locations",
-            "Context switching between roles and tenants via impersonation without re-login",
-            "Invitation tokens with expiry, password reset and self-serve password change"
+          "sections": [
+            {
+              "heading": "Roles & permissions",
+              "body": "Roles and granular permissions — Owner / Admin / Staff / custom — with per-member templates you can copy between hires"
+            },
+            {
+              "heading": "Schedule",
+              "body": "Weekly schedules with per-location shifts, breaks and blocked times"
+            },
+            {
+              "heading": "Attendance",
+              "body": "Attendance with clock-in / clock-out, break tracking and QR self-check"
+            },
+            {
+              "heading": "Leave",
+              "body": "Leave requests, leave types and approval workflows"
+            },
+            {
+              "heading": "Timesheet",
+              "body": "Timesheets that feed directly into the next pay run"
+            },
+            {
+              "heading": "Commission engine",
+              "body": "Commission engine — per service, per staff, per split — with tip handling built in"
+            },
+            {
+              "heading": "Pay Runs",
+              "body": "Pay runs with payslips and CSV export for banks or third-party payroll"
+            },
+            {
+              "heading": "Staff KPIs",
+              "body": "Staff KPIs — rebook rate, utilization and revenue per member — on the team dashboard"
+            },
+            {
+              "heading": "Audit & login history",
+              "body": "Audit trails on subscription and sensitive admin actions, plus per-member login history"
+            },
+            {
+              "heading": "Internal team tickets",
+              "body": "Internal team tickets — assign, thread and track operational requests across roles and locations"
+            },
+            {
+              "heading": "Impersonation",
+              "body": "Context switching between roles and tenants via impersonation without re-login"
+            },
+            {
+              "heading": "Invitations & passwords",
+              "body": "Invitation tokens with expiry, password reset and self-serve password change"
+            }
           ]
         },
         {
@@ -2561,18 +3073,51 @@
           "group": "Money",
           "title": "Accounting",
           "summary": "A real double-entry ledger built in — no second subscription, no monthly export routine, no hand-off to an external bookkeeper.",
-          "bullets": [
-            "Chart of accounts with opening balances and unlimited-depth hierarchy",
-            "Auto-posted journal entries from every sale, invoice, refund, payroll run, expense and stock movement",
-            "Manual journal entries with a tamper-evident hash-chain audit trail",
-            "Bills, supplier payments and vendor profiles tied to inventory and expenses",
-            "Accounts receivable and accounts payable with aging, statements and dunning",
-            "Bank accounts with statement import, transaction matching and reconciliation",
-            "Fixed assets with automatic monthly depreciation schedules, posted straight to the ledger",
-            "Deferred revenue recognition for memberships, packages and prepaid services — earned portion amortised on schedule",
-            "Bad-debt provisioning with aging buckets, and a pending-refund workflow with explicit approver states",
-            "Closed accounting periods with enforced lock — nothing posts backwards by accident",
-            "Financial statements built in: P&L, balance sheet, cash flow, trial balance, general ledger and VAT return"
+          "sections": [
+            {
+              "heading": "Chart of Accounts",
+              "body": "Chart of accounts with opening balances and unlimited-depth hierarchy"
+            },
+            {
+              "heading": "Journal Entries",
+              "body": "Auto-posted journal entries from every sale, invoice, refund, payroll run, expense and stock movement"
+            },
+            {
+              "heading": "Manual Journal & Audit",
+              "body": "Manual journal entries with a tamper-evident hash-chain audit trail"
+            },
+            {
+              "heading": "Bills & Supplier Payments",
+              "body": "Bills, supplier payments and vendor profiles tied to inventory and expenses"
+            },
+            {
+              "heading": "Receivables & Payables",
+              "body": "Accounts receivable and accounts payable with aging, statements and dunning"
+            },
+            {
+              "heading": "Bank Reconciliation",
+              "body": "Bank accounts with statement import, transaction matching and reconciliation"
+            },
+            {
+              "heading": "Fixed Assets",
+              "body": "Fixed assets with automatic monthly depreciation schedules, posted straight to the ledger"
+            },
+            {
+              "heading": "Deferred Revenue",
+              "body": "Deferred revenue recognition for memberships, packages and prepaid services — earned portion amortised on schedule"
+            },
+            {
+              "heading": "Pending Refunds & Bad Debt",
+              "body": "Bad-debt provisioning with aging buckets, and a pending-refund workflow with explicit approver states"
+            },
+            {
+              "heading": "Period Close",
+              "body": "Closed accounting periods with enforced lock — nothing posts backwards by accident"
+            },
+            {
+              "heading": "Financial Statements",
+              "body": "Financial statements built in: P&L, balance sheet, cash flow, trial balance, general ledger and VAT return"
+            }
           ]
         },
         {
@@ -2580,17 +3125,47 @@
           "group": "Insights",
           "title": "Reports",
           "summary": "Answer every \"how are we doing?\" in two clicks — with numbers you can defend to your accountant, your board or your bank.",
-          "bullets": [
-            "Finance: P&L, balance sheet, cash flow, trial balance and general ledger",
-            "Tax: VAT return, AR/AP aging, period summaries and regulator-ready exports",
-            "Operations: appointments, utilization, rebook rate and no-show analysis",
-            "People: commissions, attendance, leave, timesheets and staff KPIs",
-            "Clients: cohort retention, lifetime value and segment-level performance",
-            "Inventory: valuation, movement, stock-vs-sales and low-stock forecasts",
-            "Specialty reports per add-on — prescriptions, lab orders, medical records, resource utilization",
-            "Custom date ranges, prior-period comparison and drill-down to the source transaction",
-            "AI-powered report summary on demand — a plain-English recap of what moved and why",
-            "Export every report to Excel, CSV or PDF"
+          "sections": [
+            {
+              "heading": "Finance reports",
+              "body": "Finance: P&L, balance sheet, cash flow, trial balance and general ledger"
+            },
+            {
+              "heading": "Tax reports",
+              "body": "Tax: VAT return, AR/AP aging, period summaries and regulator-ready exports"
+            },
+            {
+              "heading": "Operations reports",
+              "body": "Operations: appointments, utilization, rebook rate and no-show analysis"
+            },
+            {
+              "heading": "People reports",
+              "body": "People: commissions, attendance, leave, timesheets and staff KPIs"
+            },
+            {
+              "heading": "Client reports",
+              "body": "Clients: cohort retention, lifetime value and segment-level performance"
+            },
+            {
+              "heading": "Inventory reports",
+              "body": "Inventory: valuation, movement, stock-vs-sales and low-stock forecasts"
+            },
+            {
+              "heading": "Add-on reports",
+              "body": "Specialty reports per add-on — prescriptions, lab orders, medical records, resource utilization"
+            },
+            {
+              "heading": "Date ranges & drill-down",
+              "body": "Custom date ranges, prior-period comparison and drill-down to the source transaction"
+            },
+            {
+              "heading": "AI report summary",
+              "body": "AI-powered report summary on demand — a plain-English recap of what moved and why"
+            },
+            {
+              "heading": "Export (Excel / CSV / PDF)",
+              "body": "Export every report to Excel, CSV or PDF"
+            }
           ]
         },
         {
@@ -2598,18 +3173,51 @@
           "group": "Clients",
           "title": "Client Portal",
           "summary": "A branded web app for every tenant — installable on any device, and always on your brand, never ours.",
-          "bullets": [
-            "Branded web app, installable on iOS, Android, tablet and desktop",
-            "Online booking with service, staff and date/time selection — matched to your real availability rules",
-            "Event, class and workshop booking with seat counts and waitlists",
-            "Pay invoices, view receipts and download PDF statements",
-            "Loyalty wallet with earning history, redemption ledger and expiring-point visibility",
-            "Memberships, packages and gift cards with remaining sessions and balances always on screen",
-            "Medical records, prescriptions and lab results where relevant (per activated add-on)",
-            "In-app notification center with read / unread state and push notifications on mobile",
-            "Support tickets and review submission after every completed visit",
-            "AI chat assistant that answers from your own policies, hours and services",
-            "Custom domain, custom logo, custom theme — it's their app, not yours"
+          "sections": [
+            {
+              "heading": "Branded web app",
+              "body": "Branded web app, installable on iOS, Android, tablet and desktop"
+            },
+            {
+              "heading": "Online booking",
+              "body": "Online booking with service, staff and date/time selection — matched to your real availability rules"
+            },
+            {
+              "heading": "Events & classes",
+              "body": "Event, class and workshop booking with seat counts and waitlists"
+            },
+            {
+              "heading": "Pay invoices & statements",
+              "body": "Pay invoices, view receipts and download PDF statements"
+            },
+            {
+              "heading": "Loyalty wallet",
+              "body": "Loyalty wallet with earning history, redemption ledger and expiring-point visibility"
+            },
+            {
+              "heading": "Memberships & gift cards",
+              "body": "Memberships, packages and gift cards with remaining sessions and balances always on screen"
+            },
+            {
+              "heading": "Medical records",
+              "body": "Medical records, prescriptions and lab results where relevant (per activated add-on)"
+            },
+            {
+              "heading": "Notifications",
+              "body": "In-app notification center with read / unread state and push notifications on mobile"
+            },
+            {
+              "heading": "Tickets & reviews",
+              "body": "Support tickets and review submission after every completed visit"
+            },
+            {
+              "heading": "AI chat",
+              "body": "AI chat assistant that answers from your own policies, hours and services"
+            },
+            {
+              "heading": "Custom domain & branding",
+              "body": "Custom domain, custom logo, custom theme — it's their app, not yours"
+            }
           ]
         },
         {
@@ -2617,18 +3225,51 @@
           "group": "Platform",
           "title": "Multi-Tenant Architecture",
           "summary": "One install. Thousands of businesses. Run it for yourself, for your franchise, or for your portfolio — same codebase, same server, same day.",
-          "bullets": [
-            "Isolated data per tenant — every model is scoped by tenantId and resolved at the request middleware",
-            "Per-tenant branding, logo, colour theme, menu config and default locale",
-            "Super-admin panel to manage plans, subscriptions, suspensions, payments and promo codes",
-            "Feature-flag control per tenant — turn plugins on and off without a deploy",
-            "Impersonation sessions with full log (who, when, from, until) for audit",
-            "Plans and subscription lifecycle automation with usage limits configured per plan",
-            "Onboarding progress tracked per tenant with a guided wizard",
-            "Webhook event log for inbound integrations and troubleshooting",
-            "Slug-based routing for portal, booking, events and public invoice links",
-            "Dunning policies, expiry alerts and renewal reminders — scheduled out of the box",
-            "Tenant deletion with Prisma-cascade cleanup of all scoped records"
+          "sections": [
+            {
+              "heading": "Data isolation",
+              "body": "Isolated data per tenant — every model is scoped by tenantId and resolved at the request middleware"
+            },
+            {
+              "heading": "Per-tenant branding",
+              "body": "Per-tenant branding, logo, colour theme, menu config and default locale"
+            },
+            {
+              "heading": "Super-admin panel",
+              "body": "Super-admin panel to manage plans, subscriptions, suspensions, payments and promo codes"
+            },
+            {
+              "heading": "Feature flags",
+              "body": "Feature-flag control per tenant — turn plugins on and off without a deploy"
+            },
+            {
+              "heading": "Impersonation",
+              "body": "Impersonation sessions with full log (who, when, from, until) for audit"
+            },
+            {
+              "heading": "Plans & subscriptions",
+              "body": "Plans and subscription lifecycle automation with usage limits configured per plan"
+            },
+            {
+              "heading": "Onboarding wizard",
+              "body": "Onboarding progress tracked per tenant with a guided wizard"
+            },
+            {
+              "heading": "Webhook event log",
+              "body": "Webhook event log for inbound integrations and troubleshooting"
+            },
+            {
+              "heading": "Slug-based routing",
+              "body": "Slug-based routing for portal, booking, events and public invoice links"
+            },
+            {
+              "heading": "Dunning & renewals",
+              "body": "Dunning policies, expiry alerts and renewal reminders — scheduled out of the box"
+            },
+            {
+              "heading": "Tenant deletion",
+              "body": "Tenant deletion with Prisma-cascade cleanup of all scoped records"
+            }
           ]
         },
         {
@@ -2636,13 +3277,31 @@
           "group": "Platform",
           "title": "Bilingual & RTL",
           "summary": "Arabic and English — not merely translated, but truly localized. Layout, numbers, dates and currency aware from the first pixel.",
-          "bullets": [
-            "Full RTL rendering for Arabic — layout, icons, arrows and animations mirrored where it matters",
-            "Locale-aware numbers, currency and Gregorian dates throughout the app",
-            "Saudi Riyal custom symbol font built in — receipts print correct, every time",
-            "Per-user language toggle and per-tenant default language (team and client-facing)",
-            "Timezone-aware scheduling, reminders and campaigns in each tenant's local time",
-            "Bilingual dashboard, booking site and client portal"
+          "sections": [
+            {
+              "heading": "RTL rendering",
+              "body": "Full RTL rendering for Arabic — layout, icons, arrows and animations mirrored where it matters"
+            },
+            {
+              "heading": "Locale-aware formatting",
+              "body": "Locale-aware numbers, currency and Gregorian dates throughout the app"
+            },
+            {
+              "heading": "Saudi Riyal symbol",
+              "body": "Saudi Riyal custom symbol font built in — receipts print correct, every time"
+            },
+            {
+              "heading": "Per-user / per-tenant locale",
+              "body": "Per-user language toggle and per-tenant default language (team and client-facing)"
+            },
+            {
+              "heading": "Timezone scheduling",
+              "body": "Timezone-aware scheduling, reminders and campaigns in each tenant's local time"
+            },
+            {
+              "heading": "Bilingual surfaces",
+              "body": "Bilingual dashboard, booking site and client portal"
+            }
           ]
         },
         {
@@ -2650,15 +3309,39 @@
           "group": "Platform",
           "title": "Self-Hosted",
           "summary": "Your server, your rules. No phone home. No SaaS bill. No vendor who can pull the plug on your business.",
-          "bullets": [
-            "Docker Compose stack — boot the full platform in under an hour",
-            "PostgreSQL + Prisma ORM with connection pooling",
-            "Runs on any VPS from $5/month, scales to dedicated infrastructure",
-            "APP_MODE environment flag switches between single-tenant and multi-tenant deployments",
-            "S3-compatible storage or local disk — Cloudinary supported for image CDN",
-            "SMTP, Twilio, SendGrid and WhatsApp — plug in the providers you already pay for",
-            "Data-retention policy model for GDPR-friendly cleanup — host where the law says you must",
-            "Install-status endpoint and manual backup utility included; schedule the cron your way"
+          "sections": [
+            {
+              "heading": "Docker Compose stack",
+              "body": "Docker Compose stack — boot the full platform in under an hour"
+            },
+            {
+              "heading": "PostgreSQL + Prisma",
+              "body": "PostgreSQL + Prisma ORM with connection pooling"
+            },
+            {
+              "heading": "VPS-ready",
+              "body": "Runs on any VPS from $5/month, scales to dedicated infrastructure"
+            },
+            {
+              "heading": "APP_MODE flag",
+              "body": "APP_MODE environment flag switches between single-tenant and multi-tenant deployments"
+            },
+            {
+              "heading": "S3 / Cloudinary / local storage",
+              "body": "S3-compatible storage or local disk — Cloudinary supported for image CDN"
+            },
+            {
+              "heading": "Provider plug-ins",
+              "body": "SMTP, Twilio, SendGrid and WhatsApp — plug in the providers you already pay for"
+            },
+            {
+              "heading": "Data retention",
+              "body": "Data-retention policy model for GDPR-friendly cleanup — host where the law says you must"
+            },
+            {
+              "heading": "Backup & install status",
+              "body": "Install-status endpoint and manual backup utility included; schedule the cron your way"
+            }
           ]
         },
         {
@@ -2666,14 +3349,35 @@
           "group": "Compliance",
           "title": "ZATCA Phase 2 (Saudi)",
           "summary": "Sign, stamp and clear e-invoices to the Saudi Tax Authority — directly from your POS, not through a middleman.",
-          "bullets": [
-            "Compliance CSR + CSID issuance against ZATCA sandbox and production",
-            "XML generation, UBL signing and QR stamping on every invoice — private keys stay on your server",
-            "B2B standard (clearance) and B2C simplified (reporting) flows with distinct code paths",
-            "Live submission status visible on the invoice — UUID, reporting status, errors",
-            "Hourly cron re-processes any pending or failed submissions",
-            "Archival of cleared invoices with SHA-256 hash and digital signature stored",
-            "Reporting status and error history retained on every ZATCA-tracked invoice"
+          "sections": [
+            {
+              "heading": "CSR / CSID issuance",
+              "body": "Compliance CSR + CSID issuance against ZATCA sandbox and production"
+            },
+            {
+              "heading": "XML, UBL signing & QR",
+              "body": "XML generation, UBL signing and QR stamping on every invoice — private keys stay on your server"
+            },
+            {
+              "heading": "B2B clearance & B2C reporting",
+              "body": "B2B standard (clearance) and B2C simplified (reporting) flows with distinct code paths"
+            },
+            {
+              "heading": "Live submission status",
+              "body": "Live submission status visible on the invoice — UUID, reporting status, errors"
+            },
+            {
+              "heading": "Hourly retry cron",
+              "body": "Hourly cron re-processes any pending or failed submissions"
+            },
+            {
+              "heading": "Archival",
+              "body": "Archival of cleared invoices with SHA-256 hash and digital signature stored"
+            },
+            {
+              "heading": "Error history",
+              "body": "Reporting status and error history retained on every ZATCA-tracked invoice"
+            }
           ]
         },
         {
@@ -2681,12 +3385,27 @@
           "group": "Compliance",
           "title": "ETA E-Invoicing (Egypt)",
           "summary": "Submit invoices to the Egyptian Tax Authority without ever leaving the sale.",
-          "bullets": [
-            "Item, customer and tax-code mapping configured in tenant settings",
-            "Signed submission with UUID, long-id and live status tracking on every invoice",
-            "Automatic resubmission for rejected documents with error details retained",
-            "Credit notes (c) and debit notes (d) supported via ETA document-type flags",
-            "ETA data queryable per invoice — UUID, submission status, internal-id for accounting exports"
+          "sections": [
+            {
+              "heading": "Code mapping",
+              "body": "Item, customer and tax-code mapping configured in tenant settings"
+            },
+            {
+              "heading": "Signed submission",
+              "body": "Signed submission with UUID, long-id and live status tracking on every invoice"
+            },
+            {
+              "heading": "Auto-resubmission",
+              "body": "Automatic resubmission for rejected documents with error details retained"
+            },
+            {
+              "heading": "Credit & debit notes",
+              "body": "Credit notes (c) and debit notes (d) supported via ETA document-type flags"
+            },
+            {
+              "heading": "Per-invoice ETA data",
+              "body": "ETA data queryable per invoice — UUID, submission status, internal-id for accounting exports"
+            }
           ]
         },
         {
@@ -2694,14 +3413,35 @@
           "group": "Intelligence",
           "title": "AI Assistant",
           "summary": "An assistant trained on your own operations — it answers from your services, books for your clients, and writes your operator summaries.",
-          "bullets": [
-            "In-app chat on the booking site and client portal — grounded in your services, hours and policies",
-            "Guides clients through booking and creates confirmed appointments within your availability rules",
-            "Multi-provider — OpenAI, Google Gemini, Groq, DeepSeek, x.ai, Together, Ollama, LM Studio, or any OpenAI-compatible endpoint",
-            "Configurable provider, model, dialect and tone per tenant",
-            "Per-tenant system-prompt suffix so the assistant speaks in your brand voice",
-            "Plain-English AI summaries on the performance report for operators who skip the spreadsheets",
-            "Bring-your-own API key — no mark-up, no rate-limiting through us"
+          "sections": [
+            {
+              "heading": "In-app chat",
+              "body": "In-app chat on the booking site and client portal — grounded in your services, hours and policies"
+            },
+            {
+              "heading": "Booking assistant",
+              "body": "Guides clients through booking and creates confirmed appointments within your availability rules"
+            },
+            {
+              "heading": "Multi-provider",
+              "body": "Multi-provider — OpenAI, Google Gemini, Groq, DeepSeek, x.ai, Together, Ollama, LM Studio, or any OpenAI-compatible endpoint"
+            },
+            {
+              "heading": "Per-tenant configuration",
+              "body": "Configurable provider, model, dialect and tone per tenant"
+            },
+            {
+              "heading": "Brand voice",
+              "body": "Per-tenant system-prompt suffix so the assistant speaks in your brand voice"
+            },
+            {
+              "heading": "AI report summaries",
+              "body": "Plain-English AI summaries on the performance report for operators who skip the spreadsheets"
+            },
+            {
+              "heading": "BYO API key",
+              "body": "Bring-your-own API key — no mark-up, no rate-limiting through us"
+            }
           ]
         },
         {
@@ -2709,14 +3449,35 @@
           "group": "Growth",
           "title": "Reviews & Loyalty",
           "summary": "Turn every happy visit into repeat revenue — and a public review that earns you the next one.",
-          "bullets": [
-            "Reviews captured after completed visits — via portal, email or SMS templates",
-            "Review moderation before publishing, with featured reviews on the public page",
-            "Public review page per tenant — branded and linkable from bookings and socials",
-            "Loyalty points earning on sales with configurable per-tenant rules",
-            "Redemption with minimum balance and expiry windows configurable per tenant",
-            "Expiring points surfaced to clients in their portal wallet before they lapse",
-            "Segments for top spenders and dormant clients, ready to target with campaigns"
+          "sections": [
+            {
+              "heading": "Review capture",
+              "body": "Reviews captured after completed visits — via portal, email or SMS templates"
+            },
+            {
+              "heading": "Moderation",
+              "body": "Review moderation before publishing, with featured reviews on the public page"
+            },
+            {
+              "heading": "Public review page",
+              "body": "Public review page per tenant — branded and linkable from bookings and socials"
+            },
+            {
+              "heading": "Loyalty earning",
+              "body": "Loyalty points earning on sales with configurable per-tenant rules"
+            },
+            {
+              "heading": "Redemption rules",
+              "body": "Redemption with minimum balance and expiry windows configurable per tenant"
+            },
+            {
+              "heading": "Expiry alerts",
+              "body": "Expiring points surfaced to clients in their portal wallet before they lapse"
+            },
+            {
+              "heading": "Top-spender segments",
+              "body": "Segments for top spenders and dormant clients, ready to target with campaigns"
+            }
           ]
         },
         {
@@ -2724,15 +3485,39 @@
           "group": "Operations",
           "title": "Notifications & Messaging",
           "summary": "Per-event notification rules — staff vs client, by channel, with editable templates — delivered through your own provider keys.",
-          "bullets": [
-            "Four channels — In-app, Email, SMS, WhatsApp — toggle each per tenant",
-            "Provider plugins: SMTP, SendGrid or Resend (email); Twilio (SMS); Twilio or Meta Business (WhatsApp)",
-            "Use the platform default for any channel, or supply your own keys per tenant for full deliverability control",
-            "Per-event rules across 30+ event types — appointments, sales, inventory, events, loyalty, follow-ups, tickets, subscriptions — with separate audiences for staff and clients",
-            "Editable bilingual templates (subject + body) per event and channel, with named variables for clientName, serviceName, dates, totals and branding",
-            "Delivery logs with sent / delivered / failed status, fully retryable from the UI",
-            "Test-send any channel before going live, with sandboxes per provider",
-            "Personal alert preferences per team member — opt out of non-essential noise"
+          "sections": [
+            {
+              "heading": "Four channels",
+              "body": "Four channels — In-app, Email, SMS, WhatsApp — toggle each per tenant"
+            },
+            {
+              "heading": "Provider plug-ins",
+              "body": "Provider plugins: SMTP, SendGrid or Resend (email); Twilio (SMS); Twilio or Meta Business (WhatsApp)"
+            },
+            {
+              "heading": "Bring-your-own keys",
+              "body": "Use the platform default for any channel, or supply your own keys per tenant for full deliverability control"
+            },
+            {
+              "heading": "Per-event rules",
+              "body": "Per-event rules across 30+ event types — appointments, sales, inventory, events, loyalty, follow-ups, tickets, subscriptions — with separate audiences for staff and clients"
+            },
+            {
+              "heading": "Editable templates",
+              "body": "Editable bilingual templates (subject + body) per event and channel, with named variables for clientName, serviceName, dates, totals and branding"
+            },
+            {
+              "heading": "Delivery logs",
+              "body": "Delivery logs with sent / delivered / failed status, fully retryable from the UI"
+            },
+            {
+              "heading": "Test send",
+              "body": "Test-send any channel before going live, with sandboxes per provider"
+            },
+            {
+              "heading": "Personal preferences",
+              "body": "Personal alert preferences per team member — opt out of non-essential noise"
+            }
           ]
         },
         {
@@ -2740,19 +3525,55 @@
           "group": "Platform",
           "title": "Workspace Control",
           "summary": "The settings panel — brand, locations, permissions, retention, backup, storage, BNPL credentials, sidebar layout — all in one place.",
-          "bullets": [
-            "Business profile: name, logo, country, currency, default languages and number formats (Western or Arabic-Indic)",
-            "Multi-location with per-branch hours, capacity, address and team assignment",
-            "External brand links — Facebook, Instagram, Twitter/X, website — surfaced on the booking portal and receipts",
-            "Menu manager — reorder, hide, pin items in the sidebar per tenant; promote frequently-used add-ons",
-            "Permission templates — reusable role presets (Senior Stylist, Reception) applied at member onboarding",
-            "Data retention rules — soft-deleted records, read notifications, activity logs, cancelled appointments — with GDPR right-to-erasure on the client portal",
-            "Backup & restore — JSON export of the entire workspace; restore replaces current state with a confirmation gate",
-            "Storage providers — local disk, S3-compatible (AWS S3, DigitalOcean Spaces, MinIO) or Cloudinary, switchable per tenant",
-            "Receipt templates (A4 standard or POS thermal), payment-method toggles, tax rates, tipping presets",
-            "Date, time, timezone and calendar defaults — first day of the week, working hours, slot granularity, default appointment duration",
-            "Online-booking rules — lead time, cancellation window, deposit policy, public-page visibility — and Zoom integration credentials per tenant",
-            "Buy-now-pay-later credentials — Tabby and Tamara — with sandbox/live modes and a built-in connection test"
+          "sections": [
+            {
+              "heading": "Business profile",
+              "body": "Business profile: name, logo, country, currency, default languages and number formats (Western or Arabic-Indic)"
+            },
+            {
+              "heading": "Locations",
+              "body": "Multi-location with per-branch hours, capacity, address and team assignment"
+            },
+            {
+              "heading": "External brand links",
+              "body": "External brand links — Facebook, Instagram, Twitter/X, website — surfaced on the booking portal and receipts"
+            },
+            {
+              "heading": "Menu manager",
+              "body": "Menu manager — reorder, hide, pin items in the sidebar per tenant; promote frequently-used add-ons"
+            },
+            {
+              "heading": "Permission templates",
+              "body": "Permission templates — reusable role presets (Senior Stylist, Reception) applied at member onboarding"
+            },
+            {
+              "heading": "Data retention",
+              "body": "Data retention rules — soft-deleted records, read notifications, activity logs, cancelled appointments — with GDPR right-to-erasure on the client portal"
+            },
+            {
+              "heading": "Backup & restore",
+              "body": "Backup & restore — JSON export of the entire workspace; restore replaces current state with a confirmation gate"
+            },
+            {
+              "heading": "Storage providers",
+              "body": "Storage providers — local disk, S3-compatible (AWS S3, DigitalOcean Spaces, MinIO) or Cloudinary, switchable per tenant"
+            },
+            {
+              "heading": "Receipts, tax & tipping",
+              "body": "Receipt templates (A4 standard or POS thermal), payment-method toggles, tax rates, tipping presets"
+            },
+            {
+              "heading": "Date, time & calendar defaults",
+              "body": "Date, time, timezone and calendar defaults — first day of the week, working hours, slot granularity, default appointment duration"
+            },
+            {
+              "heading": "Online booking & Zoom",
+              "body": "Online-booking rules — lead time, cancellation window, deposit policy, public-page visibility — and Zoom integration credentials per tenant"
+            },
+            {
+              "heading": "BNPL credentials",
+              "body": "Buy-now-pay-later credentials — Tabby and Tamara — with sandbox/live modes and a built-in connection test"
+            }
           ]
         },
         {
@@ -2760,15 +3581,39 @@
           "group": "Platform",
           "title": "Activity Logs & Audit",
           "summary": "Every sensitive action — recorded, attributed and queryable. The trail your auditor, your insurer and your future self will thank you for.",
-          "bullets": [
-            "Tenant-wide activity log for staff actions — logins, edits, deletions, role changes, refunds, overrides and admin operations",
-            "Per-record activity timeline on clients, invoices, appointments, payments and members",
-            "Tamper-evident hash-chain audit trail on accounting journal entries — provable integrity for every period",
-            "Subscription and sensitive-action audit logs surfaced to super-admin for cross-tenant oversight",
-            "Filter by member, action type, date range, IP or affected record — and export the result to CSV",
-            "Impersonation sessions tracked end-to-end (who, when, from, until) with a dedicated entry per session",
-            "Webhook event log for inbound integrations and troubleshooting — payload, signature, retry status",
-            "Configurable retention windows aligned with your data-retention policy and GDPR right-to-erasure"
+          "sections": [
+            {
+              "heading": "Tenant activity log",
+              "body": "Tenant-wide activity log for staff actions — logins, edits, deletions, role changes, refunds, overrides and admin operations"
+            },
+            {
+              "heading": "Per-record timeline",
+              "body": "Per-record activity timeline on clients, invoices, appointments, payments and members"
+            },
+            {
+              "heading": "Hash-chain audit",
+              "body": "Tamper-evident hash-chain audit trail on accounting journal entries — provable integrity for every period"
+            },
+            {
+              "heading": "Super-admin audit",
+              "body": "Subscription and sensitive-action audit logs surfaced to super-admin for cross-tenant oversight"
+            },
+            {
+              "heading": "Filter & export",
+              "body": "Filter by member, action type, date range, IP or affected record — and export the result to CSV"
+            },
+            {
+              "heading": "Impersonation tracking",
+              "body": "Impersonation sessions tracked end-to-end (who, when, from, until) with a dedicated entry per session"
+            },
+            {
+              "heading": "Webhook event log",
+              "body": "Webhook event log for inbound integrations and troubleshooting — payload, signature, retry status"
+            },
+            {
+              "heading": "Retention windows",
+              "body": "Configurable retention windows aligned with your data-retention policy and GDPR right-to-erasure"
+            }
           ]
         }
       ]
@@ -2854,7 +3699,11 @@
         "locationsLabel": "Number of locations",
         "locationsHelp": "Momentfy is multi-tenant. One license covers every location, every brand.",
         "yearsLabel": "Projection horizon",
-        "yearOptions": ["3 yrs", "5 yrs", "10 yrs"],
+        "yearOptions": [
+          "3 yrs",
+          "5 yrs",
+          "10 yrs"
+        ],
         "currencyLabel": "Currency"
       },
       "assumptions": {
@@ -2908,12 +3757,32 @@
           "title": "Salons & Spas",
           "hero": "Color-coded staff lanes, memberships, gift cards and loyalty — built for the rhythm of a salon.",
           "summary": "From the front desk to the chair and the wallet. One tab replaces the booking app, the spreadsheet of memberships, the paper loyalty card and the commission ledger.",
-          "compliance": ["VAT", "ZATCA-ready", "Arabic / English"],
-          "setup": ["Calendar", "POS", "Memberships", "Loyalty", "Campaigns", "Reviews"],
+          "compliance": [
+            "VAT",
+            "ZATCA-ready",
+            "Arabic / English"
+          ],
+          "setup": [
+            "Calendar",
+            "POS",
+            "Memberships",
+            "Loyalty",
+            "Campaigns",
+            "Reviews"
+          ],
           "stats": [
-            { "k": "Avg. no-show drop", "v": "-38%" },
-            { "k": "Rebook rate", "v": "+52%" },
-            { "k": "Checkout time", "v": "< 90s" }
+            {
+              "k": "Avg. no-show drop",
+              "v": "-38%"
+            },
+            {
+              "k": "Rebook rate",
+              "v": "+52%"
+            },
+            {
+              "k": "Checkout time",
+              "v": "< 90s"
+            }
           ],
           "pains": [
             "Double-booked chairs and walk-in chaos eating revenue",
@@ -2938,19 +3807,45 @@
             "Split payment at checkout — membership credit + card + tip",
             "Points accrue, review request sent, follow-up task scheduled"
           ],
-          "addons": ["loyalty", "followup", "ai", "gcal"]
+          "addons": [
+            "loyalty",
+            "followup",
+            "ai",
+            "gcal"
+          ]
         },
         {
           "id": "dental",
           "title": "Dental Clinics",
           "hero": "Odontogram, treatment plans, DICOM imaging, prescriptions and insurance — plus ZATCA e-invoicing.",
           "summary": "Clinical depth without clinical drag. Pediatric + adult odontograms, DICOM viewer, structured Rx, insurance coverage rules and signed e-invoices — all inside one bilingual app.",
-          "compliance": ["ZATCA Phase 2", "VAT", "Clinical audit trail", "Insurance-ready"],
-          "setup": ["Calendar", "Dental Chart", "Imaging", "Prescriptions", "Insurance", "ZATCA"],
+          "compliance": [
+            "ZATCA Phase 2",
+            "VAT",
+            "Clinical audit trail",
+            "Insurance-ready"
+          ],
+          "setup": [
+            "Calendar",
+            "Dental Chart",
+            "Imaging",
+            "Prescriptions",
+            "Insurance",
+            "ZATCA"
+          ],
           "stats": [
-            { "k": "Chair utilization", "v": "+24%" },
-            { "k": "Insurance recovery", "v": "+31%" },
-            { "k": "Record time", "v": "-65%" }
+            {
+              "k": "Chair utilization",
+              "v": "+24%"
+            },
+            {
+              "k": "Insurance recovery",
+              "v": "+31%"
+            },
+            {
+              "k": "Record time",
+              "v": "-65%"
+            }
           ],
           "pains": [
             "Paper odontograms scanned, lost or kept in a separate drawer",
@@ -2975,19 +3870,48 @@
             "Rx + lab orders authored and pushed to the patient portal",
             "Signed ZATCA invoice issued with insurance split calculated"
           ],
-          "addons": ["dental", "imaging", "rx", "labs", "records", "insurance", "zatca"]
+          "addons": [
+            "dental",
+            "imaging",
+            "rx",
+            "labs",
+            "records",
+            "insurance",
+            "zatca"
+          ]
         },
         {
           "id": "medical",
           "title": "Medical Clinics",
           "hero": "Structured EMR, lab orders, prescriptions and multi-doctor scheduling with insurance-ready invoicing.",
           "summary": "SOAP-first EMR with allergies, vitals, attachments and a patient timeline. Multi-doctor schedules, lab orders, Rx and insurance coverage — signed invoices for KSA and Egypt built in.",
-          "compliance": ["ZATCA Phase 2", "ETA E-invoicing", "VAT", "Insurance-ready"],
-          "setup": ["Calendar", "Medical Records", "Lab Orders", "Prescriptions", "Insurance", "Portal"],
+          "compliance": [
+            "ZATCA Phase 2",
+            "ETA E-invoicing",
+            "VAT",
+            "Insurance-ready"
+          ],
+          "setup": [
+            "Calendar",
+            "Medical Records",
+            "Lab Orders",
+            "Prescriptions",
+            "Insurance",
+            "Portal"
+          ],
           "stats": [
-            { "k": "Charting time", "v": "-40%" },
-            { "k": "Portal adoption", "v": "72%" },
-            { "k": "Lab turnaround", "v": "-28%" }
+            {
+              "k": "Charting time",
+              "v": "-40%"
+            },
+            {
+              "k": "Portal adoption",
+              "v": "72%"
+            },
+            {
+              "k": "Lab turnaround",
+              "v": "-28%"
+            }
           ],
           "pains": [
             "Handwritten SOAP notes that nobody can search later",
@@ -3012,19 +3936,47 @@
             "Lab orders sent; results back populate the patient timeline",
             "Insurance-split invoice generated, signed and delivered to portal"
           ],
-          "addons": ["records", "labs", "rx", "insurance", "gcal", "ai", "followup"]
+          "addons": [
+            "records",
+            "labs",
+            "rx",
+            "insurance",
+            "gcal",
+            "ai",
+            "followup"
+          ]
         },
         {
           "id": "barber",
           "title": "Barber Shops",
           "hero": "Walk-in queue, fast POS and per-barber commissions. Built for volume.",
           "summary": "High-velocity, mostly walk-in, mostly cash. A display-ready queue, sub-90-second checkout and a commission engine that never argues at payday.",
-          "compliance": ["VAT", "ZATCA-ready", "Arabic / English"],
-          "setup": ["Calendar", "POS", "Memberships", "Commissions", "Tips", "Campaigns"],
+          "compliance": [
+            "VAT",
+            "ZATCA-ready",
+            "Arabic / English"
+          ],
+          "setup": [
+            "Calendar",
+            "POS",
+            "Memberships",
+            "Commissions",
+            "Tips",
+            "Campaigns"
+          ],
           "stats": [
-            { "k": "Avg. ticket", "v": "+18%" },
-            { "k": "Queue wait", "v": "-44%" },
-            { "k": "Commission accuracy", "v": "100%" }
+            {
+              "k": "Avg. ticket",
+              "v": "+18%"
+            },
+            {
+              "k": "Queue wait",
+              "v": "-44%"
+            },
+            {
+              "k": "Commission accuracy",
+              "v": "100%"
+            }
           ],
           "pains": [
             "Walk-in queue written on a whiteboard everyone ignores",
@@ -3049,19 +4001,44 @@
             "Payment with tip — split commission auto-calculated on the receipt",
             "Points added, review requested, come-back nudge scheduled"
           ],
-          "addons": ["loyalty", "followup", "attendance", "ai"]
+          "addons": [
+            "loyalty",
+            "followup",
+            "attendance",
+            "ai"
+          ]
         },
         {
           "id": "fitness",
           "title": "Fitness & Studios",
           "hero": "Group classes, memberships, waitlists and attendance tracking. Kiosk-friendly check-in.",
           "summary": "Classes fill, classes cancel, members come and go. A capacity-aware class calendar, automatic waitlists, a kiosk QR check-in and a membership wallet the member actually opens.",
-          "compliance": ["VAT", "ZATCA-ready", "Member agreements"],
-          "setup": ["Events", "Memberships", "Attendance", "Portal", "Campaigns", "Reports"],
+          "compliance": [
+            "VAT",
+            "ZATCA-ready",
+            "Member agreements"
+          ],
+          "setup": [
+            "Events",
+            "Memberships",
+            "Attendance",
+            "Portal",
+            "Campaigns",
+            "Reports"
+          ],
           "stats": [
-            { "k": "Class fill rate", "v": "+26%" },
-            { "k": "Member churn", "v": "-19%" },
-            { "k": "Check-in time", "v": "< 5s" }
+            {
+              "k": "Class fill rate",
+              "v": "+26%"
+            },
+            {
+              "k": "Member churn",
+              "v": "-19%"
+            },
+            {
+              "k": "Check-in time",
+              "v": "< 5s"
+            }
           ],
           "pains": [
             "Classes booked but nobody shows — capacity wasted",
@@ -3086,19 +4063,45 @@
             "Class fills from the waitlist if someone drops — member notified",
             "End of month — churn alert on dormant members triggers a campaign"
           ],
-          "addons": ["events", "attendance", "loyalty", "ai", "followup"]
+          "addons": [
+            "events",
+            "attendance",
+            "loyalty",
+            "ai",
+            "followup"
+          ]
         },
         {
           "id": "pet",
           "title": "Vet & Pet Care",
           "hero": "Vet records, vaccination schedules and grooming billing — one timeline per pet.",
           "summary": "Every pet gets a timeline — vaccines, visits, grooming, medical notes. Owners get automated vaccine recalls. Clinic chains get one record per animal across every location.",
-          "compliance": ["VAT", "Vaccination audit trail", "Clinical timeline"],
-          "setup": ["Calendar", "Medical Records", "Grooming POS", "Portal", "Reminders", "Reports"],
+          "compliance": [
+            "VAT",
+            "Vaccination audit trail",
+            "Clinical timeline"
+          ],
+          "setup": [
+            "Calendar",
+            "Medical Records",
+            "Grooming POS",
+            "Portal",
+            "Reminders",
+            "Reports"
+          ],
           "stats": [
-            { "k": "Vaccine recall", "v": "+48%" },
-            { "k": "Grooming rebook", "v": "+31%" },
-            { "k": "Client reviews", "v": "4.9★" }
+            {
+              "k": "Vaccine recall",
+              "v": "+48%"
+            },
+            {
+              "k": "Grooming rebook",
+              "v": "+31%"
+            },
+            {
+              "k": "Client reviews",
+              "v": "4.9★"
+            }
           ],
           "pains": [
             "Vaccine schedules missed because nobody remembered to call",
@@ -3123,19 +4126,45 @@
             "Invoice auto-splits — grooming, retail, optional Rx",
             "Vaccine recall scheduled 11 months out — SMS goes out on time"
           ],
-          "addons": ["records", "rx", "labs", "followup", "loyalty"]
+          "addons": [
+            "records",
+            "rx",
+            "labs",
+            "followup",
+            "loyalty"
+          ]
         },
         {
           "id": "education",
           "title": "Education & Training",
           "hero": "Cohorts, classes, attendance and invoicing — one system for schools, academies and training centers.",
           "summary": "Run fixed-schedule cohorts, drop-in classes, private tutoring and exam bookings from the same calendar. Attendance on the teacher's phone, invoices from the parent portal.",
-          "compliance": ["VAT", "ZATCA-ready", "Attendance records"],
-          "setup": ["Calendar", "Events", "Memberships", "Attendance", "Portal", "Reports"],
+          "compliance": [
+            "VAT",
+            "ZATCA-ready",
+            "Attendance records"
+          ],
+          "setup": [
+            "Calendar",
+            "Events",
+            "Memberships",
+            "Attendance",
+            "Portal",
+            "Reports"
+          ],
           "stats": [
-            { "k": "Class fill rate", "v": "+30%" },
-            { "k": "Attendance accuracy", "v": "100%" },
-            { "k": "Parent portal uptake", "v": "70%" }
+            {
+              "k": "Class fill rate",
+              "v": "+30%"
+            },
+            {
+              "k": "Attendance accuracy",
+              "v": "100%"
+            },
+            {
+              "k": "Parent portal uptake",
+              "v": "70%"
+            }
           ],
           "pains": [
             "Teachers take attendance on paper and lose the sheets",
@@ -3160,19 +4189,46 @@
             "Monthly invoice auto-generates; parent pays in the portal",
             "Attendance + performance report delivered at term-end"
           ],
-          "addons": ["events", "attendance", "followup", "ai", "loyalty"]
+          "addons": [
+            "events",
+            "attendance",
+            "followup",
+            "ai",
+            "loyalty"
+          ]
         },
         {
           "id": "professional",
           "title": "Professional Services",
           "hero": "Appointments, case files, documents and invoicing for lawyers, consultants, therapists and advisors.",
           "summary": "Consultations billed by the hour, retainers as memberships, case files per client and a portal where every document, invoice and next appointment is one tap away.",
-          "compliance": ["VAT", "ZATCA / ETA", "Audit trail", "Client confidentiality"],
-          "setup": ["Calendar", "Clients", "Retainers", "POS", "Portal", "Records"],
+          "compliance": [
+            "VAT",
+            "ZATCA / ETA",
+            "Audit trail",
+            "Client confidentiality"
+          ],
+          "setup": [
+            "Calendar",
+            "Clients",
+            "Retainers",
+            "POS",
+            "Portal",
+            "Records"
+          ],
           "stats": [
-            { "k": "No-show drop", "v": "-42%" },
-            { "k": "Invoicing time", "v": "-55%" },
-            { "k": "Portal adoption", "v": "68%" }
+            {
+              "k": "No-show drop",
+              "v": "-42%"
+            },
+            {
+              "k": "Invoicing time",
+              "v": "-55%"
+            },
+            {
+              "k": "Portal adoption",
+              "v": "68%"
+            }
           ],
           "pains": [
             "Case notes scattered across laptops, email and paper",
@@ -3197,19 +4253,44 @@
             "Retainer balance debited or an hourly invoice issued",
             "Documents published to the portal for client access"
           ],
-          "addons": ["gcal", "ai", "followup", "records"]
+          "addons": [
+            "gcal",
+            "ai",
+            "followup",
+            "records"
+          ]
         },
         {
           "id": "auto",
           "title": "Auto Service & Maintenance",
           "hero": "Service bookings, mechanic schedules, parts and quotes — for workshops, garages and service centers.",
           "summary": "Customers book online by vehicle and service. Mechanics see their day on a tablet. Parts come from inventory, labor from the commission engine, and the invoice signs itself.",
-          "compliance": ["VAT", "ZATCA Phase 2", "Vehicle history"],
-          "setup": ["Calendar", "Inventory", "POS", "Quotes", "Portal", "Commissions"],
+          "compliance": [
+            "VAT",
+            "ZATCA Phase 2",
+            "Vehicle history"
+          ],
+          "setup": [
+            "Calendar",
+            "Inventory",
+            "POS",
+            "Quotes",
+            "Portal",
+            "Commissions"
+          ],
           "stats": [
-            { "k": "Bay utilization", "v": "+27%" },
-            { "k": "Quote-to-invoice", "v": "-40%" },
-            { "k": "Return visits", "v": "+33%" }
+            {
+              "k": "Bay utilization",
+              "v": "+27%"
+            },
+            {
+              "k": "Quote-to-invoice",
+              "v": "-40%"
+            },
+            {
+              "k": "Return visits",
+              "v": "+33%"
+            }
           ],
           "pains": [
             "Vehicle history in a paper folder in the manager's office",
@@ -3234,19 +4315,44 @@
             "Customer approves, work continues, commission recorded",
             "Signed ZATCA invoice issued; vehicle history updated"
           ],
-          "addons": ["zatca", "gcal", "followup", "ai"]
+          "addons": [
+            "zatca",
+            "gcal",
+            "followup",
+            "ai"
+          ]
         },
         {
           "id": "optical",
           "title": "Optical & Eyewear",
           "hero": "Eye exams, prescriptions, lens fittings and retail — one system for optical stores.",
           "summary": "Book the exam, record the prescription, sell the frame, collect the lenses. Memberships for warranty, insurance for the exam, portal for the renewal reminder.",
-          "compliance": ["VAT", "ZATCA Phase 2", "Clinical records"],
-          "setup": ["Calendar", "Prescriptions", "POS", "Inventory", "Portal", "Reminders"],
+          "compliance": [
+            "VAT",
+            "ZATCA Phase 2",
+            "Clinical records"
+          ],
+          "setup": [
+            "Calendar",
+            "Prescriptions",
+            "POS",
+            "Inventory",
+            "Portal",
+            "Reminders"
+          ],
           "stats": [
-            { "k": "Rebook for renewals", "v": "+45%" },
-            { "k": "Exam throughput", "v": "+22%" },
-            { "k": "Retail attach rate", "v": "+28%" }
+            {
+              "k": "Rebook for renewals",
+              "v": "+45%"
+            },
+            {
+              "k": "Exam throughput",
+              "v": "+22%"
+            },
+            {
+              "k": "Retail attach rate",
+              "v": "+28%"
+            }
           ],
           "pains": [
             "Prescriptions handwritten and re-entered for every order",
@@ -3271,19 +4377,43 @@
             "Single invoice covers exam + frame + lenses with insurance split",
             "Renewal reminder fires 11 months later; customer rebooks"
           ],
-          "addons": ["rx", "insurance", "zatca", "followup"]
+          "addons": [
+            "rx",
+            "insurance",
+            "zatca",
+            "followup"
+          ]
         },
         {
           "id": "carwash",
           "title": "Car Wash & Detailing",
           "hero": "Booked washes, unlimited memberships and detailing packages — one platform for car-care operators.",
           "summary": "Drive-in bookings with bay routing, unlimited monthly wash memberships, detailing service tiers and retail of care products — all on one ticket.",
-          "compliance": ["VAT", "ZATCA-ready"],
-          "setup": ["Calendar", "Services", "Products", "Memberships", "Commissions", "Portal"],
+          "compliance": [
+            "VAT",
+            "ZATCA-ready"
+          ],
+          "setup": [
+            "Calendar",
+            "Services",
+            "Products",
+            "Memberships",
+            "Commissions",
+            "Portal"
+          ],
           "stats": [
-            { "k": "Memberships", "v": "+52%" },
-            { "k": "Bay utilization", "v": "+36%" },
-            { "k": "Upsell rate", "v": "+29%" }
+            {
+              "k": "Memberships",
+              "v": "+52%"
+            },
+            {
+              "k": "Bay utilization",
+              "v": "+36%"
+            },
+            {
+              "k": "Upsell rate",
+              "v": "+29%"
+            }
           ],
           "pains": [
             "Monthly-member list kept in a notebook",
@@ -3308,19 +4438,44 @@
             "Membership covers the wash; upsells charged separately",
             "Loyalty points added and review request sent"
           ],
-          "addons": ["loyalty", "followup", "ai", "attendance"]
+          "addons": [
+            "loyalty",
+            "followup",
+            "ai",
+            "attendance"
+          ]
         },
         {
           "id": "photo",
           "title": "Photography Studios",
           "hero": "Sessions, packages, prints and deposits — for photographers, wedding studios and content creators.",
           "summary": "Block the session, collect the deposit, deliver the prints. Packages combine hours + digitals + physical prints; memberships for recurring families; a portal where clients preview proofs.",
-          "compliance": ["VAT", "ZATCA Phase 2", "Image rights"],
-          "setup": ["Calendar", "Services", "Products", "Memberships", "Portal", "Deposits"],
+          "compliance": [
+            "VAT",
+            "ZATCA Phase 2",
+            "Image rights"
+          ],
+          "setup": [
+            "Calendar",
+            "Services",
+            "Products",
+            "Memberships",
+            "Portal",
+            "Deposits"
+          ],
           "stats": [
-            { "k": "Deposits captured", "v": "100%" },
-            { "k": "Repeat families", "v": "+38%" },
-            { "k": "Print attach rate", "v": "+41%" }
+            {
+              "k": "Deposits captured",
+              "v": "100%"
+            },
+            {
+              "k": "Repeat families",
+              "v": "+38%"
+            },
+            {
+              "k": "Print attach rate",
+              "v": "+41%"
+            }
           ],
           "pains": [
             "Session deposits chased over WhatsApp",
@@ -3345,19 +4500,44 @@
             "Prints and digitals delivered; retail add-ons upsold",
             "Review request + next-session nudge scheduled"
           ],
-          "addons": ["events", "followup", "ai", "loyalty"]
+          "addons": [
+            "events",
+            "followup",
+            "ai",
+            "loyalty"
+          ]
         },
         {
           "id": "wellness",
           "title": "Massage & Wellness Spas",
           "hero": "Therapeutic massage, signature treatments and wellness memberships — calm software for calm spaces.",
           "summary": "Therapist lanes, room-and-equipment booking, treatment packages, retail of oils and supplements, and monthly membership plans — without the chaos of a general salon.",
-          "compliance": ["VAT", "ZATCA-ready", "Treatment records"],
-          "setup": ["Calendar", "Services", "Products", "Memberships", "Portal", "Resources"],
+          "compliance": [
+            "VAT",
+            "ZATCA-ready",
+            "Treatment records"
+          ],
+          "setup": [
+            "Calendar",
+            "Services",
+            "Products",
+            "Memberships",
+            "Portal",
+            "Resources"
+          ],
           "stats": [
-            { "k": "Monthly memberships", "v": "+48%" },
-            { "k": "Retail attach rate", "v": "+33%" },
-            { "k": "Therapist utilization", "v": "+21%" }
+            {
+              "k": "Monthly memberships",
+              "v": "+48%"
+            },
+            {
+              "k": "Retail attach rate",
+              "v": "+33%"
+            },
+            {
+              "k": "Therapist utilization",
+              "v": "+21%"
+            }
           ],
           "pains": [
             "Therapists double-booked across rooms",
@@ -3382,19 +4562,45 @@
             "Membership balance debited, retail charged separately",
             "Review and rebook nudge scheduled"
           ],
-          "addons": ["loyalty", "followup", "ai", "gcal", "resources"]
+          "addons": [
+            "loyalty",
+            "followup",
+            "ai",
+            "gcal",
+            "resources"
+          ]
         },
         {
           "id": "coworking",
           "title": "Co-working Spaces",
           "hero": "Memberships, meeting rooms, day passes and café — one platform for coworking operators.",
           "summary": "Tiered memberships (hot desk / dedicated / private office), resource booking for meeting rooms, day passes for visitors, and a POS for café items — all feeding the same accounting.",
-          "compliance": ["VAT", "ZATCA Phase 2", "Access logs"],
-          "setup": ["Memberships", "Resources", "POS", "Portal", "Calendar", "Attendance"],
+          "compliance": [
+            "VAT",
+            "ZATCA Phase 2",
+            "Access logs"
+          ],
+          "setup": [
+            "Memberships",
+            "Resources",
+            "POS",
+            "Portal",
+            "Calendar",
+            "Attendance"
+          ],
           "stats": [
-            { "k": "Member churn", "v": "-22%" },
-            { "k": "Room utilization", "v": "+34%" },
-            { "k": "F&B attach rate", "v": "+27%" }
+            {
+              "k": "Member churn",
+              "v": "-22%"
+            },
+            {
+              "k": "Room utilization",
+              "v": "+34%"
+            },
+            {
+              "k": "F&B attach rate",
+              "v": "+27%"
+            }
           ],
           "pains": [
             "Meeting rooms booked in a spreadsheet nobody updates",
@@ -3419,7 +4625,13 @@
             "Invoice renewed on the 1st; portal shows any outstanding",
             "Guest pays day pass online; access pass issued"
           ],
-          "addons": ["resources", "attendance", "loyalty", "followup", "ai"]
+          "addons": [
+            "resources",
+            "attendance",
+            "loyalty",
+            "followup",
+            "ai"
+          ]
         }
       ]
     },

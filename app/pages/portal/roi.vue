@@ -223,7 +223,7 @@ const saasPresets = [25, 50, 100, 200]
         <!-- OUTPUT -->
         <div class="lg:col-span-7 space-y-6">
           <!-- Savings hero card -->
-          <div class="relative overflow-hidden rounded-2xl border border-emerald-500/30 bg-gradient-to-br from-emerald-500/10 via-white to-emerald-500/5 dark:from-emerald-500/15 dark:via-black/40 dark:to-emerald-500/5 p-7 sm:p-10">
+          <div class="relative overflow-hidden rounded-2xl border border-black/10 dark:border-white/10 bg-gradient-to-br from-emerald-500/10 via-white to-emerald-500/5 dark:from-emerald-500/15 dark:via-black/40 dark:to-emerald-500/5 p-7 sm:p-10">
             <div aria-hidden="true" class="absolute -top-20 -end-20 w-72 h-72 rounded-full bg-emerald-500 blur-[120px] opacity-15 pointer-events-none" />
             <p class="text-[11px] uppercase tracking-[0.2em] font-bold text-emerald-700 dark:text-emerald-400 flex items-center gap-2">
               <UIcon name="i-lucide-trending-down" class="size-3.5" />

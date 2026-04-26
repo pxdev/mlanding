@@ -168,7 +168,6 @@ const chapterNav = computed(() => copy.value.showcasePage.verticals.map(v => ({
           <!-- Visual side: mock in soft frame -->
           <div class="col-span-12 lg:col-span-5 relative" :class="i % 2 === 1 ? 'lg:order-1' : ''">
             <div class="relative rounded-2xl bg-gray-50 dark:bg-white/[0.025] overflow-hidden lg:sticky lg:top-32">
-              <div aria-hidden="true" class="h-0.5 bg-gradient-to-r opacity-80" :class="visuals[v.id].accent" />
               <div class="p-5 sm:p-6">
                 <LandingModuleMock :id="visuals[v.id].mockId" :color="visuals[v.id].accent" />
               </div>
