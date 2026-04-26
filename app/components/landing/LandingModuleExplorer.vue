@@ -62,7 +62,7 @@ const activeHighlights = computed(() => {
 
 // Tabs — 'core' shows the auto-rotating explorer, 'addons' shows the directory
 const activeTab = ref<'core' | 'addons'>('core')
-const activeCat = ref<AddonCat | 'all'>('all')
+const activeCat = ref<string>('all')
 
 const addonCategories = computed(() => {
   return CAT_ORDER.map(cat => ({
@@ -70,6 +70,23 @@ const addonCategories = computed(() => {
     items: copy.value.addons.items.filter((a: { key: string }) => addonMeta[a.key as AddonKey]?.cat === cat)
   })).filter(c => c.items.length > 0)
 })
+
+// Items consumed by LandingChapterNav (filter mode) for the addons tab —
+// "All" + one entry per non-empty category, each with count and accent dot.
+const addonChipItems = computed(() => [
+  {
+    id: 'all',
+    label: copy.value.featuresPage?.filterAll || 'All',
+    count: copy.value.addons.items.length,
+    dot: 'bg-gray-400 dark:bg-gray-500'
+  },
+  ...addonCategories.value.map(cat => ({
+    id: cat.name,
+    label: copy.value.ui.addonCategoryLabels[cat.name] || cat.name,
+    count: cat.items.length,
+    dot: catPalette[cat.name].dot
+  }))
+])
 
 const visibleAddons = computed(() => {
   if (activeCat.value === 'all') {
@@ -420,39 +437,13 @@ const totalIndex = computed(() => String(modules.value.length).padStart(2, '0'))
         role="tabpanel"
         :aria-hidden="activeTab !== 'addons'"
       >
-        <!-- Category filter chips — All + 5 categories -->
-        <div class="flex flex-wrap items-center gap-2 mb-12 sm:mb-14">
-          <span class="text-xs uppercase tracking-[0.2em] text-gray-400 me-2">{{ copy.ui.chaptersLabel }}</span>
-          <button
-            type="button"
-            class="inline-flex items-center gap-2 px-3.5 h-9 rounded-full text-xs font-bold uppercase tracking-[0.18em] transition-all"
-            :class="activeCat === 'all'
-              ? 'bg-primary text-white shadow-md shadow-primary/20 dark:bg-white dark:text-primary'
-              : 'bg-black/[0.04] text-gray-700 dark:bg-white/[0.05] dark:text-gray-300 hover:bg-black/[0.07] dark:hover:bg-white/[0.08]'"
-            @click="activeCat = 'all'"
-          >
-            <span aria-hidden="true" class="size-1.5 rounded-full bg-gradient-to-br from-emerald-500 via-violet-500 to-rose-500" />
-            All
-            <span class="text-[10px] tabular-nums opacity-70">{{ copy.addons.items.length }}</span>
-          </button>
-          <button
-            v-for="cat in addonCategories"
-            :key="cat.name"
-            type="button"
-            class="inline-flex items-center gap-2 px-3.5 h-9 rounded-full text-xs font-bold uppercase tracking-[0.18em] transition-all"
-            :class="activeCat === cat.name
-              ? 'bg-primary text-white shadow-md shadow-primary/20 dark:bg-white dark:text-primary'
-              : 'bg-black/[0.04] text-gray-700 dark:bg-white/[0.05] dark:text-gray-300 hover:bg-black/[0.07] dark:hover:bg-white/[0.08]'"
-            @click="activeCat = cat.name"
-          >
-            <span
-              aria-hidden="true"
-              class="size-1.5 rounded-full"
-              :class="catPalette[cat.name].dot"
-            />
-            {{ copy.ui.addonCategoryLabels[cat.name] }}
-            <span class="text-[10px] tabular-nums opacity-70">{{ cat.items.length }}</span>
-          </button>
+        <!-- Category quick-nav — shared component, popover-driven so chips never clip -->
+        <div class="-mx-5 sm:-mx-8 mb-12 sm:mb-14">
+          <LandingChapterNav
+            :items="addonChipItems"
+            as-filter
+            v-model:active="activeCat"
+          />
         </div>
 
         <!-- Directory chapters — compact -->

@@ -1,19 +1,21 @@
 <script setup>
-// Shared "Pick your installation path" plans grid. Used both on the landing
-// home (read-only, links to /portal/pricing) and on the dedicated pricing
-// page (interactive — emits `select` so the page can trigger checkout).
+// "Pick your installation path" plans — used both on the landing home
+// (read-only NuxtLinks) and the dedicated /portal/pricing page (interactive
+// — emits `select` so the host can drive checkout).
 //
-// Data source: merges `/api/portal/plans` (DB — name, price, features)
-// with i18n metadata (durationValue, tagline, tag, cta, mostPopular, etc.)
-// by matching `slug`. i18n is the fallback if the API fails — keeps the
-// site up even without a reachable database.
+// Visual: editorial split with warmth. Two columns separated by a single
+// hairline divider, NO boxed cards. Each column has:
+//   - a soft radial glow background tinted to the plan's accent color
+//   - a giant ghost index numeral ("01"/"02") behind the content
+//   - a plan icon tile in the eyebrow row
+//   - a hero duration number (gradient-tinted on the featured plan)
+//   - a small-caps "What's included" header before the feature list
+//   - price + arrow CTA at the bottom
 //
-// Behaviors:
-//   - to="/somewhere"        → cards render as <NuxtLink>s to that URL
-//   - @select               → cards render as <button>s and emit (idx, plan)
-//   - showFeatures          → renders the per-plan feature list above the CTA
-//   - loadingIndex          → shows a spinner on the matching card's CTA
-//   - discountPercent       → reduces displayed prices by this percent
+// Data source: merges `/api/portal/plans` (DB — name, price, features) with
+// i18n metadata (durationValue, tagline, mostPopular, etc.) by slug. i18n is
+// the fallback if the API fails — keeps the page populated even offline.
+
 const props = defineProps({
   to: { type: String, default: '/portal/pricing' },
   interactive: { type: Boolean, default: false },
@@ -25,22 +27,29 @@ const emit = defineEmits(['select'])
 
 const copy = useLandingCopy()
 const { locale } = useI18n()
-// NuxtLink isn't a string component name, so for <component :is> we need
-// a resolved reference rather than the literal `'NuxtLink'`.
 const NuxtLinkRef = resolveComponent('NuxtLink')
 
-// Pull live plans + features from the DB. `default: () => []` lets us
-// degrade gracefully when the endpoint is unavailable (prerender, offline).
 const { data: dbPlans } = await useFetch('/api/portal/plans', {
   default: () => [],
   server: true
 })
 
-// i18n plans carry the UI-only bits that the DB doesn't store (duration
-// slider, tagline, mostPopular ribbon, etc). We match by slug if available
-// — the landing.json is ordered to mirror the DB's sortOrder so falling
-// back to index lookup is safe.
 const I18N_SLUGS = ['self-install', 'we-install']
+
+// Per-plan visual accent — chosen by slug so admin re-ordering doesn't shift
+// the colour palette. Falls back to the index palette when the slug is new.
+const planAccents = {
+  'self-install': { icon: 'i-lucide-terminal-square', glow: 'bg-sky-500', text: 'text-sky-600 dark:text-sky-400', textGradient: 'from-sky-500 to-indigo-600' },
+  'we-install':   { icon: 'i-lucide-rocket',          glow: 'bg-secondary-500', text: 'text-secondary-600 dark:text-secondary-400', textGradient: 'from-secondary-500 via-secondary-600 to-primary' }
+}
+const fallbackAccents = [
+  planAccents['self-install'],
+  planAccents['we-install']
+]
+
+function accentFor(plan, idx) {
+  return planAccents[plan.slug] ?? fallbackAccents[idx] ?? fallbackAccents[0]
+}
 
 function formatPrice(cents, discountPercent) {
   const discounted = Math.round(cents * (1 - (discountPercent || 0) / 100))
@@ -54,13 +63,9 @@ function formatPrice(cents, discountPercent) {
 const plans = computed(() => {
   const i18nPlans = copy.value.pricing?.plans ?? []
   const ar = locale.value === 'ar'
-  // If the DB returned nothing (dev/offline/first run), pass through the
-  // i18n list unchanged so the page never looks empty.
   if (!dbPlans.value?.length) return i18nPlans
 
   return dbPlans.value.map((dbPlan, apiIndex) => {
-    // Prefer slug-based merge so re-ordering in admin doesn't break the
-    // mapping; fall back to ordinal when the i18n list doesn't know the slug.
     const i18nIndex = I18N_SLUGS.indexOf(dbPlan.slug)
     const i18n = (i18nIndex >= 0 ? i18nPlans[i18nIndex] : null) ?? i18nPlans[apiIndex] ?? {}
 
@@ -71,9 +76,7 @@ const plans = computed(() => {
       : i18n.features
 
     return {
-      // UI-only fields from i18n (tag, duration visuals, mostPopular, CTA)
       ...i18n,
-      // DB-sourced fields override
       slug: dbPlan.slug,
       name,
       price,
@@ -88,167 +91,163 @@ function onClick(idx, p) {
 </script>
 
 <template>
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-    <component
-      :is="interactive ? 'button' : NuxtLinkRef"
+  <!-- Editorial split: two columns, single hairline divider, no boxed cards. -->
+  <div
+    class="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-black/10 dark:divide-white/10 rtl:md:divide-x-reverse"
+  >
+    <article
       v-for="(p, idx) in plans"
       :key="p.slug || p.name"
-      :to="interactive ? undefined : to"
-      :type="interactive ? 'button' : undefined"
-      :disabled="interactive && loadingIndex !== null"
-      :class="[
-        'group block text-start w-full overflow-hidden rounded-3xl transition-all',
-        p.featured
-          ? 'relative bg-gradient-to-br from-secondary-500 via-secondary-600 to-primary text-white ring-1 ring-white/10 shadow-2xl shadow-secondary-500/30 md:scale-[1.02]'
-          : 'relative bg-white dark:bg-white/[0.02] text-primary dark:text-white ring-1 ring-black/10 dark:ring-white/10 shadow-xl shadow-black/5',
-        interactive && loadingIndex !== null ? 'cursor-wait' : ''
-      ]"
-      @click="onClick(idx, p)"
+      class="group/plan relative isolate overflow-hidden px-1 sm:px-2 md:px-12 py-12 sm:py-16 first:pt-0 last:pb-0 md:first:py-2 md:last:py-2 md:first:pe-12 md:first:ps-0 md:last:ps-12 md:last:pe-0 flex flex-col"
     >
-      <!-- Decorative grid pattern on featured card -->
+      <!-- Soft radial glow (decorative, low opacity, no border) -->
       <div
-        v-if="p.featured"
         aria-hidden="true"
-        class="absolute inset-0 opacity-[0.18] pointer-events-none"
-        style="background-image:linear-gradient(to right,rgba(255,255,255,.4) 1px,transparent 1px),linear-gradient(to bottom,rgba(255,255,255,.4) 1px,transparent 1px);background-size:40px 40px"
+        class="pointer-events-none absolute -top-32 start-1/2 -translate-x-1/2 size-[34rem] rounded-full blur-[140px] opacity-[0.10] dark:opacity-[0.18] -z-10 transition-opacity duration-700 group-hover/plan:opacity-[0.16] dark:group-hover/plan:opacity-[0.28]"
+        :class="accentFor(p, idx).glow"
       />
-      <!-- Soft top-end glow on featured -->
-      <div
-        v-if="p.featured"
+      <!-- Ghost index numeral behind the content -->
+      <span
         aria-hidden="true"
-        class="absolute -top-24 -end-24 size-80 rounded-full bg-white/15 blur-3xl pointer-events-none"
-      />
+        class="pointer-events-none select-none absolute -top-6 end-0 sm:-top-10 sm:end-2 text-[14rem] sm:text-[18rem] leading-none font-black tracking-tighter text-black/[0.025] dark:text-white/[0.035] -z-10 tabular-nums"
+      >{{ String(idx + 1).padStart(2, '0') }}</span>
 
-      <!-- "Most popular" ribbon -->
-      <div
-        v-if="p.featured && p.mostPopular"
-        class="absolute top-5 end-5 z-10 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white text-secondary-700 text-[10px] font-black uppercase tracking-[0.18em] shadow-lg shadow-black/20"
-      >
-        <UIcon name="i-lucide-sparkles" class="size-3" />
-        {{ p.mostPopular }}
+      <!-- Eyebrow row: icon tile + plan name + index counter -->
+      <div class="flex items-center gap-3 mb-7">
+        <span
+          class="inline-flex items-center justify-center size-9 rounded-xl bg-black/[0.04] dark:bg-white/[0.06]"
+          :class="accentFor(p, idx).text"
+        >
+          <UIcon :name="accentFor(p, idx).icon" class="size-4" />
+        </span>
+        <p class="text-[11px] uppercase tracking-[0.25em] font-black text-gray-700 dark:text-gray-200">
+          {{ p.name }}
+        </p>
+        <span class="ms-auto text-[10px] tabular-nums text-gray-400 font-semibold">
+          {{ String(idx + 1).padStart(2, '0') }} / {{ String(plans.length).padStart(2, '0') }}
+        </span>
       </div>
 
-      <div class="relative p-8 sm:p-10 flex flex-col h-full">
-        <!-- Top row: index + plan name -->
-        <div class="flex items-center justify-between mb-6">
-          <span
-            class="text-xs tabular-nums"
-            :class="p.featured ? 'text-white/60' : 'text-gray-400'"
-          >0{{ idx + 1 }} / 0{{ plans.length }}</span>
-          <h3
-            class="text-xs font-black uppercase tracking-[0.25em]"
-            :class="p.featured ? 'text-white/80' : 'text-gray-500 dark:text-gray-400'"
-          >{{ p.name }}</h3>
-        </div>
-
-        <!-- Hero duration -->
-        <div class="flex items-baseline gap-3 leading-none mb-2">
-          <span
-            class="font-black tracking-tight tabular-nums"
-            :class="[
-              p.durationValue === '∞' ? 'text-7xl sm:text-8xl lg:text-9xl' : 'text-6xl sm:text-7xl lg:text-8xl',
-              p.featured ? 'text-white' : 'text-primary dark:text-white'
-            ]"
-          >{{ p.durationValue }}</span>
-          <span
-            class="text-sm sm:text-base font-black uppercase tracking-[0.25em]"
-            :class="p.featured ? 'text-white/70' : 'text-gray-500 dark:text-gray-400'"
-          >{{ p.durationLabel }}</span>
-        </div>
-
-        <!-- Coverage bar -->
-        <div class="mt-6 mb-8">
-          <div
-            class="relative h-1 rounded-full overflow-hidden"
-            :class="p.featured ? 'bg-white/20' : 'bg-black/10 dark:bg-white/10'"
-          >
-            <div
-              class="absolute inset-y-0 start-0 rounded-full transition-all duration-1000"
-              :class="p.featured
-                ? 'bg-white'
-                : p.durationProgress === 100
-                  ? 'bg-gradient-to-r from-emerald-500 to-emerald-400'
-                  : 'bg-gradient-to-r from-gray-600 to-gray-400 dark:from-gray-400 dark:to-gray-300'"
-              :style="{ width: p.durationProgress + '%' }"
-            />
-            <div
-              v-if="p.durationProgress < 100"
-              aria-hidden="true"
-              class="absolute top-1/2 -translate-y-1/2 size-2 rounded-full ring-2"
-              :class="p.featured
-                ? 'bg-white ring-secondary-600'
-                : 'bg-gray-500 ring-white dark:ring-black'"
-              :style="{ insetInlineStart: `calc(${p.durationProgress}% - 0.25rem)` }"
-            />
-          </div>
-          <div
-            class="mt-2 flex justify-between items-center text-[10px] uppercase tracking-[0.2em]"
-            :class="p.featured ? 'text-white/60' : 'text-gray-400'"
-          >
-            <span>{{ copy.pricing.durationAxisStart }}</span>
-            <span
-              v-if="p.durationProgress === 100"
-              class="inline-flex items-center gap-1 font-bold"
-              :class="p.featured ? 'text-white' : 'text-emerald-600 dark:text-emerald-400'"
-            >
-              <UIcon name="i-lucide-infinity" class="size-3" />
-              {{ copy.pricing.durationAxisEndForever }}
-            </span>
-          </div>
-        </div>
-
-        <!-- Tagline -->
-        <p
-          class="text-sm sm:text-base leading-relaxed mb-6"
-          :class="p.featured ? 'text-white/85' : 'text-gray-600 dark:text-gray-400'"
-        >{{ p.tagline }}</p>
-
-        <!-- Per-plan features list (only on the dedicated pricing page) -->
-        <ul
-          v-if="showFeatures && p.features?.length"
-          class="mb-8 space-y-2.5 text-sm"
+      <!-- "Most popular" — inline pill, no glow ring -->
+      <div v-if="p.featured && p.mostPopular" class="mb-4">
+        <span class="inline-flex items-center gap-1.5 ps-2 pe-3 h-6 rounded-full bg-gradient-to-r text-white text-[10px] font-black uppercase tracking-[0.18em] shadow-md shadow-secondary-500/20"
+          :class="accentFor(p, idx).textGradient"
         >
-          <li v-for="f in p.features" :key="f" class="flex items-start gap-2.5">
-            <UIcon
-              name="i-lucide-check"
-              class="size-4 shrink-0 mt-0.5"
-              :class="p.featured ? 'text-white' : 'text-emerald-500'"
-            />
-            <span :class="p.featured ? 'text-white/90' : 'text-gray-700 dark:text-gray-300'">{{ f }}</span>
-          </li>
-        </ul>
+          <UIcon name="i-lucide-sparkles" class="size-3" />
+          {{ p.mostPopular }}
+        </span>
+      </div>
 
-        <!-- Spacer pushes price + CTA to the bottom -->
-        <div class="mt-auto">
-          <!-- Price -->
-          <div class="flex items-baseline gap-2 mb-6">
-            <span
-              class="text-5xl font-black tracking-tight"
-              :class="p.featured ? 'text-white' : 'text-primary dark:text-white'"
-            >{{ p.price }}</span>
-            <span
-              class="text-xs"
-              :class="p.featured ? 'text-white/70' : 'text-gray-500'"
-            >{{ p.priceSuffix }}</span>
-          </div>
+      <!-- Hero duration — featured gets a subtle gradient text fill -->
+      <div class="flex items-baseline gap-3 leading-[0.85]">
+        <span
+          class="font-black tracking-tight tabular-nums"
+          :class="[
+            p.durationValue === '∞'
+              ? 'text-7xl sm:text-8xl lg:text-[8.5rem]'
+              : 'text-6xl sm:text-7xl lg:text-8xl',
+            p.featured
+              ? `bg-gradient-to-br bg-clip-text text-transparent ${accentFor(p, idx).textGradient}`
+              : 'text-primary dark:text-white'
+          ]"
+        >{{ p.durationValue }}</span>
+        <span class="text-xs sm:text-sm font-black uppercase tracking-[0.25em] text-gray-500 dark:text-gray-400">
+          {{ p.durationLabel }}
+        </span>
+      </div>
 
-          <!-- Big full-width CTA — visual only; the wrapping element handles
-               the click (NuxtLink for static, button for interactive). -->
+      <!-- Coverage bar — slim, accent-tinted fill -->
+      <div class="mt-7 mb-7">
+        <div class="relative h-1 rounded-full bg-black/[0.06] dark:bg-white/[0.08] overflow-hidden">
+          <div
+            class="absolute inset-y-0 start-0 rounded-full transition-all duration-1000"
+            :class="p.durationProgress === 100
+              ? `bg-gradient-to-r ${accentFor(p, idx).textGradient}`
+              : 'bg-gray-700 dark:bg-gray-300'"
+            :style="{ width: p.durationProgress + '%' }"
+          />
           <span
-            class="flex items-center justify-center gap-3 w-full h-14 rounded-2xl text-sm font-bold transition-all"
-            :class="p.featured
-              ? 'bg-white text-secondary-700 group-hover:shadow-xl group-hover:shadow-white/20 group-hover:-translate-y-0.5'
-              : 'bg-primary text-white dark:bg-white dark:text-primary group-hover:opacity-90 group-hover:-translate-y-0.5'"
+            v-if="p.durationProgress < 100"
+            aria-hidden="true"
+            class="absolute top-1/2 -translate-y-1/2 size-2 rounded-full bg-gray-800 dark:bg-white ring-2 ring-white dark:ring-black"
+            :style="{ insetInlineStart: `calc(${p.durationProgress}% - 0.25rem)` }"
+          />
+        </div>
+        <div class="mt-2 flex justify-between items-center text-[10px] uppercase tracking-[0.2em] text-gray-400">
+          <span>{{ copy.pricing.durationAxisStart }}</span>
+          <span
+            v-if="p.durationProgress === 100"
+            class="inline-flex items-center gap-1 font-bold"
+            :class="accentFor(p, idx).text"
           >
-            {{ p.cta }}
-            <UIcon
-              :name="loadingIndex === idx ? 'i-lucide-loader-circle' : 'i-lucide-arrow-right'"
-              class="size-4 rtl:rotate-180 transition-transform group-hover:translate-x-1 rtl:group-hover:-translate-x-1"
-              :class="{ 'animate-spin': loadingIndex === idx }"
-            />
+            <UIcon name="i-lucide-infinity" class="size-3" />
+            {{ copy.pricing.durationAxisEndForever }}
           </span>
         </div>
       </div>
-    </component>
+
+      <!-- Tagline -->
+      <p class="text-base sm:text-lg text-gray-600 dark:text-gray-400 leading-relaxed max-w-md">
+        {{ p.tagline }}
+      </p>
+
+      <!-- Per-plan features — small-caps header + hairline list -->
+      <div v-if="showFeatures && p.features?.length" class="mt-9">
+        <div class="flex items-center gap-3 mb-3">
+          <span aria-hidden="true" class="h-px w-5 bg-current opacity-40" :class="accentFor(p, idx).text" />
+          <p class="text-[10px] uppercase tracking-[0.25em] font-black" :class="accentFor(p, idx).text">
+            {{ copy.ui.includedInEveryPlan || 'What\'s included' }}
+          </p>
+        </div>
+        <dl class="border-t border-black/[0.06] dark:border-white/[0.06]">
+          <div
+            v-for="f in p.features"
+            :key="f"
+            class="flex items-start gap-3 py-3 border-b border-black/[0.06] dark:border-white/[0.06]"
+          >
+            <span class="inline-flex items-center justify-center size-5 rounded-full mt-0.5 shrink-0 bg-emerald-500/10">
+              <UIcon name="i-lucide-check" class="size-3 text-emerald-600 dark:text-emerald-400" />
+            </span>
+            <span class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">{{ f }}</span>
+          </div>
+        </dl>
+      </div>
+
+      <!-- Spacer pushes price + CTA to the bottom on desktop -->
+      <div class="mt-auto pt-10">
+        <!-- Price + suffix on a single baseline -->
+        <div class="flex items-baseline gap-2 mb-7">
+          <span class="text-4xl sm:text-5xl font-black tracking-tight tabular-nums text-primary dark:text-white">
+            {{ p.price }}
+          </span>
+          <span class="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+            {{ p.priceSuffix }}
+          </span>
+        </div>
+
+        <!-- CTA: filled rounded pill, full-width on mobile, comfortable size -->
+        <component
+          :is="interactive ? 'button' : NuxtLinkRef"
+          :to="interactive ? undefined : to"
+          :type="interactive ? 'button' : undefined"
+          :disabled="interactive && loadingIndex !== null"
+          :class="[
+            'group/cta inline-flex items-center justify-center gap-3 w-full sm:w-auto sm:min-w-[16rem] h-14 ps-5 pe-6 rounded-full text-sm font-bold transition-all',
+            p.featured
+              ? 'bg-secondary-500 text-white hover:bg-secondary-600 hover:-translate-y-0.5'
+              : 'bg-primary text-white dark:bg-white dark:text-primary hover:opacity-90 hover:-translate-y-0.5',
+            interactive && loadingIndex !== null ? 'cursor-wait opacity-70' : ''
+          ]"
+          @click="onClick(idx, p)"
+        >
+          <span>{{ p.cta }}</span>
+          <UIcon
+            :name="loadingIndex === idx ? 'i-lucide-loader-circle' : 'i-lucide-arrow-right'"
+            class="size-4 rtl:rotate-180 transition-transform group-hover/cta:translate-x-1 rtl:group-hover/cta:-translate-x-1"
+            :class="{ 'animate-spin': loadingIndex === idx }"
+          />
+        </component>
+      </div>
+    </article>
   </div>
 </template>
