@@ -330,3 +330,10 @@ function manualLink(id) {
   <LandingCTA />
 </template>
 
+<style scoped>
+/* Intentionally empty. The previous marquee CSS moved to <UMarquee>; this
+   stub stays so Vite's HMR module graph resolves the
+   `?type=style&index=0&scoped=...` virtual URL it cached from the prior
+   block, instead of trying to compile the script body as CSS. */
+</style>
+
