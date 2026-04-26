@@ -94,7 +94,7 @@ const chapterNav = computed(() => copy.value.docsPage.sections.map(s => ({
           </span>
         </NuxtLink>
         <NuxtLink to="/portal/pricing" class="group inline-flex items-center gap-3 text-sm font-bold">
-          <span class="size-11 rounded-full bg-primary text-white dark:bg-white dark:text-primary flex items-center justify-center transition-transform group-hover:scale-110">
+          <span class="size-12 rounded-full bg-primary text-white dark:bg-white dark:text-primary flex items-center justify-center transition-transform group-hover:scale-110">
             <UIcon name="i-lucide-arrow-right" class="size-4 rtl:rotate-180" />
           </span>
           <span class="relative">

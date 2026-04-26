@@ -42,7 +42,7 @@ useHead(() => ({
             :to="`/portal/manual/${m.id}`"
             class="group relative flex items-start gap-4 p-5 rounded-2xl border border-black/10 dark:border-white/10 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5 bg-white dark:bg-black transition h-full"
           >
-            <div class="shrink-0 size-11 rounded-xl flex items-center justify-center transition bg-primary/10 text-primary dark:bg-white/10 dark:text-white group-hover:bg-primary group-hover:text-white">
+            <div class="shrink-0 size-12 rounded-xl flex items-center justify-center transition bg-primary/10 text-primary dark:bg-white/10 dark:text-white group-hover:bg-primary group-hover:text-white">
               <UIcon :name="m.icon" class="size-5" />
             </div>
             <div class="flex-1 min-w-0">
@@ -56,7 +56,7 @@ useHead(() => ({
             v-else
             class="relative flex items-start gap-4 p-5 rounded-2xl border border-dashed border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] cursor-not-allowed h-full"
           >
-            <div class="shrink-0 size-11 rounded-xl flex items-center justify-center bg-black/5 dark:bg-white/5 text-gray-400">
+            <div class="shrink-0 size-12 rounded-xl flex items-center justify-center bg-black/5 dark:bg-white/5 text-gray-400">
               <UIcon :name="m.icon" class="size-5" />
             </div>
             <div class="flex-1 min-w-0">
@@ -87,7 +87,7 @@ useHead(() => ({
             :to="`/portal/manual/${a.id}`"
             class="group relative flex items-start gap-4 p-5 rounded-2xl border border-black/10 dark:border-white/10 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5 bg-white dark:bg-black transition h-full"
           >
-            <div class="shrink-0 size-11 rounded-xl flex items-center justify-center transition bg-secondary-500/10 text-secondary-500 dark:bg-white/10 dark:text-white group-hover:bg-secondary-500 group-hover:text-white">
+            <div class="shrink-0 size-12 rounded-xl flex items-center justify-center transition bg-secondary-500/10 text-secondary-500 dark:bg-white/10 dark:text-white group-hover:bg-secondary-500 group-hover:text-white">
               <UIcon :name="a.icon" class="size-5" />
             </div>
             <div class="flex-1 min-w-0">
@@ -101,7 +101,7 @@ useHead(() => ({
             v-else
             class="relative flex items-start gap-4 p-5 rounded-2xl border border-dashed border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] cursor-not-allowed h-full"
           >
-            <div class="shrink-0 size-11 rounded-xl flex items-center justify-center bg-black/5 dark:bg-white/5 text-gray-400">
+            <div class="shrink-0 size-12 rounded-xl flex items-center justify-center bg-black/5 dark:bg-white/5 text-gray-400">
               <UIcon :name="a.icon" class="size-5" />
             </div>
             <div class="flex-1 min-w-0">
@@ -126,7 +126,7 @@ useHead(() => ({
       </div>
       <NuxtLink
         to="/portal/faq"
-        class="inline-flex items-center gap-2 px-5 h-11 rounded-full text-sm font-semibold bg-primary text-white shadow-lg shadow-primary/20 hover:shadow-primary/40 hover:scale-[1.02] transition-all self-start sm:self-center"
+        class="inline-flex items-center gap-2 px-5 h-12 rounded-full text-sm font-semibold bg-primary text-white shadow-lg shadow-primary/20 hover:shadow-primary/40 hover:scale-[1.02] transition-all self-start sm:self-center"
       >
         {{ manual.home.footerCtaButton }}
         <UIcon name="i-lucide-arrow-right" class="size-4 rtl:rotate-180" />

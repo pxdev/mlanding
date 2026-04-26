@@ -30,7 +30,7 @@ const formattedCount = computed(() =>
 </script>
 
 <template>
-  <div :class="['mb-14 sm:mb-20', maxWidth]">
+  <div :class="['mb-16 sm:mb-20', maxWidth]">
     <div class="flex items-center gap-3 mb-6 sm:mb-8">
       <span aria-hidden="true" class="inline-block h-px w-8 bg-primary" />
       <p class="text-xs font-semibold uppercase tracking-[0.3em] text-gray-600 dark:text-gray-300">

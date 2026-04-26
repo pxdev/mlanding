@@ -4,17 +4,18 @@ const copy = useLandingCopy();
 const { locale } = useI18n();
 const route = useRoute();
 const moduleId = computed(() => String(route.params.id || ''));
-// Icon + gradient per module id
+// One brand color across all modules — the icon distinguishes them, not the tint.
+const BRAND_TILE = { color: 'from-secondary-500 to-secondary-700', dot: 'bg-secondary-500' };
 const visuals = {
-    calendar: { icon: 'i-lucide-calendar-days', color: 'from-violet-500 to-fuchsia-500', dot: 'bg-violet-500' },
-    sales: { icon: 'i-lucide-store', color: 'from-amber-500 to-orange-600', dot: 'bg-amber-500' },
-    clients: { icon: 'i-lucide-users-round', color: 'from-sky-500 to-blue-600', dot: 'bg-sky-500' },
-    catalogue: { icon: 'i-lucide-layers', color: 'from-pink-500 to-rose-600', dot: 'bg-pink-500' },
-    inventory: { icon: 'i-lucide-package', color: 'from-teal-500 to-emerald-600', dot: 'bg-teal-500' },
-    team: { icon: 'i-lucide-user-check', color: 'from-indigo-500 to-purple-600', dot: 'bg-indigo-500' },
-    accounting: { icon: 'i-lucide-book-open', color: 'from-stone-500 to-neutral-700', dot: 'bg-stone-500' },
-    reports: { icon: 'i-lucide-bar-chart-3', color: 'from-cyan-500 to-sky-600', dot: 'bg-cyan-500' },
-    portal: { icon: 'i-lucide-smartphone', color: 'from-lime-500 to-green-600', dot: 'bg-lime-500' }
+    calendar: { icon: 'i-lucide-calendar-days', ...BRAND_TILE },
+    sales: { icon: 'i-lucide-store', ...BRAND_TILE },
+    clients: { icon: 'i-lucide-users-round', ...BRAND_TILE },
+    catalogue: { icon: 'i-lucide-layers', ...BRAND_TILE },
+    inventory: { icon: 'i-lucide-package', ...BRAND_TILE },
+    team: { icon: 'i-lucide-user-check', ...BRAND_TILE },
+    accounting: { icon: 'i-lucide-book-open', ...BRAND_TILE },
+    reports: { icon: 'i-lucide-bar-chart-3', ...BRAND_TILE },
+    portal: { icon: 'i-lucide-smartphone', ...BRAND_TILE }
 };
 // Which other modules pair well with each one
 const integrations = {
@@ -72,7 +73,7 @@ if (!moduleEntry.value) {
 <template>
   <template v-if="moduleEntry">
     <!-- ═══ Hero — compact title block followed by the autoplay video ═══ -->
-    <section class="relative pt-10 sm:pt-14 pb-10 sm:pb-14 overflow-hidden">
+    <section class="relative pt-10 sm:pt-16 pb-10 sm:pb-16 overflow-hidden">
       <div aria-hidden="true" class="absolute inset-0 -z-10">
         <div class="absolute top-0 start-1/2 -translate-x-1/2 w-[min(40rem,90vw)] h-[min(30rem,60vw)] sm:h-[30rem] blur-[160px] opacity-20 rounded-full bg-gradient-to-br" :class="visual?.color" />
       </div>
@@ -87,8 +88,8 @@ if (!moduleEntry.value) {
 
         <!-- Compact title row: icon + title + blurb -->
         <div class="flex items-center gap-5 sm:gap-6 mb-3">
-          <div class="shrink-0 size-14 sm:size-16 rounded-2xl bg-gradient-to-br text-white flex items-center justify-center shadow-xl" :class="visual?.color">
-            <UIcon :name="visual?.icon" class="size-7 sm:size-8" />
+          <div class="shrink-0 size-16 sm:size-16 rounded-2xl bg-gradient-to-br text-white flex items-center justify-center shadow-xl" :class="visual?.color">
+            <UIcon :name="visual?.icon" class="size-8 sm:size-8" />
           </div>
           <div class="min-w-0 flex-1">
             <p class="text-xs uppercase tracking-[0.25em] text-gray-400 mb-1 flex flex-wrap items-center gap-x-3 gap-y-1">
@@ -104,14 +105,14 @@ if (!moduleEntry.value) {
             </h1>
           </div>
         </div>
-        <p class="text-base sm:text-lg text-gray-600 dark:text-gray-400 leading-relaxed max-w-3xl mb-6 sm:mb-7">
+        <p class="text-base sm:text-lg text-gray-600 dark:text-gray-400 leading-relaxed max-w-3xl mb-6 sm:mb-8">
           {{ moduleEntry.blurb }}
         </p>
 
         <!-- Manual deep-link — only when a manual article exists for this module -->
         <NuxtLink v-if="manualHref"
           :to="manualHref"
-          class="group inline-flex items-center gap-2 ps-3 pe-4 h-9 rounded-full bg-black/[0.04] dark:bg-white/[0.06] ring-1 ring-black/10 dark:ring-white/10 text-sm font-semibold hover:bg-primary hover:text-white dark:hover:bg-white dark:hover:text-primary transition-colors mb-8 sm:mb-10"
+          class="group inline-flex items-center gap-2 ps-3 pe-4 h-10 rounded-full bg-black/[0.04] dark:bg-white/[0.06] ring-1 ring-black/10 dark:ring-white/10 text-sm font-semibold hover:bg-primary hover:text-white dark:hover:bg-white dark:hover:text-primary transition-colors mb-8 sm:mb-10"
         >
           <UIcon name="i-lucide-book-open" class="size-4" />
           <span>{{ copy.ui.readTheManual }}</span>
@@ -210,7 +211,7 @@ if (!moduleEntry.value) {
     </section>
 
     <!-- ═══ Prev / Next module pager ═══ -->
-    <section class="py-14 border-t border-black/10 dark:border-white/10">
+    <section class="py-16 border-t border-black/10 dark:border-white/10">
       <div class="max-w-7xl mx-auto px-5 sm:px-8">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:divide-x md:divide-black/10 md:dark:divide-white/10 rtl:md:divide-x-reverse">
           <NuxtLink v-if="prevModule" :to="`/portal/modules/${prevModule.id}`"
@@ -252,7 +253,7 @@ if (!moduleEntry.value) {
         <h1 class="font-black tracking-tight text-4xl sm:text-5xl mb-4">{{ copy.ui.noModuleWithId }}</h1>
         <p class="text-gray-600 dark:text-gray-400 mb-8">{{ copy.ui.checkUrlFeatures }}</p>
         <NuxtLink to="/portal/features" class="group inline-flex items-center gap-3 text-sm font-bold">
-          <span class="size-11 rounded-full bg-primary text-white dark:bg-white dark:text-primary flex items-center justify-center transition-transform group-hover:scale-110">
+          <span class="size-12 rounded-full bg-primary text-white dark:bg-white dark:text-primary flex items-center justify-center transition-transform group-hover:scale-110">
             <UIcon name="i-lucide-arrow-right" class="size-4 rtl:rotate-180" />
           </span>
           <span class="relative">

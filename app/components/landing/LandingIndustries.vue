@@ -170,7 +170,7 @@ function onImgError(e: Event) {
            half of 420px on default, half of 480px on sm, slider center on lg. -->
       <button
         type="button"
-        class="absolute top-[210px] sm:top-[240px] lg:top-1/2 -translate-y-1/2 start-3 sm:start-5 lg:start-6 z-10 size-11 sm:size-12 rounded-full bg-white text-gray-900 shadow-xl shadow-black/15 ring-1 ring-black/10 hover:scale-105 hover:bg-white transition-all flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary-500"
+        class="absolute top-[210px] sm:top-[240px] lg:top-1/2 -translate-y-1/2 start-3 sm:start-5 lg:start-6 z-10 size-12 sm:size-12 rounded-full bg-white text-gray-900 shadow-xl shadow-black/15 ring-1 ring-black/10 hover:scale-105 hover:bg-white transition-all flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary-500"
         :aria-label="copy.ui.prev"
         @click="prev(true)"
       >
@@ -178,7 +178,7 @@ function onImgError(e: Event) {
       </button>
       <button
         type="button"
-        class="absolute top-[210px] sm:top-[240px] lg:top-1/2 -translate-y-1/2 end-3 sm:end-5 lg:end-6 z-10 size-11 sm:size-12 rounded-full bg-white text-gray-900 shadow-xl shadow-black/15 ring-1 ring-black/10 hover:scale-105 hover:bg-white transition-all flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary-500"
+        class="absolute top-[210px] sm:top-[240px] lg:top-1/2 -translate-y-1/2 end-3 sm:end-5 lg:end-6 z-10 size-12 sm:size-12 rounded-full bg-white text-gray-900 shadow-xl shadow-black/15 ring-1 ring-black/10 hover:scale-105 hover:bg-white transition-all flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary-500"
         :aria-label="copy.ui.next"
         @click="next(true)"
       >

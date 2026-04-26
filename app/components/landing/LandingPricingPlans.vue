@@ -36,11 +36,12 @@ const { data: dbPlans } = await useFetch('/api/portal/plans', {
 
 const I18N_SLUGS = ['self-install', 'we-install']
 
-// Per-plan visual accent — chosen by slug so admin re-ordering doesn't shift
-// the colour palette. Falls back to the index palette when the slug is new.
+// Single brand accent across all plans. The icon distinguishes the path,
+// not the hue — keeps the editorial split visually unified.
+const BRAND_ACCENT = { glow: 'bg-secondary-500', text: 'text-secondary-600 dark:text-secondary-400', textGradient: 'from-secondary-500 to-secondary-700' }
 const planAccents = {
-  'self-install': { icon: 'i-lucide-terminal-square', glow: 'bg-sky-500', text: 'text-sky-600 dark:text-sky-400', textGradient: 'from-sky-500 to-indigo-600' },
-  'we-install':   { icon: 'i-lucide-rocket',          glow: 'bg-secondary-500', text: 'text-secondary-600 dark:text-secondary-400', textGradient: 'from-secondary-500 via-secondary-600 to-primary' }
+  'self-install': { icon: 'i-lucide-terminal-square', ...BRAND_ACCENT },
+  'we-install':   { icon: 'i-lucide-rocket',          ...BRAND_ACCENT }
 }
 const fallbackAccents = [
   planAccents['self-install'],
@@ -113,9 +114,9 @@ function onClick(idx, p) {
       >{{ String(idx + 1).padStart(2, '0') }}</span>
 
       <!-- Eyebrow row: icon tile + plan name + index counter -->
-      <div class="flex items-center gap-3 mb-7">
+      <div class="flex items-center gap-3 mb-8">
         <span
-          class="inline-flex items-center justify-center size-9 rounded-xl bg-black/[0.04] dark:bg-white/[0.06]"
+          class="inline-flex items-center justify-center size-10 rounded-xl bg-black/[0.04] dark:bg-white/[0.06]"
           :class="accentFor(p, idx).text"
         >
           <UIcon :name="accentFor(p, idx).icon" class="size-4" />
@@ -157,7 +158,7 @@ function onClick(idx, p) {
       </div>
 
       <!-- Coverage bar — slim, accent-tinted fill -->
-      <div class="mt-7 mb-7">
+      <div class="mt-8 mb-8">
         <div class="relative h-1 rounded-full bg-black/[0.06] dark:bg-white/[0.08] overflow-hidden">
           <div
             class="absolute inset-y-0 start-0 rounded-full transition-all duration-1000"
@@ -192,7 +193,7 @@ function onClick(idx, p) {
       </p>
 
       <!-- Per-plan features — small-caps header + hairline list -->
-      <div v-if="showFeatures && p.features?.length" class="mt-9">
+      <div v-if="showFeatures && p.features?.length" class="mt-10">
         <div class="flex items-center gap-3 mb-3">
           <span aria-hidden="true" class="h-px w-5 bg-current opacity-40" :class="accentFor(p, idx).text" />
           <p class="text-[10px] uppercase tracking-[0.25em] font-black" :class="accentFor(p, idx).text">
@@ -216,7 +217,7 @@ function onClick(idx, p) {
       <!-- Spacer pushes price + CTA to the bottom on desktop -->
       <div class="mt-auto pt-10">
         <!-- Price + suffix on a single baseline -->
-        <div class="flex items-baseline gap-2 mb-7">
+        <div class="flex items-baseline gap-2 mb-8">
           <span class="text-4xl sm:text-5xl font-black tracking-tight tabular-nums text-primary dark:text-white">
             {{ p.price }}
           </span>
@@ -232,7 +233,7 @@ function onClick(idx, p) {
           :type="interactive ? 'button' : undefined"
           :disabled="interactive && loadingIndex !== null"
           :class="[
-            'group/cta inline-flex items-center justify-center gap-3 w-full sm:w-auto sm:min-w-[16rem] h-14 ps-5 pe-6 rounded-full text-sm font-bold transition-all',
+            'group/cta inline-flex items-center justify-center gap-3 w-full sm:w-auto sm:min-w-[16rem] h-16 ps-5 pe-6 rounded-full text-sm font-bold transition-all',
             p.featured
               ? 'bg-secondary-500 text-white hover:bg-secondary-600 hover:-translate-y-0.5'
               : 'bg-primary text-white dark:bg-white dark:text-primary hover:opacity-90 hover:-translate-y-0.5',

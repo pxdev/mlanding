@@ -164,7 +164,7 @@ const t = computed(() => {
       </nav>
 
       <!-- Heading -->
-      <div class="mb-10 sm:mb-14">
+      <div class="mb-10 sm:mb-16">
         <div class="flex items-baseline gap-3 mb-4">
           <span aria-hidden="true" class="h-px w-8 bg-secondary-500" />
           <p class="text-[11px] uppercase tracking-[0.25em] text-secondary-600 dark:text-secondary-400 font-bold">
@@ -200,8 +200,8 @@ const t = computed(() => {
           <div class="rounded-3xl bg-white dark:bg-white/[0.02] ring-1 ring-black/10 dark:ring-white/10 p-6 sm:p-8">
             <!-- Plan header -->
             <div class="flex items-start gap-4 pb-6 border-b border-black/10 dark:border-white/10">
-              <div class="size-12 sm:size-14 rounded-2xl bg-gradient-to-br from-secondary-500 to-secondary-700 text-white flex items-center justify-center shadow-lg shrink-0">
-                <UIcon name="i-lucide-package-check" class="size-6 sm:size-7" />
+              <div class="size-12 sm:size-16 rounded-2xl bg-gradient-to-br from-secondary-500 to-secondary-700 text-white flex items-center justify-center shadow-lg shrink-0">
+                <UIcon name="i-lucide-package-check" class="size-6 sm:size-8" />
               </div>
               <div class="flex-1 min-w-0">
                 <p class="text-[10px] uppercase tracking-[0.25em] text-gray-400 font-bold mb-1">{{ t.oneTime }} · {{ t.lifetime }}</p>
@@ -293,7 +293,7 @@ const t = computed(() => {
             <!-- Proceed CTA -->
             <button
               type="button"
-              class="mt-6 flex items-center justify-center gap-3 w-full h-14 rounded-2xl bg-white text-emerald-700 text-sm font-black uppercase tracking-wider transition-all hover:-translate-y-0.5 hover:shadow-xl disabled:opacity-60 disabled:translate-y-0"
+              class="mt-6 flex items-center justify-center gap-3 w-full h-16 rounded-2xl bg-white text-emerald-700 text-sm font-black uppercase tracking-wider transition-all hover:-translate-y-0.5 hover:shadow-xl disabled:opacity-60 disabled:translate-y-0"
               :disabled="submitting"
               @click="proceedToPayment"
             >

@@ -38,7 +38,7 @@ if (!solution.value) {
 <template>
   <template v-if="solution">
     <!-- ═══ Hero — compact title block + autoplay video ═══ -->
-    <section class="relative pt-10 sm:pt-14 pb-10 sm:pb-14 overflow-hidden">
+    <section class="relative pt-10 sm:pt-16 pb-10 sm:pb-16 overflow-hidden">
       <div aria-hidden="true" class="absolute inset-0 -z-10">
         <div class="absolute top-0 start-1/2 -translate-x-1/2 w-[min(40rem,90vw)] h-[min(30rem,60vw)] sm:h-[30rem] blur-[160px] opacity-20 rounded-full bg-gradient-to-br" :class="solution.accent" />
       </div>
@@ -53,8 +53,8 @@ if (!solution.value) {
 
         <!-- Compact title row -->
         <div class="flex items-center gap-5 sm:gap-6 mb-3">
-          <div class="shrink-0 size-14 sm:size-16 rounded-2xl bg-gradient-to-br text-white flex items-center justify-center shadow-xl" :class="solution.accent">
-            <UIcon :name="solution.icon" class="size-7 sm:size-8" />
+          <div class="shrink-0 size-16 sm:size-16 rounded-2xl bg-gradient-to-br text-white flex items-center justify-center shadow-xl" :class="solution.accent">
+            <UIcon :name="solution.icon" class="size-8 sm:size-8" />
           </div>
           <div class="min-w-0 flex-1">
             <p class="text-xs uppercase tracking-[0.25em] text-gray-400 mb-1 flex flex-wrap items-center gap-x-3 gap-y-1">
@@ -147,7 +147,7 @@ if (!solution.value) {
     </section>
 
     <!-- ═══ Stats strip ═══ -->
-    <section class="py-14 sm:py-16 border-t border-black/10 dark:border-white/10">
+    <section class="py-16 sm:py-16 border-t border-black/10 dark:border-white/10">
       <div class="max-w-7xl mx-auto px-5 sm:px-8">
         <div class="flex items-center gap-2 mb-6">
           <UIcon name="i-lucide-info" class="size-3.5 text-amber-500" />
@@ -174,7 +174,7 @@ if (!solution.value) {
           <div class="col-span-12 sm:col-span-8 lg:col-span-9">
             <div class="flex flex-wrap gap-x-2 gap-y-3">
               <span v-for="s in solution.stack" :key="s"
-                class="inline-flex items-center gap-2 px-3 h-9 rounded-full border border-black/10 dark:border-white/15 bg-white dark:bg-white/[0.03] text-sm text-gray-700 dark:text-gray-200"
+                class="inline-flex items-center gap-2 px-3 h-10 rounded-full border border-black/10 dark:border-white/15 bg-white dark:bg-white/[0.03] text-sm text-gray-700 dark:text-gray-200"
               >
                 <span class="size-1.5 rounded-full" :class="solution.dot" />
                 {{ s }}
@@ -232,7 +232,7 @@ if (!solution.value) {
         <p class="text-base sm:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">{{ sp.ctaBody }}</p>
         <div class="flex flex-wrap items-center justify-center gap-6">
           <NuxtLink to="/portal/pricing" class="group inline-flex items-center gap-3 text-sm font-bold">
-            <span class="size-11 rounded-full bg-primary text-white dark:bg-white dark:text-primary flex items-center justify-center transition-transform group-hover:scale-110">
+            <span class="size-12 rounded-full bg-primary text-white dark:bg-white dark:text-primary flex items-center justify-center transition-transform group-hover:scale-110">
               <UIcon name="i-lucide-arrow-right" class="size-4 rtl:rotate-180" />
             </span>
             <span class="relative">
@@ -249,7 +249,7 @@ if (!solution.value) {
     </section>
 
     <!-- ═══ Prev / Next pager ═══ -->
-    <section v-if="prev || next" class="py-14 border-t border-black/10 dark:border-white/10">
+    <section v-if="prev || next" class="py-16 border-t border-black/10 dark:border-white/10">
       <div class="max-w-7xl mx-auto px-5 sm:px-8">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:divide-x md:divide-black/10 md:dark:divide-white/10 rtl:md:divide-x-reverse">
           <NuxtLink v-if="prev" :to="`/portal/solutions/${prev.id}`"
@@ -290,7 +290,7 @@ if (!solution.value) {
         <LandingSectionEyebrow :label="sp.notFoundEyebrow" class="mb-4" />
         <h1 class="font-black tracking-tight text-4xl sm:text-5xl mb-4">{{ sp.notFoundBody }}</h1>
         <NuxtLink to="/portal/solutions" class="group inline-flex items-center gap-3 text-sm font-bold mt-6">
-          <span class="size-11 rounded-full bg-primary text-white dark:bg-white dark:text-primary flex items-center justify-center transition-transform group-hover:scale-110">
+          <span class="size-12 rounded-full bg-primary text-white dark:bg-white dark:text-primary flex items-center justify-center transition-transform group-hover:scale-110">
             <UIcon name="i-lucide-arrow-right" class="size-4 rtl:rotate-180" />
           </span>
           <span class="relative">

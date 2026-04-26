@@ -63,7 +63,7 @@ function selectFilter(id) {
       <UPopover v-model:open="open" :content="{ side: 'bottom', align: 'end', sideOffset: 8 }">
         <button
           type="button"
-          class="inline-flex items-center gap-2 h-9 sm:h-10 ps-3 pe-3 sm:pe-4 rounded-full bg-black/[0.04] dark:bg-white/[0.06] ring-1 ring-black/10 dark:ring-white/10 text-xs sm:text-sm font-semibold hover:bg-black/[0.08] dark:hover:bg-white/[0.1] transition-colors shrink-0"
+          class="inline-flex items-center gap-2 h-10 sm:h-10 ps-3 pe-3 sm:pe-4 rounded-full bg-black/[0.04] dark:bg-white/[0.06] ring-1 ring-black/10 dark:ring-white/10 text-xs sm:text-sm font-semibold hover:bg-black/[0.08] dark:hover:bg-white/[0.1] transition-colors shrink-0"
         >
           <UIcon name="i-lucide-grid-2x2" class="size-4" />
           <span class="hidden sm:inline">{{ asFilter ? copy.ui.navBrowseGroups : copy.ui.navBrowseSections }}</span>

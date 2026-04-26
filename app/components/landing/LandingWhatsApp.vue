@@ -55,13 +55,13 @@ const open = ref(false)
         target="_blank"
         rel="noopener noreferrer"
         :aria-label="copy.ui.whatsappLabel"
-        class="group relative flex items-center justify-center size-14 rounded-full bg-[#25D366] text-white shadow-xl shadow-emerald-900/20 hover:scale-105 hover:bg-[#20bd5a] transition-all focus-visible:ring-4 focus-visible:ring-emerald-500/30 focus-visible:outline-none"
+        class="group relative flex items-center justify-center size-16 rounded-full bg-[#25D366] text-white shadow-xl shadow-emerald-900/20 hover:scale-105 hover:bg-[#20bd5a] transition-all focus-visible:ring-4 focus-visible:ring-emerald-500/30 focus-visible:outline-none"
         @mouseenter="open = true"
         @mouseleave="open = false"
         @focus="open = true"
         @blur="open = false"
       >
-        <UIcon name="i-simple-icons-whatsapp" class="size-7" />
+        <UIcon name="i-simple-icons-whatsapp" class="size-8" />
         <span aria-hidden="true" class="absolute inset-0 rounded-full ring-2 ring-[#25D366]/30 animate-ping pointer-events-none" />
       </a>
     </div>

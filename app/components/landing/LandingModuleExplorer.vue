@@ -5,16 +5,18 @@
 const copy = useLandingCopy()
 
 type ModuleVisual = { icon: string; color: string; check: string }
+// Single brand accent per module — icons carry the differentiation.
+const BRAND_VISUAL = { color: 'from-secondary-500 to-secondary-700', check: 'text-secondary-500' }
 const visuals: Record<string, ModuleVisual> = {
-  calendar:   { icon: 'i-lucide-calendar-days', color: 'from-violet-500 to-fuchsia-500',  check: 'text-violet-500' },
-  sales:      { icon: 'i-lucide-store',         color: 'from-amber-500 to-orange-600',    check: 'text-amber-500' },
-  clients:    { icon: 'i-lucide-users-round',   color: 'from-sky-500 to-blue-600',        check: 'text-sky-500' },
-  catalogue:  { icon: 'i-lucide-layers',        color: 'from-pink-500 to-rose-600',       check: 'text-pink-500' },
-  inventory:  { icon: 'i-lucide-package',       color: 'from-teal-500 to-emerald-600',    check: 'text-teal-500' },
-  team:       { icon: 'i-lucide-user-check',    color: 'from-indigo-500 to-purple-600',   check: 'text-indigo-500' },
-  accounting: { icon: 'i-lucide-book-open',     color: 'from-stone-500 to-neutral-700',   check: 'text-stone-500' },
-  reports:    { icon: 'i-lucide-bar-chart-3',   color: 'from-cyan-500 to-sky-600',        check: 'text-cyan-500' },
-  portal:     { icon: 'i-lucide-smartphone',    color: 'from-lime-500 to-green-600',      check: 'text-lime-500' }
+  calendar:   { icon: 'i-lucide-calendar-days', ...BRAND_VISUAL },
+  sales:      { icon: 'i-lucide-store',         ...BRAND_VISUAL },
+  clients:    { icon: 'i-lucide-users-round',   ...BRAND_VISUAL },
+  catalogue:  { icon: 'i-lucide-layers',        ...BRAND_VISUAL },
+  inventory:  { icon: 'i-lucide-package',       ...BRAND_VISUAL },
+  team:       { icon: 'i-lucide-user-check',    ...BRAND_VISUAL },
+  accounting: { icon: 'i-lucide-book-open',     ...BRAND_VISUAL },
+  reports:    { icon: 'i-lucide-bar-chart-3',   ...BRAND_VISUAL },
+  portal:     { icon: 'i-lucide-smartphone',    ...BRAND_VISUAL }
 }
 
 type AddonKey = 'zatca' | 'eta' | 'ai' | 'gcal' | 'insurance' | 'dental' | 'imaging' | 'labs' | 'rx' | 'records' | 'resources' | 'attendance' | 'loyalty' | 'events' | 'followup'
@@ -38,12 +40,17 @@ const addonMeta: Record<AddonKey, { icon: string; cat: AddonCat }> = {
   followup:   { icon: 'i-lucide-list-checks',     cat: 'Growth' }
 }
 
-const catPalette: Record<AddonCat, { accent: string; iconBg: string; iconText: string; dot: string }> = {
-  Compliance:   { accent: 'text-emerald-600 dark:text-emerald-400', iconBg: 'bg-emerald-500/10', iconText: 'text-emerald-600 dark:text-emerald-400', dot: 'bg-emerald-500' },
-  Clinical:     { accent: 'text-sky-600 dark:text-sky-400',         iconBg: 'bg-sky-500/10',     iconText: 'text-sky-600 dark:text-sky-400',         dot: 'bg-sky-500' },
-  Intelligence: { accent: 'text-violet-600 dark:text-violet-400',   iconBg: 'bg-violet-500/10',  iconText: 'text-violet-600 dark:text-violet-400',   dot: 'bg-violet-500' },
-  Operations:   { accent: 'text-amber-600 dark:text-amber-400',     iconBg: 'bg-amber-500/10',   iconText: 'text-amber-600 dark:text-amber-400',     dot: 'bg-amber-500' },
-  Growth:       { accent: 'text-rose-600 dark:text-rose-400',       iconBg: 'bg-rose-500/10',    iconText: 'text-rose-600 dark:text-rose-400',       dot: 'bg-rose-500' }
+// Compliance is the only category with a distinct hue (emerald = regulatory
+// approval, semantic). All other categories adopt the brand blue. Category
+// titles distinguish themselves typographically, not chromatically.
+const CAT_BRAND   = { accent: 'text-secondary-600 dark:text-secondary-400', iconBg: 'bg-secondary-500/10', iconText: 'text-secondary-600 dark:text-secondary-400', dot: 'bg-secondary-500' }
+const CAT_SUCCESS = { accent: 'text-emerald-600 dark:text-emerald-400',     iconBg: 'bg-emerald-500/10',   iconText: 'text-emerald-600 dark:text-emerald-400',     dot: 'bg-emerald-500' }
+const catPalette: Record<AddonCat, typeof CAT_BRAND> = {
+  Compliance:   CAT_SUCCESS,
+  Clinical:     CAT_BRAND,
+  Intelligence: CAT_BRAND,
+  Operations:   CAT_BRAND,
+  Growth:       CAT_BRAND
 }
 
 const CAT_ORDER: AddonCat[] = ['Compliance', 'Clinical', 'Intelligence', 'Operations', 'Growth']
@@ -216,7 +223,7 @@ const totalIndex = computed(() => String(modules.value.length).padStart(2, '0'))
           :to="activeTab === 'core' ? '/portal/features' : '/portal/addons'"
           class="group inline-flex items-center gap-3 text-sm font-bold"
         >
-          <span class="size-9 rounded-full bg-primary text-white dark:bg-white dark:text-primary flex items-center justify-center transition-transform group-hover:scale-110">
+          <span class="size-10 rounded-full bg-primary text-white dark:bg-white dark:text-primary flex items-center justify-center transition-transform group-hover:scale-110">
             <UIcon name="i-lucide-arrow-right" class="size-4 rtl:rotate-180" />
           </span>
           <span class="relative">
@@ -438,7 +445,7 @@ const totalIndex = computed(() => String(modules.value.length).padStart(2, '0'))
         :aria-hidden="activeTab !== 'addons'"
       >
         <!-- Category quick-nav — shared component, popover-driven so chips never clip -->
-        <div class="-mx-5 sm:-mx-8 mb-12 sm:mb-14">
+        <div class="-mx-5 sm:-mx-8 mb-12 sm:mb-16">
           <LandingChapterNav
             :items="addonChipItems"
             as-filter
@@ -485,7 +492,7 @@ const totalIndex = computed(() => String(modules.value.length).padStart(2, '0'))
                 class="group relative flex items-start gap-4"
               >
                 <div
-                  class="shrink-0 size-11 flex items-center justify-center rounded-xl transition-all duration-300 group-hover:scale-110"
+                  class="shrink-0 size-12 flex items-center justify-center rounded-xl transition-all duration-300 group-hover:scale-110"
                   :class="catPalette[cat.name].iconBg"
                 >
                   <UIcon

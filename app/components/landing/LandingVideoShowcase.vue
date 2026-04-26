@@ -97,7 +97,7 @@ function onPause() { isPlaying.value = false }
       <!-- YouTube iframe handles its own controls; we just stamp an unobtrusive provider chip -->
       <div
         aria-hidden="true"
-        class="absolute top-4 start-4 inline-flex items-center gap-1.5 px-2.5 h-7 rounded-full bg-black/50 backdrop-blur border border-white/20 text-white text-[10px] uppercase tracking-[0.2em] font-semibold opacity-0 group-hover:opacity-70 transition-opacity pointer-events-none"
+        class="absolute top-4 start-4 inline-flex items-center gap-1.5 px-2.5 h-8 rounded-full bg-black/50 backdrop-blur border border-white/20 text-white text-[10px] uppercase tracking-[0.2em] font-semibold opacity-0 group-hover:opacity-70 transition-opacity pointer-events-none"
       >
         <UIcon name="i-simple-icons-youtube" class="size-3 text-red-500" />
         <span>YouTube</span>
@@ -146,7 +146,7 @@ function onPause() { isPlaying.value = false }
       <div
         v-if="isMuted"
         aria-hidden="true"
-        class="absolute top-4 start-4 inline-flex items-center gap-1.5 px-2.5 h-7 rounded-full bg-black/50 backdrop-blur border border-white/20 text-white text-[10px] uppercase tracking-[0.2em] font-semibold opacity-70 group-hover:opacity-100 transition-opacity"
+        class="absolute top-4 start-4 inline-flex items-center gap-1.5 px-2.5 h-8 rounded-full bg-black/50 backdrop-blur border border-white/20 text-white text-[10px] uppercase tracking-[0.2em] font-semibold opacity-70 group-hover:opacity-100 transition-opacity"
       >
         <UIcon name="i-lucide-volume-x" class="size-3" />
         <span>{{ copy.ui.mutedIndicator || 'muted' }}</span>

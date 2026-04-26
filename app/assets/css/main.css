@@ -302,3 +302,78 @@ html[dir='rtl'] {
   unicode-range: U+20C0-20C1;
 }
 
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Marketing button system — three variants only.
+   Compose with Tailwind utilities for size/spacing on a per-use basis,
+   but reach for these for the consistent fill/border/hover treatment.
+
+   .btn-primary   — Solid primary fill. The single high-emphasis CTA.
+   .btn-secondary — Frosted background + hairline ring. Companion / "play".
+   .btn-tertiary  — Text + arrow, no fill. Inline reading flow CTAs.
+
+   Layout (height, padding, gap) is set on the element via Tailwind so each
+   call site can size itself; these classes only handle the look + state.
+   ───────────────────────────────────────────────────────────────────── */
+.btn-primary,
+.btn-secondary,
+.btn-tertiary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  transition: background-color 200ms ease, color 200ms ease,
+              transform 200ms ease, opacity 200ms ease;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  height: 3.5rem;
+  padding-inline: 1.75rem;
+  border-radius: 9999px;
+  font-size: 1rem;
+  background: var(--color-main);
+  color: #fff;
+}
+.btn-primary:hover { transform: translateY(-1px); opacity: 0.92; }
+
+:where(.dark) .btn-primary { background: #fff; color: var(--color-main); }
+
+.btn-secondary {
+  height: 3.5rem;
+  padding-inline: 1.75rem;
+  border-radius: 9999px;
+  font-size: 1rem;
+  background: rgb(255 255 255 / 0.8);
+  color: var(--color-main);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.10);
+}
+.btn-secondary:hover { background: #fff; transform: translateY(-1px); }
+
+:where(.dark) .btn-secondary {
+  background: rgb(255 255 255 / 0.04);
+  color: #fff;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.15);
+}
+:where(.dark) .btn-secondary:hover { background: rgb(255 255 255 / 0.08); }
+
+.btn-tertiary {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: inherit;
+  position: relative;
+}
+.btn-tertiary::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  bottom: -0.125rem;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.3;
+  transition: opacity 200ms ease;
+}
+.btn-tertiary:hover::after { opacity: 1; }

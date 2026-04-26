@@ -4,22 +4,27 @@ const copy = useLandingCopy();
 const { locale } = useI18n();
 const route = useRoute();
 const addonKey = computed(() => String(route.params.key || ''));
+// Two-tone palette: Compliance items get the success tone (semantic — they
+// signal regulatory approval); everything else uses the brand blue. The icon
+// itself differentiates each addon — no per-key hue rainbow.
+const COMPLIANCE = { accent: 'from-emerald-500 to-emerald-700', iconBg: 'bg-emerald-500/10', iconText: 'text-emerald-600 dark:text-emerald-400', dot: 'bg-emerald-500' };
+const BRAND      = { accent: 'from-secondary-500 to-secondary-700', iconBg: 'bg-secondary-500/10', iconText: 'text-secondary-600 dark:text-secondary-400', dot: 'bg-secondary-500' };
 const addonMeta = {
-    zatca: { icon: 'i-lucide-shield-check', cat: 'Compliance', accent: 'from-emerald-500 to-green-600', iconBg: 'bg-emerald-500/8', iconText: 'text-emerald-600 dark:text-emerald-400', dot: 'bg-emerald-500' },
-    eta: { icon: 'i-lucide-file-check', cat: 'Compliance', accent: 'from-amber-500 to-yellow-600', iconBg: 'bg-emerald-500/8', iconText: 'text-emerald-600 dark:text-emerald-400', dot: 'bg-emerald-500' },
-    ai: { icon: 'i-lucide-sparkles', cat: 'Intelligence', accent: 'from-violet-500 to-indigo-600', iconBg: 'bg-violet-500/8', iconText: 'text-violet-600 dark:text-violet-400', dot: 'bg-violet-500' },
-    gcal: { icon: 'i-lucide-calendar-check', cat: 'Intelligence', accent: 'from-sky-500 to-blue-600', iconBg: 'bg-violet-500/8', iconText: 'text-violet-600 dark:text-violet-400', dot: 'bg-violet-500' },
-    insurance: { icon: 'i-lucide-heart-pulse', cat: 'Clinical', accent: 'from-red-500 to-rose-600', iconBg: 'bg-sky-500/8', iconText: 'text-sky-600 dark:text-sky-400', dot: 'bg-sky-500' },
-    dental: { icon: 'i-hugeicons-dental-tooth', cat: 'Clinical', accent: 'from-sky-500 to-cyan-600', iconBg: 'bg-sky-500/8', iconText: 'text-sky-600 dark:text-sky-400', dot: 'bg-sky-500' },
-    imaging: { icon: 'i-lucide-scan', cat: 'Clinical', accent: 'from-slate-500 to-gray-700', iconBg: 'bg-sky-500/8', iconText: 'text-sky-600 dark:text-sky-400', dot: 'bg-sky-500' },
-    labs: { icon: 'i-lucide-flask-conical', cat: 'Clinical', accent: 'from-teal-500 to-emerald-600', iconBg: 'bg-sky-500/8', iconText: 'text-sky-600 dark:text-sky-400', dot: 'bg-sky-500' },
-    rx: { icon: 'i-lucide-pill', cat: 'Clinical', accent: 'from-rose-500 to-pink-600', iconBg: 'bg-sky-500/8', iconText: 'text-sky-600 dark:text-sky-400', dot: 'bg-sky-500' },
-    records: { icon: 'i-lucide-folder-heart', cat: 'Clinical', accent: 'from-fuchsia-500 to-purple-600', iconBg: 'bg-sky-500/8', iconText: 'text-sky-600 dark:text-sky-400', dot: 'bg-sky-500' },
-    resources: { icon: 'i-lucide-armchair', cat: 'Operations', accent: 'from-indigo-500 to-violet-600', iconBg: 'bg-amber-500/8', iconText: 'text-amber-600 dark:text-amber-400', dot: 'bg-amber-500' },
-    attendance: { icon: 'i-lucide-log-in', cat: 'Operations', accent: 'from-lime-500 to-emerald-600', iconBg: 'bg-amber-500/8', iconText: 'text-amber-600 dark:text-amber-400', dot: 'bg-amber-500' },
-    loyalty: { icon: 'i-lucide-award', cat: 'Growth', accent: 'from-amber-500 to-orange-600', iconBg: 'bg-rose-500/8', iconText: 'text-rose-600 dark:text-rose-400', dot: 'bg-rose-500' },
-    events: { icon: 'i-lucide-calendar-heart', cat: 'Growth', accent: 'from-pink-500 to-rose-600', iconBg: 'bg-rose-500/8', iconText: 'text-rose-600 dark:text-rose-400', dot: 'bg-rose-500' },
-    followup: { icon: 'i-lucide-list-checks', cat: 'Growth', accent: 'from-blue-500 to-indigo-600', iconBg: 'bg-rose-500/8', iconText: 'text-rose-600 dark:text-rose-400', dot: 'bg-rose-500' }
+    zatca:      { icon: 'i-lucide-shield-check',    cat: 'Compliance',   ...COMPLIANCE },
+    eta:        { icon: 'i-lucide-file-check',      cat: 'Compliance',   ...COMPLIANCE },
+    ai:         { icon: 'i-lucide-sparkles',        cat: 'Intelligence', ...BRAND },
+    gcal:       { icon: 'i-lucide-calendar-check',  cat: 'Intelligence', ...BRAND },
+    insurance:  { icon: 'i-lucide-heart-pulse',     cat: 'Clinical',     ...BRAND },
+    dental:     { icon: 'i-hugeicons-dental-tooth', cat: 'Clinical',     ...BRAND },
+    imaging:    { icon: 'i-lucide-scan',            cat: 'Clinical',     ...BRAND },
+    labs:       { icon: 'i-lucide-flask-conical',   cat: 'Clinical',     ...BRAND },
+    rx:         { icon: 'i-lucide-pill',            cat: 'Clinical',     ...BRAND },
+    records:    { icon: 'i-lucide-folder-heart',    cat: 'Clinical',     ...BRAND },
+    resources:  { icon: 'i-lucide-armchair',        cat: 'Operations',   ...BRAND },
+    attendance: { icon: 'i-lucide-log-in',          cat: 'Operations',   ...BRAND },
+    loyalty:    { icon: 'i-lucide-award',           cat: 'Growth',       ...BRAND },
+    events:     { icon: 'i-lucide-calendar-heart',  cat: 'Growth',       ...BRAND },
+    followup:   { icon: 'i-lucide-list-checks',     cat: 'Growth',       ...BRAND }
 };
 const addonItem = computed(() => copy.value.addons.items.find(a => a.key === addonKey.value));
 const detail = computed(() => copy.value.addonDetails[addonKey.value]);
@@ -90,7 +95,7 @@ if (!addonItem.value || !detail.value) {
             </p>
             <NuxtLink v-if="manualHref"
               :to="manualHref"
-              class="mt-6 group inline-flex items-center gap-2 ps-3 pe-4 h-9 rounded-full bg-black/[0.04] dark:bg-white/[0.06] ring-1 ring-black/10 dark:ring-white/10 text-sm font-semibold hover:bg-primary hover:text-white dark:hover:bg-white dark:hover:text-primary transition-colors"
+              class="mt-6 group inline-flex items-center gap-2 ps-3 pe-4 h-10 rounded-full bg-black/[0.04] dark:bg-white/[0.06] ring-1 ring-black/10 dark:ring-white/10 text-sm font-semibold hover:bg-primary hover:text-white dark:hover:bg-white dark:hover:text-primary transition-colors"
             >
               <UIcon name="i-lucide-book-open" class="size-4" />
               <span>{{ copy.ui.readTheManual }}</span>
@@ -128,7 +133,7 @@ if (!addonItem.value || !detail.value) {
           <div class="col-span-12 lg:col-span-7">
             <dl class="border-t border-black/10 dark:border-white/10">
               <div v-for="(s, bi) in detail.sections" :key="s.heading"
-                class="grid grid-cols-[2.5rem_1fr] sm:grid-cols-[3rem_1fr] gap-x-3 sm:gap-x-4 gap-y-2 py-7 border-b border-black/10 dark:border-white/10"
+                class="grid grid-cols-[2.5rem_1fr] sm:grid-cols-[3rem_1fr] gap-x-3 sm:gap-x-4 gap-y-2 py-8 border-b border-black/10 dark:border-white/10"
               >
                 <span class="text-xs tabular-nums text-gray-400 mt-1.5">{{ String(bi + 1).padStart(2, '0') }}</span>
                 <dt class="flex items-start gap-2 text-base sm:text-lg font-bold text-gray-900 dark:text-white leading-snug">
@@ -136,7 +141,7 @@ if (!addonItem.value || !detail.value) {
                   <span>{{ s.heading }}</span>
                 </dt>
                 <span aria-hidden="true" />
-                <dd class="ps-7 text-sm sm:text-base text-gray-600 dark:text-gray-400 leading-relaxed">{{ s.body }}</dd>
+                <dd class="ps-8 text-sm sm:text-base text-gray-600 dark:text-gray-400 leading-relaxed">{{ s.body }}</dd>
               </div>
             </dl>
           </div>
@@ -236,7 +241,7 @@ if (!addonItem.value || !detail.value) {
     </section>
 
     <!-- ═══ Prev / Next pager ═══ -->
-    <section class="py-14 border-t border-black/10 dark:border-white/10">
+    <section class="py-16 border-t border-black/10 dark:border-white/10">
       <div class="max-w-7xl mx-auto px-5 sm:px-8">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:divide-x md:divide-black/10 md:dark:divide-white/10 rtl:md:divide-x-reverse">
           <NuxtLink v-if="prevAddon" :to="`/portal/addons/${prevAddon.key}`"
@@ -278,7 +283,7 @@ if (!addonItem.value || !detail.value) {
         <h1 class="font-black tracking-tight text-4xl sm:text-5xl mb-4">{{ copy.ui.noAddonWithKey }}</h1>
         <p class="text-gray-600 dark:text-gray-400 mb-8">{{ copy.ui.checkUrlAddons }}</p>
         <NuxtLink to="/portal/addons" class="group inline-flex items-center gap-3 text-sm font-bold">
-          <span class="size-11 rounded-full bg-primary text-white dark:bg-white dark:text-primary flex items-center justify-center transition-transform group-hover:scale-110">
+          <span class="size-12 rounded-full bg-primary text-white dark:bg-white dark:text-primary flex items-center justify-center transition-transform group-hover:scale-110">
             <UIcon name="i-lucide-arrow-right" class="size-4 rtl:rotate-180" />
           </span>
           <span class="relative">

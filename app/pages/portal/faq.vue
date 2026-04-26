@@ -88,14 +88,14 @@ const chapterNav = computed(() => copy.value.faqPage.sections.map((s, i) => ({
           >
             <button
               type="button"
-              class="w-full flex items-center gap-3 sm:gap-6 py-6 sm:py-7 px-3 sm:px-6 text-start transition-colors"
+              class="w-full flex items-center gap-3 sm:gap-6 py-6 sm:py-8 px-3 sm:px-6 text-start transition-colors"
               :aria-expanded="openSet.has(section.title + '|' + it.q)"
               :aria-controls="`faq-panel-${si}-${ii}`"
               @click="toggle(section.title + '|' + it.q)"
             >
               <span class="hidden sm:inline-block w-6 shrink-0 text-xs tabular-nums text-gray-400">{{ String(ii + 1).padStart(2, '0') }}</span>
               <span class="flex-1 min-w-0 text-base sm:text-lg lg:text-xl font-bold tracking-tight leading-tight">{{ it.q }}</span>
-              <span class="shrink-0 size-9 rounded-full flex items-center justify-center transition-all border border-black/10 dark:border-white/15"
+              <span class="shrink-0 size-10 rounded-full flex items-center justify-center transition-all border border-black/10 dark:border-white/15"
                 :class="openSet.has(section.title + '|' + it.q) ? 'bg-primary text-white border-primary rotate-180' : 'group-hover:border-secondary-500/40'"
               >
                 <UIcon :name="openSet.has(section.title + '|' + it.q) ? 'i-lucide-minus' : 'i-lucide-plus'" class="size-4" />

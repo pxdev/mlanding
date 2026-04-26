@@ -251,7 +251,7 @@ const activeTenant = computed(() => tenants.value[active.value]!)
           <div class="px-4 sm:px-6 pb-10 -mt-8 flex flex-col gap-3">
             <!-- Header: logo + name + meta + open-now -->
             <div class="flex items-end gap-3">
-              <div :class="['size-14 sm:size-16 rounded-2xl text-white shrink-0 ring-4 ring-white dark:ring-[#0a0a0a] shadow-xl flex items-center justify-center text-xl sm:text-2xl font-black bg-gradient-to-br', accent[t.accent].cover]">
+              <div :class="['size-16 sm:size-16 rounded-2xl text-white shrink-0 ring-4 ring-white dark:ring-[#0a0a0a] shadow-xl flex items-center justify-center text-xl sm:text-2xl font-black bg-gradient-to-br', accent[t.accent].cover]">
                 {{ t.initial }}
               </div>
               <div class="flex-1 min-w-0 pb-0.5">
@@ -276,7 +276,7 @@ const activeTenant = computed(() => tenants.value[active.value]!)
               <p class="text-[10px] font-black uppercase tracking-[0.15em] text-gray-400 mb-1.5">{{ labels.services }}</p>
               <div class="rounded-xl border border-black/5 dark:border-white/10 bg-white dark:bg-white/[0.02] divide-y divide-black/5 dark:divide-white/5">
                 <div v-for="s in t.services" :key="s.name" class="flex items-center gap-3 px-3 py-2">
-                  <div :class="['size-7 rounded-lg shrink-0 flex items-center justify-center', accent[t.accent].pill]">
+                  <div :class="['size-8 rounded-lg shrink-0 flex items-center justify-center', accent[t.accent].pill]">
                     <UIcon :name="s.icon" class="size-3.5" />
                   </div>
                   <div class="flex-1 min-w-0">
@@ -317,7 +317,7 @@ const activeTenant = computed(() => tenants.value[active.value]!)
             </div>
 
             <!-- CTA -->
-            <div :class="['group relative h-10 sm:h-11 rounded-xl text-white text-xs sm:text-sm font-black tracking-tight shadow-xl flex items-center justify-center gap-2', accent[t.accent].cta]">
+            <div :class="['group relative h-10 sm:h-12 rounded-xl text-white text-xs sm:text-sm font-black tracking-tight shadow-xl flex items-center justify-center gap-2', accent[t.accent].cta]">
               <UIcon name="i-lucide-calendar-check" class="size-4" />
               <span>{{ labels.bookNow }} · {{ labels.currency }} {{ t.services[0]!.price }}</span>
               <UIcon name="i-lucide-arrow-right" class="size-4 rtl:rotate-180" />

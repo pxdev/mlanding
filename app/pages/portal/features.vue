@@ -12,29 +12,33 @@ useLandingSeo({
         description: 'Every module, every screen. Calendar, sales, inventory, clients, accounting, HR, reports, client portal and AI — in one codebase.'
     }
 });
-// ── Icons + gradients per feature id
+// ── Icons per feature id. Single brand-blue tint for every tile (with the
+// two compliance items reserved for emerald — they read as "regulatory
+// approval" and the green is semantic, not decorative).
+const BRAND_TILE = 'from-secondary-500 to-secondary-700';
+const SUCCESS_TILE = 'from-emerald-500 to-emerald-700';
 const visuals = {
-    calendar: { icon: 'i-lucide-calendar-days', color: 'from-violet-500 to-fuchsia-500' },
-    sales: { icon: 'i-lucide-store', color: 'from-amber-500 to-orange-600' },
-    clients: { icon: 'i-lucide-users-round', color: 'from-sky-500 to-blue-600' },
-    marketing: { icon: 'i-lucide-megaphone', color: 'from-orange-500 to-red-500' },
-    catalogue: { icon: 'i-lucide-layers', color: 'from-pink-500 to-rose-600' },
-    inventory: { icon: 'i-lucide-package', color: 'from-teal-500 to-emerald-600' },
-    events: { icon: 'i-lucide-ticket', color: 'from-purple-500 to-violet-600' },
-    team: { icon: 'i-lucide-user-check', color: 'from-indigo-500 to-purple-600' },
-    accounting: { icon: 'i-lucide-book-open', color: 'from-stone-500 to-neutral-700' },
-    reports: { icon: 'i-lucide-bar-chart-3', color: 'from-cyan-500 to-sky-600' },
-    portal: { icon: 'i-lucide-smartphone', color: 'from-lime-500 to-green-600' },
-    'multi-tenant': { icon: 'i-lucide-building-2', color: 'from-fuchsia-500 to-pink-600' },
-    i18n: { icon: 'i-lucide-languages', color: 'from-rose-500 to-red-500' },
-    'self-hosted': { icon: 'i-lucide-server', color: 'from-slate-500 to-zinc-700' },
-    zatca: { icon: 'i-lucide-shield-check', color: 'from-emerald-500 to-green-600' },
-    eta: { icon: 'i-lucide-file-check', color: 'from-amber-500 to-yellow-600' },
-    ai: { icon: 'i-lucide-sparkles', color: 'from-violet-500 to-indigo-600' },
-    'reviews-loyalty': { icon: 'i-lucide-award', color: 'from-yellow-500 to-amber-600' },
-    notifications: { icon: 'i-lucide-bell', color: 'from-sky-500 to-blue-600' },
-    'workspace-control': { icon: 'i-lucide-settings', color: 'from-slate-500 to-zinc-700' },
-    'activity-logs': { icon: 'i-lucide-history', color: 'from-rose-500 to-pink-600' }
+    calendar: { icon: 'i-lucide-calendar-days', color: BRAND_TILE },
+    sales: { icon: 'i-lucide-store', color: BRAND_TILE },
+    clients: { icon: 'i-lucide-users-round', color: BRAND_TILE },
+    marketing: { icon: 'i-lucide-megaphone', color: BRAND_TILE },
+    catalogue: { icon: 'i-lucide-layers', color: BRAND_TILE },
+    inventory: { icon: 'i-lucide-package', color: BRAND_TILE },
+    events: { icon: 'i-lucide-ticket', color: BRAND_TILE },
+    team: { icon: 'i-lucide-user-check', color: BRAND_TILE },
+    accounting: { icon: 'i-lucide-book-open', color: BRAND_TILE },
+    reports: { icon: 'i-lucide-bar-chart-3', color: BRAND_TILE },
+    portal: { icon: 'i-lucide-smartphone', color: BRAND_TILE },
+    'multi-tenant': { icon: 'i-lucide-building-2', color: BRAND_TILE },
+    i18n: { icon: 'i-lucide-languages', color: BRAND_TILE },
+    'self-hosted': { icon: 'i-lucide-server', color: BRAND_TILE },
+    zatca: { icon: 'i-lucide-shield-check', color: SUCCESS_TILE },
+    eta: { icon: 'i-lucide-file-check', color: SUCCESS_TILE },
+    ai: { icon: 'i-lucide-sparkles', color: BRAND_TILE },
+    'reviews-loyalty': { icon: 'i-lucide-award', color: BRAND_TILE },
+    notifications: { icon: 'i-lucide-bell', color: BRAND_TILE },
+    'workspace-control': { icon: 'i-lucide-settings', color: BRAND_TILE },
+    'activity-logs': { icon: 'i-lucide-history', color: BRAND_TILE }
 };
 // Official authority logos shown under the mock for compliance features
 const featureLogos = {
@@ -123,7 +127,7 @@ function manualLink(id) {
     </dl>
 
     <!-- Spotlight feature card -->
-    <div v-if="spotlight" class="mt-12 sm:mt-14">
+    <div v-if="spotlight" class="mt-12 sm:mt-16">
       <div class="flex items-center gap-3 mb-4">
         <span aria-hidden="true" class="h-px w-8 bg-secondary-500" />
         <p class="text-[10px] uppercase tracking-[0.25em] text-secondary-600 dark:text-secondary-400 font-bold">
@@ -151,12 +155,12 @@ function manualLink(id) {
           {{ copy.featuresPage.spotlightLabel || 'Spotlight' }}
         </div>
 
-        <div class="relative grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 p-5 pt-12 sm:p-7 sm:pt-14 lg:p-8 lg:pt-8 items-center">
+        <div class="relative grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 p-5 pt-12 sm:p-8 sm:pt-16 lg:p-8 lg:pt-8 items-center">
           <!-- Left: icon tile + content -->
           <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-[auto_1fr] gap-5 sm:gap-6 items-start sm:items-center">
             <!-- Big gradient icon tile -->
             <div
-              class="size-14 sm:size-20 rounded-2xl bg-gradient-to-br flex items-center justify-center text-white shadow-xl shrink-0 transition-transform duration-500 group-hover:rotate-3"
+              class="size-16 sm:size-20 rounded-2xl bg-gradient-to-br flex items-center justify-center text-white shadow-xl shrink-0 transition-transform duration-500 group-hover:rotate-3"
               :class="visuals[spotlight.id]?.color"
             >
               <UIcon :name="visuals[spotlight.id]?.icon" class="size-6 sm:size-8" />

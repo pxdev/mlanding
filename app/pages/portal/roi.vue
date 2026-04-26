@@ -95,7 +95,7 @@ const saasPresets = [25, 50, 100, 200]
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
         <!-- INPUTS -->
         <div class="lg:col-span-5 space-y-6">
-          <div class="rounded-2xl border border-black/10 dark:border-white/10 bg-white dark:bg-black/40 p-6 sm:p-8 space-y-7">
+          <div class="rounded-2xl border border-black/10 dark:border-white/10 bg-white dark:bg-black/40 p-6 sm:p-8 space-y-8">
             <!-- SaaS monthly -->
             <div>
               <label for="saasMonthly" class="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
@@ -130,7 +130,7 @@ const saasPresets = [25, 50, 100, 200]
             </div>
 
             <!-- Locations -->
-            <div class="pt-7 border-t border-black/10 dark:border-white/10">
+            <div class="pt-8 border-t border-black/10 dark:border-white/10">
               <label for="locations" class="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
                 <span class="text-sm font-bold tracking-tight">{{ copy.roiPage.inputs.locationsLabel }}</span>
                 <span class="text-2xl sm:text-3xl font-black tabular-nums">{{ numberFmt.format(locations) }}</span>
@@ -148,7 +148,7 @@ const saasPresets = [25, 50, 100, 200]
             </div>
 
             <!-- Years -->
-            <div class="pt-7 border-t border-black/10 dark:border-white/10">
+            <div class="pt-8 border-t border-black/10 dark:border-white/10">
               <p class="text-sm font-bold tracking-tight mb-3">
                 {{ copy.roiPage.inputs.yearsLabel }}
               </p>
@@ -223,7 +223,7 @@ const saasPresets = [25, 50, 100, 200]
         <!-- OUTPUT -->
         <div class="lg:col-span-7 space-y-6">
           <!-- Savings hero card -->
-          <div class="relative overflow-hidden rounded-2xl border border-black/10 dark:border-white/10 bg-gradient-to-br from-emerald-500/10 via-white to-emerald-500/5 dark:from-emerald-500/15 dark:via-black/40 dark:to-emerald-500/5 p-7 sm:p-10">
+          <div class="relative overflow-hidden rounded-2xl border border-black/10 dark:border-white/10 bg-gradient-to-br from-emerald-500/10 via-white to-emerald-500/5 dark:from-emerald-500/15 dark:via-black/40 dark:to-emerald-500/5 p-8 sm:p-10">
             <div aria-hidden="true" class="absolute -top-20 -end-20 w-72 h-72 rounded-full bg-emerald-500 blur-[120px] opacity-15 pointer-events-none" />
             <p class="text-[11px] uppercase tracking-[0.2em] font-bold text-emerald-700 dark:text-emerald-400 flex items-center gap-2">
               <UIcon name="i-lucide-trending-down" class="size-3.5" />
@@ -303,7 +303,7 @@ const saasPresets = [25, 50, 100, 200]
                   {{ copy.roiPage.ctaLabel }}
                 </p>
               </div>
-              <UIcon name="i-lucide-arrow-right" class="size-7 shrink-0 rtl:rotate-180 transition-transform group-hover:translate-x-1 rtl:group-hover:-translate-x-1" />
+              <UIcon name="i-lucide-arrow-right" class="size-8 shrink-0 rtl:rotate-180 transition-transform group-hover:translate-x-1 rtl:group-hover:-translate-x-1" />
             </NuxtLink>
           </div>
         </div>

@@ -86,7 +86,7 @@ const tenantBrands = [
 
             <div class="relative rounded-2xl overflow-hidden bg-white ring-1 ring-black/10 shadow-2xl shadow-black/15 transition-transform duration-500 group-hover:-translate-y-1.5">
               <!-- Browser chrome (Safari-style) -->
-              <div class="h-9 px-3 flex items-center gap-2 bg-gray-50 border-b border-black/5">
+              <div class="h-10 px-3 flex items-center gap-2 bg-gray-50 border-b border-black/5">
                 <div class="flex gap-1.5 shrink-0">
                   <span aria-hidden="true" class="size-2.5 rounded-full bg-red-400/80" />
                   <span aria-hidden="true" class="size-2.5 rounded-full bg-amber-400/80" />

@@ -66,7 +66,7 @@ async function submitContact() {
     <!-- CTAs -->
     <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
       <NuxtLink to="/portal/pricing" class="group inline-flex items-center gap-3 text-sm font-bold">
-        <span class="size-11 rounded-full bg-primary text-white dark:bg-white dark:text-primary flex items-center justify-center transition-transform group-hover:scale-110">
+        <span class="size-12 rounded-full bg-primary text-white dark:bg-white dark:text-primary flex items-center justify-center transition-transform group-hover:scale-110">
           <UIcon name="i-lucide-credit-card" class="size-4" />
         </span>
         <span class="relative">
@@ -132,7 +132,7 @@ async function submitContact() {
 
         <!-- Right: terminal mock (kept — it's a UI element, not a card) -->
         <div class="relative rounded-2xl overflow-hidden bg-[#0c0c0c] text-gray-300 text-xs shadow-2xl h-fit" dir="ltr">
-          <div class="h-9 bg-white/5 border-b border-white/10 flex items-center px-4 gap-2">
+          <div class="h-10 bg-white/5 border-b border-white/10 flex items-center px-4 gap-2">
             <div class="flex gap-1.5">
               <div class="size-2.5 rounded-full bg-red-400" />
               <div class="size-2.5 rounded-full bg-yellow-400" />
@@ -224,7 +224,7 @@ async function submitContact() {
           class="group/cta mt-6 inline-flex items-center gap-3 text-sm font-bold disabled:opacity-60"
           :disabled="sent || submitting"
         >
-          <span class="size-11 rounded-full bg-primary text-white dark:bg-white dark:text-primary flex items-center justify-center transition-transform group-hover/cta:scale-110"
+          <span class="size-12 rounded-full bg-primary text-white dark:bg-white dark:text-primary flex items-center justify-center transition-transform group-hover/cta:scale-110"
             :class="sent ? 'bg-emerald-500 dark:bg-emerald-500 !text-white' : ''"
           >
             <UIcon

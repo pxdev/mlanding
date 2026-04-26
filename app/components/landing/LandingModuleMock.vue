@@ -22,7 +22,7 @@ defineProps<{ id: string; color?: string }>()
     <!-- Calendar grid: time gutter + 3 member lanes -->
     <div class="flex gap-1.5">
       <!-- Time gutter -->
-      <div class="w-5 pt-7 flex flex-col text-[7px] text-gray-400 tabular-nums">
+      <div class="w-5 pt-8 flex flex-col text-[7px] text-gray-400 tabular-nums">
         <span v-for="h in ['09', '10', '11', '12', '13', '14']" :key="h" class="h-[22px] leading-none">{{ h }}</span>
       </div>
 
@@ -32,22 +32,22 @@ defineProps<{ id: string; color?: string }>()
         <div class="relative">
           <!-- Member header -->
           <div class="flex items-center gap-1 mb-1 pb-1 border-b border-black/10 dark:border-white/10">
-            <div class="size-4 rounded-full bg-gradient-to-br from-pink-400 to-rose-500 text-white text-[7px] font-black flex items-center justify-center">LH</div>
+            <div class="size-4 rounded-full bg-gradient-to-br from-secondary-400 to-rose-500 text-white text-[7px] font-black flex items-center justify-center">LH</div>
             <span class="text-[8px] font-bold text-gray-700 dark:text-gray-300 truncate">Lina</span>
             <span aria-hidden="true" class="ms-auto size-1.5 rounded-full bg-rose-500 animate-pulse" />
           </div>
           <!-- Hour ticks behind appointments -->
-          <div aria-hidden="true" class="absolute inset-x-0 top-7 h-[132px] pointer-events-none">
+          <div aria-hidden="true" class="absolute inset-x-0 top-8 h-[132px] pointer-events-none">
             <div v-for="n in 6" :key="n" class="h-[22px] border-t border-black/5 dark:border-white/10" />
           </div>
           <!-- Appointments (colored by service category) -->
           <div class="relative space-y-0.5">
-            <div class="h-[43px] rounded bg-gradient-to-br from-pink-400 to-rose-500 text-white px-1.5 py-1 flex flex-col justify-between leading-tight shadow-sm shadow-rose-500/25">
+            <div class="h-[43px] rounded bg-gradient-to-br from-secondary-400 to-rose-500 text-white px-1.5 py-1 flex flex-col justify-between leading-tight shadow-sm shadow-rose-500/25">
               <p class="font-black text-[9px] truncate">Color & Cut</p>
               <p class="text-[7px] opacity-90 truncate">Lina H. · 9:00</p>
             </div>
             <div class="h-[21px] rounded bg-gray-200 dark:bg-white/5 text-gray-500 px-1.5 flex items-center text-[7px] font-semibold"><UIcon name="i-lucide-coffee" class="size-2.5 me-1" />Break</div>
-            <div class="h-[43px] rounded bg-gradient-to-br from-violet-400 to-fuchsia-500 text-white px-1.5 py-1 flex flex-col justify-between leading-tight shadow-sm shadow-violet-500/25">
+            <div class="h-[43px] rounded bg-gradient-to-br from-secondary-400 to-secondary-500 text-white px-1.5 py-1 flex flex-col justify-between leading-tight shadow-sm shadow-violet-500/25">
               <p class="font-black text-[9px] truncate">Facial Glow</p>
               <p class="text-[7px] opacity-90 truncate">Noura S. · 12:00</p>
             </div>
@@ -57,17 +57,17 @@ defineProps<{ id: string; color?: string }>()
         <!-- Lane: Karim (sky category) -->
         <div class="relative">
           <div class="flex items-center gap-1 mb-1 pb-1 border-b border-black/10 dark:border-white/10">
-            <div class="size-4 rounded-full bg-gradient-to-br from-sky-400 to-indigo-500 text-white text-[7px] font-black flex items-center justify-center">KM</div>
+            <div class="size-4 rounded-full bg-gradient-to-br from-secondary-400 to-secondary-500 text-white text-[7px] font-black flex items-center justify-center">KM</div>
             <span class="text-[8px] font-bold text-gray-700 dark:text-gray-300 truncate">Karim</span>
           </div>
-          <div aria-hidden="true" class="absolute inset-x-0 top-7 h-[132px] pointer-events-none">
+          <div aria-hidden="true" class="absolute inset-x-0 top-8 h-[132px] pointer-events-none">
             <div v-for="n in 6" :key="n" class="h-[22px] border-t border-black/5 dark:border-white/10" />
           </div>
           <div class="relative space-y-0.5">
-            <div class="h-[21px] rounded bg-gradient-to-br from-sky-400 to-indigo-500 text-white px-1.5 flex items-center text-[8px] font-bold shadow-sm shadow-sky-500/25">
+            <div class="h-[21px] rounded bg-gradient-to-br from-secondary-400 to-secondary-500 text-white px-1.5 flex items-center text-[8px] font-bold shadow-sm shadow-sky-500/25">
               <span class="truncate">Consult</span>
             </div>
-            <div class="h-[32px] rounded bg-gradient-to-br from-emerald-400 to-teal-500 text-white px-1.5 py-0.5 flex flex-col justify-center leading-tight shadow-sm shadow-emerald-500/25">
+            <div class="h-[32px] rounded bg-gradient-to-br from-emerald-400 to-secondary-500 text-white px-1.5 py-0.5 flex flex-col justify-center leading-tight shadow-sm shadow-emerald-500/25">
               <p class="font-black text-[8px] truncate">Deep Tissue</p>
               <p class="text-[7px] opacity-90 truncate">60 min</p>
             </div>
@@ -82,10 +82,10 @@ defineProps<{ id: string; color?: string }>()
         <!-- Lane: Noura (emerald category) -->
         <div class="relative">
           <div class="flex items-center gap-1 mb-1 pb-1 border-b border-black/10 dark:border-white/10">
-            <div class="size-4 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 text-white text-[7px] font-black flex items-center justify-center">NS</div>
+            <div class="size-4 rounded-full bg-gradient-to-br from-emerald-400 to-secondary-500 text-white text-[7px] font-black flex items-center justify-center">NS</div>
             <span class="text-[8px] font-bold text-gray-700 dark:text-gray-300 truncate">Noura</span>
           </div>
-          <div aria-hidden="true" class="absolute inset-x-0 top-7 h-[132px] pointer-events-none">
+          <div aria-hidden="true" class="absolute inset-x-0 top-8 h-[132px] pointer-events-none">
             <div v-for="n in 6" :key="n" class="h-[22px] border-t border-black/5 dark:border-white/10" />
           </div>
           <div class="relative space-y-0.5">
@@ -116,8 +116,8 @@ defineProps<{ id: string; color?: string }>()
         <span aria-hidden="true" class="size-1.5 rounded-full bg-amber-500" />
         Waitlist 2
       </span>
-      <span class="inline-flex items-center gap-1 text-sky-600 dark:text-sky-400">
-        <span aria-hidden="true" class="size-1.5 rounded-full bg-sky-500" />
+      <span class="inline-flex items-center gap-1 text-secondary-600 dark:text-secondary-400">
+        <span aria-hidden="true" class="size-1.5 rounded-full bg-secondary-500" />
         Unconfirmed 1
       </span>
       <span class="ms-auto inline-flex items-center gap-1 text-emerald-600 dark:text-emerald-400">
@@ -186,12 +186,12 @@ defineProps<{ id: string; color?: string }>()
         <UIcon name="i-lucide-banknote" class="size-2.5" />
         Cash 45%
       </span>
-      <span class="inline-flex items-center gap-1 text-sky-600 dark:text-sky-400">
+      <span class="inline-flex items-center gap-1 text-secondary-600 dark:text-secondary-400">
         <UIcon name="i-lucide-credit-card" class="size-2.5" />
         Card 32%
       </span>
-      <span class="inline-flex items-center gap-1 text-violet-600 dark:text-violet-400">
-        <span aria-hidden="true" class="size-1.5 rounded-full bg-violet-500" />
+      <span class="inline-flex items-center gap-1 text-secondary-600 dark:text-secondary-400">
+        <span aria-hidden="true" class="size-1.5 rounded-full bg-secondary-500" />
         BNPL 15%
       </span>
       <span class="ms-auto inline-flex items-center gap-1 text-emerald-600 dark:text-emerald-400">
@@ -209,7 +209,7 @@ defineProps<{ id: string; color?: string }>()
         <p class="text-sm font-black text-gray-900 dark:text-white tracking-tight leading-none">Clients</p>
         <p class="text-[9px] text-gray-400 mt-1">1,284 total · 312 active this month</p>
       </div>
-      <div class="inline-flex items-center gap-1 px-2 h-5 rounded bg-sky-500/15 text-sky-700 dark:text-sky-400 text-[8px] font-bold">
+      <div class="inline-flex items-center gap-1 px-2 h-5 rounded bg-secondary-500/15 text-secondary-700 dark:text-secondary-400 text-[8px] font-bold">
         <UIcon name="i-lucide-search" class="size-2.5" />
         Search
       </div>
@@ -217,8 +217,8 @@ defineProps<{ id: string; color?: string }>()
 
     <!-- Segment chips -->
     <div class="flex flex-wrap gap-1 mb-3">
-      <span class="text-[8px] px-1.5 py-0.5 rounded-full bg-sky-500/15 text-sky-700 dark:text-sky-400 font-bold">All · 1,284</span>
-      <span class="text-[8px] px-1.5 py-0.5 rounded-full bg-pink-500/15 text-pink-700 dark:text-pink-400 font-bold">VIP · 48</span>
+      <span class="text-[8px] px-1.5 py-0.5 rounded-full bg-secondary-500/15 text-secondary-700 dark:text-secondary-400 font-bold">All · 1,284</span>
+      <span class="text-[8px] px-1.5 py-0.5 rounded-full bg-secondary-500/15 text-secondary-700 dark:text-secondary-400 font-bold">VIP · 48</span>
       <span class="text-[8px] px-1.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 font-bold">New · 22</span>
       <span class="text-[8px] px-1.5 py-0.5 rounded-full bg-amber-500/15 text-amber-700 dark:text-amber-400 font-bold">Dormant · 74</span>
     </div>
@@ -227,9 +227,9 @@ defineProps<{ id: string; color?: string }>()
     <div class="space-y-1">
       <div
         v-for="c in [
-          { n: 'Lina Hassan', init: 'LH', tag: 'VIP', color: 'from-pink-400 to-rose-500', ring: 'ring-pink-400/30', visits: '24 visits · 12 Apr', spend: '12,840', tagColor: 'pink' },
-          { n: 'Karim Malek', init: 'KM', tag: 'Returning', color: 'from-sky-400 to-indigo-500', ring: 'ring-sky-400/30', visits: '8 visits · 08 Apr', spend: '3,200', tagColor: 'sky' },
-          { n: 'Noura Saeed', init: 'NS', tag: 'New', color: 'from-emerald-400 to-teal-500', ring: 'ring-emerald-400/30', visits: '1 visit · 21 Apr', spend: '450', tagColor: 'emerald' },
+          { n: 'Lina Hassan', init: 'LH', tag: 'VIP', color: 'from-secondary-400 to-rose-500', ring: 'ring-secondary-400/30', visits: '24 visits · 12 Apr', spend: '12,840', tagColor: 'pink' },
+          { n: 'Karim Malek', init: 'KM', tag: 'Returning', color: 'from-secondary-400 to-secondary-500', ring: 'ring-secondary-400/30', visits: '8 visits · 08 Apr', spend: '3,200', tagColor: 'sky' },
+          { n: 'Noura Saeed', init: 'NS', tag: 'New', color: 'from-emerald-400 to-secondary-500', ring: 'ring-emerald-400/30', visits: '1 visit · 21 Apr', spend: '450', tagColor: 'emerald' },
           { n: 'Omar Rashid', init: 'OR', tag: 'Dormant', color: 'from-amber-400 to-orange-500', ring: 'ring-amber-400/30', visits: 'Last seen 98d', spend: '980', tagColor: 'amber' }
         ]" :key="c.init"
         class="flex items-center gap-2 px-2 py-1.5 rounded-md bg-white dark:bg-[#0c0c0c] border border-black/5 dark:border-white/10"
@@ -245,8 +245,8 @@ defineProps<{ id: string; color?: string }>()
         <div class="text-end">
           <p class="text-[9px] font-black tabular-nums">SAR {{ c.spend }}</p>
           <span class="text-[7px] px-1 py-0.5 rounded font-bold" :class="{
-            'bg-pink-500/15 text-pink-700 dark:text-pink-400': c.tagColor === 'pink',
-            'bg-sky-500/15 text-sky-700 dark:text-sky-400': c.tagColor === 'sky',
+            'bg-secondary-500/15 text-secondary-700 dark:text-secondary-400': c.tagColor === 'pink',
+            'bg-secondary-500/15 text-secondary-700 dark:text-secondary-400': c.tagColor === 'sky',
             'bg-emerald-500/15 text-emerald-700 dark:text-emerald-400': c.tagColor === 'emerald',
             'bg-amber-500/15 text-amber-700 dark:text-amber-400': c.tagColor === 'amber'
           }">{{ c.tag }}</span>
@@ -256,11 +256,11 @@ defineProps<{ id: string; color?: string }>()
 
     <!-- Footer: quick stats -->
     <div class="mt-3 pt-2 border-t border-black/5 dark:border-white/10 flex items-center gap-3 text-[8px] font-semibold">
-      <span class="inline-flex items-center gap-1 text-sky-600 dark:text-sky-400">
+      <span class="inline-flex items-center gap-1 text-secondary-600 dark:text-secondary-400">
         <UIcon name="i-lucide-message-square" class="size-2.5" />
         Campaigns 3 active
       </span>
-      <span class="inline-flex items-center gap-1 text-pink-600 dark:text-pink-400">
+      <span class="inline-flex items-center gap-1 text-secondary-600 dark:text-secondary-400">
         <UIcon name="i-lucide-gift" class="size-2.5" />
         2 birthdays today
       </span>
@@ -291,16 +291,16 @@ defineProps<{ id: string; color?: string }>()
         <UIcon name="i-lucide-message-square" class="size-3 text-emerald-600 dark:text-emerald-400" />
         <span class="text-[9px] font-bold">SMS</span>
       </div>
-      <div class="p-1.5 rounded-md bg-sky-500/10 ring-1 ring-sky-500/20 flex flex-col items-center gap-0.5">
-        <UIcon name="i-lucide-mail" class="size-3 text-sky-600 dark:text-sky-400" />
+      <div class="p-1.5 rounded-md bg-secondary-500/10 ring-1 ring-secondary-500/20 flex flex-col items-center gap-0.5">
+        <UIcon name="i-lucide-mail" class="size-3 text-secondary-600 dark:text-secondary-400" />
         <span class="text-[9px] font-bold">Email</span>
       </div>
       <div class="p-1.5 rounded-md bg-green-500/10 ring-1 ring-green-500/20 flex flex-col items-center gap-0.5">
         <UIcon name="i-simple-icons-whatsapp" class="size-3 text-green-600 dark:text-green-400" />
         <span class="text-[9px] font-bold">WA</span>
       </div>
-      <div class="p-1.5 rounded-md bg-violet-500/10 ring-1 ring-violet-500/20 flex flex-col items-center gap-0.5">
-        <UIcon name="i-lucide-bell" class="size-3 text-violet-600 dark:text-violet-400" />
+      <div class="p-1.5 rounded-md bg-secondary-500/10 ring-1 ring-secondary-500/20 flex flex-col items-center gap-0.5">
+        <UIcon name="i-lucide-bell" class="size-3 text-secondary-600 dark:text-secondary-400" />
         <span class="text-[9px] font-bold">Push</span>
       </div>
     </div>
@@ -342,7 +342,7 @@ defineProps<{ id: string; color?: string }>()
         <p class="text-sm font-black text-gray-900 dark:text-white tracking-tight leading-none">Services</p>
         <p class="text-[9px] text-gray-400 mt-1">42 services · 8 categories · Avg SAR 168</p>
       </div>
-      <div class="inline-flex items-center gap-1 px-2 h-5 rounded bg-pink-500/15 text-pink-700 dark:text-pink-400 text-[8px] font-bold">
+      <div class="inline-flex items-center gap-1 px-2 h-5 rounded bg-secondary-500/15 text-secondary-700 dark:text-secondary-400 text-[8px] font-bold">
         <UIcon name="i-lucide-plus" class="size-2.5" />
         Add
       </div>
@@ -360,15 +360,15 @@ defineProps<{ id: string; color?: string }>()
     <!-- Service rows -->
     <div class="space-y-1">
       <div v-for="s in [
-        { n: 'Color & Cut', cat: 'Hair', d: '90m', p: '180', icon: 'i-lucide-scissors', g: 'from-pink-400 to-rose-500', booked: 48, staff: ['LH', 'NS'] },
-        { n: 'Deep Tissue Massage', cat: 'Spa', d: '60m', p: '240', icon: 'i-lucide-hand', g: 'from-emerald-400 to-teal-500', booked: 32, staff: ['KM'] },
-        { n: 'Facial Glow', cat: 'Spa', d: '45m', p: '150', icon: 'i-lucide-sparkles', g: 'from-violet-400 to-fuchsia-500', booked: 28, staff: ['NS', 'RK'] },
-        { n: 'Nail Art · Gel', cat: 'Nails', d: '30m', p: '95', icon: 'i-lucide-palette', g: 'from-sky-400 to-indigo-500', booked: 61, staff: ['RK'] }
+        { n: 'Color & Cut', cat: 'Hair', d: '90m', p: '180', icon: 'i-lucide-scissors', g: 'from-secondary-400 to-rose-500', booked: 48, staff: ['LH', 'NS'] },
+        { n: 'Deep Tissue Massage', cat: 'Spa', d: '60m', p: '240', icon: 'i-lucide-hand', g: 'from-emerald-400 to-secondary-500', booked: 32, staff: ['KM'] },
+        { n: 'Facial Glow', cat: 'Spa', d: '45m', p: '150', icon: 'i-lucide-sparkles', g: 'from-secondary-400 to-secondary-500', booked: 28, staff: ['NS', 'RK'] },
+        { n: 'Nail Art · Gel', cat: 'Nails', d: '30m', p: '95', icon: 'i-lucide-palette', g: 'from-secondary-400 to-secondary-500', booked: 61, staff: ['RK'] }
       ]" :key="s.n"
         class="flex items-center gap-2 px-2 py-1.5 rounded-md bg-white dark:bg-[#0c0c0c] border border-black/5 dark:border-white/10"
       >
         <!-- Icon tile -->
-        <div class="size-7 shrink-0 rounded-md bg-gradient-to-br text-white flex items-center justify-center" :class="s.g">
+        <div class="size-8 shrink-0 rounded-md bg-gradient-to-br text-white flex items-center justify-center" :class="s.g">
           <UIcon :name="s.icon" class="size-3.5" />
         </div>
         <!-- Name + category -->
@@ -383,7 +383,7 @@ defineProps<{ id: string; color?: string }>()
         <div class="flex -space-x-1">
           <div v-for="(a, ai) in s.staff" :key="a"
             class="size-4 rounded-full bg-gradient-to-br text-white text-[6px] font-black flex items-center justify-center ring-1 ring-white dark:ring-[#0c0c0c]"
-            :class="ai === 0 ? 'from-pink-400 to-rose-500' : 'from-sky-400 to-indigo-500'"
+            :class="ai === 0 ? 'from-secondary-400 to-rose-500' : 'from-secondary-400 to-secondary-500'"
           >{{ a }}</div>
         </div>
         <!-- Price -->
@@ -393,11 +393,11 @@ defineProps<{ id: string; color?: string }>()
 
     <!-- Footer: totals -->
     <div class="mt-3 pt-2 border-t border-black/5 dark:border-white/10 flex items-center gap-3 text-[8px] font-semibold">
-      <span class="inline-flex items-center gap-1 text-pink-600 dark:text-pink-400">
+      <span class="inline-flex items-center gap-1 text-secondary-600 dark:text-secondary-400">
         <UIcon name="i-lucide-layers" class="size-2.5" />
         14 packages
       </span>
-      <span class="inline-flex items-center gap-1 text-violet-600 dark:text-violet-400">
+      <span class="inline-flex items-center gap-1 text-secondary-600 dark:text-secondary-400">
         <UIcon name="i-lucide-ticket" class="size-2.5" />
         6 memberships
       </span>
@@ -424,8 +424,8 @@ defineProps<{ id: string; color?: string }>()
 
     <!-- KPI cards -->
     <div class="grid grid-cols-3 gap-1.5 mb-3">
-      <div class="p-1.5 rounded-lg bg-teal-500/10 border-s-2 border-teal-500">
-        <p class="text-[7px] uppercase tracking-wider text-teal-700 dark:text-teal-400 font-bold">In stock</p>
+      <div class="p-1.5 rounded-lg bg-secondary-500/10 border-s-2 border-secondary-500">
+        <p class="text-[7px] uppercase tracking-wider text-secondary-700 dark:text-secondary-400 font-bold">In stock</p>
         <p class="text-[13px] font-black tabular-nums leading-tight">126</p>
       </div>
       <div class="p-1.5 rounded-lg bg-amber-500/10 border-s-2 border-amber-500">
@@ -450,7 +450,7 @@ defineProps<{ id: string; color?: string }>()
         class="px-2 py-1.5 rounded-md bg-white dark:bg-[#0c0c0c] border border-black/5 dark:border-white/10"
       >
         <div class="flex items-center gap-2">
-          <div class="size-5 shrink-0 rounded bg-teal-500/15 text-teal-600 flex items-center justify-center">
+          <div class="size-5 shrink-0 rounded bg-secondary-500/15 text-secondary-600 flex items-center justify-center">
             <UIcon name="i-lucide-package" class="size-2.5" />
           </div>
           <div class="flex-1 min-w-0">
@@ -469,7 +469,7 @@ defineProps<{ id: string; color?: string }>()
         <!-- Progress bar -->
         <div class="mt-1.5 h-1 rounded-full bg-black/5 dark:bg-white/5 overflow-hidden">
           <div class="h-full rounded-full" :class="{
-            'bg-gradient-to-r from-teal-400 to-emerald-500': p.c === 'emerald',
+            'bg-gradient-to-r from-secondary-400 to-emerald-500': p.c === 'emerald',
             'bg-gradient-to-r from-amber-400 to-orange-500': p.c === 'amber',
             'bg-gradient-to-r from-rose-400 to-red-500': p.c === 'red'
           }" :style="{ width: `${(p.qty / p.max) * 100}%` }" />
@@ -479,7 +479,7 @@ defineProps<{ id: string; color?: string }>()
 
     <!-- Footer -->
     <div class="mt-3 pt-2 border-t border-black/5 dark:border-white/10 flex items-center gap-3 text-[8px] font-semibold">
-      <span class="inline-flex items-center gap-1 text-teal-600 dark:text-teal-400">
+      <span class="inline-flex items-center gap-1 text-secondary-600 dark:text-secondary-400">
         <UIcon name="i-lucide-truck" class="size-2.5" />
         3 transfers live
       </span>
@@ -502,7 +502,7 @@ defineProps<{ id: string; color?: string }>()
         <p class="text-sm font-black text-gray-900 dark:text-white tracking-tight leading-none">Yoga Flow · Sat 7am</p>
         <p class="text-[10px] text-gray-500 mt-0.5">Studio A · 60 min</p>
       </div>
-      <span class="inline-flex items-center gap-1 ps-1.5 pe-2 py-0.5 rounded-full bg-purple-500/10 text-purple-700 dark:text-purple-300 text-[9px] font-bold uppercase tracking-wider ring-1 ring-purple-500/30">
+      <span class="inline-flex items-center gap-1 ps-1.5 pe-2 py-0.5 rounded-full bg-secondary-500/10 text-secondary-700 dark:text-secondary-300 text-[9px] font-bold uppercase tracking-wider ring-1 ring-secondary-500/30">
         <UIcon name="i-lucide-ticket" class="size-2.5" />
         Live
       </span>
@@ -515,7 +515,7 @@ defineProps<{ id: string; color?: string }>()
         <span class="text-[11px] font-black tabular-nums">10 / 12</span>
       </div>
       <div class="h-1.5 bg-black/[0.06] dark:bg-white/10 rounded-full overflow-hidden">
-        <div class="h-full bg-gradient-to-r from-purple-500 to-violet-500 rounded-full" style="width:83%" />
+        <div class="h-full bg-gradient-to-r from-secondary-500 to-secondary-500 rounded-full" style="width:83%" />
       </div>
       <div class="mt-1.5 flex items-center justify-between text-[9px] text-gray-500">
         <span>Sold-out in 6 min</span>
@@ -534,8 +534,8 @@ defineProps<{ id: string; color?: string }>()
         <span class="text-[10px] tabular-nums text-gray-500">8 sold</span>
         <span class="text-[10px] font-black tabular-nums">SAR 80</span>
       </div>
-      <div class="flex items-center gap-2 p-1.5 rounded-md bg-violet-500/[0.06] ring-1 ring-violet-500/20">
-        <span class="size-1.5 rounded-full bg-violet-500" />
+      <div class="flex items-center gap-2 p-1.5 rounded-md bg-secondary-500/[0.06] ring-1 ring-secondary-500/20">
+        <span class="size-1.5 rounded-full bg-secondary-500" />
         <span class="text-[10px] font-bold flex-1">Member</span>
         <span class="text-[10px] tabular-nums text-gray-500">2 sold</span>
         <span class="text-[10px] font-black tabular-nums">Free</span>
@@ -544,7 +544,7 @@ defineProps<{ id: string; color?: string }>()
 
     <!-- Check-in row -->
     <div class="flex items-center gap-2 pt-1.5 border-t border-black/10 dark:border-white/10">
-      <div class="size-7 rounded-md bg-black/5 dark:bg-white/10 flex items-center justify-center">
+      <div class="size-8 rounded-md bg-black/5 dark:bg-white/10 flex items-center justify-center">
         <UIcon name="i-lucide-qr-code" class="size-3.5 text-gray-600 dark:text-gray-300" />
       </div>
       <div class="flex-1">
@@ -583,20 +583,20 @@ defineProps<{ id: string; color?: string }>()
     <div class="space-y-1">
       <div
         v-for="m in [
-          { n: 'Lina Hassan', r: 'OWNER', title: 'Senior Stylist', init: 'LH', c: 'from-pink-400 to-rose-500', ring: 'ring-pink-400/30', hrs: '38h', shift: 85, ok: true, role: 'pink' },
-          { n: 'Karim Malek', r: 'STAFF', title: 'Barber', init: 'KM', c: 'from-sky-400 to-indigo-500', ring: 'ring-sky-400/30', hrs: '40h', shift: 100, ok: true, role: 'sky' },
-          { n: 'Noura Saeed', r: 'ADMIN', title: 'Receptionist', init: 'NS', c: 'from-emerald-400 to-teal-500', ring: 'ring-emerald-400/30', hrs: '32h', shift: 72, ok: false, role: 'emerald' }
+          { n: 'Lina Hassan', r: 'OWNER', title: 'Senior Stylist', init: 'LH', c: 'from-secondary-400 to-rose-500', ring: 'ring-secondary-400/30', hrs: '38h', shift: 85, ok: true, role: 'pink' },
+          { n: 'Karim Malek', r: 'STAFF', title: 'Barber', init: 'KM', c: 'from-secondary-400 to-secondary-500', ring: 'ring-secondary-400/30', hrs: '40h', shift: 100, ok: true, role: 'sky' },
+          { n: 'Noura Saeed', r: 'ADMIN', title: 'Receptionist', init: 'NS', c: 'from-emerald-400 to-secondary-500', ring: 'ring-emerald-400/30', hrs: '32h', shift: 72, ok: false, role: 'emerald' }
         ]" :key="m.init"
         class="px-2 py-1.5 rounded-md bg-white dark:bg-[#0c0c0c] border border-black/5 dark:border-white/10"
       >
         <div class="flex items-center gap-2">
-          <div class="size-7 shrink-0 rounded-lg bg-gradient-to-br flex items-center justify-center text-white text-[9px] font-black ring-2" :class="[m.c, m.ring]">{{ m.init }}</div>
+          <div class="size-8 shrink-0 rounded-lg bg-gradient-to-br flex items-center justify-center text-white text-[9px] font-black ring-2" :class="[m.c, m.ring]">{{ m.init }}</div>
           <div class="flex-1 min-w-0">
             <div class="flex items-center gap-1">
               <p class="text-[9px] font-bold truncate">{{ m.n }}</p>
               <span class="text-[6px] px-1 py-0.5 rounded font-black" :class="{
-                'bg-pink-500/15 text-pink-700 dark:text-pink-400': m.role === 'pink',
-                'bg-sky-500/15 text-sky-700 dark:text-sky-400': m.role === 'sky',
+                'bg-secondary-500/15 text-secondary-700 dark:text-secondary-400': m.role === 'pink',
+                'bg-secondary-500/15 text-secondary-700 dark:text-secondary-400': m.role === 'sky',
                 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-400': m.role === 'emerald'
               }">{{ m.r }}</span>
             </div>
@@ -621,11 +621,11 @@ defineProps<{ id: string; color?: string }>()
 
     <!-- Footer -->
     <div class="mt-3 pt-2 border-t border-black/5 dark:border-white/10 flex items-center gap-3 text-[8px] font-semibold">
-      <span class="inline-flex items-center gap-1 text-indigo-600 dark:text-indigo-400">
+      <span class="inline-flex items-center gap-1 text-secondary-600 dark:text-secondary-400">
         <UIcon name="i-lucide-clock" class="size-2.5" />
         110h · this week
       </span>
-      <span class="inline-flex items-center gap-1 text-violet-600 dark:text-violet-400">
+      <span class="inline-flex items-center gap-1 text-secondary-600 dark:text-secondary-400">
         <UIcon name="i-lucide-wallet" class="size-2.5" />
         Pay run 28 Apr
       </span>
@@ -664,7 +664,7 @@ defineProps<{ id: string; color?: string }>()
         <span class="text-[7px] px-1.5 py-0.5 rounded font-black shrink-0" :class="{
           'bg-emerald-500/15 text-emerald-700 dark:text-emerald-400': e.color === 'emerald',
           'bg-rose-500/15 text-rose-700 dark:text-rose-400': e.color === 'rose',
-          'bg-violet-500/15 text-violet-700 dark:text-violet-400': e.color === 'violet'
+          'bg-secondary-500/15 text-secondary-700 dark:text-secondary-400': e.color === 'violet'
         }">{{ e.src }}</span>
         <p class="flex-1 min-w-0 text-[9px] font-bold truncate">{{ e.desc }}</p>
         <p class="text-[9px] font-black tabular-nums whitespace-nowrap">{{ e.amt }}</p>
@@ -698,7 +698,7 @@ defineProps<{ id: string; color?: string }>()
         <UIcon name="i-lucide-landmark" class="size-2.5" />
         Bank reconciled
       </span>
-      <span class="inline-flex items-center gap-1 text-sky-600 dark:text-sky-400">
+      <span class="inline-flex items-center gap-1 text-secondary-600 dark:text-secondary-400">
         <UIcon name="i-lucide-shield-check" class="size-2.5" />
         Audit trail live
       </span>
@@ -727,10 +727,10 @@ defineProps<{ id: string; color?: string }>()
 
     <!-- KPI grid 4 tiles -->
     <div class="grid grid-cols-4 gap-1.5 mb-3">
-      <div class="p-1.5 rounded-lg bg-cyan-500/10 border-s-2 border-cyan-500">
+      <div class="p-1.5 rounded-lg bg-secondary-500/10 border-s-2 border-secondary-500">
         <div class="flex items-center gap-1">
-          <UIcon name="i-lucide-circle-dollar-sign" class="size-2.5 text-cyan-600 dark:text-cyan-400" />
-          <p class="text-[7px] uppercase tracking-wider text-cyan-700 dark:text-cyan-400 font-bold">Revenue</p>
+          <UIcon name="i-lucide-circle-dollar-sign" class="size-2.5 text-secondary-600 dark:text-secondary-400" />
+          <p class="text-[7px] uppercase tracking-wider text-secondary-700 dark:text-secondary-400 font-bold">Revenue</p>
         </div>
         <p class="text-[12px] font-black tabular-nums leading-tight mt-0.5">48.2k</p>
         <p class="text-[7px] text-emerald-600 dark:text-emerald-400 font-bold">+18%</p>
@@ -751,13 +751,13 @@ defineProps<{ id: string; color?: string }>()
         <p class="text-[12px] font-black tabular-nums leading-tight mt-0.5">29.8k</p>
         <p class="text-[7px] text-emerald-600 dark:text-emerald-400 font-bold">+24%</p>
       </div>
-      <div class="p-1.5 rounded-lg bg-violet-500/10 border-s-2 border-violet-500">
+      <div class="p-1.5 rounded-lg bg-secondary-500/10 border-s-2 border-secondary-500">
         <div class="flex items-center gap-1">
-          <UIcon name="i-lucide-landmark" class="size-2.5 text-violet-600 dark:text-violet-400" />
-          <p class="text-[7px] uppercase tracking-wider text-violet-700 dark:text-violet-400 font-bold">Cash</p>
+          <UIcon name="i-lucide-landmark" class="size-2.5 text-secondary-600 dark:text-secondary-400" />
+          <p class="text-[7px] uppercase tracking-wider text-secondary-700 dark:text-secondary-400 font-bold">Cash</p>
         </div>
         <p class="text-[12px] font-black tabular-nums leading-tight mt-0.5">82.1k</p>
-        <p class="text-[7px] text-violet-600 dark:text-violet-400 font-bold">12 accts</p>
+        <p class="text-[7px] text-secondary-600 dark:text-secondary-400 font-bold">12 accts</p>
       </div>
     </div>
 
@@ -765,15 +765,15 @@ defineProps<{ id: string; color?: string }>()
     <div class="p-2 rounded-lg bg-white dark:bg-[#0c0c0c] border border-black/5 dark:border-white/10">
       <div class="flex items-center justify-between mb-1.5">
         <p class="text-[8px] uppercase tracking-wider text-gray-500 font-black">Daily revenue · 12 mo</p>
-        <p class="text-[8px] font-black tabular-nums bg-gradient-to-br from-cyan-500 to-sky-600 bg-clip-text text-transparent">SAR 48,200</p>
+        <p class="text-[8px] font-black tabular-nums bg-gradient-to-br from-secondary-500 to-secondary-600 bg-clip-text text-transparent">SAR 48,200</p>
       </div>
-      <div class="flex items-end gap-1 h-14">
+      <div class="flex items-end gap-1 h-16">
         <div v-for="(b, i) in [42, 58, 38, 72, 55, 84, 66, 92, 78, 96, 88, 100]" :key="i"
-          class="flex-1 rounded-t bg-gradient-to-t from-cyan-500 to-sky-300 relative"
+          class="flex-1 rounded-t bg-gradient-to-t from-secondary-500 to-secondary-300 relative"
           :style="{ height: `${b}%` }"
         >
           <div v-if="i === 11" aria-hidden="true" class="absolute -top-1 inset-x-0 flex justify-center">
-            <span class="size-1 rounded-full bg-cyan-500 ring-2 ring-cyan-500/25 animate-pulse" />
+            <span class="size-1 rounded-full bg-secondary-500 ring-2 ring-secondary-500/25 animate-pulse" />
           </div>
         </div>
       </div>
@@ -784,15 +784,15 @@ defineProps<{ id: string; color?: string }>()
 
     <!-- Footer: report shortcuts -->
     <div class="mt-3 pt-2 border-t border-black/5 dark:border-white/10 flex items-center gap-3 text-[8px] font-semibold">
-      <span class="inline-flex items-center gap-1 text-cyan-600 dark:text-cyan-400">
+      <span class="inline-flex items-center gap-1 text-secondary-600 dark:text-secondary-400">
         <UIcon name="i-lucide-file-text" class="size-2.5" />
         P&L
       </span>
-      <span class="inline-flex items-center gap-1 text-sky-600 dark:text-sky-400">
+      <span class="inline-flex items-center gap-1 text-secondary-600 dark:text-secondary-400">
         <UIcon name="i-lucide-scale" class="size-2.5" />
         Balance sheet
       </span>
-      <span class="inline-flex items-center gap-1 text-violet-600 dark:text-violet-400">
+      <span class="inline-flex items-center gap-1 text-secondary-600 dark:text-secondary-400">
         <UIcon name="i-lucide-file-check" class="size-2.5" />
         VAT return
       </span>
@@ -855,11 +855,11 @@ defineProps<{ id: string; color?: string }>()
               <UIcon name="i-lucide-calendar-plus" class="size-2.5" />
               <span class="text-[5px] mt-0.5 font-bold">Book</span>
             </div>
-            <div class="aspect-square rounded-md bg-sky-500/15 text-sky-600 flex flex-col items-center justify-center">
+            <div class="aspect-square rounded-md bg-secondary-500/15 text-secondary-600 flex flex-col items-center justify-center">
               <UIcon name="i-lucide-receipt" class="size-2.5" />
               <span class="text-[5px] mt-0.5 font-bold">Invoices</span>
             </div>
-            <div class="aspect-square rounded-md bg-violet-500/15 text-violet-600 flex flex-col items-center justify-center">
+            <div class="aspect-square rounded-md bg-secondary-500/15 text-secondary-600 flex flex-col items-center justify-center">
               <UIcon name="i-lucide-pill" class="size-2.5" />
               <span class="text-[5px] mt-0.5 font-bold">Rx</span>
             </div>
@@ -873,7 +873,7 @@ defineProps<{ id: string; color?: string }>()
           <p class="text-[6px] uppercase tracking-wider text-gray-400 font-black mb-1">Upcoming</p>
           <div class="p-1.5 rounded-md border border-black/5 dark:border-white/10 mb-1">
             <div class="flex items-center gap-1">
-              <div class="size-4 rounded-md bg-gradient-to-br from-pink-400 to-rose-500 flex items-center justify-center">
+              <div class="size-4 rounded-md bg-gradient-to-br from-secondary-400 to-rose-500 flex items-center justify-center">
                 <UIcon name="i-lucide-scissors" class="size-2 text-white" />
               </div>
               <div class="flex-1 min-w-0">
@@ -905,14 +905,14 @@ defineProps<{ id: string; color?: string }>()
   <div v-else-if="id === 'multi-tenant'" class="w-full space-y-1.5">
     <div
       v-for="t in [
-        { n: 'Lina Spa Co.', s: 'lina-spa', plan: 'Business', c: 'from-pink-400 to-rose-500', stats: '3 loc · 12 staff' },
-        { n: 'Smile Dental', s: 'smile-dental', plan: 'Business', c: 'from-sky-400 to-indigo-500', stats: '2 loc · 8 staff' },
-        { n: 'Flex Fitness', s: 'flex-fitness', plan: 'Starter', c: 'from-lime-400 to-emerald-500', stats: '1 loc · 5 staff' },
+        { n: 'Lina Spa Co.', s: 'lina-spa', plan: 'Business', c: 'from-secondary-400 to-rose-500', stats: '3 loc · 12 staff' },
+        { n: 'Smile Dental', s: 'smile-dental', plan: 'Business', c: 'from-secondary-400 to-secondary-500', stats: '2 loc · 8 staff' },
+        { n: 'Flex Fitness', s: 'flex-fitness', plan: 'Starter', c: 'from-secondary-400 to-emerald-500', stats: '1 loc · 5 staff' },
         { n: 'Pawsitive Vet', s: 'pawsitive', plan: 'Business', c: 'from-amber-400 to-orange-500', stats: '1 loc · 4 staff' }
       ]" :key="t.s"
       class="flex items-center gap-2 p-2 rounded-lg bg-white dark:bg-[#0c0c0c] border border-black/5 dark:border-white/10"
     >
-      <div class="size-7 rounded-lg bg-gradient-to-br flex items-center justify-center text-white text-[9px] font-black" :class="t.c">{{ t.n.charAt(0) }}</div>
+      <div class="size-8 rounded-lg bg-gradient-to-br flex items-center justify-center text-white text-[9px] font-black" :class="t.c">{{ t.n.charAt(0) }}</div>
       <div class="flex-1 min-w-0">
         <p class="text-[10px] font-bold truncate">{{ t.n }}</p>
         <p class="text-[8px] text-gray-400">{{ t.s }}.momentfy.com</p>
@@ -929,7 +929,7 @@ defineProps<{ id: string; color?: string }>()
     <div class="rounded-lg border border-black/10 dark:border-white/10 p-3" dir="ltr">
       <div class="flex items-center justify-between mb-2">
         <span class="text-[10px] text-gray-400">EN · LTR</span>
-        <span class="text-[9px] px-1.5 py-0.5 rounded bg-sky-500/15 text-sky-600 font-semibold">English</span>
+        <span class="text-[9px] px-1.5 py-0.5 rounded bg-secondary-500/15 text-secondary-600 font-semibold">English</span>
       </div>
       <p class="text-[11px] font-bold">Welcome back, Lina</p>
       <p class="text-[9px] text-gray-500 mt-1">Today · Apr 18</p>
@@ -953,7 +953,7 @@ defineProps<{ id: string; color?: string }>()
     <div class="rounded-lg overflow-hidden bg-[#0c0c0c] border border-white/10 text-[10px] text-gray-300">
       <div class="h-6 bg-white/5 border-b border-white/10 flex items-center gap-1.5 px-2">
         <div class="size-1.5 rounded-full bg-red-400" />
-        <div class="size-1.5 rounded-full bg-yellow-400" />
+        <div class="size-1.5 rounded-full bg-secondary-400" />
         <div class="size-1.5 rounded-full bg-emerald-400" />
         <span class="ms-auto text-[9px] text-gray-500">~/momentfy</span>
       </div>
@@ -962,7 +962,7 @@ defineProps<{ id: string; color?: string }>()
         <p class="text-gray-500">[+] Running 2/2</p>
         <p><span class="text-emerald-400">✔</span> Container momentfy-db-1 &nbsp;Started</p>
         <p><span class="text-emerald-400">✔</span> Container momentfy-app-1 Started</p>
-        <p class="mt-1 text-sky-400">http://localhost:3000</p>
+        <p class="mt-1 text-secondary-400">http://localhost:3000</p>
       </div>
     </div>
   </div>
@@ -1027,13 +1027,13 @@ defineProps<{ id: string; color?: string }>()
       </div>
     </div>
     <div class="flex items-start gap-2">
-      <div class="size-6 rounded-full bg-gradient-to-br from-violet-400 to-indigo-600 flex items-center justify-center shrink-0">
+      <div class="size-6 rounded-full bg-gradient-to-br from-secondary-400 to-secondary-600 flex items-center justify-center shrink-0">
         <UIcon name="i-lucide-sparkles" class="size-3 text-white" />
       </div>
-      <div class="flex-1 rounded-lg rounded-ss-sm bg-violet-500/10 border border-violet-500/20 p-2 text-[11px]">
+      <div class="flex-1 rounded-lg rounded-ss-sm bg-secondary-500/10 border border-secondary-500/20 p-2 text-[11px]">
         <p>Yes — Lina has <b>18:30</b> open, Noura has <b>19:00</b>. Want me to book one?</p>
         <div class="mt-1.5 flex gap-1">
-          <span class="text-[9px] px-1.5 py-0.5 rounded bg-violet-500 text-white font-semibold">Book 18:30</span>
+          <span class="text-[9px] px-1.5 py-0.5 rounded bg-secondary-500 text-white font-semibold">Book 18:30</span>
           <span class="text-[9px] px-1.5 py-0.5 rounded bg-black/10 dark:bg-white/10 font-semibold">19:00</span>
         </div>
       </div>
@@ -1078,16 +1078,16 @@ defineProps<{ id: string; color?: string }>()
     <!-- Channel toggles -->
     <div class="rounded-lg ring-1 ring-black/10 dark:ring-white/10 p-2 space-y-1.5">
       <div class="flex items-center gap-2">
-        <UIcon name="i-lucide-bell" class="size-3 text-violet-500" />
+        <UIcon name="i-lucide-bell" class="size-3 text-secondary-500" />
         <span class="text-[10px] font-semibold flex-1">In-app</span>
         <span class="text-[9px] text-gray-400">always</span>
-        <span class="size-3 rounded-full bg-violet-500 ring-2 ring-violet-500/30" />
+        <span class="size-3 rounded-full bg-secondary-500 ring-2 ring-secondary-500/30" />
       </div>
       <div class="flex items-center gap-2">
-        <UIcon name="i-lucide-mail" class="size-3 text-sky-500" />
+        <UIcon name="i-lucide-mail" class="size-3 text-secondary-500" />
         <span class="text-[10px] font-semibold flex-1">Email</span>
         <span class="text-[9px] text-gray-400">SendGrid</span>
-        <span class="size-3 rounded-full bg-sky-500 ring-2 ring-sky-500/30" />
+        <span class="size-3 rounded-full bg-secondary-500 ring-2 ring-secondary-500/30" />
       </div>
       <div class="flex items-center gap-2">
         <UIcon name="i-lucide-message-square" class="size-3 text-emerald-500" />
@@ -1130,7 +1130,7 @@ defineProps<{ id: string; color?: string }>()
   <div v-else-if="id === 'workspace-control'" class="w-full text-[9px] space-y-2">
     <!-- Brand row -->
     <div class="flex items-center gap-2 p-2 rounded-lg ring-1 ring-black/10 dark:ring-white/10">
-      <div class="size-8 rounded-lg bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center text-white font-black text-[11px]">M</div>
+      <div class="size-8 rounded-lg bg-gradient-to-br from-secondary-500 to-rose-600 flex items-center justify-center text-white font-black text-[11px]">M</div>
       <div class="flex-1 min-w-0">
         <p class="text-[11px] font-black tracking-tight">Momentfy Studio</p>
         <p class="text-[9px] text-gray-500">SAR · ar/en · Asia/Riyadh</p>
@@ -1141,7 +1141,7 @@ defineProps<{ id: string; color?: string }>()
     <!-- Settings rows -->
     <div class="space-y-1">
       <div class="flex items-center gap-2 p-1.5 rounded-md bg-black/[0.03] dark:bg-white/[0.04]">
-        <UIcon name="i-lucide-map-pin" class="size-3 text-sky-500" />
+        <UIcon name="i-lucide-map-pin" class="size-3 text-secondary-500" />
         <span class="text-[10px] font-semibold flex-1">Locations</span>
         <span class="text-[9px] tabular-nums text-gray-500">3 branches</span>
       </div>
@@ -1156,7 +1156,7 @@ defineProps<{ id: string; color?: string }>()
         <span class="text-[9px] tabular-nums text-gray-500">last · 02:04</span>
       </div>
       <div class="flex items-center gap-2 p-1.5 rounded-md bg-black/[0.03] dark:bg-white/[0.04]">
-        <UIcon name="i-lucide-archive" class="size-3 text-violet-500" />
+        <UIcon name="i-lucide-archive" class="size-3 text-secondary-500" />
         <span class="text-[10px] font-semibold flex-1">Retention</span>
         <span class="text-[9px] tabular-nums text-gray-500">90d / GDPR</span>
       </div>
@@ -1213,8 +1213,8 @@ defineProps<{ id: string; color?: string }>()
         </div>
         <UIcon name="i-lucide-key" class="size-3 text-amber-500 shrink-0" />
       </div>
-      <div class="flex items-start gap-2 p-1.5 rounded-md bg-sky-500/[0.06] ring-1 ring-sky-500/15">
-        <span class="size-1.5 mt-1 rounded-full bg-sky-500 shrink-0" />
+      <div class="flex items-start gap-2 p-1.5 rounded-md bg-secondary-500/[0.06] ring-1 ring-secondary-500/15">
+        <span class="size-1.5 mt-1 rounded-full bg-secondary-500 shrink-0" />
         <div class="flex-1 min-w-0">
           <p class="text-[10px] leading-tight">
             <span class="font-bold">Reception</span>
@@ -1223,7 +1223,7 @@ defineProps<{ id: string; color?: string }>()
           </p>
           <p class="text-[9px] text-gray-400 mt-0.5">10:21 · Staff → Manager</p>
         </div>
-        <UIcon name="i-lucide-user-cog" class="size-3 text-sky-500 shrink-0" />
+        <UIcon name="i-lucide-user-cog" class="size-3 text-secondary-500 shrink-0" />
       </div>
     </div>
 
@@ -1247,14 +1247,14 @@ defineProps<{ id: string; color?: string }>()
           'border-gray-300 bg-white dark:bg-white/5 dark:border-white/20': t.s === 'ok',
           'border-amber-400 bg-amber-100 dark:bg-amber-500/20': t.s === 'filled',
           'border-red-400 bg-red-100 dark:bg-red-500/20': t.s === 'caries',
-          'border-sky-400 bg-sky-100 dark:bg-sky-500/20': t.s === 'crown'
+          'border-secondary-400 bg-secondary-100 dark:bg-secondary-500/20': t.s === 'crown'
         }" />
       </div>
     </div>
     <div class="mt-3 flex flex-wrap gap-2 text-[9px]">
       <span class="inline-flex items-center gap-1"><span class="size-2 rounded-sm bg-amber-400" />Filled</span>
       <span class="inline-flex items-center gap-1"><span class="size-2 rounded-sm bg-red-400" />Caries</span>
-      <span class="inline-flex items-center gap-1"><span class="size-2 rounded-sm bg-sky-400" />Crown</span>
+      <span class="inline-flex items-center gap-1"><span class="size-2 rounded-sm bg-secondary-400" />Crown</span>
     </div>
   </div>
 
@@ -1276,7 +1276,7 @@ defineProps<{ id: string; color?: string }>()
       </div>
       <div class="mt-2 flex gap-1.5 pt-2 border-t border-black/5 dark:border-white/10">
         <span class="text-[9px] px-1.5 py-0.5 rounded bg-red-500/15 text-red-600 font-semibold">Allergies · 1</span>
-        <span class="text-[9px] px-1.5 py-0.5 rounded bg-sky-500/15 text-sky-600 font-semibold">Rx · 1</span>
+        <span class="text-[9px] px-1.5 py-0.5 rounded bg-secondary-500/15 text-secondary-600 font-semibold">Rx · 1</span>
       </div>
     </div>
   </div>
@@ -1308,9 +1308,9 @@ defineProps<{ id: string; color?: string }>()
   <div v-else-if="id === 'fitness'" class="w-full space-y-1.5">
     <div
       v-for="c in [
-        { n: 'Yoga Flow', t: '07:00', seats: 14, cap: 16, c: 'from-emerald-400 to-teal-500' },
+        { n: 'Yoga Flow', t: '07:00', seats: 14, cap: 16, c: 'from-emerald-400 to-secondary-500' },
         { n: 'HIIT Blast', t: '08:30', seats: 12, cap: 12, c: 'from-orange-400 to-red-500', full: true },
-        { n: 'Pilates', t: '18:00', seats: 8, cap: 15, c: 'from-violet-400 to-fuchsia-500' }
+        { n: 'Pilates', t: '18:00', seats: 8, cap: 15, c: 'from-secondary-400 to-secondary-500' }
       ]" :key="c.n"
       class="p-2 rounded-lg bg-white dark:bg-[#0c0c0c] border border-black/5 dark:border-white/10"
     >
@@ -1335,7 +1335,7 @@ defineProps<{ id: string; color?: string }>()
   <div v-else-if="id === 'pet'" class="w-full">
     <div class="rounded-lg bg-white dark:bg-[#0c0c0c] border border-black/10 dark:border-white/10 p-3">
       <div class="flex items-center gap-2 mb-2">
-        <div class="size-9 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-white">
+        <div class="size-10 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-white">
           <UIcon name="i-lucide-paw-print" class="size-4" />
         </div>
         <div class="flex-1">
@@ -1352,9 +1352,9 @@ defineProps<{ id: string; color?: string }>()
           <span class="flex items-center gap-1"><UIcon name="i-lucide-alert-triangle" class="size-3 text-amber-600" />DHPP</span>
           <span class="text-amber-700 dark:text-amber-400">due · May 12</span>
         </div>
-        <div class="flex items-center justify-between p-1.5 rounded bg-sky-500/10">
-          <span class="flex items-center gap-1"><UIcon name="i-lucide-scissors" class="size-3 text-sky-600" />Grooming</span>
-          <span class="text-sky-700 dark:text-sky-400">Monthly · SAR 150</span>
+        <div class="flex items-center justify-between p-1.5 rounded bg-secondary-500/10">
+          <span class="flex items-center gap-1"><UIcon name="i-lucide-scissors" class="size-3 text-secondary-600" />Grooming</span>
+          <span class="text-secondary-700 dark:text-secondary-400">Monthly · SAR 150</span>
         </div>
       </div>
     </div>

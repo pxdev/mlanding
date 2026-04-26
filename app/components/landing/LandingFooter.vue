@@ -56,14 +56,14 @@ function scrollToTop() {
       <!-- ═══ 02 · Spine — brand block + tagline + status + CTAs ═══ -->
       <div class="grid grid-cols-12 gap-6 lg:gap-10 pt-16 sm:pt-20 pb-12">
 
-        <!-- Left: chapter number + wordmark -->
+        <!-- Left: chapter number + wordmark + Saudi Riyal signature -->
         <div class="col-span-12 lg:col-span-3 flex items-start gap-5">
           <span aria-hidden="true" class="text-5xl sm:text-6xl font-black tracking-tighter leading-[0.8] text-white/[0.12] select-none tabular-nums">
             00
           </span>
           <div>
             <div class="flex items-center gap-2.5">
-              <div class="size-9 rounded-xl bg-white text-primary flex items-center justify-center font-black text-lg">M</div>
+              <div class="size-10 rounded-xl bg-white text-primary flex items-center justify-center font-black text-lg">M</div>
               <span class="text-xl font-black tracking-tight">Momentfy</span>
             </div>
             <p class="mt-1 text-[10px] uppercase tracking-[0.28em] text-white/50">
@@ -82,7 +82,7 @@ function scrollToTop() {
 
         <!-- Right: status + CTA -->
         <div class="col-span-12 lg:col-span-3 flex flex-col gap-4 lg:items-end">
-          <span class="inline-flex items-center gap-2 px-3 h-7 rounded-full bg-emerald-400/15 text-emerald-300 text-[10px] uppercase tracking-[0.25em] font-black">
+          <span class="inline-flex items-center gap-2 px-3 h-8 rounded-full bg-emerald-400/15 text-emerald-300 text-[10px] uppercase tracking-[0.25em] font-black">
             <span class="relative flex size-1.5">
               <span class="absolute inset-0 rounded-full bg-emerald-400 animate-ping opacity-75" />
               <span class="relative size-1.5 rounded-full bg-emerald-400" />
@@ -102,7 +102,7 @@ function scrollToTop() {
       </div>
 
       <!-- ═══ 03 · Link grid — chapter-style columns with hairline dividers ═══ -->
-      <div class="border-t border-white/10 pt-12 pb-14">
+      <div class="border-t border-white/10 pt-12 pb-16">
         <div class="grid grid-cols-2 md:grid-cols-6 gap-x-8 gap-y-10">
 
           <!-- Solutions gets a double-width slot with its own 2-col item layout -->
@@ -174,7 +174,7 @@ function scrollToTop() {
           @click="scrollToTop"
         >
           {{ copy.ui.backToTop }}
-          <span aria-hidden="true" class="size-7 rounded-full border border-white/15 flex items-center justify-center group-hover:border-white transition-colors">
+          <span aria-hidden="true" class="size-8 rounded-full border border-white/15 flex items-center justify-center group-hover:border-white transition-colors">
             <UIcon name="i-lucide-arrow-up" class="size-3.5 group-hover:-translate-y-0.5 transition-transform" />
           </span>
         </button>

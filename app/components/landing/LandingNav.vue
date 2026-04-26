@@ -98,7 +98,7 @@ function isActive(to: string) {
         <ClientOnly>
           <button
             type="button"
-            class="hidden sm:inline-flex items-center gap-1.5 h-9 px-3 rounded-full text-sm font-semibold text-gray-600 dark:text-gray-400 ring-1 ring-transparent hover:ring-black/[0.06] hover:bg-black/[0.04] dark:hover:bg-white/[0.06] dark:hover:ring-white/10 transition"
+            class="hidden sm:inline-flex items-center gap-1.5 h-10 px-3 rounded-full text-sm font-semibold text-gray-600 dark:text-gray-400 ring-1 ring-transparent hover:ring-black/[0.06] hover:bg-black/[0.04] dark:hover:bg-white/[0.06] dark:hover:ring-white/10 transition"
             :aria-label="copy.nav.langLabel"
             :title="otherLocale?.name"
             @click="toggleLocale"
@@ -107,7 +107,7 @@ function isActive(to: string) {
             <span class="text-[13px] font-bold tracking-tight">{{ otherLocale?.name }}</span>
           </button>
           <template #fallback>
-            <span class="hidden sm:inline-flex items-center gap-1.5 h-9 px-3 rounded-full text-sm font-semibold text-gray-600 dark:text-gray-400">
+            <span class="hidden sm:inline-flex items-center gap-1.5 h-10 px-3 rounded-full text-sm font-semibold text-gray-600 dark:text-gray-400">
               <UIcon name="i-lucide-globe" class="size-4 opacity-70" />
               <span class="text-[13px] font-bold tracking-tight">{{ currentLocale?.name }}</span>
             </span>
@@ -118,14 +118,14 @@ function isActive(to: string) {
         <ClientOnly>
           <NuxtLink
             :to="loggedIn ? localePath('/dashboard') : localePath('/auth/login')"
-            class="hidden sm:inline-flex items-center h-9 px-4 rounded-full text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition"
+            class="hidden sm:inline-flex items-center h-10 px-4 rounded-full text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition"
           >
             {{ loggedIn ? copy.nav.dashboard : copy.nav.signIn }}
           </NuxtLink>
           <template #fallback>
             <NuxtLink
               :to="localePath('/auth/login')"
-              class="hidden sm:inline-flex items-center h-9 px-4 rounded-full text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition"
+              class="hidden sm:inline-flex items-center h-10 px-4 rounded-full text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition"
             >
               {{ copy.nav.signIn }}
             </NuxtLink>
@@ -135,7 +135,7 @@ function isActive(to: string) {
         <!-- Primary CTA — gradient pill that picks up the brand secondary on hover -->
         <NuxtLink
           :to="localePath('/portal/pricing')"
-          class="group relative inline-flex items-center gap-1.5 h-9 ps-4 pe-3 rounded-full text-sm font-bold text-white shadow-md shadow-primary/25 hover:shadow-lg hover:shadow-primary/40 hover:-translate-y-0.5 transition-all overflow-hidden"
+          class="group relative inline-flex items-center gap-1.5 h-10 ps-4 pe-3 rounded-full text-sm font-bold text-white shadow-md shadow-primary/25 hover:shadow-lg hover:shadow-primary/40 hover:-translate-y-0.5 transition-all overflow-hidden"
         >
           <span aria-hidden="true" class="absolute inset-0 bg-primary" />
           <span aria-hidden="true" class="absolute inset-0 bg-gradient-to-r from-primary via-secondary-700 to-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -146,7 +146,7 @@ function isActive(to: string) {
         </NuxtLink>
 
         <button
-          class="lg:hidden size-9 flex items-center justify-center rounded-full hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition"
+          class="lg:hidden size-10 flex items-center justify-center rounded-full hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition"
           aria-label="Open menu"
           aria-controls="landing-mobile-menu"
           :aria-expanded="mobileOpen"
@@ -189,7 +189,7 @@ function isActive(to: string) {
           <div class="h-16 px-5 flex items-center justify-between border-b border-black/5 dark:border-white/10">
             <LandingNavBrand />
             <button
-              class="size-9 flex items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10"
+              class="size-10 flex items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10"
               aria-label="Close menu"
               @click="mobileOpen = false"
             >

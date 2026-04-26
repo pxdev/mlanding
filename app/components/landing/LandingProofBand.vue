@@ -9,11 +9,11 @@ const copy = useLandingCopy()
       class="relative border-y border-black/5 dark:border-white/10 py-6 overflow-hidden mb-16"
       role="presentation"
     >
-      <div class="flex w-max animate-marquee gap-14">
+      <div class="flex w-max animate-marquee gap-16">
         <div
           v-for="pass in 2"
           :key="pass"
-          class="flex items-center gap-14 shrink-0"
+          class="flex items-center gap-16 shrink-0"
         >
           <template
             v-for="(ind, i) in copy.industries.items"
@@ -37,7 +37,7 @@ const copy = useLandingCopy()
         <div
           v-for="(s, i) in copy.hero.statsStrip"
           :key="s.v"
-          class="relative py-10 lg:py-14 px-5 sm:px-8 bg-white dark:bg-black"
+          class="relative py-10 lg:py-16 px-5 sm:px-8 bg-white dark:bg-black"
         >
           <span class="text-[10px] tabular-nums text-gray-400 tracking-widest">
             {{ String(i + 1).padStart(2, '0') }}

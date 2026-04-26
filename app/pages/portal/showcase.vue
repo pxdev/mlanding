@@ -82,7 +82,7 @@ const chapterNav = computed(() => copy.value.showcasePage.verticals.map(v => ({
     <div class="max-w-7xl mx-auto px-5 sm:px-8 border-t border-black/10 dark:border-white/10">
       <article
         v-for="(v, i) in copy.showcasePage.verticals" :key="v.id" :id="v.id"
-        class="group relative py-14 sm:py-20 border-b border-black/10 dark:border-white/10"
+        class="group relative py-16 sm:py-20 border-b border-black/10 dark:border-white/10"
       >
         <!-- ── Top zigzag: hero on one side, mock on the other ── -->
         <div class="grid grid-cols-12 gap-6 lg:gap-12">
@@ -176,7 +176,7 @@ const chapterNav = computed(() => copy.value.showcasePage.verticals.map(v => ({
         </div>
 
         <!-- ── Pains × Capabilities: parallel columns ── -->
-        <div v-if="v.pains?.length || v.capabilities?.length" class="mt-14 sm:mt-20 grid grid-cols-12 gap-6 lg:gap-12">
+        <div v-if="v.pains?.length || v.capabilities?.length" class="mt-16 sm:mt-20 grid grid-cols-12 gap-6 lg:gap-12">
           <!-- Pains (red-tinted) -->
           <div v-if="v.pains?.length" class="col-span-12 lg:col-span-5">
             <div class="flex items-baseline gap-3 mb-6 pb-4 border-b border-black/10 dark:border-white/10">
@@ -208,7 +208,7 @@ const chapterNav = computed(() => copy.value.showcasePage.verticals.map(v => ({
         </div>
 
         <!-- ── Day-in-the-life flow stepper ── -->
-        <div v-if="v.flow?.length" class="mt-14 sm:mt-20">
+        <div v-if="v.flow?.length" class="mt-16 sm:mt-20">
           <div class="flex items-baseline gap-3 mb-8">
             <UIcon name="i-lucide-route" class="size-3.5" :class="visuals[v.id].text" />
             <span class="text-[10px] uppercase tracking-[0.25em] font-bold" :class="visuals[v.id].text">{{ copy.showcasePage.flowTitle }}</span>
@@ -216,7 +216,7 @@ const chapterNav = computed(() => copy.value.showcasePage.verticals.map(v => ({
           <ol class="grid grid-cols-1 md:grid-cols-5 gap-y-8 md:gap-x-0 relative">
             <li v-for="(step, si) in v.flow" :key="step" class="relative md:px-5 first:md:ps-0 last:md:pe-0 md:border-e md:border-black/10 md:dark:border-white/10 last:md:border-e-0 rtl:md:border-e-0 rtl:md:border-s last:rtl:md:border-s-0">
               <div class="flex items-center gap-3 mb-3">
-                <div class="size-7 rounded-full bg-gradient-to-br text-white text-[11px] font-black flex items-center justify-center shadow-sm shrink-0" :class="visuals[v.id].accent">{{ si + 1 }}</div>
+                <div class="size-8 rounded-full bg-gradient-to-br text-white text-[11px] font-black flex items-center justify-center shadow-sm shrink-0" :class="visuals[v.id].accent">{{ si + 1 }}</div>
                 <span aria-hidden="true" class="h-px flex-1" :class="visuals[v.id].soft" />
               </div>
               <p class="text-sm leading-relaxed text-gray-800 dark:text-gray-200">{{ step }}</p>
@@ -225,7 +225,7 @@ const chapterNav = computed(() => copy.value.showcasePage.verticals.map(v => ({
         </div>
 
         <!-- ── Paired add-ons ── -->
-        <div v-if="v.addons?.length" class="mt-14 sm:mt-20">
+        <div v-if="v.addons?.length" class="mt-16 sm:mt-20">
           <div class="flex items-baseline gap-3 mb-6 pb-4 border-b border-black/10 dark:border-white/10">
             <UIcon name="i-lucide-puzzle" class="size-3.5" :class="visuals[v.id].text" />
             <span class="text-[10px] uppercase tracking-[0.25em] font-bold" :class="visuals[v.id].text">{{ copy.showcasePage.addonsTitle }}</span>
@@ -235,7 +235,7 @@ const chapterNav = computed(() => copy.value.showcasePage.verticals.map(v => ({
             <NuxtLink v-for="k in v.addons" :key="k" :to="`/portal/addons/${k}`"
               class="group/addon flex items-center gap-2.5 p-3 rounded-xl ring-1 ring-black/10 dark:ring-white/10 hover:ring-secondary-500/50 hover:bg-secondary-500/[0.04] transition-all"
             >
-              <div class="size-9 shrink-0 rounded-lg flex items-center justify-center" :class="[visuals[v.id].soft, visuals[v.id].text]">
+              <div class="size-10 shrink-0 rounded-lg flex items-center justify-center" :class="[visuals[v.id].soft, visuals[v.id].text]">
                 <UIcon :name="addonMeta[k]?.icon || 'i-lucide-puzzle'" class="size-4" />
               </div>
               <div class="min-w-0 flex-1">

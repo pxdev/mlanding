@@ -84,13 +84,13 @@ useHead(() => ({
         <h2 class="mt-3 font-black tracking-tight text-3xl sm:text-4xl lg:text-5xl">{{ sp.industriesLabel }}.</h2>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-14">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-16">
         <NuxtLink v-for="(s, si) in industries" :key="s.id" :id="s.id" :to="`/portal/solutions/${s.id}`"
           class="group flex flex-col"
         >
           <div class="flex items-center gap-4 mb-4">
             <span class="text-xs tabular-nums text-gray-400 w-6 shrink-0">{{ String(si + 1).padStart(2, '0') }}</span>
-            <div class="shrink-0 size-11 rounded-xl bg-gradient-to-br text-white flex items-center justify-center shadow-md transition-transform group-hover:scale-110 group-hover:-rotate-[6deg]" :class="s.accent">
+            <div class="shrink-0 size-12 rounded-xl bg-gradient-to-br text-white flex items-center justify-center shadow-md transition-transform group-hover:scale-110 group-hover:-rotate-[6deg]" :class="s.accent">
               <UIcon :name="s.icon" class="size-5" />
             </div>
           </div>
@@ -118,13 +118,13 @@ useHead(() => ({
         <h2 class="mt-3 font-black tracking-tight text-3xl sm:text-4xl lg:text-5xl">{{ sp.businessShapesLabel }}.</h2>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-14">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-16">
         <NuxtLink v-for="(s, si) in businessShapes" :key="s.id" :id="s.id" :to="`/portal/solutions/${s.id}`"
           class="group flex flex-col"
         >
           <div class="flex items-center gap-4 mb-4">
             <span class="text-xs tabular-nums text-gray-400 w-6 shrink-0">{{ String(si + 1).padStart(2, '0') }}</span>
-            <div class="shrink-0 size-11 rounded-xl bg-gradient-to-br text-white flex items-center justify-center shadow-md transition-transform group-hover:scale-110 group-hover:-rotate-[6deg]" :class="s.accent">
+            <div class="shrink-0 size-12 rounded-xl bg-gradient-to-br text-white flex items-center justify-center shadow-md transition-transform group-hover:scale-110 group-hover:-rotate-[6deg]" :class="s.accent">
               <UIcon :name="s.icon" class="size-5" />
             </div>
           </div>
