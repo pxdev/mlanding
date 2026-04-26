@@ -2392,7 +2392,7 @@
     "featuresPage": {
       "eyebrow": "Features",
       "h1": "Everything, on one tab.",
-      "sub": "Twenty major feature areas. Hundreds of screens. Every small detail wired to the next — all included in the source, all yours on day one.",
+      "sub": "Twenty-one major feature areas. Hundreds of screens. Every small detail wired to the next — all included in the source, all yours on day one.",
       "spotlightLabel": "Spotlight",
       "spotlightCta": "Read in detail",
       "readMore": "Read more",
@@ -2428,6 +2428,7 @@
             "Smart quick-filter chips, instant search and keyboard shortcuts tuned for the busiest front desks",
             "Blocked time with daily, weekly or monthly recurrence — vacation, training, lunch, equipment maintenance",
             "Waitlist panel, walk-in flow, and QR check-in at the front desk",
+            "Scan an appointment QR — from a printed slip, receipt or the client's phone — to jump straight to that booking on the calendar (uses the device camera, native BarcodeDetector with a jsQR fallback, plus manual ID lookup)",
             "Resource reservations — chairs, rooms, dental units, studios — scheduled alongside staff so no one ever double-books equipment",
             "Timezone-aware across every tenant, location, reminder and campaign",
             "Public booking link with online payment (Tabby, Tamara, Stripe, Tap, Paymob), two-way Google Calendar sync and auto-generated Zoom meeting URLs on confirmation",
@@ -2550,6 +2551,7 @@
             "Pay runs with payslips and CSV export for banks or third-party payroll",
             "Staff KPIs — rebook rate, utilization and revenue per member — on the team dashboard",
             "Audit trails on subscription and sensitive admin actions, plus per-member login history",
+            "Internal team tickets — assign, thread and track operational requests across roles and locations",
             "Context switching between roles and tenants via impersonation without re-login",
             "Invitation tokens with expiry, password reset and self-serve password change"
           ]
@@ -2748,7 +2750,25 @@
             "Backup & restore — JSON export of the entire workspace; restore replaces current state with a confirmation gate",
             "Storage providers — local disk, S3-compatible (AWS S3, DigitalOcean Spaces, MinIO) or Cloudinary, switchable per tenant",
             "Receipt templates (A4 standard or POS thermal), payment-method toggles, tax rates, tipping presets",
+            "Date, time, timezone and calendar defaults — first day of the week, working hours, slot granularity, default appointment duration",
+            "Online-booking rules — lead time, cancellation window, deposit policy, public-page visibility — and Zoom integration credentials per tenant",
             "Buy-now-pay-later credentials — Tabby and Tamara — with sandbox/live modes and a built-in connection test"
+          ]
+        },
+        {
+          "id": "activity-logs",
+          "group": "Platform",
+          "title": "Activity Logs & Audit",
+          "summary": "Every sensitive action — recorded, attributed and queryable. The trail your auditor, your insurer and your future self will thank you for.",
+          "bullets": [
+            "Tenant-wide activity log for staff actions — logins, edits, deletions, role changes, refunds, overrides and admin operations",
+            "Per-record activity timeline on clients, invoices, appointments, payments and members",
+            "Tamper-evident hash-chain audit trail on accounting journal entries — provable integrity for every period",
+            "Subscription and sensitive-action audit logs surfaced to super-admin for cross-tenant oversight",
+            "Filter by member, action type, date range, IP or affected record — and export the result to CSV",
+            "Impersonation sessions tracked end-to-end (who, when, from, until) with a dedicated entry per session",
+            "Webhook event log for inbound integrations and troubleshooting — payload, signature, retry status",
+            "Configurable retention windows aligned with your data-retention policy and GDPR right-to-erasure"
           ]
         }
       ]
