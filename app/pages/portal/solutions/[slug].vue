@@ -1,4 +1,5 @@
 <script setup>
+const localePath = useLocalePath()
 definePageMeta({ layout: 'landing', scrollToTop: true });
 const copy = useLandingCopy();
 const { locale } = useI18n();
@@ -46,7 +47,7 @@ if (!solution.value) {
       <div class="max-w-7xl mx-auto px-5 sm:px-8">
         <!-- Breadcrumb -->
         <nav class="flex items-center gap-2 text-xs text-gray-500 mb-6" aria-label="Breadcrumb">
-          <NuxtLink to="/portal/solutions" class="hover:text-primary dark:hover:text-white transition-colors uppercase tracking-[0.2em]">{{ sp.breadcrumb }}</NuxtLink>
+          <NuxtLink :to="localePath('/portal/solutions')" class="hover:text-primary dark:hover:text-white transition-colors uppercase tracking-[0.2em]">{{ sp.breadcrumb }}</NuxtLink>
           <UIcon name="i-lucide-chevron-right" class="size-3 rtl:rotate-180" />
           <span class="uppercase tracking-[0.2em]">{{ String(idx + 1).padStart(2, '0') }} / {{ total }}</span>
         </nav>
@@ -76,13 +77,13 @@ if (!solution.value) {
 
         <!-- Hero CTA row -->
         <div class="flex flex-wrap items-center gap-4 sm:gap-5">
-          <NuxtLink to="/portal/pricing"
+          <NuxtLink :to="localePath('/portal/pricing')"
             class="group inline-flex items-center gap-3 h-12 ps-4 pe-5 rounded-full bg-primary text-white dark:bg-white dark:text-primary text-sm font-bold transition-transform hover:-translate-y-0.5"
           >
             <span>{{ sp.ctaPrimary }}</span>
             <UIcon name="i-lucide-arrow-right" class="size-4 rtl:rotate-180 transition-transform group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5" />
           </NuxtLink>
-          <NuxtLink to="/portal/features"
+          <NuxtLink :to="localePath('/portal/features')"
             class="inline-flex items-center gap-2 h-12 px-4 text-sm text-gray-600 hover:text-primary dark:text-gray-300 dark:hover:text-white transition-colors"
           >
             <span>{{ sp.ctaSecondary }}</span>
@@ -231,7 +232,7 @@ if (!solution.value) {
         <h2 class="font-black tracking-tight leading-[0.9] text-4xl sm:text-5xl lg:text-6xl mb-6">{{ sp.ctaTitle }}</h2>
         <p class="text-base sm:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">{{ sp.ctaBody }}</p>
         <div class="flex flex-wrap items-center justify-center gap-6">
-          <NuxtLink to="/portal/pricing" class="group inline-flex items-center gap-3 text-sm font-bold">
+          <NuxtLink :to="localePath('/portal/pricing')" class="group inline-flex items-center gap-3 text-sm font-bold">
             <span class="size-12 rounded-full bg-primary text-white dark:bg-white dark:text-primary flex items-center justify-center transition-transform group-hover:scale-110">
               <UIcon name="i-lucide-arrow-right" class="size-4 rtl:rotate-180" />
             </span>
@@ -240,7 +241,7 @@ if (!solution.value) {
               <span aria-hidden="true" class="absolute -bottom-0.5 inset-x-0 h-px bg-current group-hover:bg-secondary-500 transition-colors" />
             </span>
           </NuxtLink>
-          <NuxtLink to="/portal/solutions" class="text-sm text-gray-500 hover:text-primary dark:hover:text-white transition-colors inline-flex items-center gap-1.5">
+          <NuxtLink :to="localePath('/portal/solutions')" class="text-sm text-gray-500 hover:text-primary dark:hover:text-white transition-colors inline-flex items-center gap-1.5">
             {{ sp.ctaSecondary }}
             <UIcon name="i-lucide-arrow-up-right" class="size-3.5" />
           </NuxtLink>
@@ -252,7 +253,7 @@ if (!solution.value) {
     <section v-if="prev || next" class="py-16 border-t border-black/10 dark:border-white/10">
       <div class="max-w-7xl mx-auto px-5 sm:px-8">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:divide-x md:divide-black/10 md:dark:divide-white/10 rtl:md:divide-x-reverse">
-          <NuxtLink v-if="prev" :to="`/portal/solutions/${prev.id}`"
+          <NuxtLink v-if="prev" :to="localePath(`/portal/solutions/${prev.id}`)"
             class="group flex items-center gap-4 md:pe-10"
           >
             <span class="size-10 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-gray-600 dark:text-gray-400 transition-colors group-hover:bg-primary group-hover:text-white">
@@ -265,7 +266,7 @@ if (!solution.value) {
           </NuxtLink>
           <div v-else />
 
-          <NuxtLink v-if="next" :to="`/portal/solutions/${next.id}`"
+          <NuxtLink v-if="next" :to="localePath(`/portal/solutions/${next.id}`)"
             class="group flex items-center justify-end gap-4 md:ps-10"
           >
             <div class="text-end">
@@ -289,7 +290,7 @@ if (!solution.value) {
       <div class="max-w-2xl mx-auto px-5 text-center">
         <LandingSectionEyebrow :label="sp.notFoundEyebrow" class="mb-4" />
         <h1 class="font-black tracking-tight text-4xl sm:text-5xl mb-4">{{ sp.notFoundBody }}</h1>
-        <NuxtLink to="/portal/solutions" class="group inline-flex items-center gap-3 text-sm font-bold mt-6">
+        <NuxtLink :to="localePath('/portal/solutions')" class="group inline-flex items-center gap-3 text-sm font-bold mt-6">
           <span class="size-12 rounded-full bg-primary text-white dark:bg-white dark:text-primary flex items-center justify-center transition-transform group-hover:scale-110">
             <UIcon name="i-lucide-arrow-right" class="size-4 rtl:rotate-180" />
           </span>

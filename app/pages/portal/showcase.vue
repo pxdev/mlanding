@@ -1,4 +1,5 @@
 <script setup>
+const localePath = useLocalePath()
 definePageMeta({ layout: 'landing' });
 const copy = useLandingCopy();
 const { locale } = useI18n();
@@ -149,7 +150,7 @@ const chapterNav = computed(() => copy.value.showcasePage.verticals.map(v => ({
 
             <!-- CTAs -->
             <div class="mt-10 flex flex-wrap gap-6 items-center">
-              <NuxtLink to="/portal/features" class="group/cta inline-flex items-center gap-3 text-sm font-bold">
+              <NuxtLink :to="localePath('/portal/features')" class="group/cta inline-flex items-center gap-3 text-sm font-bold">
                 <span class="size-10 rounded-full bg-primary text-white dark:bg-white dark:text-primary flex items-center justify-center transition-transform group-hover/cta:scale-110">
                   <UIcon name="i-lucide-arrow-right" class="size-4 rtl:rotate-180" />
                 </span>
@@ -158,7 +159,7 @@ const chapterNav = computed(() => copy.value.showcasePage.verticals.map(v => ({
                   <span aria-hidden="true" class="absolute -bottom-0.5 inset-x-0 h-px bg-current group-hover/cta:bg-secondary-500 transition-colors" />
                 </span>
               </NuxtLink>
-              <NuxtLink to="/portal/addons" class="text-sm text-gray-500 hover:text-primary dark:hover:text-white transition-colors inline-flex items-center gap-1.5">
+              <NuxtLink :to="localePath('/portal/addons')" class="text-sm text-gray-500 hover:text-primary dark:hover:text-white transition-colors inline-flex items-center gap-1.5">
                 {{ copy.showcasePage.cta2 }}
                 <UIcon name="i-lucide-arrow-up-right" class="size-3.5" />
               </NuxtLink>
@@ -232,7 +233,7 @@ const chapterNav = computed(() => copy.value.showcasePage.verticals.map(v => ({
             <span class="ms-auto text-[10px] tabular-nums text-gray-400">{{ v.addons.length }}</span>
           </div>
           <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-            <NuxtLink v-for="k in v.addons" :key="k" :to="`/portal/addons/${k}`"
+            <NuxtLink v-for="k in v.addons" :key="k" :to="localePath(`/portal/addons/${k}`)"
               class="group/addon flex items-center gap-2.5 p-3 rounded-xl ring-1 ring-black/10 dark:ring-white/10 hover:ring-secondary-500/50 hover:bg-secondary-500/[0.04] transition-all"
             >
               <div class="size-10 shrink-0 rounded-lg flex items-center justify-center" :class="[visuals[v.id].soft, visuals[v.id].text]">

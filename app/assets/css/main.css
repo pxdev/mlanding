@@ -234,23 +234,8 @@ html[dir='rtl'] {
   animation: glow-pulse 3s ease-in-out infinite;
 }
 
-/* Marquee — infinite horizontal scroll for industry name sweep */
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-.animate-marquee {
-  animation: marquee 40s linear infinite;
-  will-change: transform;
-}
-.animate-marquee-slow {
-  animation: marquee 60s linear infinite;
-  will-change: transform;
-}
-[dir="rtl"] .animate-marquee,
-[dir="rtl"] .animate-marquee-slow {
-  animation-direction: reverse;
-}
+/* Marquee animations now provided by Nuxt UI v4's <UMarquee> component
+   (which ships its own RTL-aware keyframes via `marquee` / `marquee-rtl`). */
 
 /* Shimmer effect for gradient text */
 @keyframes shimmer {

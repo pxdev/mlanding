@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const localePath = useLocalePath()
 // Unified Platform section — tabbed between core modules and add-ons.
 // Core tab: auto-rotating explorer with mocks (preserved from previous design).
 // Add-ons tab: category-grouped directory with a sticky chapter rail.
@@ -408,7 +409,7 @@ const totalIndex = computed(() => String(modules.value.length).padStart(2, '0'))
             <!-- Footer: CTA + stepper -->
             <div class="mt-10 flex items-center justify-between gap-4 flex-wrap">
               <NuxtLink
-                :to="`/portal/modules/${active?.id}`"
+                :to="localePath(`/portal/modules/${active?.id}`)"
                 class="group inline-flex items-center gap-3 text-sm font-bold"
               >
                 <span class="size-10 rounded-full bg-primary text-white dark:bg-white dark:text-primary flex items-center justify-center transition-transform group-hover:scale-110">
@@ -488,7 +489,7 @@ const totalIndex = computed(() => String(modules.value.length).padStart(2, '0'))
               <NuxtLink
                 v-for="a in cat.items"
                 :key="a.key"
-                :to="`/portal/addons/${a.key}`"
+                :to="localePath(`/portal/addons/${a.key}`)"
                 class="group relative flex items-start gap-4"
               >
                 <div

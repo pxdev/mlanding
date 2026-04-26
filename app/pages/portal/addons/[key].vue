@@ -1,4 +1,5 @@
 <script setup>
+const localePath = useLocalePath()
 definePageMeta({ layout: 'landing', scrollToTop: true });
 const copy = useLandingCopy();
 const { locale } = useI18n();
@@ -64,7 +65,7 @@ if (!addonItem.value || !detail.value) {
       <div class="max-w-7xl mx-auto px-5 sm:px-8">
         <!-- Breadcrumb -->
         <nav class="flex items-center gap-2 text-xs text-gray-500 mb-10" aria-label="Breadcrumb">
-          <NuxtLink to="/portal/addons" class="hover:text-primary dark:hover:text-white transition-colors uppercase tracking-[0.2em]">{{ copy.ui.breadcrumbAddons }}</NuxtLink>
+          <NuxtLink :to="localePath('/portal/addons')" class="hover:text-primary dark:hover:text-white transition-colors uppercase tracking-[0.2em]">{{ copy.ui.breadcrumbAddons }}</NuxtLink>
           <UIcon name="i-lucide-chevron-right" class="size-3 rtl:rotate-180" />
           <span class="uppercase tracking-[0.2em] inline-flex items-center gap-1.5">
             <span class="size-1.5 rounded-full" :class="meta?.dot" />
@@ -220,7 +221,7 @@ if (!addonItem.value || !detail.value) {
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-8 border-t border-black/10 dark:border-white/10 pt-10">
-          <NuxtLink v-for="s in siblings" :key="s.key" :to="`/portal/addons/${s.key}`"
+          <NuxtLink v-for="s in siblings" :key="s.key" :to="localePath(`/portal/addons/${s.key}`)"
             class="group flex items-start gap-4"
           >
             <div class="shrink-0 size-12 flex items-center justify-center rounded-xl transition-all duration-300 group-hover:scale-110" :class="addonMeta[s.key]?.iconBg">
@@ -244,7 +245,7 @@ if (!addonItem.value || !detail.value) {
     <section class="py-16 border-t border-black/10 dark:border-white/10">
       <div class="max-w-7xl mx-auto px-5 sm:px-8">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:divide-x md:divide-black/10 md:dark:divide-white/10 rtl:md:divide-x-reverse">
-          <NuxtLink v-if="prevAddon" :to="`/portal/addons/${prevAddon.key}`"
+          <NuxtLink v-if="prevAddon" :to="localePath(`/portal/addons/${prevAddon.key}`)"
             class="group flex items-center gap-4 md:pe-10"
           >
             <span class="size-10 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-gray-600 dark:text-gray-400 transition-colors group-hover:bg-primary group-hover:text-white">
@@ -257,7 +258,7 @@ if (!addonItem.value || !detail.value) {
           </NuxtLink>
           <div v-else />
 
-          <NuxtLink v-if="nextAddon" :to="`/portal/addons/${nextAddon.key}`"
+          <NuxtLink v-if="nextAddon" :to="localePath(`/portal/addons/${nextAddon.key}`)"
             class="group flex items-center justify-end gap-4 md:ps-10"
           >
             <div class="text-end">
@@ -282,7 +283,7 @@ if (!addonItem.value || !detail.value) {
         <LandingSectionEyebrow :label="copy.ui.addonNotFoundEyebrow" class="mb-4" />
         <h1 class="font-black tracking-tight text-4xl sm:text-5xl mb-4">{{ copy.ui.noAddonWithKey }}</h1>
         <p class="text-gray-600 dark:text-gray-400 mb-8">{{ copy.ui.checkUrlAddons }}</p>
-        <NuxtLink to="/portal/addons" class="group inline-flex items-center gap-3 text-sm font-bold">
+        <NuxtLink :to="localePath('/portal/addons')" class="group inline-flex items-center gap-3 text-sm font-bold">
           <span class="size-12 rounded-full bg-primary text-white dark:bg-white dark:text-primary flex items-center justify-center transition-transform group-hover:scale-110">
             <UIcon name="i-lucide-arrow-right" class="size-4 rtl:rotate-180" />
           </span>

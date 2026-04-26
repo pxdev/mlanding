@@ -7,6 +7,7 @@ const props = defineProps<{
 }>()
 
 const manual = useManualCopy()
+const localePath = useLocalePath()
 
 // Scroll-spy: highlight the chapter whose heading is currently in view.
 const activeSection = ref<string>(props.article.chapters[0]?.id || '')
@@ -44,7 +45,10 @@ const prevModule = computed(() => readyEntries.value[currentIdx.value - 1])
 const nextModule = computed(() => readyEntries.value[currentIdx.value + 1])
 
 const iconName = computed(() => props.article.icon || 'i-lucide-book-open')
-const gradientClass = computed(() => props.article.gradient || 'from-primary to-primary')
+// One brand gradient across every article — the icon distinguishes the topic,
+// not the hue. The per-article `gradient` field in manual.json is intentionally
+// ignored to keep the manual unified with the rest of the marketing site.
+const gradientClass = 'from-secondary-500 to-secondary-700'
 </script>
 
 <template>
@@ -52,7 +56,7 @@ const gradientClass = computed(() => props.article.gradient || 'from-primary to-
     <!-- Breadcrumb -->
     <nav class="mb-6 text-sm" aria-label="Breadcrumb">
       <NuxtLink
-        to="/portal/manual"
+        :to="localePath('/portal/manual')"
         class="inline-flex items-center gap-1.5 text-gray-500 hover:text-primary dark:hover:text-white transition"
       >
         <UIcon name="i-lucide-arrow-left" class="size-4 rtl:rotate-180" />
@@ -179,7 +183,7 @@ const gradientClass = computed(() => props.article.gradient || 'from-primary to-
           <div>
             <NuxtLink
               v-if="prevModule"
-              :to="`/portal/manual/${prevModule.id}`"
+              :to="localePath(`/portal/manual/${prevModule.id}`)"
               class="group flex items-center gap-3 p-4 rounded-xl border border-black/10 dark:border-white/10 hover:border-primary/40 transition"
             >
               <UIcon name="i-lucide-arrow-left" class="size-4 text-gray-400 group-hover:text-primary transition rtl:rotate-180" />
@@ -192,7 +196,7 @@ const gradientClass = computed(() => props.article.gradient || 'from-primary to-
           <div class="text-end">
             <NuxtLink
               v-if="nextModule"
-              :to="`/portal/manual/${nextModule.id}`"
+              :to="localePath(`/portal/manual/${nextModule.id}`)"
               class="group inline-flex items-center gap-3 p-4 rounded-xl border border-black/10 dark:border-white/10 hover:border-primary/40 transition"
             >
               <div class="text-end">

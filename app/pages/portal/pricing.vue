@@ -153,7 +153,7 @@ const includedIcons = ['i-lucide-code', 'i-lucide-globe', 'i-lucide-infinity', '
         :heading="copy.pricingPage.faq.heading"
       >
         <template #meta>
-          <NuxtLink to="/portal/faq" class="ms-auto group inline-flex items-center gap-1.5 text-xs text-gray-500 hover:text-primary dark:hover:text-white transition-colors">
+          <NuxtLink :to="localePath('/portal/faq')" class="ms-auto group inline-flex items-center gap-1.5 text-xs text-gray-500 hover:text-primary dark:hover:text-white transition-colors">
             <span class="relative">
               {{ copy.ui.fullFaq }}
               <span aria-hidden="true" class="absolute -bottom-0.5 inset-x-0 h-px bg-current opacity-0 group-hover:opacity-100 transition-opacity" />

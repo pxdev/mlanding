@@ -204,7 +204,7 @@ async function onLogout() {
       <div class="py-4 flex flex-col items-center gap-2 border-t border-white/10 flex-shrink-0">
         <UPopover mode="hover" arrow :content="{ side: 'right', align: 'center' }">
           <NuxtLink
-            to="/"
+            :to="localePath('/')"
             class="w-11 h-11 flex items-center justify-center rounded-xl transition-all duration-200 text-gray-400 hover:text-white hover:bg-white/10"
           >
             <UIcon name="i-lucide-arrow-left" class="size-5 rtl:rotate-180" />

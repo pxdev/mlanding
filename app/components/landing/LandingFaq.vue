@@ -1,4 +1,5 @@
 <script setup>
+const localePath = useLocalePath()
 const copy = useLandingCopy()
 const faqOpen = ref(0)
 </script>
@@ -19,7 +20,7 @@ const faqOpen = ref(0)
       />
 
       <NuxtLink
-        to="/portal/faq"
+        :to="localePath('/portal/faq')"
         class="group inline-flex items-center gap-3 text-sm font-bold mb-16"
       >
         <span class="size-10 rounded-full bg-primary dark:bg-white text-white dark:text-primary flex items-center justify-center transition-transform group-hover:scale-110">

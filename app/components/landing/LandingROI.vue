@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const localePath = useLocalePath()
 const copy = useLandingCopy()
 const { locale } = useI18n()
 
@@ -82,7 +83,7 @@ const currencyFmt = computed(() => new Intl.NumberFormat(
             </p>
           </div>
           <NuxtLink
-            to="/portal/roi"
+            :to="localePath('/portal/roi')"
             class="mt-6 inline-flex items-center justify-between gap-2 px-4 py-3 rounded-xl bg-white/10 hover:bg-white/15 backdrop-blur-sm text-sm font-semibold transition-colors"
           >
             <span>{{ copy.roiPage.homeSection.cta }}</span>

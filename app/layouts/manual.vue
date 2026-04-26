@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const localePath = useLocalePath()
 // User-manual layout — docs.daftra-style shell.
 //
 // Top: same landing nav as the rest of the marketing site.
@@ -68,7 +69,7 @@ const addons = computed(() => manual.value.addons || [])
             <div class="sticky top-24">
               <p class="text-xs uppercase tracking-[0.25em] text-gray-400 mb-4">{{ manual.home.eyebrow }}</p>
               <NuxtLink
-                to="/portal/manual"
+                :to="localePath('/portal/manual')"
                 class="block px-3 py-2 rounded-lg text-sm font-medium transition"
                 :class="isHomeActive
                   ? 'bg-primary/10 text-primary dark:bg-white/10 dark:text-white'
@@ -186,7 +187,7 @@ const addons = computed(() => manual.value.addons || [])
           </div>
           <nav class="flex-1 overflow-y-auto p-4">
             <NuxtLink
-              to="/portal/manual"
+              :to="localePath('/portal/manual')"
               class="block px-3 py-2.5 rounded-lg text-sm font-medium transition"
               :class="isHomeActive
                 ? 'bg-primary/10 text-primary dark:bg-white/10 dark:text-white'

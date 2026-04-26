@@ -1,4 +1,5 @@
 <script setup>
+const localePath = useLocalePath()
 definePageMeta({ layout: 'landing' })
 
 const copy = useLandingCopy()
@@ -86,14 +87,14 @@ const chapterNav = computed(() => copy.value.docsPage.sections.map(s => ({
         <p class="mt-2 text-2xl sm:text-3xl font-black tracking-tight">{{ copy.ui.buyCloneTagline }}</p>
       </div>
       <div class="flex flex-wrap items-center gap-6">
-        <NuxtLink to="/portal/legal" class="group inline-flex items-center gap-2 text-sm text-gray-500 hover:text-primary dark:hover:text-white transition-colors">
+        <NuxtLink :to="localePath('/portal/legal')" class="group inline-flex items-center gap-2 text-sm text-gray-500 hover:text-primary dark:hover:text-white transition-colors">
           <UIcon name="i-lucide-scale" class="size-3.5" />
           <span class="relative">
             {{ copy.ui.readLicense }}
             <span aria-hidden="true" class="absolute -bottom-0.5 inset-x-0 h-px bg-current opacity-0 group-hover:opacity-100 transition-opacity" />
           </span>
         </NuxtLink>
-        <NuxtLink to="/portal/pricing" class="group inline-flex items-center gap-3 text-sm font-bold">
+        <NuxtLink :to="localePath('/portal/pricing')" class="group inline-flex items-center gap-3 text-sm font-bold">
           <span class="size-12 rounded-full bg-primary text-white dark:bg-white dark:text-primary flex items-center justify-center transition-transform group-hover:scale-110">
             <UIcon name="i-lucide-arrow-right" class="size-4 rtl:rotate-180" />
           </span>

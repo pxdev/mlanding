@@ -1,4 +1,5 @@
 <script setup>
+const localePath = useLocalePath()
 definePageMeta({ layout: 'landing' });
 const copy = useLandingCopy();
 const { locale } = useI18n();
@@ -87,7 +88,7 @@ const chapterNav = computed(() => addonCategories.value.map(cat => ({
 
         <!-- Addon grid inside chapter — each row links to the detail page -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-10">
-          <NuxtLink v-for="a in cat.items" :key="a.key" :to="`/portal/addons/${a.key}`"
+          <NuxtLink v-for="a in cat.items" :key="a.key" :to="localePath(`/portal/addons/${a.key}`)"
             class="group relative flex items-start gap-4"
           >
             <div class="shrink-0 size-12 flex items-center justify-center rounded-xl transition-all duration-300 group-hover:scale-110" :class="catPalette[cat.name].iconBg">

@@ -1,4 +1,5 @@
 <script setup>
+const localePath = useLocalePath()
 definePageMeta({ layout: 'landing' })
 
 const copy = useLandingCopy()
@@ -85,7 +86,7 @@ useHead(() => ({
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-16">
-        <NuxtLink v-for="(s, si) in industries" :key="s.id" :id="s.id" :to="`/portal/solutions/${s.id}`"
+        <NuxtLink v-for="(s, si) in industries" :key="s.id" :id="s.id" :to="localePath(`/portal/solutions/${s.id}`)"
           class="group flex flex-col"
         >
           <div class="flex items-center gap-4 mb-4">
@@ -119,7 +120,7 @@ useHead(() => ({
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-16">
-        <NuxtLink v-for="(s, si) in businessShapes" :key="s.id" :id="s.id" :to="`/portal/solutions/${s.id}`"
+        <NuxtLink v-for="(s, si) in businessShapes" :key="s.id" :id="s.id" :to="localePath(`/portal/solutions/${s.id}`)"
           class="group flex flex-col"
         >
           <div class="flex items-center gap-4 mb-4">

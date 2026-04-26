@@ -1,4 +1,5 @@
 <script setup>
+const localePath = useLocalePath()
 const copy = useLandingCopy()
 
 // Why-items icon list (order matches copy.why.items)
@@ -63,7 +64,7 @@ const whyIcons = ['i-lucide-package-2', 'i-lucide-server', 'i-lucide-languages',
 
       <div class="mt-12">
         <NuxtLink
-          to="/portal/features"
+          :to="localePath('/portal/features')"
           class="group inline-flex items-center gap-3 text-base font-bold"
         >
           <span class="size-12 rounded-full bg-primary dark:bg-white text-white dark:text-primary flex items-center justify-center transition-transform group-hover:scale-110">

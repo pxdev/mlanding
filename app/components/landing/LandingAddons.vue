@@ -1,4 +1,5 @@
 <script setup>
+const localePath = useLocalePath()
 const copy = useLandingCopy()
 
 const addonMeta = {
@@ -68,7 +69,7 @@ const addonCategories = computed(() => {
       <!-- CTA + category jump-nav -->
       <div class="flex flex-wrap items-center gap-x-6 gap-y-3 mb-16 sm:mb-20">
         <NuxtLink
-          to="/portal/addons"
+          :to="localePath('/portal/addons')"
           class="group inline-flex items-center gap-3 text-sm font-bold"
         >
           <span class="size-10 rounded-full bg-primary text-white dark:bg-white dark:text-primary flex items-center justify-center transition-transform group-hover:scale-110">
@@ -140,7 +141,7 @@ const addonCategories = computed(() => {
             <NuxtLink
               v-for="a in cat.items"
               :key="a.key"
-              :to="`/portal/addons/${a.key}`"
+              :to="localePath(`/portal/addons/${a.key}`)"
               class="group relative flex items-start gap-4"
             >
               <!-- Tinted icon square — no border, just a soft bg panel -->

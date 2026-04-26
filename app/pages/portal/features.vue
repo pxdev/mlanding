@@ -233,19 +233,24 @@ function manualLink(id) {
     <!-- Marquee strip — every feature title cycling, sense-of-breadth -->
     <div
       v-if="marqueeTrack.length"
-      class="relative mt-10 -mx-5 sm:-mx-8 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]"
+      class="relative mt-10 -mx-5 sm:-mx-8 [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]"
       aria-hidden="true"
     >
-      <div class="flex gap-10 py-4 whitespace-nowrap animate-features-marquee">
+      <UMarquee
+        :repeat="3"
+        :overlay="false"
+        :pause-on-hover="false"
+        class="py-4 [--duration:40s] [--gap:--spacing(10)]"
+      >
         <span
-          v-for="(t, i) in [...marqueeTrack, ...marqueeTrack]"
+          v-for="(t, i) in marqueeTrack"
           :key="i"
-          class="inline-flex items-center gap-3 text-base sm:text-lg font-black tracking-tight text-black/30 dark:text-white/25"
+          class="inline-flex items-center gap-3 text-base sm:text-lg font-black tracking-tight text-black/30 dark:text-white/25 whitespace-nowrap"
         >
           {{ t }}
           <span class="size-1.5 rounded-full bg-secondary-500/60" />
         </span>
-      </div>
+      </UMarquee>
     </div>
   </LandingPageHero>
 
@@ -325,19 +330,3 @@ function manualLink(id) {
   <LandingCTA />
 </template>
 
-<style scoped>
-/* Marquee for the hero feature-name ticker. The track holds each label
-   twice; we shift exactly halfway so the wrap-around is invisible.
-   `motion-reduce` users get a static, paused track. */
-@keyframes features-marquee {
-  from { transform: translate3d(0, 0, 0); }
-  to   { transform: translate3d(-50%, 0, 0); }
-}
-.animate-features-marquee {
-  animation: features-marquee 40s linear infinite;
-  will-change: transform;
-}
-@media (prefers-reduced-motion: reduce) {
-  .animate-features-marquee { animation: none; }
-}
-</style>

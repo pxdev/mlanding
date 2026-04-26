@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const localePath = useLocalePath()
 definePageMeta({ layout: 'manual' })
 
 const route = useRoute()
@@ -42,7 +43,7 @@ useHead(() => ({
   <div v-else-if="isComingSoon" class="max-w-2xl py-16">
     <nav class="mb-6 text-sm" aria-label="Breadcrumb">
       <NuxtLink
-        to="/portal/manual"
+        :to="localePath('/portal/manual')"
         class="inline-flex items-center gap-1.5 text-gray-500 hover:text-primary dark:hover:text-white transition"
       >
         <UIcon name="i-lucide-arrow-left" class="size-4 rtl:rotate-180" />

@@ -9,11 +9,9 @@ const bottomText = computed(() => copy.value.footer.bottom.replace('{year}', Str
 const solutionsCol = computed(() => copy.value.footer.columns[1])
 const otherCols = computed(() => copy.value.footer.columns.filter((_, i) => i !== 1))
 
-// Solution labels for the top ticker — doubled so the marquee loops seamlessly.
-const tickerItems = computed(() => {
-  const labels = (solutionsCol.value?.links || []).map(l => l.label)
-  return [...labels, ...labels]
-})
+// Solution labels for the top ticker. UMarquee handles the seamless loop
+// (and direction in RTL) — we just feed it the source list once.
+const tickerLabels = computed(() => solutionsCol.value?.links || [])
 
 // Wrap any in-app path with localePath so footer links keep visitors in
 // their current locale (the bare path resolves to the default locale only).
@@ -35,20 +33,26 @@ function scrollToTop() {
   <footer class="relative mt-24 bg-primary text-white">
 
     <!-- ═══ 01 · Top ribbon — scrolling sweep of every solution we cover ═══ -->
-    <div class="group relative border-y border-white/10 overflow-hidden bg-white/[0.04]">
+    <div class="relative border-y border-white/10 bg-white/[0.04]">
       <div aria-hidden="true" class="absolute inset-y-0 start-0 w-24 bg-gradient-to-e from-primary to-transparent z-10 pointer-events-none" />
       <div aria-hidden="true" class="absolute inset-y-0 end-0 w-24 bg-gradient-to-w from-primary to-transparent z-10 pointer-events-none" />
 
-      <div class="flex whitespace-nowrap py-3 sm:py-4 animate-marquee-slow group-hover:[animation-play-state:paused]">
+      <UMarquee
+        :repeat="3"
+        :overlay="false"
+        pause-on-hover
+        class="py-3 sm:py-4 [--duration:60s] [--gap:--spacing(0)]"
+      >
         <NuxtLink
-          v-for="(label, i) in tickerItems" :key="`${label}-${i}`"
-          :to="resolve(solutionsCol?.links[i % solutionsCol.links.length]?.to || '/portal/solutions')"
+          v-for="link in tickerLabels"
+          :key="link.label"
+          :to="resolve(link.to || '/portal/solutions')"
           class="inline-flex items-center gap-4 px-5 text-xs uppercase tracking-[0.28em] text-white/60 hover:text-white transition-colors shrink-0"
         >
           <span aria-hidden="true" class="size-1 rounded-full bg-white/30" />
-          {{ label }}
+          {{ link.label }}
         </NuxtLink>
-      </div>
+      </UMarquee>
     </div>
 
     <div class="max-w-7xl mx-auto px-5 sm:px-8">

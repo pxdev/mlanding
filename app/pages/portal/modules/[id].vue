@@ -1,4 +1,5 @@
 <script setup>
+const localePath = useLocalePath()
 definePageMeta({ layout: 'landing', scrollToTop: true });
 const copy = useLandingCopy();
 const { locale } = useI18n();
@@ -81,7 +82,7 @@ if (!moduleEntry.value) {
       <div class="max-w-7xl mx-auto px-5 sm:px-8">
         <!-- Breadcrumb -->
         <nav class="flex items-center gap-2 text-xs text-gray-500 mb-6" aria-label="Breadcrumb">
-          <NuxtLink to="/portal/features" class="hover:text-primary dark:hover:text-white transition-colors uppercase tracking-[0.2em]">{{ copy.ui.breadcrumbFeatures }}</NuxtLink>
+          <NuxtLink :to="localePath('/portal/features')" class="hover:text-primary dark:hover:text-white transition-colors uppercase tracking-[0.2em]">{{ copy.ui.breadcrumbFeatures }}</NuxtLink>
           <UIcon name="i-lucide-chevron-right" class="size-3 rtl:rotate-180" />
           <span class="uppercase tracking-[0.2em]">{{ String(moduleIndex + 1).padStart(2, '0') }} / {{ totalModules }}</span>
         </nav>
@@ -190,7 +191,7 @@ if (!moduleEntry.value) {
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-8 border-t border-black/10 dark:border-white/10 pt-10">
-          <NuxtLink v-for="m in relatedModules" :key="m.id" :to="`/portal/modules/${m.id}`"
+          <NuxtLink v-for="m in relatedModules" :key="m.id" :to="localePath(`/portal/modules/${m.id}`)"
             class="group flex items-start gap-4"
           >
             <div class="shrink-0 size-12 rounded-xl bg-gradient-to-br text-white flex items-center justify-center shadow-md transition-transform group-hover:scale-110 group-hover:-rotate-[6deg]" :class="visuals[m.id]?.color">
@@ -214,7 +215,7 @@ if (!moduleEntry.value) {
     <section class="py-16 border-t border-black/10 dark:border-white/10">
       <div class="max-w-7xl mx-auto px-5 sm:px-8">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:divide-x md:divide-black/10 md:dark:divide-white/10 rtl:md:divide-x-reverse">
-          <NuxtLink v-if="prevModule" :to="`/portal/modules/${prevModule.id}`"
+          <NuxtLink v-if="prevModule" :to="localePath(`/portal/modules/${prevModule.id}`)"
             class="group flex items-center gap-4 md:pe-10"
           >
             <span class="size-10 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-gray-600 dark:text-gray-400 transition-colors group-hover:bg-primary group-hover:text-white">
@@ -227,7 +228,7 @@ if (!moduleEntry.value) {
           </NuxtLink>
           <div v-else />
 
-          <NuxtLink v-if="nextModule" :to="`/portal/modules/${nextModule.id}`"
+          <NuxtLink v-if="nextModule" :to="localePath(`/portal/modules/${nextModule.id}`)"
             class="group flex items-center justify-end gap-4 md:ps-10"
           >
             <div class="text-end">
@@ -252,7 +253,7 @@ if (!moduleEntry.value) {
         <LandingSectionEyebrow :label="copy.ui.moduleNotFoundEyebrow" class="mb-4" />
         <h1 class="font-black tracking-tight text-4xl sm:text-5xl mb-4">{{ copy.ui.noModuleWithId }}</h1>
         <p class="text-gray-600 dark:text-gray-400 mb-8">{{ copy.ui.checkUrlFeatures }}</p>
-        <NuxtLink to="/portal/features" class="group inline-flex items-center gap-3 text-sm font-bold">
+        <NuxtLink :to="localePath('/portal/features')" class="group inline-flex items-center gap-3 text-sm font-bold">
           <span class="size-12 rounded-full bg-primary text-white dark:bg-white dark:text-primary flex items-center justify-center transition-transform group-hover:scale-110">
             <UIcon name="i-lucide-arrow-right" class="size-4 rtl:rotate-180" />
           </span>

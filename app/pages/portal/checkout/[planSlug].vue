@@ -156,7 +156,7 @@ const t = computed(() => {
     <div class="max-w-6xl mx-auto px-5 sm:px-8">
       <!-- Breadcrumb -->
       <nav class="flex items-center gap-2 text-xs text-gray-500 mb-8" aria-label="Breadcrumb">
-        <NuxtLink to="/portal/pricing" class="hover:text-primary dark:hover:text-white uppercase tracking-[0.2em]">
+        <NuxtLink :to="localePath('/portal/pricing')" class="hover:text-primary dark:hover:text-white uppercase tracking-[0.2em]">
           {{ copy.pricingPage.eyebrow }}
         </NuxtLink>
         <UIcon name="i-lucide-chevron-right" class="size-3 rtl:rotate-180" />
@@ -188,7 +188,7 @@ const t = computed(() => {
         <p class="text-lg font-black mb-2">
           {{ locale === 'ar' ? 'الخطة غير موجودة' : 'Plan not found' }}
         </p>
-        <NuxtLink to="/portal/pricing" class="inline-block mt-4 text-sm font-bold text-primary dark:text-white underline">
+        <NuxtLink :to="localePath('/portal/pricing')" class="inline-block mt-4 text-sm font-bold text-primary dark:text-white underline">
           {{ t.changePlan }}
         </NuxtLink>
       </div>
@@ -225,7 +225,7 @@ const t = computed(() => {
           </div>
 
           <!-- Change-plan link -->
-          <NuxtLink to="/portal/pricing" class="mt-5 inline-flex items-center gap-2 text-sm text-gray-500 hover:text-primary dark:hover:text-white transition-colors">
+          <NuxtLink :to="localePath('/portal/pricing')" class="mt-5 inline-flex items-center gap-2 text-sm text-gray-500 hover:text-primary dark:hover:text-white transition-colors">
             <UIcon name="i-lucide-arrow-left" class="size-3.5 rtl:rotate-180" />
             {{ t.changePlan }}
           </NuxtLink>

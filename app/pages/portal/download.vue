@@ -1,4 +1,5 @@
 <script setup>
+const localePath = useLocalePath()
 definePageMeta({ layout: 'landing' });
 const copy = useLandingCopy();
 const { locale } = useI18n();
@@ -65,7 +66,7 @@ async function submitContact() {
 
     <!-- CTAs -->
     <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
-      <NuxtLink to="/portal/pricing" class="group inline-flex items-center gap-3 text-sm font-bold">
+      <NuxtLink :to="localePath('/portal/pricing')" class="group inline-flex items-center gap-3 text-sm font-bold">
         <span class="size-12 rounded-full bg-primary text-white dark:bg-white dark:text-primary flex items-center justify-center transition-transform group-hover:scale-110">
           <UIcon name="i-lucide-credit-card" class="size-4" />
         </span>

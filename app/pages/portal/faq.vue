@@ -1,4 +1,5 @@
 <script setup>
+const localePath = useLocalePath()
 definePageMeta({ layout: 'landing' });
 const copy = useLandingCopy();
 const { locale } = useI18n();
@@ -53,7 +54,7 @@ const chapterNav = computed(() => copy.value.faqPage.sections.map((s, i) => ({
     </template>
 
     <p class="mt-4 text-sm sm:text-base text-gray-500 dark:text-gray-400 max-w-2xl leading-relaxed">
-      <NuxtLink to="/portal/download#contact" class="text-primary dark:text-white font-semibold underline underline-offset-4 decoration-secondary-500 hover:decoration-2">{{ copy.faqPage.contactLink }}</NuxtLink>.
+      <NuxtLink :to="localePath('/portal/download#contact')" class="text-primary dark:text-white font-semibold underline underline-offset-4 decoration-secondary-500 hover:decoration-2">{{ copy.faqPage.contactLink }}</NuxtLink>.
     </p>
   </LandingPageHero>
 

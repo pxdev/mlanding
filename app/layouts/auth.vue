@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const localePath = useLocalePath()
 const chrome = useChromeCopy()
 const { currentLocale, otherLocale, toggleLocale } = useLandingLocale()
 </script>
@@ -6,7 +7,7 @@ const { currentLocale, otherLocale, toggleLocale } = useLandingLocale()
 <template>
   <div class="min-h-dvh flex flex-col bg-neutral-50 dark:bg-neutral-950 text-gray-900 dark:text-white">
     <header class="px-5 sm:px-8 h-16 flex items-center">
-      <NuxtLink to="/" class="flex items-center gap-2 group">
+      <NuxtLink :to="localePath('/')" class="flex items-center gap-2 group">
         <div class="size-8 rounded-xl bg-primary text-white flex items-center justify-center font-black text-lg shadow-lg shadow-primary/20 group-hover:scale-105 transition-transform">M</div>
         <span class="font-black text-lg tracking-tight">Momentfy</span>
       </NuxtLink>

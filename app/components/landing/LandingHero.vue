@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const localePath = useLocalePath()
 // Hero section orchestrator.
 // Composes: background → headline block → product mock → four floating overlay cards.
 const copy = useLandingCopy()
@@ -13,7 +14,7 @@ const demoUrl = useRuntimeConfig().public.demoUrl
       <!-- ─── Eyebrow chip — neutral ring, brand-blue version pill ─── -->
       <div class="flex justify-center mb-8">
         <NuxtLink
-          to="/portal/features"
+          :to="localePath('/portal/features')"
           class="group inline-flex items-center gap-2 ps-1 pe-3 py-1 rounded-full bg-white/80 dark:bg-white/[0.06] backdrop-blur ring-1 ring-black/10 dark:ring-white/10 text-xs font-medium text-gray-700 dark:text-gray-300 hover:bg-white dark:hover:bg-white/[0.08] transition-colors"
         >
           <span class="inline-flex items-center justify-center h-6 px-2 rounded-full bg-secondary-500 text-white text-[10px] font-black tracking-wide">v1.0</span>
@@ -37,7 +38,7 @@ const demoUrl = useRuntimeConfig().public.demoUrl
 
       <!-- ─── CTAs — Primary (solid black) + Secondary (frosted, hairline ring) ─── -->
       <div class="mt-10 flex flex-wrap justify-center gap-3">
-        <NuxtLink to="/portal/pricing" class="btn-primary">
+        <NuxtLink :to="localePath('/portal/pricing')" class="btn-primary">
           <UIcon name="i-lucide-shopping-bag" class="size-4" />
           <span>{{ copy.hero.primary }}</span>
           <UIcon name="i-lucide-arrow-right" class="size-4 rtl:rotate-180" />

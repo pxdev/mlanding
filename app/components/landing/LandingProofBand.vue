@@ -4,30 +4,29 @@ const copy = useLandingCopy()
 
 <template>
   <section class="relative py-16 overflow-hidden bg-white dark:bg-black">
-    <!-- Marquee: huge uppercase industry sweep — pulls labels from localized copy -->
+    <!-- Marquee: huge uppercase industry sweep — RTL-aware via Nuxt UI v4 -->
     <div
-      class="relative border-y border-black/5 dark:border-white/10 py-6 overflow-hidden mb-16"
+      class="relative border-y border-black/5 dark:border-white/10 py-6 mb-16"
       role="presentation"
     >
-      <div class="flex w-max animate-marquee gap-16">
-        <div
-          v-for="pass in 2"
-          :key="pass"
-          class="flex items-center gap-16 shrink-0"
+      <UMarquee
+        :repeat="3"
+        :overlay="false"
+        :pause-on-hover="false"
+        class="[--duration:40s] [--gap:--spacing(16)]"
+      >
+        <template
+          v-for="(ind, i) in copy.industries.items"
+          :key="ind.id"
         >
-          <template
-            v-for="(ind, i) in copy.industries.items"
-            :key="`${pass}-${ind.id}`"
-          >
-            <span class="text-3xl sm:text-5xl font-black uppercase tracking-tight text-gray-300/80 dark:text-white/10 whitespace-nowrap">{{ ind.label }}</span>
-            <UIcon
-              name="i-lucide-asterisk"
-              class="size-5 sm:size-6 text-secondary-500/60 shrink-0"
-              :class="i === 0 && pass === 1 ? 'animate-spin [animation-duration:8s]' : ''"
-            />
-          </template>
-        </div>
-      </div>
+          <span class="text-3xl sm:text-5xl font-black uppercase tracking-tight text-gray-300/80 dark:text-white/10 whitespace-nowrap">{{ ind.label }}</span>
+          <UIcon
+            name="i-lucide-asterisk"
+            class="size-5 sm:size-6 text-secondary-500/60 shrink-0"
+            :class="i === 0 ? 'animate-spin [animation-duration:8s]' : ''"
+          />
+        </template>
+      </UMarquee>
     </div>
 
     <!-- Stats — four hairline cells. `gap-px` on a tinted parent renders the

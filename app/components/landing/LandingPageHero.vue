@@ -1,4 +1,5 @@
 <script setup>
+const localePath = useLocalePath()
 defineProps({
   crumbLabel: { type: String, required: true },
   headline:   { type: String, required: true },
@@ -18,7 +19,7 @@ defineProps({
 
     <div class="max-w-7xl mx-auto px-5 sm:px-8">
       <nav aria-label="Breadcrumb" class="text-xs flex items-center gap-2 mb-8 text-gray-400">
-        <NuxtLink to="/" class="hover:text-primary dark:hover:text-white transition-colors">Momentfy</NuxtLink>
+        <NuxtLink :to="localePath('/')" class="hover:text-primary dark:hover:text-white transition-colors">Momentfy</NuxtLink>
         <UIcon name="i-lucide-chevron-right" class="size-3 rtl:rotate-180" />
         <span class="text-primary dark:text-white font-semibold">{{ crumbLabel }}</span>
       </nav>

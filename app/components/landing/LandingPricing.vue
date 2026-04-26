@@ -38,7 +38,7 @@ async function goToReview(idx, plan) {
       >
         <template #meta>
           <NuxtLink
-            to="/portal/pricing"
+            :to="localePath('/portal/pricing')"
             class="ms-auto group inline-flex items-center gap-1.5 text-xs text-gray-500 hover:text-primary dark:hover:text-white transition-colors"
           >
             <span class="relative">

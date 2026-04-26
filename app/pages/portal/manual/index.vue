@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const localePath = useLocalePath()
 definePageMeta({ layout: 'manual' })
 
 const manual = useManualCopy()
@@ -39,7 +40,7 @@ useHead(() => ({
         <li v-for="m in manual.modules" :key="m.id">
           <NuxtLink
             v-if="m.status === 'ready'"
-            :to="`/portal/manual/${m.id}`"
+            :to="localePath(`/portal/manual/${m.id}`)"
             class="group relative flex items-start gap-4 p-5 rounded-2xl border border-black/10 dark:border-white/10 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5 bg-white dark:bg-black transition h-full"
           >
             <div class="shrink-0 size-12 rounded-xl flex items-center justify-center transition bg-primary/10 text-primary dark:bg-white/10 dark:text-white group-hover:bg-primary group-hover:text-white">
@@ -84,7 +85,7 @@ useHead(() => ({
         <li v-for="a in manual.addons" :key="a.id">
           <NuxtLink
             v-if="a.status === 'ready'"
-            :to="`/portal/manual/${a.id}`"
+            :to="localePath(`/portal/manual/${a.id}`)"
             class="group relative flex items-start gap-4 p-5 rounded-2xl border border-black/10 dark:border-white/10 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5 bg-white dark:bg-black transition h-full"
           >
             <div class="shrink-0 size-12 rounded-xl flex items-center justify-center transition bg-secondary-500/10 text-secondary-500 dark:bg-white/10 dark:text-white group-hover:bg-secondary-500 group-hover:text-white">
@@ -125,7 +126,7 @@ useHead(() => ({
         <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ manual.home.footerCtaBody }}</p>
       </div>
       <NuxtLink
-        to="/portal/faq"
+        :to="localePath('/portal/faq')"
         class="inline-flex items-center gap-2 px-5 h-12 rounded-full text-sm font-semibold bg-primary text-white shadow-lg shadow-primary/20 hover:shadow-primary/40 hover:scale-[1.02] transition-all self-start sm:self-center"
       >
         {{ manual.home.footerCtaButton }}
