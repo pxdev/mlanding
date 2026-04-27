@@ -279,17 +279,6 @@ function manualLink(id) {
           <h2 class="font-black tracking-tight leading-[0.95] text-3xl sm:text-4xl lg:text-5xl">{{ f.title }}</h2>
           <p class="mt-4 text-base sm:text-lg text-gray-600 dark:text-gray-400 leading-relaxed max-w-xl">{{ f.summary }}</p>
 
-          <!-- Hairline + section list (submenu heading + description) -->
-          <dl class="mt-8 pt-6 border-t border-black/10 dark:border-white/10 grid sm:grid-cols-2 gap-x-8 gap-y-6 max-w-2xl">
-            <div v-for="s in f.sections" :key="s.heading" class="flex flex-col gap-1.5">
-              <dt class="flex items-center gap-2 text-sm font-bold text-gray-900 dark:text-white">
-                <span aria-hidden="true" class="size-1.5 rounded-full bg-secondary-500 shrink-0" />
-                <span>{{ s.heading }}</span>
-              </dt>
-              <dd class="ps-3.5 text-sm text-gray-600 dark:text-gray-400 leading-relaxed">{{ s.body }}</dd>
-            </div>
-          </dl>
-
           <!-- "Read in detail" + manual links — pill row, same height, vertically aligned -->
           <div class="mt-8 flex flex-wrap items-center gap-3">
             <NuxtLink v-if="detailLink(f.id)" :to="detailLink(f.id)"

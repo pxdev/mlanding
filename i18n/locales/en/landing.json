@@ -2700,55 +2700,71 @@
           "id": "calendar",
           "group": "Front of house",
           "title": "Calendar & Scheduling",
-          "summary": "The command center of every service business — one shared calendar across every team member, every location, and every room, chair and piece of equipment they touch.",
+          "summary": "The command center of any service business — every team member, every branch, every room or chair they touch, with reminders, payments and a public booking page wired in.",
           "sections": [
             {
-              "heading": "Five-view calendar",
-              "body": "Five views built for five kinds of shift — day, 3-day, week, month and agenda — each with auto-scroll to the current working window and a live 'now' line"
+              "heading": "Calendar that fits how you work",
+              "body": "Day, three-day, week, month and agenda views, switchable in one tap. The day moves with a live \"now\" line, and a one-tap button snaps you back to the current hour when you've scrolled away. Phones default to the agenda so the team can run from a tablet at the door."
             },
             {
-              "heading": "Multi-staff bookings",
-              "body": "Multi-service, multi-member bookings: a single appointment can span several staff, back-to-back or in parallel"
+              "heading": "One column per staff member",
+              "body": "In day view, every staff member gets their own lane with their shifts and breaks visible — so you see who's free at a glance. Tap any empty slot and a new appointment opens pre-filled with that time and that member."
             },
             {
-              "heading": "Multi-location schedules",
-              "body": "Multi-location scheduling with per-location staff availability, working hours and holidays"
+              "heading": "Spot busy days at a glance",
+              "body": "The date picker dots every day in the next three months that already has a booking — the front desk can quote an opening without scanning the whole month."
             },
             {
-              "heading": "Appointment lifecycle",
-              "body": "Six-stage appointment lifecycle — Scheduled, Confirmed, In-progress, Completed, Cancelled, No-show — each colour-customizable by status, category, staff or service"
+              "heading": "Stack services on one appointment",
+              "body": "A single appointment can chain multiple services across different staff — the second service starts where the first ends. Peak-hour pricing kicks in automatically and packages flow through to checkout as one bundle."
             },
             {
-              "heading": "Filters, search & shortcuts",
-              "body": "Smart quick-filter chips, instant search and keyboard shortcuts tuned for the busiest front desks"
+              "heading": "Walk-in or known client",
+              "body": "Pick a known client from a fast search by name, phone or email, or capture a walk-in with just a name and a phone — their details stay visible on the appointment."
             },
             {
-              "heading": "Blocked time",
-              "body": "Blocked time with daily, weekly or monthly recurrence — vacation, training, lunch, equipment maintenance"
+              "heading": "No checkout, no start",
+              "body": "Each appointment moves through Booked → Confirmed → In progress → Completed, but it can't move to In progress until the client has paid. The front desk physically can't skip the till, so revenue never leaks."
             },
             {
-              "heading": "Waitlist & walk-ins",
-              "body": "Waitlist panel, walk-in flow, and QR check-in at the front desk"
+              "heading": "Pay from the appointment",
+              "body": "Open the appointment, tap Checkout, and the till opens with the booked services pre-loaded. The receipt links back to the appointment, which now shows as Paid."
             },
             {
-              "heading": "QR scan to find an appointment",
-              "body": "Scan an appointment QR — from a printed slip, receipt or the client's phone — to jump straight to that booking on the calendar (uses the device camera, native BarcodeDetector with a jsQR fallback, plus manual ID lookup)"
+              "heading": "Reminders and auto no-show",
+              "body": "Clients get a 24-hour reminder over the channel they prefer — SMS, email, WhatsApp or push — on your brand. If they don't show up, the appointment auto-marks \"no-show\" after the grace period you set, so reports stay honest."
             },
             {
-              "heading": "Resource reservations",
-              "body": "Resource reservations — chairs, rooms, dental units, studios — scheduled alongside staff so no one ever double-books equipment"
+              "heading": "Block time for vacation, training, lunch",
+              "body": "Block any slot — daily, weekly or monthly until an end date — with colored reasons you manage in one place. Edit the whole recurring series at once when plans change."
             },
             {
-              "heading": "Timezone awareness",
-              "body": "Timezone-aware across every tenant, location, reminder and campaign"
+              "heading": "Waitlist that closes the loop",
+              "body": "Queue clients for a service with their preferred dates and times. When a spot opens, notify the next person in line and book them straight from the waitlist — no hunting through a notebook."
             },
             {
-              "heading": "Public booking link",
-              "body": "Public booking link with online payment (Tabby, Tamara, Stripe, Tap, Paymob), two-way Google Calendar sync and auto-generated Zoom meeting URLs on confirmation"
+              "heading": "Reserve the room or the chair",
+              "body": "Define rooms, dental chairs, studios or any equipment, link them to the services that need them, and the system reserves the right one inside every appointment so you never double-book gear."
             },
             {
-              "heading": "Reminders",
-              "body": "Appointment reminders delivered over SMS, email, WhatsApp and push — from your brand, at your cadence"
+              "heading": "Scan a ticket, jump to the booking",
+              "body": "Scan the appointment QR — from a printed slip, receipt or the client's phone — and the calendar jumps straight there. Notification links work the same way, so a tap on a missed-appointment alert lands you on the right slot."
+            },
+            {
+              "heading": "Make the calendar match your business",
+              "body": "Color by service category or by appointment status, hide blocked time when you don't want it visible, choose Sunday or Monday as the week start, and decide whether to allow bookings outside hours, in the past or overlapping."
+            },
+            {
+              "heading": "Public booking page, Google Calendar, Zoom",
+              "body": "Publish a public booking page where clients book and prepay through Stripe, Tap, Paymob, Tabby or Tamara — with your minimum notice, advance window and cancellation policy. Active add-ons sync every appointment to Google Calendar both ways and create a Zoom link automatically for online sessions."
+            },
+            {
+              "heading": "Clinical shortcuts on the appointment",
+              "body": "When clinical add-ons are active, the appointment detail offers one-tap shortcuts to start a medical record, prescription, lab order or dental chart for the client — already pre-bound to that visit."
+            },
+            {
+              "heading": "Multiple branches, each in their timezone",
+              "body": "Every appointment lives in a branch and every branch has its own timezone, so working hours, reminders and dates render correctly per location. Switch the active branch and the whole calendar follows."
             }
           ]
         },
@@ -2756,51 +2772,67 @@
           "id": "sales",
           "group": "Money",
           "title": "Sales, POS & Invoicing",
-          "summary": "A cash register, a full point of sale, and a complete invoicing suite — all in one tab, all wired to accounting from the very first receipt.",
+          "summary": "From the daily till to the recurring invoice — every way money comes into the business, in one place, all flowing into your books automatically.",
           "sections": [
             {
-              "heading": "Open ticket",
-              "body": "Sell services, products, packages, memberships and gift cards from a single open ticket"
+              "heading": "Lightning-fast point of sale",
+              "body": "Sell services, products, packages and memberships from one screen. Add a known client or ring up a walk-in, scan a barcode, hold a ticket while you serve someone else, and resume it later — your busiest day with zero friction."
             },
             {
-              "heading": "POS ticketing",
-              "body": "POS ticketing with open tabs, parked sales, barcode scanning and split payments across unlimited methods"
+              "heading": "Mix and match payments",
+              "body": "Split a single ticket across cash, card, bank transfer, online payment, Tabby and Tamara installments, store credit, gift cards, loyalty points and insurance — every method gets its own line on the receipt."
             },
             {
-              "heading": "Invoices, Estimates & Recurring Invoices",
-              "body": "Invoices, estimates, recurring invoices (daily, weekly, monthly, quarterly, yearly), credit notes and refunds with pending-approval states"
+              "heading": "The day at a glance",
+              "body": "Open today's summary to see what you sold, what was refunded, what was collected and how much came in tips — broken down by item type and payment method, without exporting anything."
             },
             {
-              "heading": "Automated dunning",
-              "body": "Automated dunning for overdue invoices — scheduled reminders, escalation steps and a public pay-online link per invoice"
+              "heading": "Searchable transaction history",
+              "body": "Every sale lives in a filterable list with a one-tap refund or void from the row. Larger refunds can require a second person to approve before any money moves, so nothing slips through."
             },
             {
-              "heading": "Expenses",
-              "body": "Expense tracking with category rules, vendor capture and auto-journal posting"
+              "heading": "Every payment in one stream",
+              "body": "A live feed of every payment ever taken, filterable by method, so \"how much did we take in card today?\" is a five-second answer, not a five-minute spreadsheet."
             },
             {
-              "heading": "Cash Register",
-              "body": "Cash register open/close sessions with variance reporting and end-of-day reconciliation"
+              "heading": "Invoices for work off the counter",
+              "body": "Send a polished invoice for jobs that didn't ring up at the till. See when the client opened it, took a partial payment, paid in full or fell overdue — and every invoice carries its own pay-online link the client can use from their phone."
             },
             {
-              "heading": "Payments",
-              "body": "Payments: cash, card, Tabby, Tamara, bank transfer, store credit, gift cards, and any custom method you define"
+              "heading": "Estimates that turn into invoices",
+              "body": "Quote work first, share a clean public link the client can review on their phone, and convert the accepted estimate to a paid invoice with one tap when they say yes."
             },
             {
-              "heading": "BNPL (Tabby & Tamara)",
-              "body": "Buy-now-pay-later built in — Tabby and Tamara — with installment state visible on the ticket"
+              "heading": "Recurring billing on autopilot",
+              "body": "Schedule daily, weekly, monthly, quarterly or yearly invoices for retainers, memberships and subscriptions. Turn on auto-send and clients receive each one the moment it generates."
             },
             {
-              "heading": "Tax, tips & smart pricing",
-              "body": "Tax rates, discounts, tips, service charges and smart pricing (peak, off-peak, member, seasonal)"
+              "heading": "Automatic chasing of late payers",
+              "body": "Overdue invoices get polite reminders at 7, 21, 45 and 90 days on your behalf — and every reminder ships with a pay-online link the client can use without picking up the phone."
             },
             {
-              "heading": "Multi-currency invoicing",
-              "body": "Multi-currency invoicing with per-tenant default currency and per-bank-account currency snapshots"
+              "heading": "Gift cards from issue to redeem",
+              "body": "Issue a card with a recipient name and optional expiry; the system generates a unique code that's easy to read aloud. Clients redeem at the counter, your cashier checks the remaining balance with the same code."
             },
             {
-              "heading": "Receipts",
-              "body": "Print-ready receipts tuned for thermal printers, plus a public receipt and invoice link on every transaction"
+              "heading": "Expenses with optional approval",
+              "body": "Log day-to-day costs against vendors and categories. Larger expenses can require approval before they post, and every approved expense lands in your books automatically — no double entry."
+            },
+            {
+              "heading": "Credit notes that close the loop",
+              "body": "Issue store credit when you can't refund cash, apply it to a future invoice in one tap, and watch the balance count down as the client uses it."
+            },
+            {
+              "heading": "Cash register, day in and day out",
+              "body": "Open the till with a starting balance, watch every cash-in and cash-out throughout the day, then close it to compare expected vs counted — the system tells you whether you're balanced, over or short, and keeps a full history of every session."
+            },
+            {
+              "heading": "Receipts on paper or by link",
+              "body": "Print to a thermal receipt printer, share a public receipt link by SMS, or hand the client a pay-online link for any unpaid invoice — same flow whether the sale closed in-store or online. ZATCA and Egyptian e-invoicing numbers print on every document when those compliance add-ons are active."
+            },
+            {
+              "heading": "Wired to your books from the first receipt",
+              "body": "Every sale, refund, gift-card issuance, credit note and approved expense lands in the right account in your books automatically — Reports and Accounting just roll up. You never type a journal entry to keep up with the till."
             }
           ]
         },
@@ -2808,43 +2840,75 @@
           "id": "clients",
           "group": "Relationships",
           "title": "Clients & CRM",
-          "summary": "Know every client. Nudge the right ones at the right moment. Keep the ones you already earned.",
+          "summary": "Know every client. Nudge the right ones at the right moment. Keep the ones you've already earned — with one record, one consent register and a self-service portal.",
           "sections": [
             {
-              "heading": "Client profiles",
-              "body": "Rich client profiles — visit history, lifetime value, tags, allergies, emergency contacts and a document vault per client"
+              "heading": "Searchable client list with bulk import",
+              "body": "Search, filter, sort and export the whole list in seconds. Bring an existing client database in by uploading a CSV or Excel file from the template provided — saving hours of typing on day one."
             },
             {
-              "heading": "Segments",
-              "body": "Rule-based segments (spend, recency, tags, age, location, membership) — saved, named, and re-queried on demand"
+              "heading": "Rich client records",
+              "body": "One screen captures everything you need: contact details, date of birth, allergies, free-form notes, your own tags, and — for B2B clients — the legal name, VAT and CR registration that ZATCA-compliant invoices require."
             },
             {
-              "heading": "Loyalty wallet",
-              "body": "Loyalty wallet per client — earning history, redemption ledger, and expiring points visible to the client in their own portal"
+              "heading": "One client, every interaction",
+              "body": "Each client opens to a sidebar that includes appointments, sales, payments, invoices, notes, communications and notifications — plus medical, dental, lab, prescriptions, imaging, loyalty and insurance tabs when those add-ons are active."
             },
             {
-              "heading": "Follow-ups",
-              "body": "Follow-up engine with assignees, due dates and SLA timers — rule-generated or scheduled manually"
+              "heading": "Lifetime value at a glance",
+              "body": "The overview shows total spend, total visits, cancellations, no-shows and any open store credit — so the front desk knows whether to thank, follow up or apologize before the conversation starts."
             },
             {
-              "heading": "Reviews",
-              "body": "Reviews captured after completed appointments, with moderation before anything is published"
+              "heading": "Pinned notes the team can trust",
+              "body": "Any team member can add, edit and pin a note to the client. Pinned notes float to the top, every note carries the author and date, and the timeline survives across visits — institutional memory by default."
             },
             {
-              "heading": "Support tickets",
-              "body": "Support tickets with thread view, staff assignment and status tracking"
+              "heading": "Communications timeline",
+              "body": "Every message ever sent to this client across in-app, email, SMS and WhatsApp — with subject, body, status and reason if it failed. \"Did they actually get the reminder?\" answered in two clicks."
             },
             {
-              "heading": "Birthdays & win-back",
-              "body": "Birthday greetings in each client's local timezone, plus win-back campaigns for dormant clients"
+              "heading": "Each client controls their channels",
+              "body": "Every client carries separate consent for appointment messages and marketing — toggleable per channel. Campaign blasts skip clients who haven't consented and count them in a dedicated \"skipped\" tally so you stay compliant without thinking about it."
             },
             {
-              "heading": "Import / export & GDPR",
-              "body": "CSV and Excel import/export, and GDPR-ready personal-data export"
+              "heading": "Multiple addresses and emergency contacts",
+              "body": "Capture as many addresses (Home, Work, Site) and emergency contacts as a client needs — useful for clinics, mobile-service businesses and B2B accounts that have several billing locations."
             },
             {
-              "heading": "Statements & timeline",
-              "body": "Client statements and activity timeline, with subscription and sensitive-action audit logs"
+              "heading": "Live segments — new, loyal, lapsed, big spenders",
+              "body": "Seven ready-made segments — New clients, Recent visitors, First-visit only, Loyal, Lapsed, High spenders and Upcoming birthdays — tunable on the spot with the count refreshing as you change the rules. Pin any segment as a colored badge that follows the client around the dashboard."
+            },
+            {
+              "heading": "Send a campaign from any segment",
+              "body": "One tap on a segment opens the campaign builder pre-filled with its members. The export-upload-list cycle disappears — you can be sending an offer to lapsed clients in under a minute."
+            },
+            {
+              "heading": "Email, SMS and WhatsApp campaigns",
+              "body": "Pick a segment, pick a channel, write the message and send. Watch the dashboard tick up sent, failed and skipped counts in real time, and the segment definition is locked in at send-time so the report is the same in six months."
+            },
+            {
+              "heading": "Reviews with reply",
+              "body": "Every completed appointment can collect a 1–5 star review with a comment. Reply from the dashboard, hide a review with one tap if it needs context, and per-service averages flow onto the public booking page where they help close new bookings."
+            },
+            {
+              "heading": "Tickets per client",
+              "body": "Each client has their own little support inbox. Open / closed status, message threads and a small blue dot when the last reply came from the client — so nothing slips through."
+            },
+            {
+              "heading": "Client statement and store-credit balance",
+              "body": "Print or email a clean statement of charges and payments at any time. Open store credit from credit notes appears as its own line so the cashier can apply it on the next ticket."
+            },
+            {
+              "heading": "Photo or built-in avatar",
+              "body": "Upload a client photo or pick from the avatar gallery; remove or change it any time. The avatar follows the client across the dashboard so the team always recognises who they're greeting."
+            },
+            {
+              "heading": "Self-service portal and \"log in as client\"",
+              "body": "When you enable a portal account for a client, they can sign in to view bookings, invoices and memberships and change their own contact details. Admins can reset the password and \"log in as client\" for white-glove support — without ever asking the customer to share their password."
+            },
+            {
+              "heading": "Loyalty wallet and follow-up tasks (add-ons)",
+              "body": "Add the Loyalty add-on and every client gets a points wallet with earn, redeem and expiry tracking. Add the Follow-up add-on and the profile gains a tasks tab with assignees, due dates and an automatic schedule for the touchpoints you don't want to forget."
             }
           ]
         },
@@ -2852,39 +2916,59 @@
           "id": "marketing",
           "group": "Growth",
           "title": "Marketing & Campaigns",
-          "summary": "Turn your client list into repeat revenue — with campaigns that fire on the right channel, at the right moment, in your own brand's voice.",
+          "summary": "Turn your client list into repeat revenue — campaigns that fire on the right channel, at the right moment, in your own brand's voice, and reminders the team never has to send by hand.",
           "sections": [
             {
-              "heading": "Multi-channel campaigns",
-              "body": "SMS, email, WhatsApp and push campaigns to any segment — one-off or scheduled in advance"
+              "heading": "Campaigns to any client segment",
+              "body": "Pick a segment — new clients, lapsed clients, big spenders, anyone with a birthday next week — write the message and send. The system locks in the segment at send-time so the report you read in six months is the same one you read tomorrow."
             },
             {
-              "heading": "Automation flows",
-              "body": "Automation flows built in: post-visit review requests, birthday greetings, win-back for dormant clients, and appointment reminders"
+              "heading": "Know the cost before you press send",
+              "body": "As you change segment or channel, the builder shows three live numbers: how many people are in the segment, how many will actually receive (after consent), and how many will be skipped — so there are no surprises on the bill."
             },
             {
-              "heading": "Editable templates",
-              "body": "Editable message templates per tenant across every channel — with dynamic variables for names, dates, services, balances and branding"
+              "heading": "Big sends, no spinning beach ball",
+              "body": "Small blasts go out instantly. Larger ones run in the background while the detail page updates the sent and failed counters every few seconds — so you can close your laptop without losing the thread."
             },
             {
-              "heading": "Delivery logs",
-              "body": "Delivery logs, open-rate tracking and automatic retry on transient failures"
+              "heading": "See exactly who got it and who didn't",
+              "body": "Every recipient is on the delivery log with their status and the reason for any failure, in the campaign and again on the client's profile. \"Why didn't Mrs. Khan get it?\" is a one-look answer."
             },
             {
-              "heading": "Marketing dashboard",
-              "body": "Marketing dashboard with rebook rate, cohort retention and campaign ROI at a glance"
+              "heading": "Reminders the team never sends",
+              "body": "Appointment reminders 24 hours before, an optional reminder one hour before, thank-yous after visits and tips, rebook reminders for clients who haven't been back, birthday greetings, win-back for the silent ones, and welcomes for new clients — all toggleable, all on your brand."
             },
             {
-              "heading": "Referral tracking",
-              "body": "Referral tracking and top-referrer campaigns with automatic reward attribution"
+              "heading": "Operational alerts to the right person",
+              "body": "Low-stock alerts, membership expiry warnings, appointment cancellations, no-show alerts and an end-of-day summary — routed to owners, admins or specific roles only, so the team gets what they need and isn't drowned in pings."
             },
             {
-              "heading": "Scheduled sends",
-              "body": "Scheduled sends in each tenant's timezone, with full opt-out and unsubscribe compliance"
+              "heading": "Each transactional message follows your rules",
+              "body": "For every kind of message, you decide who hears about it (clients, staff, or both), on which channels, and which staff roles are included. One rule book governs every email, SMS, WhatsApp and in-app notification — so nothing goes out the door against policy."
             },
             {
-              "heading": "Bring-your-own providers",
-              "body": "Bring your own providers — Twilio, SendGrid, local SMS aggregators, WhatsApp Business, or the SMTP of your choice"
+              "heading": "Templates you can rewrite",
+              "body": "Every transactional message has its own template per channel, with placeholders like client name, service name, date and time the system fills in. Edit once and every future reminder uses your wording — no guessing about what variables exist."
+            },
+            {
+              "heading": "Per-client consent that's respected automatically",
+              "body": "Each client says yes or no to appointment messages and to marketing — separately, per channel. Campaigns honor both, and clients who haven't consented are counted as \"skipped\" rather than \"failed\" so your delivery reports stay clean."
+            },
+            {
+              "heading": "Each staff member mutes what they don't need",
+              "body": "Any team member can silence specific alerts on themselves without affecting their teammates — so the receptionist isn't pinged about pay-runs and the accountant isn't pinged about every booking."
+            },
+            {
+              "heading": "Sent at the right local time, every time",
+              "body": "Birthday greetings go out at the time you choose. Rebook and win-back messages go out at a sensible local hour. A salon in Riyadh and a clinic in Cairo each get the timing right — no shared global clock."
+            },
+            {
+              "heading": "Full audit log of everything sent",
+              "body": "Every outbound message is kept with the channel, recipient, subject, body, delivery status, gateway-side ID and any error text. Search by client, by event or by date — the answer is always one search away."
+            },
+            {
+              "heading": "Bring your own gateways",
+              "body": "Send email through SMTP, SendGrid or Resend; send SMS through Twilio; send WhatsApp through Twilio or Meta. Credentials are stored encrypted, and a test-send button on each channel lets you verify the connection before a real client sees a single message."
             }
           ]
         },
@@ -2892,39 +2976,71 @@
           "id": "catalogue",
           "group": "Offering",
           "title": "Catalogue",
-          "summary": "Your entire offering — services, products, packages, memberships and gift cards — structured once and priced with precision.",
+          "summary": "Your entire offering — services, products, packages, memberships, discounts and smart-pricing rules — set up once and priced with precision, ready to be sold from any branch.",
           "sections": [
             {
-              "heading": "Services",
-              "body": "Services with duration, buffer time, required staff, required resources and per-location pricing"
+              "heading": "Services with duration and price",
+              "body": "Set up each service with a name, description, color, icon, duration, price and tax. Add an optional processing time so back-to-back bookings don't trample on each other, and mark services as in-person, online or both — with a meeting link auto-attached for the online ones."
             },
             {
-              "heading": "Bundles & packages",
-              "body": "Bundles and packages with discounted pricing, session counters and automatic revenue recognition"
+              "heading": "Categories that organise the menu",
+              "body": "Group services into categories with a color. The category color tints appointments on the calendar (when you choose that mode) and powers the per-category ratings shown on your public booking page."
             },
             {
-              "heading": "Memberships",
-              "body": "Memberships — prepaid, unlimited, session-based — with auto-renewal, expiry reminders and a portal-visible wallet"
+              "heading": "Sell only where it's available",
+              "body": "Restrict a service, package, product or membership to specific branches — leave the list empty and it's available everywhere. So a single business can carry a Riyadh-only treatment, a lounge-only product, and a city-wide service all in the same catalogue."
             },
             {
-              "heading": "Gift cards",
-              "body": "Gift cards with balance tracking, expiry dates and in-portal redemption"
+              "heading": "Pair services with the rooms they need",
+              "body": "Define the rooms, chairs, dental units or studios you have, link them to the services that need them, and the calendar will reserve the right one inside every appointment — so equipment is never double-booked."
             },
             {
-              "heading": "Retail products",
-              "body": "Retail products with SKU, barcode, units of measure, expiry dates and batch tracking"
+              "heading": "Per-staff commission on a service",
+              "body": "Override the default commission for a specific staff member on a specific service — useful when a senior therapist takes a higher cut on premium services. The system applies the right number on every ticket."
             },
             {
-              "heading": "Smart pricing",
-              "body": "Smart pricing — peak, off-peak, member, seasonal and rule-based tiers"
+              "heading": "Bundles and packages",
+              "body": "Group several services into a bundle with a single price. Choose the pricing model (sum of line prices, a custom retail price, or a percentage off) and tell the calendar whether the services run one after another or together. Bundles can carry photos and a public-booking toggle of their own."
             },
             {
-              "heading": "Discounts & coupons",
-              "body": "Discount codes, coupons, stacking rules and eligibility conditions"
+              "heading": "Memberships clients buy and use",
+              "body": "Sell memberships with a fixed duration and billing cycle, free-form benefits, an optional cap on appointments and an optional discount that applies to every service bought during the active period. Clients see their card, allowance and end date in their portal."
             },
             {
-              "heading": "Categories & menus",
-              "body": "Category taxonomy, public menus and full branding control per tenant"
+              "heading": "Memberships recognised the right way",
+              "body": "Selling a year-long membership doesn't show as a year of revenue overnight — earned portions move to revenue month by month over the membership window, the way IFRS and US GAAP expect. No spreadsheets, no manual entries."
+            },
+            {
+              "heading": "Expiry messages and freeze",
+              "body": "Members get a heads-up before their membership expires and a notice when it does. Need to pause one for a vacation? Freeze it and the clock stops without ending the plan."
+            },
+            {
+              "heading": "Retail products with brand and units",
+              "body": "Each product has a name, short and long description, brand, optional barcode, unit of measure (ml, L, g, kg, oz, fl-oz, pieces, units) and a flag for whether it's sold retail. Barcode and SKU are unique within your business."
+            },
+            {
+              "heading": "Variants for size, color or batch",
+              "body": "Sell the same product in multiple sizes, colors or batches — each with its own SKU, barcode, price, cost, stock level and reorder threshold. Variants flow through sales, transfers, invoices and estimates as first-class items."
+            },
+            {
+              "heading": "Commission on retail products too",
+              "body": "Switch on commissions for any product and set the percentage or flat amount. When a stylist or therapist sells it, their commission is calculated on the same ticket as their service work."
+            },
+            {
+              "heading": "Discounts and promo codes",
+              "body": "Set up automatic discounts (apply on eligibility) or code-based discounts (the cashier types it or the client redeems it). Choose between a percentage off, a fixed amount off, or buy-X-get-Y. Apply to a single item, a category, or the whole cart."
+            },
+            {
+              "heading": "Discount rules that match your business",
+              "body": "Limit a discount to specific products, services, categories or members; cap how many times it can be used in total or per client; set minimum purchase or minimum item count; and schedule it to fire only on, say, Mondays 6–10 PM. Multiple discounts stack in the order you choose, and you can lock one as exclusive."
+            },
+            {
+              "heading": "Smart pricing for peak hours",
+              "body": "Create rules that automatically raise or lower prices for chosen services during specific day-and-time windows — Friday afternoon, Sunday morning, after 8 PM. Apply tenant-wide or to a single branch, and the new sale screen previews the adjusted price live."
+            },
+            {
+              "heading": "ZATCA & ETA item codes ready to go",
+              "body": "Every service and product can carry the item codes Saudi (ZATCA) and Egyptian (ETA) e-invoicing require. Once entered, every compliance invoice ships with the right identifiers — no last-minute scramble at submission time."
             }
           ]
         },
@@ -2932,47 +3048,63 @@
           "id": "inventory",
           "group": "Operations",
           "title": "Inventory & Supply",
-          "summary": "Stock you can trust — across every location, with the audit trail to prove it to the auditor.",
+          "summary": "Stock you can trust — every product in every branch, every receive and stocktake flowing into your books, with the audit trail to prove it.",
           "sections": [
             {
-              "heading": "Stock levels",
-              "body": "Real-time stock levels per location with low-stock alerts routed to the right staff"
+              "heading": "Stock per branch, total at a glance",
+              "body": "Every branch has its own stock count and its own low-stock threshold per product, but the dashboard always shows the total across all branches — recomputed automatically after every sale, transfer or count. No one ever asks \"is this number current?\" again."
             },
             {
-              "heading": "SKU & barcode",
-              "body": "SKU, barcode and unit tracking per product — with barcode generation, print and scan"
+              "heading": "Low-stock alerts to the right person",
+              "body": "Every morning the system scans every product in every branch and pings the owner and inventory manager about anything that's hit its threshold — by in-app, email, SMS or WhatsApp, on the channels you've enabled. The rest of the team isn't bothered."
             },
             {
-              "heading": "Stock transfers",
-              "body": "Stock transfers with in-transit status and confirmation on arrival"
+              "heading": "SKUs, barcodes, scan and print",
+              "body": "Every product gets an SKU and a barcode (generated for you with a tap if you don't have one), a printable label that sends to a thermal label printer, and a built-in scanner that opens the right product the instant you point the camera at a barcode."
             },
             {
-              "heading": "Stocktakes",
-              "body": "Stocktakes with variance reporting and single-click adjustment posting"
+              "heading": "Variants for size, color, batch",
+              "body": "Sell the same product in multiple sizes, colors or batches — each with its own SKU, barcode, price, cost, stock and reorder threshold. Variants flow through sales, transfers, invoices and estimates as first-class items."
             },
             {
-              "heading": "Suppliers & stock orders",
-              "body": "Supplier management with stock orders, approval workflows and linked supplier payments"
+              "heading": "Move stock between branches with an audit trail",
+              "body": "Create a transfer, the system checks that the source branch actually has the stock, send it, and the receiving branch confirms what arrived line by line — including damage notes for anything broken or short. Send, receive and cancel are separate actions so the audit trail stays clean."
             },
             {
-              "heading": "Variants",
-              "body": "Variant-level tracking per product (size, colour, batch) via SKU"
+              "heading": "Stocktakes with the variance you can act on",
+              "body": "Run a count, enter what you actually have, and the system shows the discrepancy line by line — search the list, filter to discrepancies only, and complete the count to overwrite the system stock with reality."
             },
             {
-              "heading": "Stock comparison",
-              "body": "Stock comparison across periods, weeks or locations"
+              "heading": "Purchase orders to suppliers",
+              "body": "Build a purchase order with a search-to-add product picker, per-line quantity and cost price, and live totals for cost and units. Track it from draft through ordered and received, with the payment status (unpaid, partially paid, paid) shown alongside."
             },
             {
-              "heading": "COGS auto-journal",
-              "body": "Cost of goods auto-journaled to accounting on every sale — no manual reconciliation"
+              "heading": "Suppliers with map and history",
+              "body": "Keep each supplier's name, contact, email, phone, website, address (with a map and \"get directions\" link) and notes. The detail page shows the products you buy from them and a history of every order. Bulk-import suppliers from a template, deactivate or reactivate, and export the list any time."
             },
             {
-              "heading": "Inventory reports",
-              "body": "Inventory valuation, movement, and stock-vs-sales reports, all exportable to Excel"
+              "heading": "Supplier payments and non-inventory bills",
+              "body": "Pay suppliers by cash, card, bank transfer or other method. A payment can settle a purchase order, a bill (for rent, utilities or marketing) or stand on its own. Outstanding balances roll up automatically and the payment links to the matching bank transaction for reconciliation."
             },
             {
-              "heading": "Import / export",
-              "body": "CSV and Excel import/export for bulk catalogue updates"
+              "heading": "Manual stock adjustment",
+              "body": "Need to write off a damaged unit or correct a count? Adjust a single product on the active branch with a mandatory reason. Reachable from the pencil on every stock row, from a barcode scan, or from the end of a stocktake."
+            },
+            {
+              "heading": "All branches side by side",
+              "body": "One screen shows every product across every branch with a total column. Rows below a branch's threshold get a warning tint, and a single tap filters to low-stock only — perfect for deciding what to transfer where, on a phone or a screen."
+            },
+            {
+              "heading": "Inventory report at a glance",
+              "body": "Open the report to see total active products, the twenty worst low-stock items (with their branch and current count), the top ten sellers in your date range, and the total stock valuation — exportable like every other report."
+            },
+            {
+              "heading": "Receives and sales hit your books",
+              "body": "Receiving a purchase order books inventory against accounts payable. Paying the supplier draws AP down. Selling a product with a cost price books cost-of-goods-sold against inventory automatically — so margins, AP and stock valuation are always live in Reports and Accounting."
+            },
+            {
+              "heading": "Bulk import, exports and audit log",
+              "body": "Bring products and suppliers in from CSV or Excel using the templates. Export any list (stock, transfers, counts, orders, suppliers, payments) with your current filters. Every change is captured in the activity log — the auditor sees exactly who did what and when."
             }
           ]
         },
@@ -2980,35 +3112,67 @@
           "id": "events",
           "group": "Front of house",
           "title": "Events & Ticketing",
-          "summary": "Sell out your classes, workshops and events — with capacity, check-in, waitlists and automated reminders built in.",
+          "summary": "Sell out your classes, workshops and events — tiered tickets, QR check-in, waitlists, online or in-person, with reminders and revenue all flowing into the same place. Activated as the Events add-on.",
           "sections": [
             {
-              "heading": "Event setup",
-              "body": "Create events with schedule, capacity and tiered ticket pricing"
+              "heading": "Set up an event in minutes",
+              "body": "Title, description, cover image, category, optional venue, optional organizer, start and end dates (multi-day works), times, and the event's own timezone — so a Riyadh business can publish a Cairo event without confusing anyone."
             },
             {
-              "heading": "Public event page",
-              "body": "Public event page with live seat counts and a share link your socials will love"
+              "heading": "In-person, online or hybrid",
+              "body": "Choose the format and add a meeting link, ID and password for online events. With the Zoom add-on active, the meeting link is created for you and stays in sync with the event."
             },
             {
-              "heading": "Waitlist",
-              "body": "Waitlist for sold-out events with position tracking and promotion as seats free up"
+              "heading": "Ticket tiers (General, VIP, Early Bird)",
+              "body": "Add as many ticket types as you need, each with its own price, description and capacity — or leave it as a single price for simple events."
             },
             {
-              "heading": "Tickets & QR check-in",
-              "body": "Ticket sales through the portal with per-ticket QR code and door check-in"
+              "heading": "Draft, publish, cancel",
+              "body": "Build the event privately, publish when you're ready, mark it complete after, or cancel it at any point. A switch decides whether it shows on your public booking page; another holds tickets for staff approval before they confirm; another lets people buy without an existing client account."
             },
             {
-              "heading": "Sales & ledger integration",
-              "body": "Tickets link directly into sales and the ledger — revenue lands where it belongs"
+              "heading": "Public event page, ready to share",
+              "body": "Every published event has its own clean public page with the cover image, description, schedule, capacity left and a tier picker. A copy-link button is one click away — paste straight into Instagram, WhatsApp or an email."
             },
             {
-              "heading": "Cancellations",
-              "body": "Cancellations tracked per event with attendee state updates"
+              "heading": "Tickets with QR codes",
+              "body": "Every ticket carries the attendee's name and contact, optional seat number, the price they paid, a unique ticket number and a QR code rendered ready to display. Each ticket has its own public URL, so the client can show it from their phone at the door."
             },
             {
-              "heading": "Capacity tracking",
-              "body": "Capacity, tickets-sold and availability live on every event listing"
+              "heading": "Add a ticket by hand",
+              "body": "Staff can register a walk-in or someone who paid by bank transfer right from the tickets page — name, email, phone — and the system generates a fresh ticket number and QR for them on the spot."
+            },
+            {
+              "heading": "Approval workflow when you need it",
+              "body": "Turn on approval for invitation-only events: new tickets start as Pending, an admin approves or rejects, and only approved attendees get the confirmation message and the QR code."
+            },
+            {
+              "heading": "Reserved → confirmed → checked in",
+              "body": "Every ticket has a clear state — Reserved while payment is pending, Confirmed once paid, Checked-in on entry, or Cancelled with a reason or No-show after the event ends. The detail page counts each."
+            },
+            {
+              "heading": "QR scan or manual check-in",
+              "body": "Open the camera and scan a ticket's QR to check the attendee in instantly — or pick them from a search list and confirm by name. Both flows record who let them in and when."
+            },
+            {
+              "heading": "Live attendance at the door",
+              "body": "A live tablet-friendly screen shows tickets sold, attendees checked in, capacity headroom and the ten most recent check-ins with names and timestamps — so the host always knows how full the room is."
+            },
+            {
+              "heading": "Waitlist with offers",
+              "body": "When a sold-out event has interest, queue people on the waitlist with their names, contact and how many seats they need. When a spot opens, notify the next person with a claim link that expires after a window you choose."
+            },
+            {
+              "heading": "Twelve automatic messages",
+              "body": "Attendees get registration confirmations, 24-hour and 1-hour reminders (with the meeting URL for online events), updates if the schedule changes, cancellation notices with any refund amount, waitlist offers, and post-event check-in confirmations with optional certificate and feedback links. Staff get separate alerts when tickets are sold, capacity is reached, someone joins the waitlist or someone checks in."
+            },
+            {
+              "heading": "Ticket revenue lands in your books",
+              "body": "Paid tickets become a sale automatically and ride the same revenue, tax and refund rails as everything else you sell — so your reports never have a separate \"events\" silo to reconcile."
+            },
+            {
+              "heading": "Capacity guards and safe cancellation",
+              "body": "The system stops selling once the event or a tier hits its cap and pings staff that capacity is reached. Cancelling an event marks every active ticket as cancelled, captures the reason and notifies every attendee. Deleting an event requires confirmation and only works when no live ticket would be lost."
             }
           ]
         },
@@ -3016,55 +3180,71 @@
           "id": "team",
           "group": "People",
           "title": "Team & HR",
-          "summary": "From shift to payslip — one tab per member of the team, no spreadsheet required.",
+          "summary": "From hire to payday — one place for shifts, attendance, leave, commissions and a payroll that posts to your books on its own.",
           "sections": [
             {
-              "heading": "Roles & permissions",
-              "body": "Roles and granular permissions — Owner / Admin / Staff / custom — with per-member templates you can copy between hires"
+              "heading": "Roster and invitations",
+              "body": "A searchable list of every team member with status, branch and date filters and a full export. \"Send invite\" emails the new hire a tokenised link that takes them straight to a join page — and the Owner is protected so no one can accidentally remove the boss."
             },
             {
-              "heading": "Schedule",
-              "body": "Weekly schedules with per-location shifts, breaks and blocked times"
+              "heading": "One profile, six tabs",
+              "body": "Each member opens to Overview, Schedule, Finance, Permissions, Notifications and Reviews — pre-bound to that person. Set their photo, profile color, title, department and a switch for whether clients can book them online."
             },
             {
-              "heading": "Attendance",
-              "body": "Attendance with clock-in / clock-out, break tracking and QR self-check"
+              "heading": "Roles, permissions and reusable templates",
+              "body": "Three roles (Owner, Admin, Staff) plus a granular checklist that says who can sell, refund, manage expenses, run payroll and so on. Save a permission set as a template and apply it to every new hire — no more rebuilding the same list."
             },
             {
-              "heading": "Leave",
-              "body": "Leave requests, leave types and approval workflows"
+              "heading": "Members across multiple branches",
+              "body": "Attach a member to one branch, two branches or all of them. The active-branch filter then restricts the calendar, schedules, attendance and pay runs to that branch — perfect for multi-location operators."
             },
             {
-              "heading": "Timesheet",
-              "body": "Timesheets that feed directly into the next pay run"
+              "heading": "Compensation per member",
+              "body": "Set each person's pay type (hourly, salary or commission-only), pay frequency, hourly rate or monthly salary, and contract dates. The pay numbers are protected by a permission so only authorized roles can see them."
             },
             {
-              "heading": "Commission engine",
-              "body": "Commission engine — per service, per staff, per split — with tip handling built in"
+              "heading": "Default and per-service commission",
+              "body": "Set a member's default commission as a percentage or a flat amount, and override it for specific services — useful when a senior therapist takes a higher cut on premium services. Tips follow the rule you've chosen — passed through to staff, or recognised as revenue."
             },
             {
-              "heading": "Pay Runs",
-              "body": "Pay runs with payslips and CSV export for banks or third-party payroll"
+              "heading": "Weekly schedule with shifts and breaks",
+              "body": "Drag shifts and breaks into each staff member's day. Schedule changes can take effect on a future date so you can plan next month's rota without disturbing this one. Copy a day's shifts to other days in one click; approved leave and blocked time appear on the same grid."
             },
             {
-              "heading": "Staff KPIs",
-              "body": "Staff KPIs — rebook rate, utilization and revenue per member — on the team dashboard"
+              "heading": "Per-staff blocked time",
+              "body": "Block any slot for vacation, training, lunch or equipment maintenance — daily, weekly or monthly until an end date, with colored reasons. Edit the whole recurring series at once, and the calendar respects the same blocks."
             },
             {
-              "heading": "Audit & login history",
-              "body": "Audit trails on subscription and sensitive admin actions, plus per-member login history"
+              "heading": "Attendance with auto-close",
+              "body": "Staff clock in and out from the dashboard with multi-break tracking. The system records late arrivals and early departures against the day's scheduled shift, and any session left open more than 24 hours auto-closes to the scheduled end so timesheets stay clean."
             },
             {
-              "heading": "Internal team tickets",
-              "body": "Internal team tickets — assign, thread and track operational requests across roles and locations"
+              "heading": "Timesheet that's ready for payroll",
+              "body": "Per-member daily breakdown — scheduled hours vs actual hours, overtime, late arrivals — with totals for the date range. Export per member and feed the next pay run with the right hours by default."
             },
             {
-              "heading": "Impersonation",
-              "body": "Context switching between roles and tenants via impersonation without re-login"
+              "heading": "Leave types, requests and balances",
+              "body": "Define your own leave types (paid or unpaid, color-coded, with optional annual quotas). Staff request leave, managers approve or reject with a note, and per-year balances track quota used, carried over and any adjustment — so balances never need reconstructing."
             },
             {
-              "heading": "Invitations & passwords",
-              "body": "Invitation tokens with expiry, password reset and self-serve password change"
+              "heading": "Pay runs that hit the books",
+              "body": "Build a pay run for the period and the branch you choose. Each entry tracks hours, overtime, base pay, commissions, bonuses, deductions and net pay — and when you mark it processed and then paid, the right journals land in your books automatically. Re-running won't double-post."
+            },
+            {
+              "heading": "Staff reviews and replies",
+              "body": "Reviews left on completed appointments link to the staff member who delivered the service. Each member's profile shows their incoming reviews with the average rating, a reply box, and a switch to make a review public or private."
+            },
+            {
+              "heading": "Each member mutes what they don't need",
+              "body": "Any team member can silence specific notifications on themselves without affecting their teammates — so the receptionist isn't pinged about pay runs and the accountant isn't pinged about every booking."
+            },
+            {
+              "heading": "Impersonation for white-glove support",
+              "body": "Owners and admins can enter the dashboard as another team member, or sign into the client portal as a specific client, for hands-on support — without ever asking anyone for their password. Member invites and password resets are link-based and expire on their own."
+            },
+            {
+              "heading": "Activity log per member",
+              "body": "Every sensitive action — sales, refunds, voids, expense approvals, supplier payments, pay-run processing, schedule edits, permission changes — is tied to the staff member who did it. \"Who voided that ticket on Tuesday?\" is a one-search answer."
             }
           ]
         },
@@ -3072,51 +3252,67 @@
           "id": "accounting",
           "group": "Money",
           "title": "Accounting",
-          "summary": "A real double-entry ledger built in — no second subscription, no monthly export routine, no hand-off to an external bookkeeper.",
+          "summary": "A real double-entry ledger built into the same system you sell from — no second subscription, no monthly export ritual, no hand-off to an outside bookkeeper.",
           "sections": [
             {
-              "heading": "Chart of Accounts",
-              "body": "Chart of accounts with opening balances and unlimited-depth hierarchy"
+              "heading": "A real double-entry ledger",
+              "body": "Every transaction in the business posts a balanced journal entry — debits on one side, credits on the other — numbered, dated and traceable back to the receipt that caused it. Built for fast reports and an honest audit."
             },
             {
-              "heading": "Journal Entries",
-              "body": "Auto-posted journal entries from every sale, invoice, refund, payroll run, expense and stock movement"
+              "heading": "Chart of accounts you can adapt",
+              "body": "A complete chart of accounts ships out of the box — assets, liabilities, equity, revenue and expense — with parent-child grouping for unlimited depth. Rename or remap accounts to match your own conventions; the system codes that route automatic postings stay safe so nothing breaks behind the scenes."
             },
             {
-              "heading": "Manual Journal & Audit",
-              "body": "Manual journal entries with a tamper-evident hash-chain audit trail"
+              "heading": "Every operational event posts itself",
+              "body": "Sales, invoice payments, refunds, write-offs, credit notes, expenses, supplier payments, bills, gift card issuance and redemption, membership sales, deferred-revenue recognition, cash register open/close, depreciation, bad-debt provisioning, payroll and asset disposal — all land in the ledger automatically against the right contra account. You never type a manual journal to keep up."
             },
             {
-              "heading": "Bills & Supplier Payments",
-              "body": "Bills, supplier payments and vendor profiles tied to inventory and expenses"
+              "heading": "Manual entries with one-click reverse",
+              "body": "Owners and admins can post manual entries for adjustments, opening balances and prior-period corrections. Every entry has a Reverse button that creates a mirrored entry — the original stays readable and the audit trail stays clean."
             },
             {
-              "heading": "Receivables & Payables",
-              "body": "Accounts receivable and accounts payable with aging, statements and dunning"
+              "heading": "Tamper-evident audit history",
+              "body": "Every sensitive action is captured in an activity log that's cryptographically chained — each entry signs the one before it. A single tap re-verifies the whole chain and tells you exactly which row, if any, was tampered with. Evidence-grade history for the auditor, the regulator or the board."
             },
             {
-              "heading": "Bank Reconciliation",
-              "body": "Bank accounts with statement import, transaction matching and reconciliation"
+              "heading": "Per-branch profit and loss",
+              "body": "Every entry can belong to a specific branch. Tenant-wide entries (rent, depreciation, opening balances) appear in every branch report. Run a branch P&L without losing the centrally-paid costs that genuinely belong to it."
             },
             {
-              "heading": "Fixed Assets",
-              "body": "Fixed assets with automatic monthly depreciation schedules, posted straight to the ledger"
+              "heading": "Six built-in financial statements",
+              "body": "Balance sheet, income statement, cash flow, trial balance, general ledger and VAT return — each parameterised by date range and optional branch. The accounting overview runs two health checks live so you always know the books are balanced before you read them."
             },
             {
-              "heading": "Deferred Revenue",
-              "body": "Deferred revenue recognition for memberships, packages and prepaid services — earned portion amortised on schedule"
+              "heading": "Aging for receivables and payables",
+              "body": "See what customers owe you and what you owe suppliers, broken into Current, 1–30, 31–60, 61–90 and 90+ day buckets. The same data feeds bad-debt provisioning, and per-customer and per-supplier statements are one tap away."
             },
             {
-              "heading": "Pending Refunds & Bad Debt",
-              "body": "Bad-debt provisioning with aging buckets, and a pending-refund workflow with explicit approver states"
+              "heading": "Bank reconciliation that won't fight you",
+              "body": "Add a bank account, import the statement, and the system suggests matches against the payments and expenses you've already recorded. Match, unmatch, ignore (for fees), and reconcile a period — every action is logged."
             },
             {
-              "heading": "Period Close",
-              "body": "Closed accounting periods with enforced lock — nothing posts backwards by accident"
+              "heading": "Bills and supplier payments",
+              "body": "Record vendor invoices for non-inventory costs (rent, utilities, marketing) with per-line account categorisation. On approval they post automatically against accounts payable; supplier payments draw the balance down and reconcile against the bank import in one tap."
             },
             {
-              "heading": "Financial Statements",
-              "body": "Financial statements built in: P&L, balance sheet, cash flow, trial balance, general ledger and VAT return"
+              "heading": "Fixed assets and monthly depreciation",
+              "body": "Track equipment, furniture and vehicles with their cost, salvage value, useful life and depreciation method. The system depreciates them month-by-month for you, posts the entry, and handles disposals with the right gain or loss."
+            },
+            {
+              "heading": "Memberships recognised properly",
+              "body": "Selling a year-long membership doesn't show as a year of revenue overnight. Earned portions move to revenue month by month over the membership window — IFRS 15 / ASC 606 compliant, with no spreadsheets."
+            },
+            {
+              "heading": "Bad-debt provisioning automatically",
+              "body": "Each month the system trues up your Allowance for Doubtful Accounts against the aging buckets and posts the provision. Writing off an invoice books the expense against receivables — so the ledger always tells the truth."
+            },
+            {
+              "heading": "Pending-refund approval",
+              "body": "Set a threshold above which refunds need a second pair of eyes. Refunds over the threshold queue as Pending — listed by requester, amount and reason — until a different team member approves or rejects. No money moves until they do."
+            },
+            {
+              "heading": "Period close and opening balances",
+              "body": "Lock the books up to a chosen date so back-dated entries can never accidentally land in a closed month. When you bring an existing business onto the system, the opening-balances editor seeds the ledger live with a single balanced journal on the date you choose."
             }
           ]
         },
