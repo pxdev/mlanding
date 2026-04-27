@@ -63,7 +63,7 @@ const demoUrl = useRuntimeConfig().public.demoUrl
         <!-- Single restrained stage glow -->
         <div aria-hidden="true" class="absolute inset-x-16 -bottom-12 h-24 bg-secondary-500 blur-3xl opacity-20 dark:opacity-30 rounded-[50%]" />
 
-        <LandingHeroProduct src="/videos/general-1.mov" aspect-ratio="3454 / 1802" />
+        <LandingHeroProduct src="/videos/general-1.mp4" aspect-ratio="3454 / 1802" />
       </div>
     </div>
   </section>
