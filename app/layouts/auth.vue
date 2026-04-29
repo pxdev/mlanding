@@ -1,44 +1,82 @@
 <script setup lang="ts">
 const localePath = useLocalePath()
-const chrome = useChromeCopy()
 const { currentLocale, otherLocale, toggleLocale } = useLandingLocale()
 </script>
 
 <template>
-  <div class="min-h-dvh flex flex-col bg-neutral-50 dark:bg-neutral-950 text-gray-900 dark:text-white">
-    <header class="px-5 sm:px-8 h-16 flex items-center">
-      <NuxtLink :to="localePath('/')" class="flex items-center gap-2 group">
-        <div class="size-8 rounded-xl bg-primary text-white flex items-center justify-center font-black text-lg shadow-lg shadow-primary/20 group-hover:scale-105 transition-transform">M</div>
-        <span class="font-black text-lg tracking-tight">Momentfy</span>
+  <div class="min-h-dvh flex flex-col lg:flex-row">
+    <!-- ═══ Left panel — branding (desktop only) ═══ -->
+    <div
+      class="hidden lg:flex lg:w-5/12 relative bg-primary flex-col justify-between p-12 xl:p-16 text-white"
+    >
+      <!-- Logo -->
+      <NuxtLink :to="localePath('/')" class="flex items-center gap-3 group">
+        <div class="size-9 rounded-lg bg-white text-primary flex items-center justify-center font-black text-lg group-hover:scale-105 transition-transform">
+          M
+        </div>
+        <span class="font-bold text-lg tracking-tight">Momentfy</span>
       </NuxtLink>
-      <div class="ms-auto flex items-center gap-1">
+
+      <!-- Value prop -->
+      <div class="max-w-sm">
+        <h2 class="text-3xl xl:text-4xl font-bold tracking-tight leading-tight">
+          The Operating System for Booking Businesses
+        </h2>
+        <p class="mt-4 text-sm text-white/70 leading-relaxed">
+          Own your code. Scale without limits. Pay once, use forever.
+        </p>
+      </div>
+
+      <!-- Footer -->
+      <p class="text-sm text-white/40">
+        &copy; Momentfy
+      </p>
+    </div>
+
+    <!-- ═══ Right panel — form area ═══ -->
+    <div class="flex-1 flex flex-col min-h-dvh bg-white dark:bg-neutral-950">
+      <!-- Mobile header -->
+      <header class="lg:hidden px-6 h-14 flex items-center border-b border-gray-100 dark:border-white/5">
+        <NuxtLink :to="localePath('/')" class="flex items-center gap-2.5">
+          <div class="size-8 rounded-lg bg-primary text-white flex items-center justify-center font-black text-base">
+            M
+          </div>
+          <span class="font-bold text-base tracking-tight">Momentfy</span>
+        </NuxtLink>
+      </header>
+
+      <!-- Language toggle -->
+      <div class="flex justify-end px-6 sm:px-10 pt-5 sm:pt-8">
         <ClientOnly>
           <button
             type="button"
-            class="inline-flex items-center gap-1.5 h-9 px-3 rounded-full text-sm font-semibold text-gray-600 dark:text-gray-400 hover:bg-black/5 dark:hover:bg-white/10 transition"
-            :aria-label="chrome.common.language"
-            :title="otherLocale?.name"
+            class="inline-flex items-center gap-1.5 h-8 px-3 rounded-lg text-xs font-medium text-gray-400 hover:text-gray-600 hover:bg-gray-100 dark:hover:bg-white/5 transition"
+            :aria-label="otherLocale?.name"
             @click="toggleLocale"
           >
-            <UIcon name="i-lucide-globe" class="size-4" />
-            <span class="text-sm font-bold">{{ otherLocale?.name }}</span>
+            <UIcon name="i-lucide-globe" class="size-3.5" />
+            <span>{{ otherLocale?.name }}</span>
           </button>
           <template #fallback>
-            <span class="inline-flex items-center gap-1.5 h-9 px-3 rounded-full text-sm font-semibold text-gray-600 dark:text-gray-400">
-              <UIcon name="i-lucide-globe" class="size-4" />
-              <span class="text-sm font-bold">{{ currentLocale?.name }}</span>
+            <span class="inline-flex items-center gap-1.5 h-8 px-3 rounded-lg text-xs font-medium text-gray-400">
+              <UIcon name="i-lucide-globe" class="size-3.5" />
+              <span>{{ currentLocale?.name }}</span>
             </span>
           </template>
         </ClientOnly>
       </div>
-    </header>
-    <main class="flex-1 grid place-items-center px-5 py-10">
-      <div class="w-full max-w-md">
-        <slot />
-      </div>
-    </main>
-    <footer class="py-6 text-center text-xs text-gray-500 dark:text-gray-500">
-      © Momentfy
-    </footer>
+
+      <!-- Form -->
+      <main class="flex-1 grid place-items-center px-6 py-10 sm:px-10">
+        <div class="w-full max-w-md">
+          <slot />
+        </div>
+      </main>
+
+      <!-- Mobile footer -->
+      <footer class="lg:hidden py-4 text-center text-xs text-gray-400">
+        &copy; Momentfy
+      </footer>
+    </div>
   </div>
 </template>

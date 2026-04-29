@@ -1,61 +1,68 @@
 <script setup>
-import { z } from 'zod';
-definePageMeta({ layout: 'auth', middleware: 'guest' });
-const chrome = useChromeCopy();
-useHead({ title: () => chrome.value.auth.register.docTitle });
-const { fetch: fetchSession } = useUserSession();
-const toast = useToast();
-const route = useRoute();
-const localePath = useLocalePath();
+import { z } from 'zod'
+definePageMeta({ layout: 'auth', middleware: 'guest' })
+const chrome = useChromeCopy()
+useHead({ title: () => chrome.value.auth.register.docTitle })
+const { fetch: fetchSession } = useUserSession()
+const toast = useToast()
+const route = useRoute()
+const localePath = useLocalePath()
 const redirectTo = computed(() => {
-    const r = route.query.redirect;
-    return r && r.startsWith('/') && !r.startsWith('//') ? r : localePath('/dashboard');
-});
+  const r = route.query.redirect
+  return r && r.startsWith('/') && !r.startsWith('//') ? r : localePath('/dashboard')
+})
 const schema = z.object({
-    firstName: z.string().min(1, 'First name is required').max(80),
-    lastName: z.string().min(1, 'Last name is required').max(80),
-    email: z.string().email('Invalid email address').max(160),
-    password: z.string().min(8, 'At least 8 characters').max(200),
-    githubUsername: z.string().regex(/^[a-zA-Z0-9-]{1,39}$/, 'Letters, numbers and dashes only').optional().or(z.literal(''))
-});
+  firstName: z.string().min(1, 'First name is required').max(80),
+  lastName: z.string().min(1, 'Last name is required').max(80),
+  email: z.string().email('Invalid email address').max(160),
+  password: z.string().min(8, 'At least 8 characters').max(200),
+  githubUsername: z.string().regex(/^[a-zA-Z0-9-]{1,39}$/, 'Letters, numbers and dashes only').optional().or(z.literal(''))
+})
 const state = reactive({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    githubUsername: ''
-});
-const loading = ref(false);
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: '',
+  githubUsername: ''
+})
+const loading = ref(false)
+const showPassword = ref(false)
 async function onSubmit(event) {
-    loading.value = true;
-    try {
-        await $fetch('/api/auth/register', {
-            method: 'POST',
-            body: {
-                ...event.data,
-                githubUsername: event.data.githubUsername || null
-            }
-        });
-        await fetchSession();
-        await navigateTo(redirectTo.value);
-    }
-    catch (err) {
-        toast.add({ title: chrome.value.auth.register.failedToast, description: err.statusMessage || err.message, color: 'error' });
-    }
-    finally {
-        loading.value = false;
-    }
+  loading.value = true
+  try {
+    await $fetch('/api/auth/register', {
+      method: 'POST',
+      body: {
+        ...event.data,
+        githubUsername: event.data.githubUsername || null
+      }
+    })
+    await fetchSession()
+    await navigateTo(redirectTo.value)
+  }
+  catch (err) {
+    toast.add({ title: chrome.value.auth.register.failedToast, description: err.statusMessage || err.message, color: 'error' })
+  }
+  finally {
+    loading.value = false
+  }
 }
 </script>
 
 <template>
-  <UCard>
-    <template #header>
-      <h2 class="text-lg font-semibold">{{ chrome.auth.register.title }}</h2>
-      <p class="text-sm text-gray-500 dark:text-gray-400">{{ chrome.auth.register.subtitle }}</p>
-    </template>
+  <div>
+    <!-- Header -->
+    <div class="mb-8">
+      <h1 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+        {{ chrome.auth.register.title }}
+      </h1>
+      <p class="mt-1.5 text-sm text-gray-500 dark:text-gray-400">
+        {{ chrome.auth.register.subtitle }}
+      </p>
+    </div>
 
-    <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
+    <!-- Form -->
+    <UForm :schema="schema" :state="state" class="space-y-5" @submit="onSubmit">
       <div class="grid grid-cols-2 gap-3">
         <UFormField :label="chrome.auth.register.firstName" name="firstName" required>
           <UInput v-model="state.firstName" size="lg" class="w-full" autocomplete="given-name" />
@@ -70,21 +77,62 @@ async function onSubmit(event) {
       </UFormField>
 
       <UFormField :label="chrome.auth.register.password" name="password" required :hint="chrome.auth.register.passwordHint">
-        <UInput v-model="state.password" type="password" icon="i-lucide-lock" size="lg" class="w-full" autocomplete="new-password" />
+        <UInput
+          v-model="state.password"
+          :type="showPassword ? 'text' : 'password'"
+          icon="i-lucide-lock"
+          size="lg"
+          class="w-full"
+          autocomplete="new-password"
+        >
+          <template #trailing>
+            <button
+              type="button"
+              class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors p-1"
+              @click="showPassword = !showPassword"
+            >
+              <UIcon :name="showPassword ? 'i-lucide-eye-off' : 'i-lucide-eye'" class="size-4" />
+            </button>
+          </template>
+        </UInput>
       </UFormField>
 
-      <UFormField :label="chrome.auth.register.github" name="githubUsername" :hint="chrome.auth.register.githubHint">
-        <UInput v-model="state.githubUsername" icon="i-simple-icons-github" size="lg" class="w-full" :placeholder="chrome.auth.register.githubPlaceholder" />
+      <UFormField :label="chrome.auth.register.github" name="githubUsername">
+        <UInput
+          v-model="state.githubUsername"
+          icon="i-simple-icons-github"
+          size="lg"
+          class="w-full"
+          :placeholder="chrome.auth.register.githubPlaceholder"
+        >
+          <template #leading>
+            <span class="text-gray-400 text-sm font-medium select-none pl-1">@</span>
+          </template>
+        </UInput>
+        <p class="mt-1.5 text-xs text-gray-400 dark:text-gray-500">
+          {{ chrome.auth.register.githubHint }}
+        </p>
       </UFormField>
 
-      <UButton type="submit" block :loading="loading" size="lg">{{ chrome.auth.register.submit }}</UButton>
+      <button
+        type="submit"
+        class="w-full h-11 rounded-xl bg-primary text-white font-semibold text-sm hover:opacity-90 active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+        :disabled="loading"
+      >
+        <UIcon v-if="loading" name="i-lucide-loader-2" class="size-4 animate-spin" />
+        <span>{{ chrome.auth.register.submit }}</span>
+      </button>
     </UForm>
 
-    <template #footer>
-      <p class="text-sm text-center text-gray-500 dark:text-gray-400">
-        {{ chrome.auth.register.haveAccountPrompt }}
-        <NuxtLink :to="{ path: '/auth/login', query: route.query.redirect ? { redirect: route.query.redirect } : undefined }" class="text-primary font-medium">{{ chrome.auth.register.haveAccountCta }}</NuxtLink>
-      </p>
-    </template>
-  </UCard>
+    <!-- Footer -->
+    <p class="mt-8 text-sm text-center text-gray-400 dark:text-gray-500">
+      {{ chrome.auth.register.haveAccountPrompt }}
+      <NuxtLink
+        :to="{ path: '/auth/login', query: route.query.redirect ? { redirect: route.query.redirect } : undefined }"
+        class="font-semibold text-primary hover:underline"
+      >
+        {{ chrome.auth.register.haveAccountCta }}
+      </NuxtLink>
+    </p>
+  </div>
 </template>
