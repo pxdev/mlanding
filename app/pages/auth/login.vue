@@ -11,11 +11,11 @@ const redirectTo = computed(() => {
   const r = route.query.redirect
   return r && r.startsWith('/') && !r.startsWith('//') ? r : localePath('/dashboard')
 })
-const schema = z.object({
-  email: z.string().email('Invalid email address'),
-  password: z.string().min(1, 'Password is required'),
+const schema = computed(() => z.object({
+  email: z.string().email(chrome.value.auth.validation.invalidEmail),
+  password: z.string().min(1, chrome.value.auth.validation.passwordRequired),
   remember: z.boolean().optional()
-})
+}))
 const state = reactive({ email: '', password: '', remember: false })
 const loading = ref(false)
 const showPassword = ref(false)
@@ -27,7 +27,7 @@ async function onSubmit(event) {
     await navigateTo(redirectTo.value)
   }
   catch (err) {
-    toast.add({ title: chrome.value.auth.signIn.failedToast, description: err.statusMessage || err.message, color: 'error' })
+    toast.add({ title: chrome.value.auth.signIn.failedToast, description: localizeAuthError(err, chrome.value), color: 'error' })
   }
   finally {
     loading.value = false
@@ -84,9 +84,9 @@ async function onSubmit(event) {
       </UFormField>
 
       <div class="flex items-center justify-between">
-        <UCheckbox v-model="state.remember" :label="chrome.auth.signIn.rememberMe || 'Remember me'" />
+        <UCheckbox v-model="state.remember" :label="chrome.auth.signIn.rememberMe" />
         <NuxtLink
-          to="/auth/forgot-password"
+          :to="localePath('/auth/forgot-password')"
           class="text-xs font-medium text-gray-400 hover:text-primary transition-colors"
         >
           {{ chrome.auth.signIn.forgotPassword }}
@@ -111,7 +111,7 @@ async function onSubmit(event) {
     <p class="mt-8 text-sm text-center text-gray-400 dark:text-gray-500">
       {{ chrome.auth.signIn.newHerePrompt }}
       <NuxtLink
-        :to="{ path: '/auth/register', query: route.query.redirect ? { redirect: route.query.redirect } : undefined }"
+        :to="{ path: localePath('/auth/register'), query: route.query.redirect ? { redirect: route.query.redirect } : undefined }"
         class="font-semibold text-primary hover:underline"
       >
         {{ chrome.auth.signIn.newHereCta }}

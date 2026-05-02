@@ -307,3 +307,15 @@ export function useChromeCopy() {
   const { locale } = useI18n()
   return computed<ChromeCopy>(() => (locale.value === 'ar' ? ar : en))
 }
+
+// Map a server error from $fetch (or the network) to a localized description.
+// Server endpoints attach `data.code` (e.g. EMAIL_TAKEN, INVALID_CREDENTIALS) so
+// the client can look up a translated message instead of showing the raw English
+// `statusMessage`. Falls back to the server message and finally to a generic
+// localized string so the user never sees an empty toast.
+export function localizeAuthError(err: any, chrome: any): string {
+  const code = err?.data?.code
+  const errors = chrome?.auth?.errors as Record<string, string> | undefined
+  if (code && errors && errors[code]) return errors[code]
+  return err?.statusMessage || err?.message || errors?.GENERIC || 'Something went wrong.'
+}

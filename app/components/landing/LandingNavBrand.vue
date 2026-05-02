@@ -1,15 +1,20 @@
 <script setup lang="ts">
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   to?: string
   hideTextBelow?: 'sm' | 'md' | 'lg'
 }>(), {
-  to: '/',
+  to: undefined,
   hideTextBelow: undefined
 })
+const localePath = useLocalePath()
+// Default the link target to the locale-prefixed home so an AR visitor
+// stays on /ar/ when they tap the brand mark. Callers can pass an explicit
+// `to` to override.
+const resolvedTo = computed(() => props.to ?? localePath('/'))
 </script>
 
 <template>
-  <NuxtLink :to="to" class="flex items-center gap-2 shrink-0 group" aria-label="Momentfy — Home">
+  <NuxtLink :to="resolvedTo" class="flex items-center gap-2 shrink-0 group" aria-label="Momentfy — Home">
     <div class="size-8 rounded-xl bg-primary text-white flex items-center justify-center font-black text-lg shadow-lg shadow-primary/20 group-hover:scale-105 transition-transform">
       M
     </div>

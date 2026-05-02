@@ -519,6 +519,36 @@
       }
     },
     "auth": {
+      "brandPanel": {
+        "headline": "The operating system for booking businesses.",
+        "tagline": "Own the code. Scale without limits. Pay once, use forever."
+      },
+      "validation": {
+        "invalidEmail": "Enter a valid email address",
+        "passwordRequired": "Password is required",
+        "firstNameRequired": "First name is required",
+        "lastNameRequired": "Last name is required",
+        "passwordMin8": "At least 8 characters",
+        "githubFormat": "Letters, numbers and dashes only",
+        "passwordsDontMatch": "Passwords do not match"
+      },
+      "errors": {
+        "EMAIL_TAKEN": "An account with this email already exists",
+        "INVALID_CREDENTIALS": "Invalid email or password",
+        "ACCOUNT_DEACTIVATED": "Your account has been deactivated. Contact support to reactivate it.",
+        "INVALID_RESET_LINK": "This reset link is invalid or has expired. Request a new one.",
+        "CURRENT_PASSWORD_INCORRECT": "Current password is incorrect",
+        "RATE_LIMITED": "Too many attempts — please wait a moment and try again",
+        "GENERIC": "Something went wrong. Please try again."
+      },
+      "successToasts": {
+        "accountCreatedTitle": "Account created",
+        "accountCreatedDesc": "Welcome to Momentfy. Buy a license whenever you're ready.",
+        "passwordUpdatedTitle": "Password updated",
+        "passwordUpdatedDesc": "Sign in with your new password to continue.",
+        "resetEmailSentTitle": "Check your inbox",
+        "resetEmailSentDesc": "If an account exists for that email, a reset link is on its way."
+      },
       "signIn": {
         "docTitle": "Sign in — Momentfy",
         "title": "Sign in",
@@ -527,6 +557,7 @@
         "emailPlaceholder": "you@company.com",
         "password": "Password",
         "passwordPlaceholder": "••••••••",
+        "rememberMe": "Remember me",
         "forgotPassword": "Forgot password?",
         "submit": "Sign in",
         "newHerePrompt": "New here?",

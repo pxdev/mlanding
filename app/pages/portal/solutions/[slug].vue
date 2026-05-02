@@ -11,7 +11,7 @@ const sp = computed(() => copy.value.solutionsPage);
 // Used for prev/next pager and for the "browse all" fallback.
 const solutionOrder = [
     'salon', 'dental', 'medical', 'barber', 'fitness', 'pet',
-    'therapy', 'photo', 'nails', 'events', 'wellness', 'driving', 'tutoring',
+    'therapy', 'photo', 'nails', 'events', 'wellness', 'driving', 'education',
     'professional', 'auto', 'optical', 'carwash', 'coworking',
     'multi-tenant', 'mobile', 'memberships'
 ];

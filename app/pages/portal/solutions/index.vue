@@ -9,7 +9,7 @@ const sp = computed(() => copy.value.solutionsPage)
 const details = computed(() => copy.value.solutionDetails)
 
 // Two groups: industries (fields of work) and business shapes (how you run it).
-const industryOrder = ['salon', 'dental', 'medical', 'barber', 'fitness', 'pet', 'therapy', 'photo', 'nails', 'events', 'wellness', 'driving', 'tutoring', 'professional', 'auto', 'optical', 'carwash', 'coworking']
+const industryOrder = ['salon', 'dental', 'medical', 'barber', 'fitness', 'pet', 'therapy', 'photo', 'nails', 'events', 'wellness', 'driving', 'education', 'professional', 'auto', 'optical', 'carwash', 'coworking']
 const businessOrder = ['multi-tenant', 'mobile', 'memberships']
 
 const industries = computed(() =>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const localePath = useLocalePath()
 const { currentLocale, otherLocale, toggleLocale } = useLandingLocale()
+const chrome = useChromeCopy()
 </script>
 
 <template>
@@ -20,10 +21,10 @@ const { currentLocale, otherLocale, toggleLocale } = useLandingLocale()
       <!-- Value prop -->
       <div class="max-w-sm">
         <h2 class="text-3xl xl:text-4xl font-bold tracking-tight leading-tight">
-          The Operating System for Booking Businesses
+          {{ chrome.auth.brandPanel.headline }}
         </h2>
         <p class="mt-4 text-sm text-white/70 leading-relaxed">
-          Own your code. Scale without limits. Pay once, use forever.
+          {{ chrome.auth.brandPanel.tagline }}
         </p>
       </div>
 

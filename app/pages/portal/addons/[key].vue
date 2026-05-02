@@ -33,7 +33,10 @@ const meta = computed(() => addonMeta[addonKey.value]);
 const allAddons = computed(() => copy.value.addons.items);
 const addonIndex = computed(() => allAddons.value.findIndex(a => a.key === addonKey.value));
 const totalAddons = computed(() => String(allAddons.value.length).padStart(2, '0'));
-const manualHref = computed(() => manualLinkForAddon(addonKey.value));
+const manualHref = computed(() => {
+    const raw = manualLinkForAddon(addonKey.value);
+    return raw ? localePath(raw) : null;
+});
 const prevAddon = computed(() => addonIndex.value > 0 ? allAddons.value[addonIndex.value - 1] : null);
 const nextAddon = computed(() => addonIndex.value < allAddons.value.length - 1 ? allAddons.value[addonIndex.value + 1] : null);
 // Sibling add-ons in the same category

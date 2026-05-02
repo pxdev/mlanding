@@ -157,7 +157,7 @@ async function onLogout() {
     <!-- LEFT: Dark icon rail -->
     <aside class="w-16 hidden lg:flex flex-col bg-primary-900 flex-shrink-0 z-20">
       <div class="h-14 flex items-center justify-center border-b border-white/10 flex-shrink-0">
-        <NuxtLink :to="isAdmin ? '/admin' : '/dashboard'" class="size-8 rounded-lg bg-primary flex items-center justify-center font-black text-white" aria-label="Momentfy">
+        <NuxtLink :to="localePath(isAdmin ? '/admin' : '/dashboard')" class="size-8 rounded-lg bg-primary flex items-center justify-center font-black text-white" aria-label="Momentfy">
           M
         </NuxtLink>
       </div>

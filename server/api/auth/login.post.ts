@@ -11,10 +11,10 @@ export default defineEventHandler(async (event) => {
 
   const account = await prisma.account.findUnique({ where: { email } })
   if (!account || !await verifyPassword(account.passwordHash, password)) {
-    throw createError({ statusCode: 401, statusMessage: 'Invalid email or password' })
+    throw createError({ statusCode: 401, statusMessage: 'Invalid email or password', data: { code: 'INVALID_CREDENTIALS' } })
   }
   if (!account.isActive) {
-    throw createError({ statusCode: 403, statusMessage: 'Account is deactivated' })
+    throw createError({ statusCode: 403, statusMessage: 'Account is deactivated', data: { code: 'ACCOUNT_DEACTIVATED' } })
   }
 
   const shouldBootstrapAdmin = !account.isAdmin && isBootstrapAdminEmail(account.email)

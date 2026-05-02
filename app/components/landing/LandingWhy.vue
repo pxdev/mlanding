@@ -4,11 +4,20 @@ const copy = useLandingCopy()
 
 const whyIcons = ['i-lucide-package-2', 'i-lucide-server', 'i-lucide-languages', 'i-lucide-shield-check', 'i-lucide-brain-circuit', 'i-lucide-smartphone']
 
-// File names derived from titles
+// Stable English filenames keyed by index. Deriving them from the localized
+// title doesn't work for Arabic — the regex strips every non-ASCII character,
+// so all six items would collapse to ".md". Filenames are decorative chrome
+// and should always render as readable English regardless of UI locale.
+const FILE_NAMES = [
+  'source-you-own.md',
+  'self-hosted.md',
+  'bilingual-rtl.md',
+  'compliance.md',
+  'ai-assistant.md',
+  'installs-like-native.md'
+]
 const fileNames = computed(() =>
-  copy.value.why.items.map(item =>
-    item.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') + '.md'
-  )
+  copy.value.why.items.map((_item, i) => FILE_NAMES[i] || `feature-${i + 1}.md`)
 )
 
 const activeIndex = ref(0)
@@ -91,7 +100,7 @@ onMounted(() => {
             <span aria-hidden="true" class="size-2.5 rounded-full bg-amber-400/80" />
             <span aria-hidden="true" class="size-2.5 rounded-full bg-emerald-400/80" />
           </div>
-          <div class="mx-auto flex items-center gap-2 text-[11px] text-gray-500 font-medium">
+          <div class="mx-auto flex items-center gap-2 text-[11px] text-gray-500 font-medium" dir="ltr">
             <UIcon name="i-lucide-file-text" class="size-3" />
             <span>why-momentfy.md</span>
           </div>
@@ -103,21 +112,21 @@ onMounted(() => {
           <div class="lg:col-span-4 bg-gray-50/80 dark:bg-[#0d0d0d] border-e border-black/5 dark:border-white/5 p-2 sm:p-3">
             <div class="flex items-center justify-between mb-2 px-2 sm:px-3 py-1">
               <span class="text-[10px] uppercase tracking-wider text-gray-400 font-bold">Explorer</span>
-              <span class="text-[10px] tabular-nums text-gray-300">{{ String(activeIndex + 1).padStart(2, '0') }} / 06</span>
+              <span class="text-[10px] tabular-nums text-gray-300" dir="ltr">{{ String(activeIndex + 1).padStart(2, '0') }} / 06</span>
             </div>
 
             <div class="space-y-0.5">
               <button
                 v-for="(item, i) in copy.why.items"
                 :key="item.title"
-                class="w-full flex items-center gap-2.5 px-2 sm:px-3 py-2 rounded-lg text-sm transition-all duration-300 text-left"
+                class="w-full flex items-center gap-2.5 px-2 sm:px-3 py-2 rounded-lg text-sm transition-all duration-300 text-start"
                 :class="activeIndex === i
                   ? 'bg-secondary-500/10 text-secondary-600 font-semibold'
                   : 'text-gray-500 hover:bg-black/[0.03] dark:hover:bg-white/[0.03]'"
                 @click="selectFeature(i)"
               >
                 <UIcon :name="whyIcons[i] || 'i-lucide-star'" class="size-4 shrink-0" />
-                <span class="truncate font-mono text-xs">{{ fileNames[i] }}</span>
+                <span class="truncate font-mono text-xs" dir="ltr">{{ fileNames[i] }}</span>
               </button>
             </div>
 
@@ -140,7 +149,7 @@ onMounted(() => {
             <!-- Line numbers gutter -->
             <div
               aria-hidden="true"
-              class="absolute start-0 top-0 bottom-0 w-10 sm:w-12 border-e border-black/5 dark:border-white/5 text-right pr-2 sm:pr-3 pt-5 sm:pt-6 text-[11px] sm:text-xs text-gray-300 dark:text-gray-600 font-mono space-y-4 select-none leading-relaxed"
+              class="absolute start-0 top-0 bottom-0 w-10 sm:w-12 border-e border-black/5 dark:border-white/5 text-end pe-2 sm:pe-3 pt-5 sm:pt-6 text-[11px] sm:text-xs text-gray-300 dark:text-gray-600 font-mono space-y-4 select-none leading-relaxed"
             >
               <div v-for="n in 6" :key="n">{{ n }}</div>
             </div>
@@ -166,7 +175,7 @@ onMounted(() => {
                   </div>
 
                   <!-- Comment line -->
-                  <div class="text-gray-400 dark:text-gray-500 font-mono text-xs mb-6">
+                  <div class="text-gray-400 dark:text-gray-500 font-mono text-xs mb-6" dir="ltr">
                     // Feature {{ String(activeIndex + 1).padStart(2, '0') }} of 06
                   </div>
 
@@ -175,13 +184,14 @@ onMounted(() => {
                     {{ copy.why.items[activeIndex].body }}
                   </p>
 
-                  <!-- Decorative code snippet -->
-                  <div class="mt-6 p-3 sm:p-4 rounded-lg bg-gray-50 dark:bg-white/[0.03] border border-black/5 dark:border-white/5 font-mono text-[11px] sm:text-xs text-gray-500 dark:text-gray-400 space-y-1">
+                  <!-- Decorative code snippet — forced LTR so the inline spans
+                       don't reverse order under RTL ("; "..." = feature const") -->
+                  <div class="mt-6 p-3 sm:p-4 rounded-lg bg-gray-50 dark:bg-white/[0.03] border border-black/5 dark:border-white/5 font-mono text-[11px] sm:text-xs text-gray-500 dark:text-gray-400 space-y-1" dir="ltr">
                     <div>
                       <span class="text-purple-600 dark:text-purple-400">const</span>
                       <span class="text-blue-600 dark:text-blue-400"> feature</span>
                       <span> = </span>
-                      <span class="text-green-600 dark:text-green-400">"{{ copy.why.items[activeIndex].title }}"</span>
+                      <span class="text-green-600 dark:text-green-400" dir="auto">"{{ copy.why.items[activeIndex].title }}"</span>
                       <span>;</span>
                     </div>
                     <div>

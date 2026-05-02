@@ -69,15 +69,29 @@ export async function sendEmail(opts: SendEmailOptions) {
   })
 }
 
-export function emailLayout(title: string, body: string): string {
+export function emailLayout(title: string, body: string, locale: 'en' | 'ar' = 'en'): string {
+  const dir = locale === 'ar' ? 'rtl' : 'ltr'
+  const lang = locale === 'ar' ? 'ar' : 'en'
   return `<!doctype html>
-<html><body style="font-family:-apple-system,Segoe UI,Roboto,sans-serif;background:#f6f7f9;margin:0;padding:32px">
+<html lang="${lang}" dir="${dir}"><body style="font-family:-apple-system,Segoe UI,Roboto,'Tahoma','Arial',sans-serif;background:#f6f7f9;margin:0;padding:32px">
   <div style="max-width:560px;margin:0 auto;background:#fff;border-radius:14px;padding:28px;box-shadow:0 1px 3px rgba(0,0,0,.06)">
     <h1 style="margin:0 0 16px;font-size:18px;color:#111">${title}</h1>
     ${body}
     <p style="margin-top:32px;font-size:12px;color:#888">— Momentfy</p>
   </div>
 </body></html>`
+}
+
+// Best-effort locale detection from the request — reads the cookie that
+// @nuxtjs/i18n drops (`i18n_redirected`) so emails sent from the AR portal
+// land in the user's inbox in Arabic. Falls back to `en` when missing or
+// unknown so we never break existing flows.
+export function detectLocaleFromEvent(event: any): 'en' | 'ar' {
+  try {
+    const cookie = getCookie(event, 'i18n_redirected')
+    if (cookie === 'ar') return 'ar'
+  } catch {}
+  return 'en'
 }
 
 // Used by the admin "test connection" button.

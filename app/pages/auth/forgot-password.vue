@@ -2,11 +2,12 @@
 import { z } from 'zod'
 definePageMeta({ layout: 'auth', middleware: 'guest' })
 const chrome = useChromeCopy()
+const localePath = useLocalePath()
 useHead({ title: () => chrome.value.auth.forgot.docTitle })
 const toast = useToast()
-const schema = z.object({
-  email: z.string().email('Invalid email address')
-})
+const schema = computed(() => z.object({
+  email: z.string().email(chrome.value.auth.validation.invalidEmail)
+}))
 const state = reactive({ email: '' })
 const loading = ref(false)
 const sent = ref(false)
@@ -17,7 +18,7 @@ async function onSubmit(event) {
     sent.value = true
   }
   catch (err) {
-    toast.add({ title: chrome.value.auth.forgot.failedToast, description: err.statusMessage || err.message, color: 'error' })
+    toast.add({ title: chrome.value.auth.forgot.failedToast, description: localizeAuthError(err, chrome.value), color: 'error' })
   }
   finally {
     loading.value = false
@@ -43,7 +44,7 @@ async function onSubmit(event) {
         <UIcon name="i-lucide-mail-check" class="size-6 text-emerald-500" />
       </div>
       <p class="text-sm text-gray-600 dark:text-gray-300">{{ chrome.auth.forgot.sentBody }}</p>
-      <NuxtLink to="/auth/login" class="inline-flex items-center gap-2 mt-6 text-sm font-semibold text-primary hover:underline">
+      <NuxtLink :to="localePath('/auth/login')" class="inline-flex items-center gap-2 mt-6 text-sm font-semibold text-primary hover:underline">
         <UIcon name="i-lucide-arrow-left" class="size-4" />
         {{ chrome.auth.forgot.backToSignIn }}
       </NuxtLink>
@@ -67,7 +68,7 @@ async function onSubmit(event) {
 
     <!-- Back link -->
     <p v-if="!sent" class="mt-8 text-sm text-center">
-      <NuxtLink to="/auth/login" class="inline-flex items-center gap-2 text-gray-400 hover:text-primary transition-colors font-medium">
+      <NuxtLink :to="localePath('/auth/login')" class="inline-flex items-center gap-2 text-gray-400 hover:text-primary transition-colors font-medium">
         <UIcon name="i-lucide-arrow-left" class="size-4" />
         {{ chrome.auth.forgot.backToSignIn }}
       </NuxtLink>

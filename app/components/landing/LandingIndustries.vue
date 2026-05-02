@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const copy = useLandingCopy()
+const localePath = useLocalePath()
 
 // Per-vertical photo + icon + accent. Photos live in /public/images.
 type Accent = 'rose' | 'sky' | 'red' | 'stone' | 'emerald' | 'amber' | 'violet' | 'cyan' | 'indigo' | 'slate' | 'orange' | 'blue' | 'fuchsia' | 'yellow'
@@ -116,9 +117,9 @@ onBeforeUnmount(() => {
 const solutionIds = computed(() => new Set(Object.keys(copy.value.solutionDetails)))
 const showcaseIds = computed(() => new Set(copy.value.showcasePage.verticals.map((x: { id: string }) => x.id)))
 function industryTarget(id: string) {
-  if (solutionIds.value.has(id)) return `/portal/solutions/${id}`
-  if (showcaseIds.value.has(id)) return `/portal/showcase#${id}`
-  return '/portal/solutions'
+  if (solutionIds.value.has(id)) return localePath(`/portal/solutions/${id}`)
+  if (showcaseIds.value.has(id)) return `${localePath('/portal/showcase')}#${id}`
+  return localePath('/portal/solutions')
 }
 
 function onImgError(e: Event) {
@@ -292,7 +293,7 @@ function onImgError(e: Event) {
     <!-- Section CTA -->
     <div class="max-w-7xl mx-auto px-5 sm:px-8 mt-10 sm:mt-12">
       <NuxtLink
-        :to="copy.industries.ctaHref"
+        :to="localePath(copy.industries.ctaHref)"
         class="inline-flex items-center gap-3 text-sm sm:text-base font-bold tracking-tight text-primary hover:text-secondary-600 transition-colors group"
       >
         <span class="border-b-2 border-secondary-500/40 group-hover:border-secondary-500 pb-0.5 transition-colors">

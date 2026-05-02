@@ -75,25 +75,34 @@ async function goToReview(idx, plan) {
         </div>
       </div>
 
-      <!-- A) What every plan includes — shown once, not repeated 3× -->
+      <!-- A) What every plan includes — sharp headline, two-column rows with
+           icon + label + value-prop hint. No redundant subtitle. -->
       <div class="mb-20">
-        <div class="flex items-baseline gap-3 mb-8 pb-4 border-b border-black/10 dark:border-white/10">
-          <span class="text-[11px] tabular-nums text-gray-400">A</span>
-          <p class="text-[11px] uppercase tracking-[0.25em] text-gray-400">
-            {{ copy.pricing.includedAllLabel }}
-          </p>
+        <div class="mb-10 pb-5 border-b border-black/10 dark:border-white/10 flex flex-col sm:flex-row sm:items-end gap-3">
+          <span class="text-[11px] tabular-nums text-gray-400 font-bold">A</span>
+          <div class="flex-1">
+            <p class="text-xl sm:text-2xl lg:text-3xl font-black tracking-tight text-gray-900 dark:text-white max-w-3xl leading-tight">
+              {{ copy.pricing.includedAllLabel }}
+            </p>
+            <p v-if="copy.pricing.includedAllSub" class="mt-2 text-sm text-gray-500 dark:text-gray-400 max-w-2xl">
+              {{ copy.pricing.includedAllSub }}
+            </p>
+          </div>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-5 gap-x-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-1">
           <div
-            v-for="item in copy.pricing.includedAll"
-            :key="item"
-            class="flex items-start gap-3"
+            v-for="(item, i) in copy.pricing.includedAll"
+            :key="item.label"
+            class="group flex items-start gap-3 py-3 border-b border-black/[0.06] dark:border-white/[0.06]"
           >
-            <UIcon
-              name="i-lucide-check"
-              class="size-5 shrink-0 mt-0.5 text-emerald-500"
-            />
-            <span class="text-sm sm:text-base font-semibold">{{ item }}</span>
+            <span class="inline-flex items-center justify-center size-9 rounded-lg bg-secondary-500/10 text-secondary-600 dark:text-secondary-400 ring-1 ring-secondary-500/20 shrink-0 transition-colors group-hover:bg-secondary-500 group-hover:text-white">
+              <UIcon :name="item.icon" class="size-4" />
+            </span>
+            <div class="flex-1 min-w-0">
+              <p class="text-sm sm:text-base font-bold leading-snug">{{ item.label }}</p>
+              <p class="mt-0.5 text-xs sm:text-sm text-gray-500 dark:text-gray-400 leading-relaxed">{{ item.hint }}</p>
+            </div>
+            <UIcon name="i-lucide-check" class="size-4 text-emerald-500 shrink-0 mt-1 opacity-60 group-hover:opacity-100 transition-opacity" aria-hidden="true" />
           </div>
         </div>
       </div>

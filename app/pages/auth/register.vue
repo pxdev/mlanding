@@ -11,13 +11,13 @@ const redirectTo = computed(() => {
   const r = route.query.redirect
   return r && r.startsWith('/') && !r.startsWith('//') ? r : localePath('/dashboard')
 })
-const schema = z.object({
-  firstName: z.string().min(1, 'First name is required').max(80),
-  lastName: z.string().min(1, 'Last name is required').max(80),
-  email: z.string().email('Invalid email address').max(160),
-  password: z.string().min(8, 'At least 8 characters').max(200),
-  githubUsername: z.string().regex(/^[a-zA-Z0-9-]{1,39}$/, 'Letters, numbers and dashes only').optional().or(z.literal(''))
-})
+const schema = computed(() => z.object({
+  firstName: z.string().min(1, chrome.value.auth.validation.firstNameRequired).max(80),
+  lastName: z.string().min(1, chrome.value.auth.validation.lastNameRequired).max(80),
+  email: z.string().email(chrome.value.auth.validation.invalidEmail).max(160),
+  password: z.string().min(8, chrome.value.auth.validation.passwordMin8).max(200),
+  githubUsername: z.string().regex(/^[a-zA-Z0-9-]{1,39}$/, chrome.value.auth.validation.githubFormat).optional().or(z.literal(''))
+}))
 const state = reactive({
   firstName: '',
   lastName: '',
@@ -38,10 +38,15 @@ async function onSubmit(event) {
       }
     })
     await fetchSession()
+    toast.add({
+      title: chrome.value.auth.successToasts.accountCreatedTitle,
+      description: chrome.value.auth.successToasts.accountCreatedDesc,
+      color: 'success'
+    })
     await navigateTo(redirectTo.value)
   }
   catch (err) {
-    toast.add({ title: chrome.value.auth.register.failedToast, description: err.statusMessage || err.message, color: 'error' })
+    toast.add({ title: chrome.value.auth.register.failedToast, description: localizeAuthError(err, chrome.value), color: 'error' })
   }
   finally {
     loading.value = false
@@ -128,7 +133,7 @@ async function onSubmit(event) {
     <p class="mt-8 text-sm text-center text-gray-400 dark:text-gray-500">
       {{ chrome.auth.register.haveAccountPrompt }}
       <NuxtLink
-        :to="{ path: '/auth/login', query: route.query.redirect ? { redirect: route.query.redirect } : undefined }"
+        :to="{ path: localePath('/auth/login'), query: route.query.redirect ? { redirect: route.query.redirect } : undefined }"
         class="font-semibold text-primary hover:underline"
       >
         {{ chrome.auth.register.haveAccountCta }}

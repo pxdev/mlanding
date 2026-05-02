@@ -1,6 +1,7 @@
 <script setup>
 definePageMeta({ layout: 'landing' });
 const copy = useLandingCopy();
+const localePath = useLocalePath();
 const { locale } = useI18n();
 useLandingSeo({
     ar: {
@@ -93,13 +94,14 @@ const moduleIds = computed(() => new Set(copy.value.modules.items.map(m => m.id)
 const addonKeys = computed(() => new Set(copy.value.addons.items.map(a => a.key)));
 function detailLink(id) {
     if (moduleIds.value.has(id))
-        return `/portal/modules/${id}`;
+        return localePath(`/portal/modules/${id}`);
     if (addonKeys.value.has(id))
-        return `/portal/addons/${id}`;
+        return localePath(`/portal/addons/${id}`);
     return null;
 }
 function manualLink(id) {
-    return manualLinkForFeature(id);
+    const raw = manualLinkForFeature(id);
+    return raw ? localePath(raw) : null;
 }
 </script>
 

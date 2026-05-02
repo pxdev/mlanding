@@ -13,10 +13,10 @@ export default defineEventHandler(async (event) => {
   })
 
   if (!reset || reset.usedAt || reset.expiresAt < new Date()) {
-    throw createError({ statusCode: 400, statusMessage: 'Invalid or expired reset link' })
+    throw createError({ statusCode: 400, statusMessage: 'Invalid or expired reset link', data: { code: 'INVALID_RESET_LINK' } })
   }
   if (!reset.account.isActive) {
-    throw createError({ statusCode: 403, statusMessage: 'Account is deactivated' })
+    throw createError({ statusCode: 403, statusMessage: 'Account is deactivated', data: { code: 'ACCOUNT_DEACTIVATED' } })
   }
 
   const passwordHash = await hashPassword(password)

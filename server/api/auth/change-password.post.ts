@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
 
   const account = await prisma.account.findUnique({ where: { id: user.id } })
   if (!account || !await verifyPassword(account.passwordHash, currentPassword)) {
-    throw createError({ statusCode: 401, statusMessage: 'Current password is incorrect' })
+    throw createError({ statusCode: 401, statusMessage: 'Current password is incorrect', data: { code: 'CURRENT_PASSWORD_INCORRECT' } })
   }
 
   await prisma.account.update({

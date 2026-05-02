@@ -51,7 +51,10 @@ const modules = computed(() => copy.value.modules.items);
 const moduleIndex = computed(() => modules.value.findIndex(m => m.id === moduleId.value));
 const totalModules = computed(() => String(modules.value.length).padStart(2, '0'));
 const visual = computed(() => visuals[moduleId.value]);
-const manualHref = computed(() => manualLinkForFeature(moduleId.value));
+const manualHref = computed(() => {
+    const raw = manualLinkForFeature(moduleId.value);
+    return raw ? localePath(raw) : null;
+});
 const relatedIds = computed(() => integrations[moduleId.value] || []);
 const relatedModules = computed(() => relatedIds.value.map(id => modules.value.find(m => m.id === id)).filter(Boolean));
 // prev / next navigation

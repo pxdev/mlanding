@@ -39,6 +39,7 @@ export function enforceRateLimit(event: any, options: RateLimitOptions) {
       statusCode: 429,
       statusMessage: 'Too many attempts — try again in a minute',
       data: {
+        code: 'RATE_LIMITED',
         reason: 'rate_limited',
         windowSeconds: options.windowSeconds,
         hint: `You can retry in up to ${options.windowSeconds} seconds.`
@@ -52,7 +53,7 @@ export function enforceRateLimitKey(keySuffix: string, options: RateLimitOptions
     throw createError({
       statusCode: 429,
       statusMessage: 'Too many attempts — try again in a minute',
-      data: { reason: 'rate_limited', windowSeconds: options.windowSeconds }
+      data: { code: 'RATE_LIMITED', reason: 'rate_limited', windowSeconds: options.windowSeconds }
     })
   }
 }

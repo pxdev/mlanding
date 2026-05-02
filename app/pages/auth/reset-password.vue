@@ -2,14 +2,15 @@
 import { z } from 'zod'
 definePageMeta({ layout: 'auth', middleware: 'guest' })
 const chrome = useChromeCopy()
+const localePath = useLocalePath()
 useHead({ title: () => chrome.value.auth.reset.docTitle })
 const route = useRoute()
 const toast = useToast()
 const token = computed(() => route.query.token || '')
-const schema = z.object({
-  password: z.string().min(8, 'At least 8 characters').max(200),
+const schema = computed(() => z.object({
+  password: z.string().min(8, chrome.value.auth.validation.passwordMin8).max(200),
   confirm: z.string()
-}).refine(d => d.password === d.confirm, { message: 'Passwords do not match', path: ['confirm'] })
+}).refine(d => d.password === d.confirm, { message: chrome.value.auth.validation.passwordsDontMatch, path: ['confirm'] }))
 const state = reactive({ password: '', confirm: '' })
 const loading = ref(false)
 const done = ref(false)
@@ -27,7 +28,7 @@ async function onSubmit(event) {
     done.value = true
   }
   catch (err) {
-    toast.add({ title: chrome.value.auth.reset.failedToast, description: err.statusMessage || err.message, color: 'error' })
+    toast.add({ title: chrome.value.auth.reset.failedToast, description: localizeAuthError(err, chrome.value), color: 'error' })
   }
   finally {
     loading.value = false
@@ -53,7 +54,7 @@ async function onSubmit(event) {
         <UIcon name="i-lucide-check-circle-2" class="size-6 text-emerald-500" />
       </div>
       <p class="text-sm text-gray-600 dark:text-gray-300">{{ chrome.auth.reset.doneBody }}</p>
-      <NuxtLink to="/auth/login" class="inline-flex items-center justify-center gap-2 mt-6 w-full h-11 rounded-xl bg-primary text-white text-sm font-semibold hover:opacity-90 transition-opacity">
+      <NuxtLink :to="localePath('/auth/login')" class="inline-flex items-center justify-center gap-2 mt-6 w-full h-11 rounded-xl bg-primary text-white text-sm font-semibold hover:opacity-90 transition-opacity">
         {{ chrome.auth.reset.signIn }}
       </NuxtLink>
     </div>

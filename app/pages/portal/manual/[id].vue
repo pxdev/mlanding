@@ -17,7 +17,7 @@ const article = computed(() => manual.value.articles[moduleId.value])
 
 // Unknown slug — bounce to the manual home.
 watchEffect(() => {
-  if (!moduleEntry.value) router.replace('/portal/manual')
+  if (!moduleEntry.value) router.replace(localePath('/portal/manual'))
 })
 
 const isComingSoon = computed(() => moduleEntry.value?.status === 'soon')

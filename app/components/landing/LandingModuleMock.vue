@@ -3,114 +3,137 @@ defineProps<{ id: string; color?: string }>()
 </script>
 
 <template>
-  <!-- ════ Calendar — Day view with member lanes, brand-aligned ════ -->
+  <!-- ════ Calendar — Day view: matches the APP toolbar (Today · date · view tabs ·
+       team filter · + Add), 12-hour gutter, 4 staff lanes with avatar+name centred,
+       diagonal-hatch empty grid, red horizontal "now" line. ════ -->
   <div v-if="id === 'calendar'" class="w-full text-[9px]">
-    <!-- Top bar: date + view-mode segmented control -->
-    <div class="flex items-center justify-between mb-3">
-      <div>
-        <p class="text-sm font-black text-gray-900 dark:text-white tracking-tight leading-none">Tue · 22 Apr</p>
-        <p class="text-[9px] text-gray-400 mt-1">14 appointments · 3 staff</p>
+    <!-- Top toolbar: Today | < date > | view tabs | filters | + Add -->
+    <div class="flex items-center gap-1.5 mb-3">
+      <span class="px-1.5 py-0.5 rounded border border-black/10 dark:border-white/10 text-[7px] font-bold text-gray-700 dark:text-gray-300">Today</span>
+      <span class="size-3.5 rounded border border-black/10 dark:border-white/10 flex items-center justify-center text-[8px] text-gray-500">‹</span>
+      <span class="text-[9px] font-black tabular-nums text-gray-900 dark:text-white">Fri, 01/05/26</span>
+      <span class="size-3.5 rounded border border-black/10 dark:border-white/10 flex items-center justify-center text-[8px] text-gray-500">›</span>
+      <div class="mx-auto flex gap-0.5 bg-black/5 dark:bg-white/10 rounded-full p-0.5 font-bold text-[7px]">
+        <span class="px-1.5 py-0.5 rounded-full bg-white dark:bg-black text-gray-900 dark:text-white shadow-sm">Day</span>
+        <span class="px-1.5 py-0.5 text-gray-500">3 Day</span>
+        <span class="px-1.5 py-0.5 text-gray-500">Week</span>
+        <span class="px-1.5 py-0.5 text-gray-500">Month</span>
+        <span class="px-1.5 py-0.5 text-gray-500">Agenda</span>
       </div>
-      <div class="flex gap-0.5 bg-black/5 dark:bg-white/10 rounded-full p-0.5 font-bold text-[8px]">
-        <span class="px-2 py-1 rounded-full bg-primary text-white dark:bg-white dark:text-primary shadow-sm">Day</span>
-        <span class="px-2 py-1 text-gray-500 dark:text-gray-400">3D</span>
-        <span class="px-2 py-1 text-gray-500 dark:text-gray-400">Wk</span>
-        <span class="px-2 py-1 text-gray-500 dark:text-gray-400">Mo</span>
-      </div>
+      <span class="px-1.5 py-0.5 rounded-full bg-black/5 dark:bg-white/10 text-[7px] font-bold text-gray-700 dark:text-gray-300 inline-flex items-center gap-1">
+        <UIcon name="i-lucide-users" class="size-2" />Team
+      </span>
+      <span class="px-1.5 py-0.5 rounded bg-primary text-white text-[7px] font-bold inline-flex items-center gap-0.5">
+        <UIcon name="i-lucide-plus" class="size-2" />Add
+      </span>
     </div>
 
-    <!-- Calendar grid: time gutter + 3 member lanes -->
-    <div class="flex gap-1.5">
-      <!-- Time gutter -->
-      <div class="w-5 pt-8 flex flex-col text-[7px] text-gray-400 tabular-nums">
-        <span v-for="h in ['09', '10', '11', '12', '13', '14']" :key="h" class="h-[22px] leading-none">{{ h }}</span>
+    <!-- Calendar grid: time gutter + 4 staff lanes (matches APP) -->
+    <div class="flex gap-1.5 relative">
+      <!-- Time gutter (12-hour with am/pm like the APP) -->
+      <div class="w-7 pt-7 flex flex-col text-[7px] text-gray-400 tabular-nums leading-none">
+        <span v-for="h in ['9 AM', '10 AM', '11 AM', '12 PM', '1 PM', '2 PM']" :key="h" class="h-[22px]">{{ h }}</span>
       </div>
 
-      <!-- Member lanes -->
-      <div class="flex-1 grid grid-cols-3 gap-1">
-        <!-- Lane: Lina (rose category) -->
+      <!-- Staff lanes -->
+      <div class="flex-1 grid grid-cols-4 gap-1 relative">
+        <!-- Diagonal hatching baseline — drawn behind the lanes via SVG, mirrors the APP's empty grid -->
+        <div aria-hidden="true" class="absolute inset-x-0 top-7 bottom-0 pointer-events-none rounded opacity-[0.5]" style="background-image: repeating-linear-gradient(45deg, rgba(0,0,0,0.04) 0 2px, transparent 2px 8px);" />
+
+        <!-- Lane: Sarah Johnson -->
         <div class="relative">
-          <!-- Member header -->
-          <div class="flex items-center gap-1 mb-1 pb-1 border-b border-black/10 dark:border-white/10">
-            <div class="size-4 rounded-full bg-gradient-to-br from-secondary-400 to-rose-500 text-white text-[7px] font-black flex items-center justify-center">LH</div>
-            <span class="text-[8px] font-bold text-gray-700 dark:text-gray-300 truncate">Lina</span>
-            <span aria-hidden="true" class="ms-auto size-1.5 rounded-full bg-rose-500 animate-pulse" />
+          <div class="flex flex-col items-center mb-1 pb-1 border-b border-black/10 dark:border-white/10">
+            <div class="size-4 rounded-full bg-secondary-100 dark:bg-secondary-900/40 text-secondary-700 dark:text-secondary-300 ring-1 ring-secondary-300 text-[6px] font-black flex items-center justify-center">SJ</div>
+            <span class="mt-0.5 text-[7px] font-semibold text-gray-700 dark:text-gray-300 truncate max-w-full">Sarah</span>
           </div>
-          <!-- Hour ticks behind appointments -->
-          <div aria-hidden="true" class="absolute inset-x-0 top-8 h-[132px] pointer-events-none">
-            <div v-for="n in 6" :key="n" class="h-[22px] border-t border-black/5 dark:border-white/10" />
-          </div>
-          <!-- Appointments (colored by service category) -->
           <div class="relative space-y-0.5">
-            <div class="h-[43px] rounded bg-gradient-to-br from-secondary-400 to-rose-500 text-white px-1.5 py-1 flex flex-col justify-between leading-tight shadow-sm shadow-rose-500/25">
-              <p class="font-black text-[9px] truncate">Color & Cut</p>
-              <p class="text-[7px] opacity-90 truncate">Lina H. · 9:00</p>
+            <div class="h-[43px] rounded bg-gradient-to-br from-secondary-400 to-rose-500 text-white px-1 py-0.5 flex flex-col justify-between leading-tight shadow-sm shadow-rose-500/25">
+              <p class="font-black text-[8px] truncate">Color & Cut</p>
+              <p class="text-[7px] opacity-90 truncate">Lina H.</p>
             </div>
-            <div class="h-[21px] rounded bg-gray-200 dark:bg-white/5 text-gray-500 px-1.5 flex items-center text-[7px] font-semibold"><UIcon name="i-lucide-coffee" class="size-2.5 me-1" />Break</div>
-            <div class="h-[43px] rounded bg-gradient-to-br from-secondary-400 to-secondary-500 text-white px-1.5 py-1 flex flex-col justify-between leading-tight shadow-sm shadow-violet-500/25">
-              <p class="font-black text-[9px] truncate">Facial Glow</p>
-              <p class="text-[7px] opacity-90 truncate">Noura S. · 12:00</p>
+            <div class="h-[21px] rounded bg-gray-200 dark:bg-white/5 text-gray-500 px-1 flex items-center text-[7px] font-semibold">
+              <UIcon name="i-lucide-coffee" class="size-2.5 me-1" />Break
+            </div>
+            <div class="h-[43px] rounded bg-gradient-to-br from-secondary-400 to-secondary-500 text-white px-1 py-0.5 flex flex-col justify-between leading-tight shadow-sm">
+              <p class="font-black text-[8px] truncate">Facial</p>
+              <p class="text-[7px] opacity-90 truncate">Noura S.</p>
             </div>
           </div>
         </div>
 
-        <!-- Lane: Karim (sky category) -->
+        <!-- Lane: Ahmed Hassan -->
         <div class="relative">
-          <div class="flex items-center gap-1 mb-1 pb-1 border-b border-black/10 dark:border-white/10">
-            <div class="size-4 rounded-full bg-gradient-to-br from-secondary-400 to-secondary-500 text-white text-[7px] font-black flex items-center justify-center">KM</div>
-            <span class="text-[8px] font-bold text-gray-700 dark:text-gray-300 truncate">Karim</span>
-          </div>
-          <div aria-hidden="true" class="absolute inset-x-0 top-8 h-[132px] pointer-events-none">
-            <div v-for="n in 6" :key="n" class="h-[22px] border-t border-black/5 dark:border-white/10" />
+          <div class="flex flex-col items-center mb-1 pb-1 border-b border-black/10 dark:border-white/10">
+            <div class="size-4 rounded-full bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 ring-1 ring-emerald-300 text-[6px] font-black flex items-center justify-center">AH</div>
+            <span class="mt-0.5 text-[7px] font-semibold text-gray-700 dark:text-gray-300 truncate max-w-full">Ahmed</span>
           </div>
           <div class="relative space-y-0.5">
-            <div class="h-[21px] rounded bg-gradient-to-br from-secondary-400 to-secondary-500 text-white px-1.5 flex items-center text-[8px] font-bold shadow-sm shadow-sky-500/25">
+            <div class="h-[21px] rounded bg-gradient-to-br from-secondary-400 to-secondary-500 text-white px-1 flex items-center text-[7px] font-bold">
               <span class="truncate">Consult</span>
             </div>
-            <div class="h-[32px] rounded bg-gradient-to-br from-emerald-400 to-secondary-500 text-white px-1.5 py-0.5 flex flex-col justify-center leading-tight shadow-sm shadow-emerald-500/25">
-              <p class="font-black text-[8px] truncate">Deep Tissue</p>
-              <p class="text-[7px] opacity-90 truncate">60 min</p>
+            <div class="h-[32px] rounded bg-gradient-to-br from-emerald-400 to-secondary-500 text-white px-1 py-0.5 flex flex-col justify-center leading-tight">
+              <p class="font-black text-[7px] truncate">Deep Tissue</p>
+              <p class="text-[6px] opacity-90 truncate">60 min</p>
             </div>
-            <!-- Status: checked-in dot -->
-            <div class="h-[32px] rounded border border-secondary-500/50 bg-secondary-500/5 text-secondary-700 dark:text-secondary-300 px-1.5 py-0.5 flex flex-col justify-center leading-tight">
-              <p class="font-black text-[8px] truncate">Trim · Confirmed</p>
-              <p class="text-[7px] opacity-80 truncate">Omar R. · 13:00</p>
+            <div class="h-[32px] rounded border border-secondary-500/50 bg-secondary-500/5 text-secondary-700 dark:text-secondary-300 px-1 py-0.5 flex flex-col justify-center leading-tight">
+              <p class="font-black text-[7px] truncate">Trim</p>
+              <p class="text-[6px] opacity-80 truncate">Omar R.</p>
             </div>
           </div>
         </div>
 
-        <!-- Lane: Noura (emerald category) -->
+        <!-- Lane: Lina Rashid -->
         <div class="relative">
-          <div class="flex items-center gap-1 mb-1 pb-1 border-b border-black/10 dark:border-white/10">
-            <div class="size-4 rounded-full bg-gradient-to-br from-emerald-400 to-secondary-500 text-white text-[7px] font-black flex items-center justify-center">NS</div>
-            <span class="text-[8px] font-bold text-gray-700 dark:text-gray-300 truncate">Noura</span>
-          </div>
-          <div aria-hidden="true" class="absolute inset-x-0 top-8 h-[132px] pointer-events-none">
-            <div v-for="n in 6" :key="n" class="h-[22px] border-t border-black/5 dark:border-white/10" />
+          <div class="flex flex-col items-center mb-1 pb-1 border-b border-black/10 dark:border-white/10">
+            <div class="size-4 rounded-full bg-violet-100 dark:bg-violet-900/40 text-violet-700 dark:text-violet-300 ring-1 ring-violet-300 text-[6px] font-black flex items-center justify-center">LR</div>
+            <span class="mt-0.5 text-[7px] font-semibold text-gray-700 dark:text-gray-300 truncate max-w-full">Lina</span>
           </div>
           <div class="relative space-y-0.5">
-            <div class="h-[32px] rounded bg-gradient-to-br from-amber-400 to-orange-500 text-white px-1.5 py-0.5 flex flex-col justify-center leading-tight shadow-sm shadow-amber-500/25">
-              <p class="font-black text-[8px] truncate">Waxing</p>
-              <p class="text-[7px] opacity-90 truncate">Rania K.</p>
+            <div class="h-[32px] rounded bg-gradient-to-br from-amber-400 to-orange-500 text-white px-1 py-0.5 flex flex-col justify-center leading-tight">
+              <p class="font-black text-[7px] truncate">Waxing</p>
+              <p class="text-[6px] opacity-90 truncate">Rania K.</p>
             </div>
-            <!-- "Now" indicator -->
-            <div class="relative h-[21px]">
-              <div aria-hidden="true" class="absolute inset-x-0 top-1/2 -translate-y-1/2 flex items-center gap-1">
-                <span class="size-1.5 rounded-full bg-rose-500 ring-2 ring-rose-500/20 animate-pulse" />
-                <span class="flex-1 h-px bg-rose-500" />
-                <span class="text-[7px] font-black text-rose-500 tabular-nums">14:32</span>
-              </div>
-            </div>
-            <!-- Free slot with dashed border -->
-            <div class="h-[32px] rounded border border-dashed border-gray-300 dark:border-white/20 text-gray-400 flex items-center justify-center text-[7px] font-semibold">
+            <div class="h-[21px] rounded border border-dashed border-gray-300 dark:border-white/20 text-gray-400 flex items-center justify-center text-[7px] font-semibold">
               + Add
             </div>
+            <div class="h-[43px] rounded bg-gradient-to-br from-pink-400 to-rose-500 text-white px-1 py-0.5 flex flex-col justify-between leading-tight">
+              <p class="font-black text-[7px] truncate">Lash Set</p>
+              <p class="text-[6px] opacity-90 truncate">Mona F.</p>
+            </div>
           </div>
+        </div>
+
+        <!-- Lane: Ahmed Amin -->
+        <div class="relative">
+          <div class="flex flex-col items-center mb-1 pb-1 border-b border-black/10 dark:border-white/10">
+            <div class="size-4 rounded-full bg-sky-100 dark:bg-sky-900/40 text-sky-700 dark:text-sky-300 ring-1 ring-sky-300 text-[6px] font-black flex items-center justify-center">AA</div>
+            <span class="mt-0.5 text-[7px] font-semibold text-gray-700 dark:text-gray-300 truncate max-w-full">Ahmed</span>
+          </div>
+          <div class="relative space-y-0.5">
+            <div class="h-[43px] rounded bg-gradient-to-br from-sky-400 to-secondary-500 text-white px-1 py-0.5 flex flex-col justify-between leading-tight">
+              <p class="font-black text-[7px] truncate">Massage 90</p>
+              <p class="text-[6px] opacity-90 truncate">Karim M.</p>
+            </div>
+            <div class="h-[21px] rounded border border-dashed border-gray-300 dark:border-white/20 text-gray-400 flex items-center justify-center text-[7px] font-semibold">
+              + Add
+            </div>
+            <div class="h-[32px] rounded bg-gradient-to-br from-emerald-400 to-teal-500 text-white px-1 py-0.5 flex flex-col justify-center leading-tight">
+              <p class="font-black text-[7px] truncate">Manicure</p>
+              <p class="text-[6px] opacity-90 truncate">Sara K.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Red horizontal "now" line spanning every lane (real APP) -->
+        <div aria-hidden="true" class="absolute start-0 end-0 top-[88px] flex items-center gap-0 pointer-events-none">
+          <span class="absolute -start-7 -translate-y-1/2 px-1 py-px rounded-sm bg-rose-500 text-white text-[6px] font-black tabular-nums">2:00 PM</span>
+          <span class="size-1.5 rounded-full bg-rose-500" />
+          <span class="flex-1 h-px bg-rose-500" />
         </div>
       </div>
     </div>
 
-    <!-- Footer: quick stats -->
+    <!-- Footer: today's quick stats (mirror dashboard appointment KPI tone) -->
     <div class="mt-3 pt-2 border-t border-black/5 dark:border-white/10 flex items-center gap-3 text-[8px] font-semibold">
       <span class="inline-flex items-center gap-1 text-amber-600 dark:text-amber-400">
         <span aria-hidden="true" class="size-1.5 rounded-full bg-amber-500" />
@@ -127,147 +150,186 @@ defineProps<{ id: string; color?: string }>()
     </div>
   </div>
 
-  <!-- ════ Sales / POS — top bar + KPI cards + invoice rows + payment split ════ -->
+  <!-- ════ Sales / POS — Daily Summary screen: KPI strip across the top, then a
+       Transaction summary table (Services / Products / Memberships) plus a Cash
+       movement summary by payment type — exactly as the APP renders. SAR shown
+       with the new Saudi Riyal glyph (U+20C1) the way receipts print. ════ -->
   <div v-else-if="id === 'sales'" class="w-full text-[9px]">
-    <!-- Top bar: date + view tabs -->
-    <div class="flex items-center justify-between mb-3">
+    <!-- Header: title + Today chip + + New Sale -->
+    <div class="flex items-center justify-between mb-2">
       <div>
-        <p class="text-sm font-black text-gray-900 dark:text-white tracking-tight leading-none">Tue · 22 Apr</p>
-        <p class="text-[9px] text-gray-400 mt-1">12 invoices · SAR 4,820 today</p>
+        <p class="text-[10px] font-black text-gray-900 dark:text-white tracking-tight leading-none">Daily Summary</p>
+        <p class="text-[7px] text-gray-400 mt-0.5">Today's revenue, transactions & cash movement</p>
       </div>
-      <div class="flex gap-0.5 bg-black/5 dark:bg-white/10 rounded-full p-0.5 font-bold text-[8px]">
-        <span class="px-2 py-1 rounded-full bg-primary text-white dark:bg-white dark:text-primary shadow-sm">POS</span>
-        <span class="px-2 py-1 text-gray-500 dark:text-gray-400">Inv</span>
-        <span class="px-2 py-1 text-gray-500 dark:text-gray-400">Est</span>
-        <span class="px-2 py-1 text-gray-500 dark:text-gray-400">CN</span>
-      </div>
-    </div>
-
-    <!-- KPI cards -->
-    <div class="grid grid-cols-3 gap-1.5 mb-3">
-      <div class="p-1.5 rounded-lg bg-amber-500/10 border-s-2 border-amber-500">
-        <p class="text-[7px] uppercase tracking-wider text-amber-700 dark:text-amber-400 font-bold">Revenue</p>
-        <p class="text-[13px] font-black tabular-nums leading-tight">4,820</p>
-      </div>
-      <div class="p-1.5 rounded-lg bg-emerald-500/10 border-s-2 border-emerald-500">
-        <p class="text-[7px] uppercase tracking-wider text-emerald-700 dark:text-emerald-400 font-bold">Paid</p>
-        <p class="text-[13px] font-black tabular-nums leading-tight">3,650</p>
-      </div>
-      <div class="p-1.5 rounded-lg bg-rose-500/10 border-s-2 border-rose-500">
-        <p class="text-[7px] uppercase tracking-wider text-rose-700 dark:text-rose-400 font-bold">Unpaid</p>
-        <p class="text-[13px] font-black tabular-nums leading-tight">1,170</p>
+      <div class="flex items-center gap-1">
+        <span class="px-1.5 py-0.5 rounded border border-black/10 dark:border-white/10 text-[7px] font-bold text-gray-700 dark:text-gray-300 inline-flex items-center gap-0.5">
+          <UIcon name="i-lucide-calendar" class="size-2" />Today
+        </span>
+        <span class="px-1.5 py-0.5 rounded bg-primary text-white text-[7px] font-bold inline-flex items-center gap-0.5">
+          <UIcon name="i-lucide-plus" class="size-2" />New Sale
+        </span>
       </div>
     </div>
 
-    <!-- Invoice rows -->
-    <div class="space-y-1">
-      <div v-for="inv in [
-        { n: '#INV-218', c: 'Lina H.', amt: '240.00', status: 'Paid', color: 'emerald' },
-        { n: '#INV-217', c: 'Karim M.', amt: '180.00', status: 'Due', color: 'amber' },
-        { n: '#INV-216', c: 'Noura S.', amt: '95.50', status: 'Paid', color: 'emerald' },
-        { n: '#INV-215', c: 'Omar R.', amt: '420.00', status: 'Overdue', color: 'rose' }
-      ]" :key="inv.n" class="flex items-center gap-2 px-2 py-1.5 rounded-md bg-white dark:bg-[#0c0c0c] border border-black/5 dark:border-white/10">
-        <div class="flex-1 min-w-0">
-          <p class="text-[8px] font-bold tracking-tight truncate">{{ inv.n }} · {{ inv.c }}</p>
-          <p class="text-[7px] text-gray-400">Color & Cut</p>
+    <!-- KPI strip — same five tiles as the APP's Daily Summary -->
+    <div class="grid grid-cols-5 gap-1 mb-2">
+      <div class="p-1 rounded border border-black/5 dark:border-white/10 bg-white dark:bg-[#0c0c0c]">
+        <p class="text-[6px] uppercase tracking-wider text-gray-400 font-bold">Total Sales</p>
+        <p class="text-[11px] font-black tabular-nums leading-tight">12</p>
+      </div>
+      <div class="p-1 rounded border border-black/5 dark:border-white/10 bg-white dark:bg-[#0c0c0c]">
+        <p class="text-[6px] uppercase tracking-wider text-gray-400 font-bold">Refunded</p>
+        <p class="text-[11px] font-black tabular-nums leading-tight text-rose-600">1</p>
+      </div>
+      <div class="p-1 rounded border border-black/5 dark:border-white/10 bg-white dark:bg-[#0c0c0c]">
+        <p class="text-[6px] uppercase tracking-wider text-gray-400 font-bold">Gross</p>
+        <p class="text-[11px] font-black tabular-nums leading-tight">﷼4,820</p>
+      </div>
+      <div class="p-1 rounded border border-black/5 dark:border-white/10 bg-white dark:bg-[#0c0c0c]">
+        <p class="text-[6px] uppercase tracking-wider text-gray-400 font-bold">Net Sales</p>
+        <p class="text-[11px] font-black tabular-nums leading-tight">﷼4,580</p>
+      </div>
+      <div class="p-1 rounded border border-black/5 dark:border-white/10 bg-white dark:bg-[#0c0c0c]">
+        <p class="text-[6px] uppercase tracking-wider text-gray-400 font-bold">Collected</p>
+        <p class="text-[11px] font-black tabular-nums leading-tight">﷼3,650</p>
+      </div>
+    </div>
+
+    <!-- Two-up: Transaction summary + Cash movement summary -->
+    <div class="grid grid-cols-2 gap-1.5">
+      <!-- Transaction summary -->
+      <div class="rounded-md border border-black/5 dark:border-white/10 bg-white dark:bg-[#0c0c0c] overflow-hidden">
+        <p class="px-2 py-1 text-[8px] font-bold border-b border-black/5 dark:border-white/10">Transaction summary</p>
+        <div class="px-2 py-1 grid grid-cols-[1fr_auto_auto] items-center gap-x-2 gap-y-0.5 text-[7px]">
+          <span class="text-gray-400">Item type</span>
+          <span class="text-gray-400 tabular-nums">Qty</span>
+          <span class="text-gray-400 tabular-nums">Total</span>
+          <span class="font-semibold">Services</span>
+          <span class="tabular-nums">8</span>
+          <span class="tabular-nums">﷼3,200</span>
+          <span class="font-semibold">Products</span>
+          <span class="tabular-nums">3</span>
+          <span class="tabular-nums">﷼1,120</span>
+          <span class="font-semibold">Memberships</span>
+          <span class="tabular-nums">1</span>
+          <span class="tabular-nums">﷼500</span>
+          <span class="font-bold border-t border-black/5 dark:border-white/10 pt-0.5">Gross total</span>
+          <span class="tabular-nums font-bold border-t border-black/5 dark:border-white/10 pt-0.5">12</span>
+          <span class="tabular-nums font-bold border-t border-black/5 dark:border-white/10 pt-0.5">﷼4,820</span>
         </div>
-        <p class="text-[9px] font-black tabular-nums whitespace-nowrap">SAR {{ inv.amt }}</p>
-        <span class="text-[7px] px-1.5 py-0.5 rounded font-bold" :class="{
-          'bg-emerald-500/15 text-emerald-700 dark:text-emerald-400': inv.color === 'emerald',
-          'bg-amber-500/15 text-amber-700 dark:text-amber-400': inv.color === 'amber',
-          'bg-rose-500/15 text-rose-700 dark:text-rose-400': inv.color === 'rose'
-        }">{{ inv.status }}</span>
+      </div>
+
+      <!-- Cash movement summary -->
+      <div class="rounded-md border border-black/5 dark:border-white/10 bg-white dark:bg-[#0c0c0c] overflow-hidden">
+        <p class="px-2 py-1 text-[8px] font-bold border-b border-black/5 dark:border-white/10">Cash movement</p>
+        <div class="px-2 py-1 space-y-1 text-[7px]">
+          <div class="flex items-center justify-between">
+            <span class="px-1 py-px rounded bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 font-bold">Cash</span>
+            <span class="tabular-nums">﷼1,640</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="px-1 py-px rounded bg-secondary-500/15 text-secondary-700 dark:text-secondary-300 font-bold">Card</span>
+            <span class="tabular-nums">﷼1,170</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="px-1 py-px rounded bg-black/[0.04] dark:bg-white/[0.06] font-bold">Bank Transfer</span>
+            <span class="tabular-nums">﷼540</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="px-1 py-px rounded bg-black/[0.04] dark:bg-white/[0.06] font-bold">Other</span>
+            <span class="tabular-nums">﷼300</span>
+          </div>
+          <div class="flex items-center justify-between border-t border-black/5 dark:border-white/10 pt-0.5 font-bold">
+            <span>Collected total</span>
+            <span class="tabular-nums">﷼3,650</span>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- Footer: payment split -->
-    <div class="mt-3 pt-2 border-t border-black/5 dark:border-white/10 flex items-center gap-3 text-[8px] font-semibold">
-      <span class="inline-flex items-center gap-1 text-emerald-600 dark:text-emerald-400">
-        <UIcon name="i-lucide-banknote" class="size-2.5" />
-        Cash 45%
-      </span>
-      <span class="inline-flex items-center gap-1 text-secondary-600 dark:text-secondary-400">
-        <UIcon name="i-lucide-credit-card" class="size-2.5" />
-        Card 32%
-      </span>
-      <span class="inline-flex items-center gap-1 text-secondary-600 dark:text-secondary-400">
-        <span aria-hidden="true" class="size-1.5 rounded-full bg-secondary-500" />
-        BNPL 15%
-      </span>
+    <!-- Footer: ZATCA cleared chip mirroring receipt status -->
+    <div class="mt-2 pt-1.5 border-t border-black/5 dark:border-white/10 flex items-center gap-3 text-[7px] font-semibold">
+      <span class="inline-flex items-center gap-1 text-gray-500"><UIcon name="i-lucide-banknote" class="size-2.5" />Cash 45%</span>
+      <span class="inline-flex items-center gap-1 text-gray-500"><UIcon name="i-lucide-credit-card" class="size-2.5" />Card 32%</span>
       <span class="ms-auto inline-flex items-center gap-1 text-emerald-600 dark:text-emerald-400">
-        <UIcon name="i-lucide-check-circle-2" class="size-2.5" />
-        ZATCA cleared
+        <UIcon name="i-lucide-check-circle-2" class="size-2.5" />ZATCA cleared
       </span>
     </div>
   </div>
 
   <!-- ════ Clients / CRM — top bar + segment chips + client rows + footer stats ════ -->
+  <!-- ════ Clients — list view: search + Date + Filters bar, then a client table
+       with the APP's columns (Client name + email · Phone · Appointments · Created),
+       monogram avatars, "+ Add Client" CTA. Tabs across top match the sub-nav. ════ -->
   <div v-else-if="id === 'clients'" class="w-full text-[9px]">
-    <!-- Top bar -->
-    <div class="flex items-center justify-between mb-3">
+    <!-- Header: title + import/export + + Add Client -->
+    <div class="flex items-center justify-between mb-2">
       <div>
-        <p class="text-sm font-black text-gray-900 dark:text-white tracking-tight leading-none">Clients</p>
-        <p class="text-[9px] text-gray-400 mt-1">1,284 total · 312 active this month</p>
+        <p class="text-[10px] font-black text-gray-900 dark:text-white tracking-tight leading-none">Clients</p>
+        <p class="text-[7px] text-gray-400 mt-0.5">Manage your client database</p>
       </div>
-      <div class="inline-flex items-center gap-1 px-2 h-5 rounded bg-secondary-500/15 text-secondary-700 dark:text-secondary-400 text-[8px] font-bold">
-        <UIcon name="i-lucide-search" class="size-2.5" />
-        Search
+      <div class="flex items-center gap-1">
+        <span class="size-4 rounded border border-black/10 dark:border-white/10 flex items-center justify-center"><UIcon name="i-lucide-upload" class="size-2 text-gray-500" /></span>
+        <span class="size-4 rounded border border-black/10 dark:border-white/10 flex items-center justify-center"><UIcon name="i-lucide-download" class="size-2 text-gray-500" /></span>
+        <span class="px-1.5 py-0.5 rounded bg-primary text-white text-[7px] font-bold inline-flex items-center gap-0.5">
+          <UIcon name="i-lucide-plus" class="size-2" />Add Client
+        </span>
       </div>
     </div>
 
-    <!-- Segment chips -->
-    <div class="flex flex-wrap gap-1 mb-3">
-      <span class="text-[8px] px-1.5 py-0.5 rounded-full bg-secondary-500/15 text-secondary-700 dark:text-secondary-400 font-bold">All · 1,284</span>
-      <span class="text-[8px] px-1.5 py-0.5 rounded-full bg-secondary-500/15 text-secondary-700 dark:text-secondary-400 font-bold">VIP · 48</span>
-      <span class="text-[8px] px-1.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 font-bold">New · 22</span>
-      <span class="text-[8px] px-1.5 py-0.5 rounded-full bg-amber-500/15 text-amber-700 dark:text-amber-400 font-bold">Dormant · 74</span>
+    <!-- Sub-nav tabs (mirror left sub-nav: Clients list / Segments / Campaigns / Reviews) -->
+    <div class="flex items-center gap-1 mb-2 text-[7px] font-semibold border-b border-black/5 dark:border-white/10">
+      <span class="px-1.5 py-1 border-b-2 border-primary text-gray-900 dark:text-white">Clients list</span>
+      <span class="px-1.5 py-1 text-gray-400">Segments</span>
+      <span class="px-1.5 py-1 text-gray-400">Campaigns</span>
+      <span class="px-1.5 py-1 text-gray-400">Reviews</span>
     </div>
 
-    <!-- Client rows -->
-    <div class="space-y-1">
+    <!-- Search + Date + Filters + sort -->
+    <div class="flex items-center gap-1 p-1 rounded bg-black/[0.03] dark:bg-white/[0.04] mb-1.5">
+      <div class="flex-1 inline-flex items-center gap-1 px-1.5 h-4 rounded bg-white dark:bg-[#0c0c0c] border border-black/5 dark:border-white/10 text-[7px] text-gray-400">
+        <UIcon name="i-lucide-search" class="size-2.5" />Search clients…
+      </div>
+      <span class="px-1 h-4 rounded border border-black/10 dark:border-white/10 inline-flex items-center gap-0.5 text-[7px] text-gray-600 dark:text-gray-300"><UIcon name="i-lucide-calendar" class="size-2" />Date</span>
+      <span class="px-1 h-4 rounded border border-black/10 dark:border-white/10 inline-flex items-center gap-0.5 text-[7px] text-gray-600 dark:text-gray-300"><UIcon name="i-lucide-filter" class="size-2" />Filters</span>
+      <span class="px-1 h-4 rounded border border-black/10 dark:border-white/10 inline-flex items-center gap-0.5 text-[7px] text-gray-600 dark:text-gray-300">Newest</span>
+    </div>
+
+    <!-- Table header -->
+    <div class="grid grid-cols-[1fr_auto_auto_auto] gap-2 px-2 py-1 text-[6px] uppercase tracking-wider text-gray-400 font-bold">
+      <span>Client name</span><span>Phone</span><span>Appts</span><span>Created</span>
+    </div>
+
+    <!-- Client rows — match the APP table -->
+    <div class="space-y-px">
       <div
         v-for="c in [
-          { n: 'Lina Hassan', init: 'LH', tag: 'VIP', color: 'from-secondary-400 to-rose-500', ring: 'ring-secondary-400/30', visits: '24 visits · 12 Apr', spend: '12,840', tagColor: 'pink' },
-          { n: 'Karim Malek', init: 'KM', tag: 'Returning', color: 'from-secondary-400 to-secondary-500', ring: 'ring-secondary-400/30', visits: '8 visits · 08 Apr', spend: '3,200', tagColor: 'sky' },
-          { n: 'Noura Saeed', init: 'NS', tag: 'New', color: 'from-emerald-400 to-secondary-500', ring: 'ring-emerald-400/30', visits: '1 visit · 21 Apr', spend: '450', tagColor: 'emerald' },
-          { n: 'Omar Rashid', init: 'OR', tag: 'Dormant', color: 'from-amber-400 to-orange-500', ring: 'ring-amber-400/30', visits: 'Last seen 98d', spend: '980', tagColor: 'amber' }
+          { n: 'Ali Bakr',         init: 'A', email: 'ali@demo.local',     phone: '+966 50 000 7777', appts: '6', date: '06/04/26', tone: 'violet' },
+          { n: 'Fatima Ibrahim',   init: 'F', email: 'fatima@demo.local',  phone: '+966 50 000 2222', appts: '5', date: '06/04/26', tone: 'rose' },
+          { n: 'Haya Sultan',      init: 'H', email: 'haya@demo.local',    phone: '+966 50 000 8888', appts: '3', date: '06/04/26', tone: 'sky' },
+          { n: 'Khalid Mansoor',   init: 'K', email: 'khalid@demo.local',  phone: '+966 50 000 5555', appts: '3', date: '06/04/26', tone: 'amber' },
+          { n: 'Mohammed Al-Saud', init: 'M', email: 'm@demo.local',       phone: '+966 50 000 1111', appts: '3', date: '06/04/26', tone: 'emerald' }
         ]" :key="c.init"
-        class="flex items-center gap-2 px-2 py-1.5 rounded-md bg-white dark:bg-[#0c0c0c] border border-black/5 dark:border-white/10"
+        class="grid grid-cols-[1fr_auto_auto_auto] gap-2 items-center px-2 py-1 rounded bg-white dark:bg-[#0c0c0c] border border-black/5 dark:border-white/10"
       >
-        <div class="size-6 rounded-full bg-gradient-to-br flex items-center justify-center text-white text-[8px] font-black ring-2" :class="[c.color, c.ring]">{{ c.init }}</div>
-        <div class="flex-1 min-w-0">
-          <div class="flex items-center gap-1">
-            <p class="text-[9px] font-bold truncate">{{ c.n }}</p>
-            <UIcon name="i-lucide-user-check" class="size-2 text-emerald-500 shrink-0" />
+        <div class="flex items-center gap-1.5 min-w-0">
+          <div class="size-4 rounded-full flex items-center justify-center text-[7px] font-black ring-1"
+               :class="{
+                 'bg-violet-100 text-violet-700 ring-violet-300':   c.tone === 'violet',
+                 'bg-rose-100 text-rose-700 ring-rose-300':         c.tone === 'rose',
+                 'bg-sky-100 text-sky-700 ring-sky-300':            c.tone === 'sky',
+                 'bg-amber-100 text-amber-700 ring-amber-300':      c.tone === 'amber',
+                 'bg-emerald-100 text-emerald-700 ring-emerald-300':c.tone === 'emerald'
+               }">{{ c.init }}</div>
+          <div class="min-w-0">
+            <p class="text-[8px] font-bold truncate">{{ c.n }}</p>
+            <p class="text-[6px] text-gray-400 truncate">{{ c.email }}</p>
           </div>
-          <p class="text-[7px] text-gray-400">{{ c.visits }}</p>
         </div>
-        <div class="text-end">
-          <p class="text-[9px] font-black tabular-nums">SAR {{ c.spend }}</p>
-          <span class="text-[7px] px-1 py-0.5 rounded font-bold" :class="{
-            'bg-secondary-500/15 text-secondary-700 dark:text-secondary-400': c.tagColor === 'pink',
-            'bg-secondary-500/15 text-secondary-700 dark:text-secondary-400': c.tagColor === 'sky',
-            'bg-emerald-500/15 text-emerald-700 dark:text-emerald-400': c.tagColor === 'emerald',
-            'bg-amber-500/15 text-amber-700 dark:text-amber-400': c.tagColor === 'amber'
-          }">{{ c.tag }}</span>
-        </div>
+        <span class="text-[7px] text-gray-600 dark:text-gray-300 tabular-nums whitespace-nowrap">{{ c.phone }}</span>
+        <span class="text-[8px] tabular-nums text-center min-w-[1rem]">{{ c.appts }}</span>
+        <span class="text-[7px] text-gray-500 tabular-nums whitespace-nowrap">{{ c.date }}</span>
       </div>
-    </div>
-
-    <!-- Footer: quick stats -->
-    <div class="mt-3 pt-2 border-t border-black/5 dark:border-white/10 flex items-center gap-3 text-[8px] font-semibold">
-      <span class="inline-flex items-center gap-1 text-secondary-600 dark:text-secondary-400">
-        <UIcon name="i-lucide-message-square" class="size-2.5" />
-        Campaigns 3 active
-      </span>
-      <span class="inline-flex items-center gap-1 text-secondary-600 dark:text-secondary-400">
-        <UIcon name="i-lucide-gift" class="size-2.5" />
-        2 birthdays today
-      </span>
-      <span class="ms-auto inline-flex items-center gap-1 text-emerald-600 dark:text-emerald-400">
-        <UIcon name="i-lucide-trending-up" class="size-2.5" />
-        +12% MoM
-      </span>
     </div>
   </div>
 
@@ -335,162 +397,186 @@ defineProps<{ id: string; color?: string }>()
   </div>
 
   <!-- ════ Catalogue — category tabs + service rows with icons + footer ════ -->
+  <!-- ════ Catalogue — Service menu screen: Add category / Add Service CTAs, KPI
+       tile row (Total Services / Showing / Categories / Avg. Price), category
+       chip filter, rows with SERVICE NAME · DURATION · BOOKINGS · TEAM · PRICE
+       — copies the APP's column shape and Saudi Riyal symbol on prices. ════ -->
   <div v-else-if="id === 'catalogue'" class="w-full text-[9px]">
-    <!-- Top bar -->
-    <div class="flex items-center justify-between mb-3">
+    <!-- Header: title + Add category + Add Service -->
+    <div class="flex items-center justify-between mb-2">
       <div>
-        <p class="text-sm font-black text-gray-900 dark:text-white tracking-tight leading-none">Services</p>
-        <p class="text-[9px] text-gray-400 mt-1">42 services · 8 categories · Avg SAR 168</p>
+        <p class="text-[10px] font-black text-gray-900 dark:text-white tracking-tight leading-none">Service menu</p>
+        <p class="text-[7px] text-gray-400 mt-0.5">View and manage the services your business offers</p>
       </div>
-      <div class="inline-flex items-center gap-1 px-2 h-5 rounded bg-secondary-500/15 text-secondary-700 dark:text-secondary-400 text-[8px] font-bold">
-        <UIcon name="i-lucide-plus" class="size-2.5" />
-        Add
+      <div class="flex items-center gap-1">
+        <span class="px-1.5 py-0.5 rounded border border-black/10 dark:border-white/10 text-[7px] font-bold inline-flex items-center gap-0.5">
+          <UIcon name="i-lucide-folder-plus" class="size-2" />Add category
+        </span>
+        <span class="px-1.5 py-0.5 rounded bg-primary text-white text-[7px] font-bold inline-flex items-center gap-0.5">
+          <UIcon name="i-lucide-plus" class="size-2" />Add Service
+        </span>
       </div>
     </div>
 
-    <!-- Category tabs -->
-    <div class="flex flex-wrap gap-1 mb-3">
-      <span class="text-[8px] px-1.5 py-0.5 rounded-full bg-primary text-white dark:bg-white dark:text-primary font-bold">All · 42</span>
-      <span class="text-[8px] px-1.5 py-0.5 rounded-full bg-black/5 dark:bg-white/10 text-gray-600 dark:text-gray-300 font-bold">Hair · 14</span>
-      <span class="text-[8px] px-1.5 py-0.5 rounded-full bg-black/5 dark:bg-white/10 text-gray-600 dark:text-gray-300 font-bold">Spa · 9</span>
-      <span class="text-[8px] px-1.5 py-0.5 rounded-full bg-black/5 dark:bg-white/10 text-gray-600 dark:text-gray-300 font-bold">Nails · 7</span>
-      <span class="text-[8px] px-1.5 py-0.5 rounded-full bg-black/5 dark:bg-white/10 text-gray-600 dark:text-gray-300 font-bold">+5</span>
-    </div>
-
-    <!-- Service rows -->
-    <div class="space-y-1">
-      <div v-for="s in [
-        { n: 'Color & Cut', cat: 'Hair', d: '90m', p: '180', icon: 'i-lucide-scissors', g: 'from-secondary-400 to-rose-500', booked: 48, staff: ['LH', 'NS'] },
-        { n: 'Deep Tissue Massage', cat: 'Spa', d: '60m', p: '240', icon: 'i-lucide-hand', g: 'from-emerald-400 to-secondary-500', booked: 32, staff: ['KM'] },
-        { n: 'Facial Glow', cat: 'Spa', d: '45m', p: '150', icon: 'i-lucide-sparkles', g: 'from-secondary-400 to-secondary-500', booked: 28, staff: ['NS', 'RK'] },
-        { n: 'Nail Art · Gel', cat: 'Nails', d: '30m', p: '95', icon: 'i-lucide-palette', g: 'from-secondary-400 to-secondary-500', booked: 61, staff: ['RK'] }
-      ]" :key="s.n"
-        class="flex items-center gap-2 px-2 py-1.5 rounded-md bg-white dark:bg-[#0c0c0c] border border-black/5 dark:border-white/10"
-      >
-        <!-- Icon tile -->
-        <div class="size-8 shrink-0 rounded-md bg-gradient-to-br text-white flex items-center justify-center" :class="s.g">
-          <UIcon :name="s.icon" class="size-3.5" />
+    <!-- KPI tile row (matches the APP's hero strip on /catalogue/services) -->
+    <div class="grid grid-cols-4 gap-1 mb-2">
+      <div class="p-1 rounded border border-black/5 dark:border-white/10 bg-white dark:bg-[#0c0c0c] flex items-center gap-1.5">
+        <UIcon name="i-lucide-layers" class="size-3 text-gray-400" />
+        <div>
+          <p class="text-[10px] font-black tabular-nums leading-none">10</p>
+          <p class="text-[6px] text-gray-400 font-bold">Total Services</p>
         </div>
-        <!-- Name + category -->
-        <div class="flex-1 min-w-0">
-          <p class="text-[9px] font-bold tracking-tight truncate">{{ s.n }}</p>
-          <div class="flex items-center gap-1 mt-0.5">
-            <span class="text-[7px] px-1 py-0.5 rounded bg-black/5 dark:bg-white/10 text-gray-600 dark:text-gray-400 font-bold">{{ s.cat }}</span>
-            <span class="text-[7px] text-gray-400">{{ s.d }} · {{ s.booked }} booked</span>
+      </div>
+      <div class="p-1 rounded border border-black/5 dark:border-white/10 bg-white dark:bg-[#0c0c0c] flex items-center gap-1.5">
+        <UIcon name="i-lucide-funnel" class="size-3 text-emerald-500" />
+        <div>
+          <p class="text-[10px] font-black tabular-nums leading-none">10</p>
+          <p class="text-[6px] text-gray-400 font-bold">Showing</p>
+        </div>
+      </div>
+      <div class="p-1 rounded border border-black/5 dark:border-white/10 bg-white dark:bg-[#0c0c0c] flex items-center gap-1.5">
+        <UIcon name="i-lucide-grid-3x3" class="size-3 text-violet-500" />
+        <div>
+          <p class="text-[10px] font-black tabular-nums leading-none">4</p>
+          <p class="text-[6px] text-gray-400 font-bold">Categories</p>
+        </div>
+      </div>
+      <div class="p-1 rounded border border-black/5 dark:border-white/10 bg-white dark:bg-[#0c0c0c] flex items-center gap-1.5">
+        <UIcon name="i-lucide-link" class="size-3 text-amber-500" />
+        <div>
+          <p class="text-[10px] font-black tabular-nums leading-none">﷼174</p>
+          <p class="text-[6px] text-gray-400 font-bold">Avg. Price</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Category chip filter — first chip dark like APP -->
+    <div class="flex flex-wrap gap-1 mb-2">
+      <span class="text-[7px] px-1.5 py-0.5 rounded-full bg-primary text-white font-bold">All categories <span class="opacity-80 ms-0.5">10</span></span>
+      <span class="text-[7px] px-1.5 py-0.5 rounded-full bg-black/[0.04] dark:bg-white/[0.06] text-gray-700 dark:text-gray-300 font-semibold">Consultation <span class="text-gray-400 ms-0.5">2</span></span>
+      <span class="text-[7px] px-1.5 py-0.5 rounded-full bg-black/[0.04] dark:bg-white/[0.06] text-gray-700 dark:text-gray-300 font-semibold">Standard Services <span class="text-gray-400 ms-0.5">3</span></span>
+      <span class="text-[7px] px-1.5 py-0.5 rounded-full bg-black/[0.04] dark:bg-white/[0.06] text-gray-700 dark:text-gray-300 font-semibold">Premium Services <span class="text-gray-400 ms-0.5">3</span></span>
+      <span class="text-[7px] px-1.5 py-0.5 rounded-full bg-black/[0.04] dark:bg-white/[0.06] text-gray-700 dark:text-gray-300 font-semibold">Follow-up <span class="text-gray-400 ms-0.5">2</span></span>
+    </div>
+
+    <!-- Table header -->
+    <div class="grid grid-cols-[1fr_auto_auto_auto_auto] gap-2 px-2 py-1 text-[6px] uppercase tracking-wider text-gray-400 font-bold">
+      <span>Service name</span><span>Duration</span><span>Bookings</span><span>Team</span><span>Price</span>
+    </div>
+
+    <!-- Service rows — match APP layout (icon · name · cat-badge · location pill, then duration/bookings/team/price) -->
+    <div class="space-y-px">
+      <div v-for="s in [
+        { n: 'Extended Session',     cat: 'Premium Services',  d: '1h 30m', booked: 8, p: '300', icon: 'i-lucide-bed-double',     g: 'bg-amber-100 text-amber-700' },
+        { n: 'Follow-up Visit',      cat: 'Follow-up & Review',d: '20m',    booked: 4, p: '60',  icon: 'i-lucide-map-pin',        g: 'bg-emerald-100 text-emerald-700' },
+        { n: 'Initial Consultation', cat: 'Consultation',      d: '30m',    booked: 4, p: '100', icon: 'i-lucide-map-pin',        g: 'bg-secondary-100 text-secondary-700' },
+        { n: 'Standard Session',     cat: 'Standard Services', d: '45m',    booked: 2, p: '150', icon: 'i-lucide-map-pin',        g: 'bg-violet-100 text-violet-700' },
+        { n: 'Comprehensive Pack',   cat: 'Premium Services',  d: '2h',     booked: 1, p: '450', icon: 'i-lucide-map-pin',        g: 'bg-rose-100 text-rose-700' }
+      ]" :key="s.n"
+        class="grid grid-cols-[1fr_auto_auto_auto_auto] gap-2 items-center px-2 py-1 rounded bg-white dark:bg-[#0c0c0c] border border-black/5 dark:border-white/10"
+      >
+        <div class="flex items-center gap-1.5 min-w-0">
+          <div class="size-5 shrink-0 rounded flex items-center justify-center" :class="s.g">
+            <UIcon :name="s.icon" class="size-3" />
+          </div>
+          <div class="min-w-0">
+            <div class="flex items-center gap-1">
+              <p class="text-[8px] font-bold truncate">{{ s.n }}</p>
+              <span class="text-[6px] px-1 py-px rounded bg-black/[0.04] dark:bg-white/[0.06] text-gray-600 dark:text-gray-400 font-bold whitespace-nowrap">{{ s.cat }}</span>
+            </div>
+            <p class="text-[6px] text-gray-400">All branches</p>
           </div>
         </div>
-        <!-- Assigned staff avatars -->
+        <span class="text-[7px] tabular-nums text-gray-700 dark:text-gray-300">{{ s.d }}</span>
+        <span class="text-[8px] tabular-nums text-center min-w-[1rem]">{{ s.booked }}</span>
         <div class="flex -space-x-1">
-          <div v-for="(a, ai) in s.staff" :key="a"
-            class="size-4 rounded-full bg-gradient-to-br text-white text-[6px] font-black flex items-center justify-center ring-1 ring-white dark:ring-[#0c0c0c]"
-            :class="ai === 0 ? 'from-secondary-400 to-rose-500' : 'from-secondary-400 to-secondary-500'"
-          >{{ a }}</div>
+          <div class="size-3.5 rounded-full bg-emerald-100 ring-1 ring-white dark:ring-[#0c0c0c] flex items-center justify-center text-[6px] font-black text-emerald-700">A</div>
+          <div class="size-3.5 rounded-full bg-violet-100 ring-1 ring-white dark:ring-[#0c0c0c] flex items-center justify-center text-[6px] font-black text-violet-700">L</div>
+          <div class="size-3.5 rounded-full bg-secondary-100 ring-1 ring-white dark:ring-[#0c0c0c] flex items-center justify-center text-[6px] font-black text-secondary-700">+1</div>
         </div>
-        <!-- Price -->
-        <p class="text-[10px] font-black tabular-nums whitespace-nowrap ms-1">SAR {{ s.p }}</p>
+        <p class="text-[9px] font-black tabular-nums whitespace-nowrap">﷼{{ s.p }}</p>
       </div>
-    </div>
-
-    <!-- Footer: totals -->
-    <div class="mt-3 pt-2 border-t border-black/5 dark:border-white/10 flex items-center gap-3 text-[8px] font-semibold">
-      <span class="inline-flex items-center gap-1 text-secondary-600 dark:text-secondary-400">
-        <UIcon name="i-lucide-layers" class="size-2.5" />
-        14 packages
-      </span>
-      <span class="inline-flex items-center gap-1 text-secondary-600 dark:text-secondary-400">
-        <UIcon name="i-lucide-ticket" class="size-2.5" />
-        6 memberships
-      </span>
-      <span class="ms-auto inline-flex items-center gap-1 text-emerald-600 dark:text-emerald-400">
-        <UIcon name="i-lucide-zap" class="size-2.5" />
-        Smart pricing on
-      </span>
     </div>
   </div>
 
   <!-- ════ Inventory — top KPI cards + stock rows with bars + footer ════ -->
+  <!-- ════ Inventory — Stock screen: 3 KPI tiles (Total Products / Low Stock /
+       Total Stock Value with ﷼ symbol), search + barcode + filter bar, then
+       PRODUCT · ALERT · IN STOCK rows with SKU pill — exactly the APP shape. ════ -->
   <div v-else-if="id === 'inventory'" class="w-full text-[9px]">
-    <!-- Top bar -->
-    <div class="flex items-center justify-between mb-3">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-2">
       <div>
-        <p class="text-sm font-black text-gray-900 dark:text-white tracking-tight leading-none">Stock · Main Branch</p>
-        <p class="text-[9px] text-gray-400 mt-1">128 products · SAR 24,680 value</p>
+        <p class="text-[10px] font-black text-gray-900 dark:text-white tracking-tight leading-none">Inventory</p>
+        <p class="text-[7px] text-gray-400 mt-0.5">Manage stock levels, orders & suppliers</p>
       </div>
-      <div class="inline-flex items-center gap-1 px-2 h-5 rounded bg-red-500/15 text-red-700 dark:text-red-400 text-[8px] font-bold">
-        <UIcon name="i-lucide-alert-triangle" class="size-2.5" />
-        2 low
+      <span class="size-4 rounded border border-black/10 dark:border-white/10 flex items-center justify-center"><UIcon name="i-lucide-download" class="size-2 text-gray-500" /></span>
+    </div>
+
+    <!-- Three KPI tiles (matches APP /inventory/stock) -->
+    <div class="grid grid-cols-3 gap-1 mb-2">
+      <div class="p-1.5 rounded border border-black/5 dark:border-white/10 bg-white dark:bg-[#0c0c0c] flex items-center gap-1.5">
+        <UIcon name="i-lucide-package" class="size-3.5 text-gray-400" />
+        <div>
+          <p class="text-[6px] uppercase tracking-wider text-gray-400 font-bold leading-none">Total Products</p>
+          <p class="text-[12px] font-black tabular-nums leading-tight">7</p>
+        </div>
+      </div>
+      <div class="p-1.5 rounded border border-black/5 dark:border-white/10 bg-white dark:bg-[#0c0c0c] flex items-center gap-1.5">
+        <UIcon name="i-lucide-alert-triangle" class="size-3.5 text-amber-500" />
+        <div>
+          <p class="text-[6px] uppercase tracking-wider text-gray-400 font-bold leading-none">Low Stock Items</p>
+          <p class="text-[12px] font-black tabular-nums leading-tight">2</p>
+        </div>
+      </div>
+      <div class="p-1.5 rounded border border-black/5 dark:border-white/10 bg-white dark:bg-[#0c0c0c] flex items-center gap-1.5">
+        <UIcon name="i-lucide-dollar-sign" class="size-3.5 text-emerald-500" />
+        <div>
+          <p class="text-[6px] uppercase tracking-wider text-gray-400 font-bold leading-none">Total Stock Value</p>
+          <p class="text-[12px] font-black tabular-nums leading-tight">﷼4,583</p>
+        </div>
       </div>
     </div>
 
-    <!-- KPI cards -->
-    <div class="grid grid-cols-3 gap-1.5 mb-3">
-      <div class="p-1.5 rounded-lg bg-secondary-500/10 border-s-2 border-secondary-500">
-        <p class="text-[7px] uppercase tracking-wider text-secondary-700 dark:text-secondary-400 font-bold">In stock</p>
-        <p class="text-[13px] font-black tabular-nums leading-tight">126</p>
+    <!-- Search + barcode + filters -->
+    <div class="flex items-center gap-1 p-1 rounded bg-black/[0.03] dark:bg-white/[0.04] mb-1.5">
+      <div class="flex-1 inline-flex items-center gap-1 px-1.5 h-4 rounded bg-white dark:bg-[#0c0c0c] border border-black/5 dark:border-white/10 text-[7px] text-gray-400">
+        <UIcon name="i-lucide-search" class="size-2.5" />Search products
       </div>
-      <div class="p-1.5 rounded-lg bg-amber-500/10 border-s-2 border-amber-500">
-        <p class="text-[7px] uppercase tracking-wider text-amber-700 dark:text-amber-400 font-bold">Reorder</p>
-        <p class="text-[13px] font-black tabular-nums leading-tight">5</p>
-      </div>
-      <div class="p-1.5 rounded-lg bg-red-500/10 border-s-2 border-red-500">
-        <p class="text-[7px] uppercase tracking-wider text-red-700 dark:text-red-400 font-bold">Out</p>
-        <p class="text-[13px] font-black tabular-nums leading-tight">2</p>
-      </div>
+      <span class="px-1 h-4 rounded border border-black/10 dark:border-white/10 inline-flex items-center"><UIcon name="i-lucide-scan-barcode" class="size-2.5 text-gray-500" /></span>
+      <span class="px-1 h-4 rounded border border-black/10 dark:border-white/10 inline-flex items-center gap-0.5 text-[7px] text-gray-600"><UIcon name="i-lucide-filter" class="size-2" />Filters</span>
+    </div>
+
+    <!-- Table header -->
+    <div class="grid grid-cols-[1fr_auto_auto] gap-2 px-2 py-1 text-[6px] uppercase tracking-wider text-gray-400 font-bold">
+      <span>Product</span><span>Alert</span><span>In stock</span>
     </div>
 
     <!-- Product rows -->
-    <div class="space-y-1">
+    <div class="space-y-px">
       <div
         v-for="p in [
-          { n: 'Shampoo Gold', sku: 'SHG-250', qty: 42, max: 60, c: 'emerald', sup: 'Acme' },
-          { n: 'Hair Color #4', sku: 'HCL-04', qty: 8, max: 30, c: 'amber', sup: 'L\'Oréal' },
-          { n: 'Nail Polish · 12', sku: 'NPL-12', qty: 2, max: 25, c: 'red', sup: 'OPI' },
-          { n: 'Conditioner XL', sku: 'CND-XL', qty: 28, max: 40, c: 'emerald', sup: 'Acme' }
+          { n: 'Cleansing Solution', sku: 'CS-001', cat: 'Care Products', alert: 5, qty: 32 },
+          { n: 'Daily Care Kit',     sku: 'DCK-001',cat: 'Care Products', alert: 5, qty: 25 },
+          { n: 'Protective Cream',   sku: 'PC-001', cat: 'Care Products', alert: 5, qty: 40 },
+          { n: 'Recovery Formula',   sku: 'RF-001', cat: 'Supplements',   alert: 5, qty: 15 },
+          { n: 'Support Band',       sku: 'SB-001', cat: 'Accessories',   alert: 5, qty: 49 }
         ]" :key="p.sku"
-        class="px-2 py-1.5 rounded-md bg-white dark:bg-[#0c0c0c] border border-black/5 dark:border-white/10"
+        class="grid grid-cols-[1fr_auto_auto] gap-2 items-center px-2 py-1 rounded bg-white dark:bg-[#0c0c0c] border border-black/5 dark:border-white/10"
       >
-        <div class="flex items-center gap-2">
-          <div class="size-5 shrink-0 rounded bg-secondary-500/15 text-secondary-600 flex items-center justify-center">
-            <UIcon name="i-lucide-package" class="size-2.5" />
+        <div class="min-w-0">
+          <div class="flex items-center gap-1">
+            <p class="text-[8px] font-bold truncate">{{ p.n }}</p>
+            <span class="text-[6px] px-1 py-px rounded border border-black/10 dark:border-white/15 text-gray-600 dark:text-gray-400 font-bold tabular-nums">{{ p.sku }}</span>
           </div>
-          <div class="flex-1 min-w-0">
-            <p class="text-[9px] font-bold tracking-tight truncate">{{ p.n }}</p>
-            <div class="flex items-center gap-1 mt-0.5">
-              <span class="text-[7px] px-1 py-0.5 rounded bg-black/5 dark:bg-white/10 text-gray-600 dark:text-gray-400 font-bold tabular-nums">{{ p.sku }}</span>
-              <span class="text-[7px] text-gray-400">{{ p.sup }}</span>
-            </div>
-          </div>
-          <p class="text-[10px] font-black tabular-nums whitespace-nowrap" :class="{
-            'text-emerald-500': p.c === 'emerald',
-            'text-amber-500': p.c === 'amber',
-            'text-red-500': p.c === 'red'
-          }">{{ p.qty }}<span class="text-[7px] text-gray-400 font-normal">/{{ p.max }}</span></p>
+          <p class="text-[6px] text-gray-400">{{ p.cat }} · 06/04/26</p>
         </div>
-        <!-- Progress bar -->
-        <div class="mt-1.5 h-1 rounded-full bg-black/5 dark:bg-white/5 overflow-hidden">
-          <div class="h-full rounded-full" :class="{
-            'bg-gradient-to-r from-secondary-400 to-emerald-500': p.c === 'emerald',
-            'bg-gradient-to-r from-amber-400 to-orange-500': p.c === 'amber',
-            'bg-gradient-to-r from-rose-400 to-red-500': p.c === 'red'
-          }" :style="{ width: `${(p.qty / p.max) * 100}%` }" />
-        </div>
+        <span class="text-[7px] tabular-nums text-gray-500 text-center min-w-[1rem]">{{ p.alert }}</span>
+        <span class="text-[9px] tabular-nums font-black text-center min-w-[1.5rem]" :class="{
+          'text-amber-600': p.qty <= p.alert + 10,
+          'text-gray-900 dark:text-white': p.qty > p.alert + 10
+        }">{{ p.qty }}</span>
       </div>
-    </div>
-
-    <!-- Footer -->
-    <div class="mt-3 pt-2 border-t border-black/5 dark:border-white/10 flex items-center gap-3 text-[8px] font-semibold">
-      <span class="inline-flex items-center gap-1 text-secondary-600 dark:text-secondary-400">
-        <UIcon name="i-lucide-truck" class="size-2.5" />
-        3 transfers live
-      </span>
-      <span class="inline-flex items-center gap-1 text-amber-600 dark:text-amber-400">
-        <UIcon name="i-lucide-file-text" class="size-2.5" />
-        2 orders pending
-      </span>
-      <span class="ms-auto inline-flex items-center gap-1 text-emerald-600 dark:text-emerald-400">
-        <UIcon name="i-lucide-check-circle-2" class="size-2.5" />
-        COGS auto-posted
-      </span>
     </div>
   </div>
 
@@ -556,249 +642,233 @@ defineProps<{ id: string; color?: string }>()
   </div>
 
   <!-- ════ Team & HR — top bar + pending invite + member rows + attendance footer ════ -->
+  <!-- ════ Team — Members screen: + Invite Member, search bar, MEMBER · EMAIL ·
+       JOINED columns. Each row mirrors the APP: avatar + name + role badge
+       (Owner/Admin/Staff) + title + branch chip below, status dot top-right. ════ -->
   <div v-else-if="id === 'team'" class="w-full text-[9px]">
-    <!-- Top bar -->
-    <div class="flex items-center justify-between mb-3">
+    <!-- Header: title + import + Invite Member -->
+    <div class="flex items-center justify-between mb-2">
       <div>
-        <p class="text-sm font-black text-gray-900 dark:text-white tracking-tight leading-none">Team · Today</p>
-        <p class="text-[9px] text-gray-400 mt-1">3 on-duty · 1 pending invite</p>
+        <p class="text-[10px] font-black text-gray-900 dark:text-white tracking-tight leading-none">Team Members</p>
+        <p class="text-[7px] text-gray-400 mt-0.5">Manage your team, schedules, and commissions</p>
       </div>
-      <div class="flex gap-0.5 bg-black/5 dark:bg-white/10 rounded-full p-0.5 font-bold text-[8px]">
-        <span class="px-2 py-1 rounded-full bg-primary text-white dark:bg-white dark:text-primary shadow-sm">Members</span>
-        <span class="px-2 py-1 text-gray-500 dark:text-gray-400">Schedule</span>
-        <span class="px-2 py-1 text-gray-500 dark:text-gray-400">Pay</span>
+      <div class="flex items-center gap-1">
+        <span class="size-4 rounded border border-black/10 dark:border-white/10 flex items-center justify-center"><UIcon name="i-lucide-download" class="size-2 text-gray-500" /></span>
+        <span class="px-1.5 py-0.5 rounded bg-primary text-white text-[7px] font-bold inline-flex items-center gap-0.5">
+          <UIcon name="i-lucide-plus" class="size-2" />Invite Member
+        </span>
       </div>
     </div>
 
-    <!-- Pending invite -->
-    <div class="mb-2 flex items-center gap-2 px-2 py-1.5 rounded-md bg-amber-500/10 border border-amber-500/20">
-      <UIcon name="i-lucide-mail" class="size-3 text-amber-600 dark:text-amber-400 shrink-0" />
-      <div class="flex-1 min-w-0">
-        <p class="text-[8px] font-bold text-amber-700 dark:text-amber-400 truncate">Invite pending — rania@studio.sa</p>
-      </div>
-      <span class="text-[7px] px-1 py-0.5 rounded bg-amber-500/20 text-amber-700 dark:text-amber-400 font-bold">Stylist</span>
+    <!-- Sub-nav (Members / Schedule / Attendance / Blocked Times / Leave / Timesheet / Pay Runs) -->
+    <div class="flex items-center gap-1 mb-2 text-[7px] font-semibold border-b border-black/5 dark:border-white/10 overflow-hidden">
+      <span class="px-1.5 py-1 border-b-2 border-primary text-gray-900 dark:text-white">Members</span>
+      <span class="px-1.5 py-1 text-gray-400">Schedule</span>
+      <span class="px-1.5 py-1 text-gray-400">Attendance</span>
+      <span class="px-1.5 py-1 text-gray-400">Leave</span>
+      <span class="px-1.5 py-1 text-gray-400">Timesheet</span>
+      <span class="px-1.5 py-1 text-gray-400">Pay Runs</span>
     </div>
 
-    <!-- Member rows -->
-    <div class="space-y-1">
+    <!-- Search + Date + Filters -->
+    <div class="flex items-center gap-1 p-1 rounded bg-black/[0.03] dark:bg-white/[0.04] mb-1.5">
+      <div class="flex-1 inline-flex items-center gap-1 px-1.5 h-4 rounded bg-white dark:bg-[#0c0c0c] border border-black/5 dark:border-white/10 text-[7px] text-gray-400">
+        <UIcon name="i-lucide-search" class="size-2.5" />Search members…
+      </div>
+      <span class="px-1 h-4 rounded border border-black/10 dark:border-white/10 inline-flex items-center gap-0.5 text-[7px] text-gray-600"><UIcon name="i-lucide-calendar" class="size-2" />Date</span>
+      <span class="px-1 h-4 rounded border border-black/10 dark:border-white/10 inline-flex items-center gap-0.5 text-[7px] text-gray-600"><UIcon name="i-lucide-filter" class="size-2" />Filters</span>
+    </div>
+
+    <!-- Header row -->
+    <div class="grid grid-cols-[1fr_auto_auto] gap-2 px-2 py-1 text-[6px] uppercase tracking-wider text-gray-400 font-bold">
+      <span>Member</span><span>Email</span><span>Joined</span>
+    </div>
+
+    <!-- Members -->
+    <div class="space-y-px">
       <div
         v-for="m in [
-          { n: 'Lina Hassan', r: 'OWNER', title: 'Senior Stylist', init: 'LH', c: 'from-secondary-400 to-rose-500', ring: 'ring-secondary-400/30', hrs: '38h', shift: 85, ok: true, role: 'pink' },
-          { n: 'Karim Malek', r: 'STAFF', title: 'Barber', init: 'KM', c: 'from-secondary-400 to-secondary-500', ring: 'ring-secondary-400/30', hrs: '40h', shift: 100, ok: true, role: 'sky' },
-          { n: 'Noura Saeed', r: 'ADMIN', title: 'Receptionist', init: 'NS', c: 'from-emerald-400 to-secondary-500', ring: 'ring-emerald-400/30', hrs: '32h', shift: 72, ok: false, role: 'emerald' }
+          { n: 'Sarah Johnson',  init: 'SJ', role: 'Staff', roleTone: 'gray',     title: 'Senior Specialist',   email: 'staff1@demo.local', branch: 'Riyadh · Second Branch', date: '06/04/26', status: 'emerald' },
+          { n: 'Ahmed Hassan',   init: 'AH', role: 'Admin', roleTone: 'sky',      title: 'Specialist',           email: 'staff2@demo.local', branch: 'Riyadh',                 date: '06/04/26', status: 'emerald' },
+          { n: 'Lina Rashid',    init: 'LR', role: 'Admin', roleTone: 'sky',      title: 'Operations Manager',   email: 'staff3@demo.local', branch: 'Riyadh',                 date: '06/04/26', status: 'gray' },
+          { n: 'Ahmed Amin',     init: 'AA', role: 'Owner', roleTone: 'gray',     title: '',                     email: 'support@momentfy.com',branch: 'Riyadh · Second Branch', date: '06/04/26', status: 'amber' }
         ]" :key="m.init"
-        class="px-2 py-1.5 rounded-md bg-white dark:bg-[#0c0c0c] border border-black/5 dark:border-white/10"
+        class="grid grid-cols-[1fr_auto_auto] gap-2 items-center px-2 py-1 rounded bg-white dark:bg-[#0c0c0c] border border-black/5 dark:border-white/10"
       >
-        <div class="flex items-center gap-2">
-          <div class="size-8 shrink-0 rounded-lg bg-gradient-to-br flex items-center justify-center text-white text-[9px] font-black ring-2" :class="[m.c, m.ring]">{{ m.init }}</div>
-          <div class="flex-1 min-w-0">
-            <div class="flex items-center gap-1">
-              <p class="text-[9px] font-bold truncate">{{ m.n }}</p>
-              <span class="text-[6px] px-1 py-0.5 rounded font-black" :class="{
-                'bg-secondary-500/15 text-secondary-700 dark:text-secondary-400': m.role === 'pink',
-                'bg-secondary-500/15 text-secondary-700 dark:text-secondary-400': m.role === 'sky',
-                'bg-emerald-500/15 text-emerald-700 dark:text-emerald-400': m.role === 'emerald'
-              }">{{ m.r }}</span>
-            </div>
-            <div class="flex items-center gap-1 mt-0.5">
-              <UIcon name="i-lucide-map-pin" class="size-2 text-gray-400" />
-              <span class="text-[7px] text-gray-400">Riyadh · {{ m.title }}</span>
-            </div>
+        <div class="flex items-center gap-1.5 min-w-0">
+          <div class="relative shrink-0">
+            <div class="size-5 rounded-full bg-gradient-to-br from-violet-100 to-secondary-100 ring-1 ring-violet-300 flex items-center justify-center text-[7px] font-black text-violet-700">{{ m.init }}</div>
+            <span aria-hidden="true" class="absolute -top-px -end-px size-1.5 rounded-full ring-1 ring-white dark:ring-[#0c0c0c]" :class="{
+              'bg-emerald-500': m.status === 'emerald',
+              'bg-amber-500': m.status === 'amber',
+              'bg-gray-300': m.status === 'gray'
+            }" />
           </div>
-          <div class="text-end">
+          <div class="min-w-0">
             <div class="flex items-center gap-1">
-              <span class="size-1.5 rounded-full" :class="m.ok ? 'bg-emerald-500' : 'bg-amber-500'" />
-              <span class="text-[9px] font-bold tabular-nums">{{ m.hrs }}</span>
+              <p class="text-[8px] font-bold truncate">{{ m.n }}</p>
+              <span class="text-[6px] px-1 py-px rounded font-bold whitespace-nowrap" :class="{
+                'bg-black/[0.05] text-gray-700 dark:bg-white/[0.06] dark:text-gray-300': m.roleTone === 'gray',
+                'bg-secondary-500/15 text-secondary-700 dark:text-secondary-300':         m.roleTone === 'sky'
+              }">{{ m.role }}</span>
             </div>
+            <p class="text-[6px] text-gray-500 dark:text-gray-400 truncate">{{ m.title }}</p>
+            <span class="mt-0.5 inline-flex items-center gap-0.5 text-[6px] px-1 py-px rounded border border-black/5 dark:border-white/15 text-gray-500">
+              <UIcon name="i-lucide-map-pin" class="size-2" />{{ m.branch }}
+            </span>
           </div>
         </div>
-        <!-- Shift bar -->
-        <div class="mt-1.5 h-1 rounded-full bg-black/5 dark:bg-white/5 overflow-hidden">
-          <div class="h-full rounded-full bg-gradient-to-r" :class="m.c" :style="{ width: `${m.shift}%` }" />
-        </div>
+        <span class="text-[7px] text-gray-500 truncate">{{ m.email }}</span>
+        <span class="text-[7px] text-gray-500 tabular-nums whitespace-nowrap">{{ m.date }}</span>
       </div>
     </div>
 
-    <!-- Footer -->
-    <div class="mt-3 pt-2 border-t border-black/5 dark:border-white/10 flex items-center gap-3 text-[8px] font-semibold">
-      <span class="inline-flex items-center gap-1 text-secondary-600 dark:text-secondary-400">
-        <UIcon name="i-lucide-clock" class="size-2.5" />
-        110h · this week
-      </span>
-      <span class="inline-flex items-center gap-1 text-secondary-600 dark:text-secondary-400">
-        <UIcon name="i-lucide-wallet" class="size-2.5" />
-        Pay run 28 Apr
-      </span>
-      <span class="ms-auto inline-flex items-center gap-1 text-emerald-600 dark:text-emerald-400">
-        <UIcon name="i-lucide-check-circle-2" class="size-2.5" />
-        All clocked in
-      </span>
-    </div>
+    <p class="mt-1 text-[6px] text-gray-400">Viewing 1–4 of 4 results</p>
   </div>
 
   <!-- ════ Accounting — top bar + journal entries with source badges + balance footer ════ -->
+    <!-- ════ Accounting — Overview screen: Total Assets / Liabilities / Equity /
+       Net Income MTD KPI strip, Ledger health check (Trial balanced + A=L+E),
+       A/R Aging and A/P Aging cards with bucket grid (Current / 1-30 / 31-60 /
+       61-90 / 90+) — exactly mirrors /dashboard/accounting. ════ -->
   <div v-else-if="id === 'accounting'" class="w-full text-[9px]">
-    <!-- Top bar -->
-    <div class="flex items-center justify-between mb-3">
-      <div>
-        <p class="text-sm font-black text-gray-900 dark:text-white tracking-tight leading-none">Journal · 22 Apr</p>
-        <p class="text-[9px] text-gray-400 mt-1">48 entries posted · 2 drafts</p>
+    <!-- Header -->
+    <div class="mb-2">
+      <p class="text-[10px] font-black text-gray-900 dark:text-white tracking-tight leading-none">Accounting</p>
+      <p class="text-[7px] text-gray-400 mt-0.5">Ledger, statements, receivables and payables</p>
+    </div>
+
+    <!-- Top KPI strip -->
+    <div class="grid grid-cols-4 gap-1 mb-2">
+      <div class="p-1.5 rounded border border-black/5 dark:border-white/10 bg-white dark:bg-[#0c0c0c]">
+        <p class="text-[6px] uppercase tracking-wider text-gray-400 font-bold">Total Assets</p>
+        <p class="text-[11px] font-black tabular-nums leading-tight">﷼16,529</p>
+        <p class="text-[6px] text-gray-400 mt-0.5">as of 2026-05-01</p>
       </div>
-      <div class="flex gap-0.5 bg-black/5 dark:bg-white/10 rounded-full p-0.5 font-bold text-[8px]">
-        <span class="px-2 py-1 rounded-full bg-primary text-white dark:bg-white dark:text-primary shadow-sm">Journal</span>
-        <span class="px-2 py-1 text-gray-500 dark:text-gray-400">Bills</span>
-        <span class="px-2 py-1 text-gray-500 dark:text-gray-400">Bank</span>
+      <div class="p-1.5 rounded border border-black/5 dark:border-white/10 bg-white dark:bg-[#0c0c0c]">
+        <p class="text-[6px] uppercase tracking-wider text-gray-400 font-bold">Total Liabilities</p>
+        <p class="text-[11px] font-black tabular-nums leading-tight">﷼2,243</p>
+      </div>
+      <div class="p-1.5 rounded border border-black/5 dark:border-white/10 bg-white dark:bg-[#0c0c0c]">
+        <p class="text-[6px] uppercase tracking-wider text-gray-400 font-bold">Total Equity</p>
+        <p class="text-[11px] font-black tabular-nums leading-tight">﷼14,286</p>
+      </div>
+      <div class="p-1.5 rounded border border-black/5 dark:border-white/10 bg-white dark:bg-[#0c0c0c]">
+        <p class="text-[6px] uppercase tracking-wider text-gray-400 font-bold">Net Income MTD</p>
+        <p class="text-[11px] font-black tabular-nums leading-tight text-rose-600">-﷼10.75</p>
       </div>
     </div>
 
-    <!-- Journal entry list -->
-    <div class="space-y-1 mb-2">
-      <div v-for="e in [
-        { n: 'JE-0482', src: 'SALE', color: 'emerald', desc: 'Invoice INV-218 · Lina H.', amt: '240.00' },
-        { n: 'JE-0481', src: 'EXP', color: 'rose', desc: 'Supplier payment · Acme', amt: '580.00' },
-        { n: 'JE-0480', src: 'PAY', color: 'violet', desc: 'Payroll · April run', amt: '8,400.00' }
-      ]" :key="e.n"
-        class="flex items-center gap-2 px-2 py-1.5 rounded-md bg-white dark:bg-[#0c0c0c] border border-black/5 dark:border-white/10"
-      >
-        <span class="text-[7px] font-black tabular-nums text-gray-400 shrink-0">{{ e.n }}</span>
-        <span class="text-[7px] px-1.5 py-0.5 rounded font-black shrink-0" :class="{
-          'bg-emerald-500/15 text-emerald-700 dark:text-emerald-400': e.color === 'emerald',
-          'bg-rose-500/15 text-rose-700 dark:text-rose-400': e.color === 'rose',
-          'bg-secondary-500/15 text-secondary-700 dark:text-secondary-400': e.color === 'violet'
-        }">{{ e.src }}</span>
-        <p class="flex-1 min-w-0 text-[9px] font-bold truncate">{{ e.desc }}</p>
-        <p class="text-[9px] font-black tabular-nums whitespace-nowrap">{{ e.amt }}</p>
+    <!-- Ledger health card -->
+    <div class="p-1.5 rounded border border-black/5 dark:border-white/10 bg-white dark:bg-[#0c0c0c] mb-2">
+      <div class="flex items-center gap-1 mb-1">
+        <UIcon name="i-lucide-stethoscope" class="size-3 text-gray-500" />
+        <p class="text-[8px] font-bold">Ledger health</p>
+      </div>
+      <div class="grid grid-cols-2 gap-1">
+        <div class="flex items-center justify-between px-1.5 py-1 rounded bg-black/[0.03] dark:bg-white/[0.04]">
+          <span class="text-[7px]">Trial balance balanced</span>
+          <span class="text-[6px] px-1 py-px rounded bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 font-bold inline-flex items-center gap-0.5">
+            <UIcon name="i-lucide-check" class="size-2" />OK
+          </span>
+        </div>
+        <div class="flex items-center justify-between px-1.5 py-1 rounded bg-black/[0.03] dark:bg-white/[0.04]">
+          <span class="text-[7px]">A = L + E</span>
+          <span class="text-[6px] px-1 py-px rounded bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 font-bold inline-flex items-center gap-0.5">
+            <UIcon name="i-lucide-check" class="size-2" />OK
+          </span>
+        </div>
       </div>
     </div>
 
-    <!-- Expanded T-account preview -->
-    <div class="rounded-lg border border-black/10 dark:border-white/10 overflow-hidden">
-      <div class="grid grid-cols-[1fr_auto_auto] gap-3 px-2 py-1 bg-black/5 dark:bg-white/5 text-[7px] uppercase tracking-wider font-black text-gray-500">
-        <span>Account</span><span>DR</span><span>CR</span>
+    <!-- A/R + A/P aging buckets (matches APP cards) -->
+    <div class="grid grid-cols-2 gap-1.5">
+      <div class="p-1.5 rounded border border-black/5 dark:border-white/10 bg-white dark:bg-[#0c0c0c]">
+        <div class="flex items-center justify-between mb-1">
+          <div>
+            <p class="text-[6px] uppercase tracking-wider text-gray-400 font-bold">A/R aging</p>
+            <p class="text-[10px] font-black tabular-nums leading-none">﷼1,075</p>
+          </div>
+          <UIcon name="i-lucide-users" class="size-3 text-gray-400" />
+        </div>
+        <div class="grid grid-cols-5 gap-px text-[6px]">
+          <div><p class="text-gray-400">Current</p><p class="tabular-nums">﷼0</p></div>
+          <div><p class="text-gray-400">1-30</p><p class="tabular-nums">﷼1,075</p></div>
+          <div><p class="text-gray-400">31-60</p><p class="tabular-nums">﷼0</p></div>
+          <div><p class="text-gray-400">61-90</p><p class="tabular-nums">﷼0</p></div>
+          <div><p class="text-amber-600">90+</p><p class="tabular-nums text-amber-600">﷼0</p></div>
+        </div>
       </div>
-      <div v-for="(r, i) in [
-        { a: '1100 · Cash', dr: '240.00', cr: '' },
-        { a: '4000 · Service revenue', dr: '', cr: '208.70' },
-        { a: '2300 · VAT payable', dr: '', cr: '31.30' }
-      ]" :key="i" class="grid grid-cols-[1fr_auto_auto] gap-3 px-2 py-1 border-t border-black/5 dark:border-white/10 text-[8px]">
-        <span class="truncate tabular-nums">{{ r.a }}</span>
-        <span class="tabular-nums font-bold text-emerald-600 dark:text-emerald-400">{{ r.dr }}</span>
-        <span class="tabular-nums font-bold text-rose-600 dark:text-rose-400">{{ r.cr }}</span>
+      <div class="p-1.5 rounded border border-black/5 dark:border-white/10 bg-white dark:bg-[#0c0c0c]">
+        <div class="flex items-center justify-between mb-1">
+          <div>
+            <p class="text-[6px] uppercase tracking-wider text-gray-400 font-bold">A/P aging</p>
+            <p class="text-[10px] font-black tabular-nums leading-none">﷼14</p>
+          </div>
+          <UIcon name="i-lucide-truck" class="size-3 text-gray-400" />
+        </div>
+        <div class="grid grid-cols-5 gap-px text-[6px]">
+          <div><p class="text-gray-400">Current</p><p class="tabular-nums">﷼0</p></div>
+          <div><p class="text-gray-400">1-30</p><p class="tabular-nums">﷼14</p></div>
+          <div><p class="text-gray-400">31-60</p><p class="tabular-nums">﷼0</p></div>
+          <div><p class="text-gray-400">61-90</p><p class="tabular-nums">﷼0</p></div>
+          <div><p class="text-amber-600">90+</p><p class="tabular-nums text-amber-600">﷼0</p></div>
+        </div>
       </div>
-      <div class="grid grid-cols-[1fr_auto_auto] gap-3 px-2 py-1 bg-stone-500/10 border-t-2 border-stone-500 text-[8px] font-black">
-        <span>Balance</span>
-        <span class="tabular-nums">240.00</span>
-        <span class="tabular-nums">240.00</span>
-      </div>
-    </div>
-
-    <!-- Footer -->
-    <div class="mt-3 pt-2 border-t border-black/5 dark:border-white/10 flex items-center gap-3 text-[8px] font-semibold">
-      <span class="inline-flex items-center gap-1 text-stone-600 dark:text-stone-400">
-        <UIcon name="i-lucide-landmark" class="size-2.5" />
-        Bank reconciled
-      </span>
-      <span class="inline-flex items-center gap-1 text-secondary-600 dark:text-secondary-400">
-        <UIcon name="i-lucide-shield-check" class="size-2.5" />
-        Audit trail live
-      </span>
-      <span class="ms-auto inline-flex items-center gap-1 text-emerald-600 dark:text-emerald-400">
-        <UIcon name="i-lucide-check-circle-2" class="size-2.5" />
-        Auto-posting on
-      </span>
     </div>
   </div>
 
   <!-- ════ Reports — top bar + KPI grid + revenue bar chart + expense list ════ -->
+  <!-- ════ Reports — All Reports gallery: tile grid with iconed report cards
+       (Performance, Staff, Clients, Balance Sheet, Trial Balance, Finance,
+       Inventory, VAT Report, Profit & Loss, Cash Flow, A/R Aging, A/P Aging),
+       grouped by section. Mirrors /dashboard/reports/all in the APP. ════ -->
   <div v-else-if="id === 'reports'" class="w-full text-[9px]">
-    <!-- Top bar -->
-    <div class="flex items-center justify-between mb-3">
-      <div>
-        <p class="text-sm font-black text-gray-900 dark:text-white tracking-tight leading-none">Finance · This month</p>
-        <p class="text-[9px] text-gray-400 mt-1">Updated 2 min ago</p>
-      </div>
-      <div class="flex gap-0.5 bg-black/5 dark:bg-white/10 rounded-full p-0.5 font-bold text-[8px]">
-        <span class="px-2 py-1 text-gray-500 dark:text-gray-400">Day</span>
-        <span class="px-2 py-1 text-gray-500 dark:text-gray-400">Wk</span>
-        <span class="px-2 py-1 rounded-full bg-primary text-white dark:bg-white dark:text-primary shadow-sm">Mo</span>
-        <span class="px-2 py-1 text-gray-500 dark:text-gray-400">Yr</span>
+    <!-- Header -->
+    <div class="mb-2">
+      <p class="text-[10px] font-black text-gray-900 dark:text-white tracking-tight leading-none">All Reports</p>
+      <p class="text-[7px] text-gray-400 mt-0.5">Sales, appointments, and key business metrics</p>
+    </div>
+
+    <!-- Report tile grid (3-up) — 9 tiles like the APP -->
+    <div class="grid grid-cols-3 gap-1.5">
+      <div v-for="r in [
+        { n: 'Performance',     d: 'Sales, appointments, key metrics',     icon: 'i-lucide-trending-up',    tone: 'emerald' },
+        { n: 'Staff',           d: 'Team performance, commissions',         icon: 'i-lucide-users',           tone: 'sky' },
+        { n: 'Clients',         d: 'Acquisition, retention, engagement',    icon: 'i-lucide-smile',           tone: 'violet' },
+        { n: 'Balance Sheet',   d: 'Revenue, taxes, payment analysis',      icon: 'i-lucide-wallet',          tone: 'amber' },
+        { n: 'Trial Balance',   d: 'Ending balance — DR must equal CR',     icon: 'i-lucide-scale',           tone: 'rose' },
+        { n: 'Finance Overview',d: 'Revenue, expenses, cash, balances',     icon: 'i-lucide-landmark',        tone: 'sky' },
+        { n: 'Inventory',       d: 'Stock levels, sales, supplier perf.',   icon: 'i-lucide-package',         tone: 'amber' },
+        { n: 'VAT Report',      d: 'Tax by rate and category — file ready', icon: 'i-lucide-receipt',         tone: 'rose' },
+        { n: 'Profit & Loss',   d: 'Revenue minus costs, refunds, dis.',    icon: 'i-lucide-bar-chart-3',     tone: 'sky' }
+      ]" :key="r.n"
+        class="p-1.5 rounded border border-black/5 dark:border-white/10 bg-white dark:bg-[#0c0c0c] hover:bg-black/[0.02] transition-colors"
+      >
+        <div class="size-5 rounded flex items-center justify-center mb-1" :class="{
+          'bg-emerald-100 text-emerald-700': r.tone === 'emerald',
+          'bg-sky-100 text-sky-700':         r.tone === 'sky',
+          'bg-violet-100 text-violet-700':   r.tone === 'violet',
+          'bg-amber-100 text-amber-700':     r.tone === 'amber',
+          'bg-rose-100 text-rose-700':       r.tone === 'rose'
+        }">
+          <UIcon :name="r.icon" class="size-3" />
+        </div>
+        <p class="text-[7px] font-bold leading-tight text-gray-900 dark:text-white">{{ r.n }}</p>
+        <p class="text-[6px] text-gray-400 leading-tight mt-0.5 line-clamp-2">{{ r.d }}</p>
       </div>
     </div>
 
-    <!-- KPI grid 4 tiles -->
-    <div class="grid grid-cols-4 gap-1.5 mb-3">
-      <div class="p-1.5 rounded-lg bg-secondary-500/10 border-s-2 border-secondary-500">
-        <div class="flex items-center gap-1">
-          <UIcon name="i-lucide-circle-dollar-sign" class="size-2.5 text-secondary-600 dark:text-secondary-400" />
-          <p class="text-[7px] uppercase tracking-wider text-secondary-700 dark:text-secondary-400 font-bold">Revenue</p>
-        </div>
-        <p class="text-[12px] font-black tabular-nums leading-tight mt-0.5">48.2k</p>
-        <p class="text-[7px] text-emerald-600 dark:text-emerald-400 font-bold">+18%</p>
-      </div>
-      <div class="p-1.5 rounded-lg bg-rose-500/10 border-s-2 border-rose-500">
-        <div class="flex items-center gap-1">
-          <UIcon name="i-lucide-arrow-down" class="size-2.5 text-rose-600 dark:text-rose-400" />
-          <p class="text-[7px] uppercase tracking-wider text-rose-700 dark:text-rose-400 font-bold">Expense</p>
-        </div>
-        <p class="text-[12px] font-black tabular-nums leading-tight mt-0.5">18.4k</p>
-        <p class="text-[7px] text-rose-600 dark:text-rose-400 font-bold">+4%</p>
-      </div>
-      <div class="p-1.5 rounded-lg bg-emerald-500/10 border-s-2 border-emerald-500">
-        <div class="flex items-center gap-1">
-          <UIcon name="i-lucide-trending-up" class="size-2.5 text-emerald-600 dark:text-emerald-400" />
-          <p class="text-[7px] uppercase tracking-wider text-emerald-700 dark:text-emerald-400 font-bold">Profit</p>
-        </div>
-        <p class="text-[12px] font-black tabular-nums leading-tight mt-0.5">29.8k</p>
-        <p class="text-[7px] text-emerald-600 dark:text-emerald-400 font-bold">+24%</p>
-      </div>
-      <div class="p-1.5 rounded-lg bg-secondary-500/10 border-s-2 border-secondary-500">
-        <div class="flex items-center gap-1">
-          <UIcon name="i-lucide-landmark" class="size-2.5 text-secondary-600 dark:text-secondary-400" />
-          <p class="text-[7px] uppercase tracking-wider text-secondary-700 dark:text-secondary-400 font-bold">Cash</p>
-        </div>
-        <p class="text-[12px] font-black tabular-nums leading-tight mt-0.5">82.1k</p>
-        <p class="text-[7px] text-secondary-600 dark:text-secondary-400 font-bold">12 accts</p>
-      </div>
-    </div>
-
-    <!-- Bar chart -->
-    <div class="p-2 rounded-lg bg-white dark:bg-[#0c0c0c] border border-black/5 dark:border-white/10">
-      <div class="flex items-center justify-between mb-1.5">
-        <p class="text-[8px] uppercase tracking-wider text-gray-500 font-black">Daily revenue · 12 mo</p>
-        <p class="text-[8px] font-black tabular-nums bg-gradient-to-br from-secondary-500 to-secondary-600 bg-clip-text text-transparent">SAR 48,200</p>
-      </div>
-      <div class="flex items-end gap-1 h-16">
-        <div v-for="(b, i) in [42, 58, 38, 72, 55, 84, 66, 92, 78, 96, 88, 100]" :key="i"
-          class="flex-1 rounded-t bg-gradient-to-t from-secondary-500 to-secondary-300 relative"
-          :style="{ height: `${b}%` }"
-        >
-          <div v-if="i === 11" aria-hidden="true" class="absolute -top-1 inset-x-0 flex justify-center">
-            <span class="size-1 rounded-full bg-secondary-500 ring-2 ring-secondary-500/25 animate-pulse" />
-          </div>
-        </div>
-      </div>
-      <div class="mt-1 flex justify-between text-[7px] text-gray-400">
-        <span v-for="m in ['May', '', '', 'Aug', '', '', 'Nov', '', '', 'Feb', '', 'Apr']" :key="m">{{ m }}</span>
-      </div>
-    </div>
-
-    <!-- Footer: report shortcuts -->
-    <div class="mt-3 pt-2 border-t border-black/5 dark:border-white/10 flex items-center gap-3 text-[8px] font-semibold">
+    <!-- Footer chip: AI summary on demand + export options -->
+    <div class="mt-2 pt-1.5 border-t border-black/5 dark:border-white/10 flex items-center gap-3 text-[7px] font-semibold">
       <span class="inline-flex items-center gap-1 text-secondary-600 dark:text-secondary-400">
-        <UIcon name="i-lucide-file-text" class="size-2.5" />
-        P&L
+        <UIcon name="i-lucide-sparkles" class="size-2.5" />AI summary
       </span>
-      <span class="inline-flex items-center gap-1 text-secondary-600 dark:text-secondary-400">
-        <UIcon name="i-lucide-scale" class="size-2.5" />
-        Balance sheet
-      </span>
-      <span class="inline-flex items-center gap-1 text-secondary-600 dark:text-secondary-400">
-        <UIcon name="i-lucide-file-check" class="size-2.5" />
-        VAT return
+      <span class="inline-flex items-center gap-1 text-gray-600 dark:text-gray-300">
+        <UIcon name="i-lucide-calendar" class="size-2.5" />Custom range · prior-period diff
       </span>
       <span class="ms-auto inline-flex items-center gap-1 text-emerald-600 dark:text-emerald-400">
-        <UIcon name="i-lucide-download" class="size-2.5" />
-        CSV · PDF
+        <UIcon name="i-lucide-download" class="size-2.5" />Excel · CSV · PDF
       </span>
     </div>
   </div>

@@ -276,6 +276,10 @@ export default defineNuxtConfig({
       {
         name: 'Saudi Riyal',
         provider: 'none'
+      },
+      {
+        name: 'Segoe UI',
+        provider: 'none'
       }
     ],
     defaults: {

@@ -139,22 +139,27 @@ function onClick(idx, p) {
         </span>
       </div>
 
-      <!-- Hero duration — featured gets a subtle gradient text fill -->
-      <div class="flex items-baseline gap-3 leading-[0.85]">
+      <!-- Hero price — visual anchor at the top of the column -->
+      <div class="flex items-baseline gap-3 leading-[0.85] mb-4">
         <span
-          class="font-black tracking-tight tabular-nums"
-          :class="[
-            p.durationValue === '∞'
-              ? 'text-7xl sm:text-8xl lg:text-[8.5rem]'
-              : 'text-6xl sm:text-7xl lg:text-8xl',
-            p.featured
-              ? `bg-gradient-to-br bg-clip-text text-transparent ${accentFor(p, idx).textGradient}`
-              : 'text-primary dark:text-white'
-          ]"
-        >{{ p.durationValue }}</span>
+          class="font-black tracking-tight tabular-nums text-6xl sm:text-7xl lg:text-8xl"
+          :class="p.featured
+            ? `bg-gradient-to-br bg-clip-text text-transparent ${accentFor(p, idx).textGradient}`
+            : 'text-primary dark:text-white'"
+        >{{ p.price }}</span>
         <span class="text-xs sm:text-sm font-black uppercase tracking-[0.25em] text-gray-500 dark:text-gray-400">
-          {{ p.durationLabel }}
+          {{ p.priceSuffix }}
         </span>
+      </div>
+
+      <!-- Supporting duration meta (∞ LIFETIME UPDATES) — sits below the price as a value-prop, not the hero -->
+      <div class="flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] font-black text-gray-500 dark:text-gray-400 mb-2">
+        <span class="inline-flex items-baseline gap-1">
+          <UIcon name="i-lucide-infinity" class="size-3.5" :class="accentFor(p, idx).text" />
+          <span class="tabular-nums">{{ p.durationValue }}</span>
+        </span>
+        <span aria-hidden="true" class="size-1 rounded-full bg-current opacity-30" />
+        <span>{{ p.durationLabel }}</span>
       </div>
 
       <!-- Coverage bar — slim, accent-tinted fill -->
@@ -214,18 +219,8 @@ function onClick(idx, p) {
         </dl>
       </div>
 
-      <!-- Spacer pushes price + CTA to the bottom on desktop -->
+      <!-- Spacer pushes the CTA to the bottom on desktop -->
       <div class="mt-auto pt-10">
-        <!-- Price + suffix on a single baseline -->
-        <div class="flex items-baseline gap-2 mb-8">
-          <span class="text-4xl sm:text-5xl font-black tracking-tight tabular-nums text-primary dark:text-white">
-            {{ p.price }}
-          </span>
-          <span class="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-            {{ p.priceSuffix }}
-          </span>
-        </div>
-
         <!-- CTA: filled rounded pill, full-width on mobile, comfortable size -->
         <component
           :is="interactive ? 'button' : NuxtLinkRef"

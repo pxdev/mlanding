@@ -88,7 +88,7 @@ To edit copy, change the JSON file and the page updates on next reload.
 **Recommended — env bootstrap:** set `PORTAL_ADMIN_EMAILS` to a comma-separated allowlist. Matching accounts are auto-promoted on register, or on the next login if they already exist.
 
 ```env
-PORTAL_ADMIN_EMAILS=you@momentfy.com,ops@momentfy.com
+PORTAL_ADMIN_EMAILS=support@momentfy.com
 ```
 
 Seed-only — removing an email does **not** demote; the DB flag sticks until you toggle it off.
@@ -101,7 +101,7 @@ npm run db:studio
 ```
 
 ```sql
-UPDATE "Account" SET "isAdmin" = true WHERE email = 'you@momentfy.com';
+UPDATE "Account" SET "isAdmin" = true WHERE email = 'support@momentfy.com';
 ```
 
 ## Deployment
@@ -109,8 +109,72 @@ UPDATE "Account" SET "isAdmin" = true WHERE email = 'you@momentfy.com';
 - Build: `npm run build`
 - Preview locally: `npm run preview`
 - The portal needs a Node runtime (it has SSR + an API). Static-only hosts won't work.
-- Recommended: Vercel (Node functions), Railway, Fly.io, or any Node host with Postgres available.
-- Run `npx prisma migrate deploy` on each release.
+- Production target: **Coolify** (steps below). Any Docker host works — the `Dockerfile` is self-contained.
+- Run `npx prisma migrate deploy` on each release. The shipped Dockerfile does this in its `CMD`, so on Coolify it happens automatically before each container boot.
+
+### Deploying to Coolify
+
+The repo ships everything Coolify needs:
+
+| File | Purpose |
+| --- | --- |
+| `Dockerfile` | Multi-stage Debian-slim build → self-contained Nitro bundle |
+| `.dockerignore` | Keeps the build context tiny and prevents `.env*` from baking into the image |
+| `server/api/health.get.ts` | Liveness + DB-ping probe at `GET /api/health` |
+| `.github/workflows/ci.yml` | Lint + typecheck + Docker build smoke (advisory) |
+| `.env.production.example` | Paste-target for the env-vars panel |
+
+#### One-time setup in Coolify
+
+1. **Provision Postgres in the same project.**
+   New Resource → Database → PostgreSQL. Note the internal connection string from its "Connection" tab — you'll paste it into the app's `DATABASE_URL`.
+2. **Add the application.**
+   New Resource → Application → Public/Private Repository → connect via Coolify's GitHub App (or PAT).
+3. **Configure the build.**
+   - Repository: this repo
+   - Branch: `main`
+   - Build pack: `Dockerfile`
+   - Port: `3000`
+   - Health check path: `/api/health`
+   - Domain: `momentfy.com` (Coolify auto-provisions Let's Encrypt TLS)
+4. **Paste the environment variables.**
+   Copy from `.env.production.example`, fill every secret. `DATABASE_URL` uses the Coolify-internal Postgres host (the service name on the project network, not `localhost`).
+5. **Mount the uploads volume.**
+   Storage → Persistent Storage → mount path `/app/data`. The Dockerfile's `VOLUME ["/app/data"]` directive declares the mount point; this step backs it with a host directory so files survive redeploys.
+6. **Enable auto-deploy.**
+   General → "Automatic deployment on push" → enabled. Coolify creates the GitHub webhook for you. Every push to `main` triggers: pull → docker build → migrate → swap container.
+
+#### How a release flows
+
+```
+git push origin main
+        ↓
+GitHub fires webhook to Coolify
+        ↓
+Coolify pulls main, runs `docker build -f Dockerfile`
+        ↓
+New container starts → ENTRYPOINT runs `prisma migrate deploy`
+        ↓
+Nitro binds :3000 → health check polls /api/health
+        ↓
+Once healthy, Coolify swaps traffic. Old container is drained + removed.
+```
+
+If migrations fail, the container exits non-zero and Coolify keeps the previous version live.
+
+#### Quality gate (advisory)
+
+`.github/workflows/ci.yml` runs on every PR and push to `main`:
+
+- `npm run lint`
+- `npm run typecheck`
+- A Dockerfile build smoke test (no registry push) — catches container breakage before Coolify wastes a deploy.
+
+The workflow is advisory by default. To make it a hard gate, enable branch protection: GitHub → Settings → Branches → main → Require status checks before merging → tick `Lint & typecheck` and `Docker build smoke`.
+
+#### Rolling back
+
+Coolify keeps the last few image hashes. From the application's Deployments tab, click any prior successful deployment and "Redeploy". For schema rollbacks, Prisma migrations are forward-only — you'll need a manual `down` migration for any reversion.
 
 ## Phase roadmap
 

@@ -182,7 +182,7 @@ const addonCategories = computed(() => {
       <!-- Closing tagline -->
       <p class="mt-20 flex items-center justify-center gap-2 text-xs text-gray-500 uppercase tracking-[0.25em]">
         <span class="size-1.5 rounded-full bg-emerald-500" />
-        {{ copy.ui.allSixteenShip }}
+        {{ copy.ui.allFifteenShip }}
       </p>
     </div>
   </section>

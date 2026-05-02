@@ -2,6 +2,7 @@
 definePageMeta({ layout: 'landing' })
 
 const copy = useLandingCopy()
+const localePath = useLocalePath()
 const { locale } = useI18n()
 
 useLandingSeo({
@@ -292,7 +293,7 @@ const saasPresets = [25, 50, 100, 200]
               </p>
             </div>
             <NuxtLink
-              :to="copy.roiPage.ctaHref"
+              :to="localePath(copy.roiPage.ctaHref)"
               class="sm:col-span-2 group relative overflow-hidden rounded-2xl bg-primary text-white p-5 sm:p-6 flex items-center justify-between gap-4 hover:scale-[1.01] transition-transform shadow-xl shadow-primary/20"
             >
               <div>

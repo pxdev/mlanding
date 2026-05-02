@@ -935,37 +935,37 @@
     "solutionDetails": {
       "salon": {
         "title": "Salons & Spas",
-        "tagline": "Color-coded lanes, memberships and loyalty — tuned for the rhythm of a salon.",
+        "tagline": "Color-coded staff lanes, memberships, loyalty and retail — tuned to the rhythm of a salon floor.",
         "icon": "i-lucide-scissors",
         "accent": "from-pink-500 to-rose-600",
         "dot": "bg-rose-500",
         "category": "Industry",
-        "long": "Salons live on rebooks, retail attach-rate and staff commissions. Momentfy's salon setup ships with color-coded staff lanes, membership bundles, gift cards, loyalty points, retail inventory, campaigns and per-stylist commissions — bookable from your branded PWA.",
+        "long": "Salons live on rebooks, retail attach-rate and stylist commissions. Momentfy's salon configuration ships with the Calendar module set to color-coded staff lanes and resource booking for chairs and rooms, the Catalogue with services, packages and tiered memberships, the Loyalty Points add-on for portal-redeemable rewards, Sales & POS with tip-split and per-stylist commission, and the branded Client Portal so guests rebook from your own URL — not a marketplace.",
         "pains": [
-          "Double-booked chairs and no-shows eating 20% of revenue",
-          "Memberships tracked in spreadsheets that nobody updates",
-          "Commissions calculated by hand every payday",
-          "Loyalty punch-cards that walk out with the client"
+          "Double-bookings and no-shows quietly burning 15–20% of the day's revenue",
+          "Memberships and prepaid packages tracked in a spreadsheet that is always one stylist behind",
+          "Commissions, tips and product splits recalculated by hand every payday",
+          "Loyalty punch-cards walking out the door with the client"
         ],
         "capabilities": [
-          "Drag-and-drop staff lanes with resource booking",
-          "Memberships, gift cards and package credits in one wallet",
-          "Loyalty points auto-earned at POS, redeemable in portal",
-          "Per-stylist commissions with split and tip handling",
-          "Retail inventory with re-order points and stock moves",
-          "SMS/WhatsApp reminders and review-request campaigns",
-          "Walk-in queue alongside booked appointments",
-          "End-of-day cash register close"
+          "Drag-and-drop staff lanes with chair/room resource booking",
+          "Memberships, gift cards and package credits in one client wallet",
+          "Loyalty points auto-earned at POS, redeemable in the branded portal",
+          "Per-stylist commissions with tip-split and product attach",
+          "Retail inventory with re-order points, transfers and stocktakes",
+          "SMS / WhatsApp reminders and review-request campaigns",
+          "Walk-in queue rendered alongside booked appointments",
+          "End-of-day cash close with shift reconciliation and float drop"
         ],
         "stack": [
           "Calendar",
           "Sales & POS",
-          "Memberships",
+          "Catalogue",
           "Loyalty Points",
-          "Campaigns",
           "Clients & CRM",
           "Inventory",
-          "Reports"
+          "Reports",
+          "Client Portal"
         ],
         "stats": [
           {
@@ -983,54 +983,58 @@
         ],
         "whoFor": "Hair, beauty, nails, lash and spa operators running 1–50 chairs across one or many locations.",
         "useCases": [
-          "Solo stylist accepting online bookings with deposits",
-          "Multi-chair salon with stylist-specific commissions and tips",
-          "Spa chain selling seasonal memberships across branches",
-          "Retail-heavy concept bar upselling products at POS"
+          "Solo stylist taking online bookings with deposit-protected slots",
+          "Multi-chair salon with stylist-specific commissions and tip-split",
+          "Spa group selling seasonal memberships across branches",
+          "Retail-heavy concept bar upselling product attach at POS checkout"
         ],
         "faq": [
           {
-            "q": "Can stylists see only their own appointments?",
-            "a": "Yes — role-based views restrict each member's calendar to their lane by default."
+            "q": "Can stylists only see their own appointments?",
+            "a": "Yes — role-based scopes restrict each member to their own lane by default; managers see the full floor and can rebook across stylists."
           },
           {
             "q": "Do memberships auto-renew?",
-            "a": "Yes. Stripe or Lemon Squeezy handles the card-on-file charge and credit tops up automatically."
+            "a": "Yes. Stripe or Lemon Squeezy charges the card on file and tops up the wallet credit automatically; clients can pause, swap tier or cancel from the portal."
+          },
+          {
+            "q": "Can I split tips between stylist, washer and reception?",
+            "a": "Yes — tip-split rules are defined per service or per ticket and feed straight into the Team & HR pay run on commission night."
           }
         ]
       },
       "dental": {
         "title": "Dental Clinics",
-        "tagline": "Odontogram, imaging, prescriptions and insurance — ZATCA-ready.",
+        "tagline": "Charts, treatment plans, insurance and recall — built for the chair and the front desk.",
         "icon": "i-hugeicons-dental-tooth",
         "accent": "from-sky-500 to-blue-600",
         "dot": "bg-sky-500",
         "category": "Industry",
-        "long": "Dental practices need clinical depth without clinical drag. Momentfy ships a pediatric + adult odontogram, treatment plans, DICOM imaging, prescriptions, insurance classes with coverage rules, and ZATCA Phase 2 e-invoicing — all inside one bilingual app.",
+        "long": "Dental clinics juggle clinical accuracy with patient flow. Momentfy ships with the Dental Chart add-on for pediatric and adult odontograms, the Insurance Classes add-on for coverage rules and claim-ready invoices, the Medical Records add-on for SOAP notes and attachments, the Calendar with chair resource booking and room blocks, and the Client Portal where patients confirm appointments, download prescriptions and pay balances — all stitched into the same client file.",
         "pains": [
-          "Paper odontograms lost between visits",
-          "Insurance rejections from missing coverage rules",
-          "X-ray images trapped on a lab PC",
-          "Manual ZATCA invoice uploads every evening"
+          "Paper charts and standalone imaging that never reach the front desk",
+          "Insurance claims rejected because coverage rules were applied at checkout, not at booking",
+          "Recall lists tracked manually — scaling and check-up patients never come back",
+          "Treatment plans signed off but never converted into actual sales"
         ],
         "capabilities": [
-          "Odontogram with surface-level treatment tracking (pediatric + adult)",
-          "Treatment plans with phasing and consent capture",
-          "DICOM viewer with annotations attached to the record",
-          "Prescription authoring with patient-facing portal download",
-          "Insurance classes + coverage rules + claim-ready invoices",
-          "ZATCA Phase 2 clearance + QR-stamped receipts",
-          "Chair & resource booking alongside staff",
-          "Lab orders with external-lab status tracking"
+          "Pediatric + adult odontogram with surface-level treatment status",
+          "Multi-stage treatment plans with phased estimates and consent capture",
+          "Insurance class rules applied at booking, not at checkout",
+          "Recall queue with auto-scheduled hygiene and check-up tasks",
+          "Lab orders and results attached to the patient timeline",
+          "Prescriptions authored in-app, downloadable from the portal",
+          "Chair / room resource booking with hygienist + dentist pairing",
+          "ZATCA / ETA-compliant invoicing on every visit"
         ],
         "stack": [
           "Calendar",
           "Dental Chart",
-          "Clinical Imaging",
-          "Prescriptions",
-          "Insurance Classes",
           "Medical Records",
-          "ZATCA",
+          "Insurance Classes",
+          "Lab Orders",
+          "Prescriptions",
+          "Sales & POS",
           "Client Portal"
         ],
         "stats": [
@@ -1047,47 +1051,51 @@
             "v": "-65%"
           }
         ],
-        "whoFor": "Solo and multi-doctor dental practices in GCC/MENA needing ZATCA compliance and insurance workflows.",
+        "whoFor": "Solo practitioners, group practices and dental chains running 1–30 chairs with insurance mix.",
         "useCases": [
-          "Two-chair clinic running mixed insurance + cash patients",
-          "Pediatric dentistry tracking deciduous dentition over time",
-          "Orthodontist managing multi-phase treatment plans",
-          "Multi-branch group practice with unified patient records"
+          "Solo dentist tracking treatment phases per patient with photo attachments",
+          "Group practice with hygienists, GPs and specialists sharing one chair grid",
+          "Insurance-heavy clinic with two payers and coverage caps per service",
+          "Multi-branch chain consolidating revenue and insurance recovery in real time"
         ],
         "faq": [
           {
-            "q": "Can I attach DICOM images to a treatment step?",
-            "a": "Yes — the DICOM viewer links each series to the relevant tooth and treatment step in one click."
+            "q": "Is the chart pediatric-aware?",
+            "a": "Yes. The Dental Chart add-on toggles between deciduous and permanent dentition and lets you record surface-level findings, planned treatment and completed work side-by-side."
           },
           {
-            "q": "Are ZATCA cleared invoices retained?",
-            "a": "Forever. Cleared XML + submission UUID are archived and exportable at any time."
+            "q": "How does insurance pricing work at the chair?",
+            "a": "Each service can be linked to one or more Insurance Classes with co-pay, ceiling and exclusion rules. The system splits the invoice into patient-due and insurer-due before checkout — no manual recalculation."
+          },
+          {
+            "q": "Can I attach X-rays or photos to the patient file?",
+            "a": "Yes. The Clinical Imaging add-on stores DICOM and standard images against the patient timeline; the Client Portal can expose the ones you choose to share."
           }
         ]
       },
       "medical": {
         "title": "Medical Clinics",
-        "tagline": "Structured EMR, lab orders, prescriptions and insurance-ready invoicing.",
+        "tagline": "EMR, lab orders, prescriptions and a calm waiting room — for clinics that bill in days, not weeks.",
         "icon": "i-lucide-heart-pulse",
         "accent": "from-red-500 to-orange-500",
         "dot": "bg-red-500",
         "category": "Industry",
-        "long": "General practice, GP chains, dermatology, pediatrics — Momentfy gives medical clinics a structured EMR with SOAP notes, vitals capture, lab orders, prescriptions and bilingual portal access, plus ZATCA/ETA invoice clearance.",
+        "long": "Medical clinics need clinical depth without enterprise weight. Momentfy combines the Medical Records add-on (structured SOAP notes, vitals and attachments), the Lab Orders add-on (order in, results back, published to portal), the Prescriptions add-on with patient-facing download, the Calendar with doctor + room resource booking, and the Client Portal for self-check-in and balance payment — all on the same patient file the front desk uses for invoicing and recall.",
         "pains": [
-          "SOAP notes scattered across paper and email",
-          "Lab results printed and filed manually",
-          "Prescriptions rewritten from scratch every visit",
-          "No way for patients to see their own history"
+          "Lab results and prescriptions arriving by email and getting lost",
+          "Charting that takes longer than the appointment itself",
+          "Insurance balances that age out before anyone notices",
+          "No simple way for patients to pre-fill intake before walking in"
         ],
         "capabilities": [
-          "Structured SOAP notes + vitals capture",
-          "Lab order workflow with external-lab turn-around",
-          "Prescription authoring with refills and templates",
-          "Medical records timeline with attachments",
-          "Insurance-class aware invoicing + coverage rules",
-          "Branded client portal with history download",
-          "Multi-doctor scheduling + per-doctor commissions",
-          "VAT + ZATCA + ETA clearance built in"
+          "Structured EMR with SOAP notes, vitals and attachments",
+          "Lab orders, results capture and patient-portal publishing",
+          "Prescriptions authored in-app with portal download",
+          "Doctor + room resource booking with reusable templates",
+          "Insurance class rules and claim-ready invoices",
+          "Patient self-check-in via QR or portal link",
+          "Recall and follow-up tasks with SLA tracking",
+          "AR aging by patient, payer and aging bucket"
         ],
         "stack": [
           "Calendar",
@@ -1095,9 +1103,9 @@
           "Lab Orders",
           "Prescriptions",
           "Insurance Classes",
-          "Client Portal",
-          "ZATCA",
-          "Reports"
+          "Clients & CRM",
+          "Sales & POS",
+          "Client Portal"
         ],
         "stats": [
           {
@@ -1113,46 +1121,60 @@
             "v": "-28%"
           }
         ],
-        "whoFor": "GP, dermatology, pediatric and specialist clinics with 1–20 doctors.",
+        "whoFor": "GP and specialty clinics running 1–20 doctors, with cash, insurance or hybrid billing.",
         "useCases": [
-          "GP chain unifying charts across branches",
-          "Dermatology clinic attaching before/after photos to visits",
-          "Pediatric practice tracking growth curves over years",
-          "Specialist running insurance-heavy procedure workflows"
+          "GP clinic with shared rooms and rotating doctor schedules",
+          "Specialty practice ordering external labs and publishing results to patients",
+          "Polyclinic with insurance + cash billing on the same invoice",
+          "Tele-consultation flow with portal intake and digital prescriptions"
+        ],
+        "faq": [
+          {
+            "q": "Does Momentfy replace a full EMR?",
+            "a": "For most outpatient clinics, yes — SOAP notes, vitals, history, lab orders and prescriptions live in one place. For deep specialty workflows we expose REST and webhooks so you can plug in a vertical EMR if needed."
+          },
+          {
+            "q": "Can patients see only their own results?",
+            "a": "Yes. The Client Portal authenticates the patient and shows only what their record contains; you choose per-result whether it auto-publishes or stays internal."
+          },
+          {
+            "q": "How are insurance balances tracked?",
+            "a": "Each invoice is split into patient-due and payer-due lines, both visible in AR aging. The Reports module tracks recovery rate and average days-to-pay per insurer."
+          }
         ]
       },
       "barber": {
         "title": "Barber Shops",
-        "tagline": "Walk-in queue, fast POS and per-barber commissions — built for volume.",
+        "tagline": "Walk-ins, queue boards, fade-card memberships and clean barber commissions.",
         "icon": "i-lucide-user",
         "accent": "from-stone-500 to-neutral-700",
         "dot": "bg-stone-500",
         "category": "Industry",
-        "long": "Barbershops thrive on speed and fairness. Momentfy blends a walk-in queue with booked appointments, tracks per-barber commissions to the cent, and checks clients out in under 90 seconds on any tablet.",
+        "long": "Barber shops live on walk-ins and regulars. Momentfy renders the Calendar as a shared queue board so the front desk can drop a walk-in into the next open chair, runs Memberships for unlimited-cut subscriptions, applies per-barber commissions through Team & HR, and powers a branded Client Portal where regulars rebook the same barber in two taps. The Loyalty add-on turns every visit into a rewarded touch.",
         "pains": [
-          "Queue mayhem during rush hour",
-          "Commission disputes on tips and products",
-          "Membership cards that nobody remembers",
-          "Checkout lines slower than the haircut"
+          "Walk-ins waiting in the doorway with no visible queue order",
+          "Members with prepaid packages who nobody can verify at the chair",
+          "Tip and commission math redone in a notebook every Sunday",
+          "Regulars who switch shops the moment their barber leaves"
         ],
         "capabilities": [
-          "Walk-in queue that coexists with bookings",
-          "Per-barber commissions with tip tracking",
-          "Fast POS tuned for <90s checkout",
-          "Memberships + package credits in one wallet",
-          "SMS reminders with deposit hold on no-shows",
-          "Staff attendance + leave from the app",
-          "Daily cash-out with z-report",
-          "Retail product sales alongside services"
+          "Live queue board with walk-in slot insertion",
+          "Unlimited-cut memberships with per-barber caps",
+          "Loyalty points auto-earned per visit, redeemable at the chair",
+          "Per-barber commissions with tip-split and retail attach",
+          "SMS reminders and \"your barber is free\" alerts",
+          "Booth-rental mode with separate chair P&L",
+          "Cash close per barber and per shift",
+          "Client portal with one-tap rebook to the same barber"
         ],
         "stack": [
           "Calendar",
           "Sales & POS",
           "Memberships",
-          "Commissions",
           "Loyalty Points",
-          "Campaigns",
-          "Clients & CRM"
+          "Team & HR",
+          "Clients & CRM",
+          "Client Portal"
         ],
         "stats": [
           {
@@ -1168,46 +1190,61 @@
             "v": "100%"
           }
         ],
-        "whoFor": "Single-shop and multi-chair barbers from classic cuts to modern grooming concepts.",
+        "whoFor": "Single-shop barbers, multi-barber salons and booth-rental concepts running 1–20 chairs.",
         "useCases": [
-          "Walk-in heavy shop running queue on a kiosk tablet",
-          "Multi-chair shop paying tiered commissions",
-          "Grooming concept selling beard-oil retail at POS",
-          "Multi-location chain unifying loyalty across branches"
+          "High-traffic shop running 80% walk-ins on a queue board",
+          "Booth-rental concept with each barber as their own micro-business",
+          "Membership-heavy shop selling 4-cut and unlimited monthly plans",
+          "Multi-location chain consolidating commission across branches"
+        ],
+        "faq": [
+          {
+            "q": "How do walk-ins fit into a booked calendar?",
+            "a": "The queue board lives next to the booked grid; the front desk can drop a walk-in into the next open chair and the system shifts the visual order without moving real bookings."
+          },
+          {
+            "q": "Can each barber see only their own queue?",
+            "a": "Yes — role-based scopes plus a \"my chair\" view show only that barber's queue and tickets, while managers keep the full floor view."
+          },
+          {
+            "q": "Does Momentfy handle booth-rental P&L?",
+            "a": "Yes. Each chair can be configured as a sub-tenant with its own catalogue, prices and commission split — useful for shops where barbers are independent operators."
+          }
         ]
       },
       "fitness": {
         "title": "Fitness & Studios",
-        "tagline": "Group classes, memberships, waitlists and attendance — kiosk-friendly.",
+        "tagline": "Class scheduling, capacity, waitlists and member check-in — without the bloat of a gym CRM.",
         "icon": "i-lucide-dumbbell",
         "accent": "from-lime-500 to-emerald-600",
         "dot": "bg-emerald-500",
         "category": "Industry",
-        "long": "Pilates, yoga, crossfit, HIIT, boxing — Momentfy runs the full class-based lifecycle: schedule, enrol, waitlist, track attendance and renew memberships. Kiosk check-in makes the door staff-free.",
+        "long": "Fitness studios juggle group classes, 1-on-1 sessions, memberships and per-program tracking. Momentfy ships with the Events & Classes add-on for capacity and waitlists, the Client Attendance add-on for fast check-in, the Memberships catalogue with tiered access, the Calendar with trainer + room booking, and the Client Portal where members reserve, cancel within window and see their program progress side-by-side.",
         "pains": [
-          "Manual class-roster spreadsheets",
-          "No-shows taking spots from waitlisted members",
-          "Membership renewals that silently lapse",
-          "Coaches paid for empty slots"
+          "Classes running at half-capacity while a waitlist sits unbooked",
+          "Members on legacy plans nobody can audit",
+          "Trainer commissions tied to attendance that nobody tallies",
+          "Last-minute cancels that never trigger the next person on the list"
         ],
         "capabilities": [
-          "Recurring class schedules with capacity + waitlist",
-          "Member app with self-enrol and cancel windows",
-          "Attendance check-in via kiosk or coach app",
-          "Membership tiers + paused/frozen states",
-          "Drop-in packs and class credits",
-          "Campaigns for re-activation of lapsed members",
-          "Commissions per coach per head",
-          "Reports: fill rate, churn, class profitability"
+          "Group classes with capacity, waitlist and auto-promotion",
+          "Recurring schedules with one-off overrides and instructor swaps",
+          "Membership tiers with class quotas and burn-down tracking",
+          "QR / NFC check-in with kiosk mode for the front desk",
+          "Trainer commissions per class, per member and per package",
+          "Cancellation windows with auto-credit policy enforcement",
+          "Client portal reservations with calendar-synced reminders",
+          "Reports on fill rate, churn risk and program completion"
         ],
         "stack": [
+          "Calendar",
           "Events & Classes",
-          "Memberships",
           "Client Attendance",
-          "Client Portal",
-          "Campaigns",
+          "Catalogue",
+          "Memberships",
+          "Team & HR",
           "Reports",
-          "Sales & POS"
+          "Client Portal"
         ],
         "stats": [
           {
@@ -1223,45 +1260,61 @@
             "v": "< 5s"
           }
         ],
-        "whoFor": "Group-class studios, boutique gyms and independent coaches running recurring classes.",
+        "whoFor": "Boutique studios, CrossFit boxes, yoga and pilates centers, fight gyms and personal-training operators.",
         "useCases": [
-          "Pilates studio selling 10-class packs with expiry",
-          "HIIT gym running waitlists for peak classes",
-          "Martial arts academy tracking kids attendance",
-          "Yoga collective paying coaches per head"
+          "Yoga studio with 40 classes a week and a single instructor team",
+          "Boxing gym selling 8-class packs alongside unlimited memberships",
+          "Pilates studio with reformer-equipment booking",
+          "Multi-branch chain with city-wide class hopping"
+        ],
+        "faq": [
+          {
+            "q": "How does the waitlist actually promote people?",
+            "a": "When a slot opens (cancel inside or outside window) the next-in-line is auto-promoted and notified by SMS / push. They have a configurable hold period to confirm before the slot drops to the following member."
+          },
+          {
+            "q": "Can I sell multi-tier memberships with class quotas?",
+            "a": "Yes. The Catalogue defines quotas per cycle (e.g. 8 classes / month, unlimited yoga), and the system burns them down at check-in. Top-ups, rollover and pause are all configurable per tier."
+          },
+          {
+            "q": "Does check-in work without staff at the door?",
+            "a": "Yes. Kiosk mode with QR scanning lets members self-check-in; the system blocks expired members and members without a reservation, and prints a waiver if you require one."
+          }
         ]
       },
       "pet": {
         "title": "Vet & Pet Care",
-        "tagline": "Vet records, vaccination reminders and grooming billing.",
+        "tagline": "Vaccines, boarding, grooming and reminders — one chart per pet, one wallet per owner.",
         "icon": "i-lucide-paw-print",
         "accent": "from-amber-500 to-yellow-600",
         "dot": "bg-amber-500",
         "category": "Industry",
-        "long": "Vets and groomers share one rhythm: recurring visits and long memory. Momentfy stores one record per animal (not per owner), schedules vaccine recalls and bills grooming alongside medical in a single invoice.",
+        "long": "Vet clinics and pet groomers track two profiles at once: the pet (vaccines, weight, allergies) and the owner (wallet, communication preferences, payment terms). Momentfy ships with the Medical Records add-on tuned for veterinary fields, the Lab Orders and Prescriptions add-ons, the Calendar with kennel / grooming-station resource booking, recurring vaccine recalls via Follow-up Tasks, and the Client Portal where owners book grooming and confirm boarding pickup.",
         "pains": [
-          "Vaccines missed because nobody called",
-          "Grooming and medical tracked in two different apps",
-          "Multi-pet households with tangled records",
-          "Medication refills that need re-typing"
+          "Vaccine recalls slipping a year because nobody schedules the next one",
+          "Grooming rebooks left to \"we'll call you\" rather than booked at checkout",
+          "Boarding revenue lost to over- or under-booked kennels",
+          "Multi-pet households with mixed wallets and split invoices"
         ],
         "capabilities": [
-          "One record per animal with species-specific fields",
-          "Vaccination schedule with automatic reminders",
-          "Recurring visits (monthly grooming, quarterly checkups) as memberships",
-          "Prescription refills from history",
-          "Multi-pet family grouping with shared billing",
-          "Grooming bookings alongside medical visits",
-          "Portal with vaccine certificates downloadable",
-          "Lab orders and imaging attached to the animal"
+          "Pet profiles with breed, weight history, allergies and vaccine schedule",
+          "Vaccine and check-up recalls auto-scheduled by Follow-up Tasks",
+          "Boarding inventory with kennel-by-kennel availability",
+          "Grooming station resource booking with turn-time reminders",
+          "Owner wallet covering multiple pets on one invoice",
+          "Lab orders and prescriptions linked to the pet timeline",
+          "Loyalty points across grooming, retail and food",
+          "Portal photos and discharge notes after every visit"
         ],
         "stack": [
           "Calendar",
           "Medical Records",
+          "Lab Orders",
           "Prescriptions",
-          "Client Portal",
+          "Follow-up Tasks",
+          "Loyalty Points",
           "Sales & POS",
-          "Campaigns"
+          "Client Portal"
         ],
         "stats": [
           {
@@ -1277,45 +1330,60 @@
             "v": "4.9★"
           }
         ],
-        "whoFor": "Vet clinics, groomers, multi-pet families and mixed-services pet businesses.",
+        "whoFor": "Vet clinics, mixed groomer-vet practices, pet boarding hotels and pet-supply retailers.",
         "useCases": [
-          "Vet clinic auto-recalling pets 1 year after vaccination",
-          "Groomer + vet combined under one brand",
-          "Multi-location clinic chain with shared pet records",
-          "Mobile vet visiting homes with route-based bookings"
+          "GP vet clinic running surgeries + walk-in consultations",
+          "Mobile groomer with route-based booking",
+          "Boarding hotel selling stays plus optional grooming",
+          "Multi-pet owner with one wallet covering 3 cats and a dog"
+        ],
+        "faq": [
+          {
+            "q": "Can one owner have multiple pets on the same invoice?",
+            "a": "Yes. The owner is the billable entity; pets are linked records. Invoices can mix services across all of an owner's pets and the wallet stays on the owner."
+          },
+          {
+            "q": "How do vaccine recalls actually fire?",
+            "a": "Each vaccine type carries a default cycle. When you record a dose, Follow-up Tasks schedules the next reminder by SMS / WhatsApp at the right interval; the front desk can override per-pet."
+          },
+          {
+            "q": "Can the portal show vaccine history?",
+            "a": "Yes — owners log into the portal and see vaccine history, due dates, prescriptions and a download-ready summary for travel or boarding."
+          }
         ]
       },
       "therapy": {
         "title": "Therapy & Coaching",
-        "tagline": "Sessions, intake forms, progress notes and private portal access.",
+        "tagline": "Privacy-first sessions, recurring blocks, encrypted notes — for therapists and coaches.",
         "icon": "i-lucide-brain",
         "accent": "from-indigo-500 to-violet-600",
         "dot": "bg-indigo-500",
         "category": "Industry",
-        "long": "Therapists, coaches and counsellors need calm software that respects confidentiality. Momentfy ships intake forms, private session notes, outcome tracking and a client portal that feels like a journal — not a dashboard.",
+        "long": "Therapy and coaching practices need a calendar that respects privacy and a notebook that respects clinical depth. Momentfy ships with the Calendar configured for recurring weekly blocks, encrypted SOAP notes via Medical Records, branded Client Portal intake forms with consent capture, the Catalogue for session packs and sliding-scale pricing, and Follow-up Tasks for between-session homework — all under role-based access so admins never see notes.",
         "pains": [
-          "Intake forms filled on paper then re-typed",
-          "Notes in a Word doc \"just for me\"",
-          "Clients missing sessions without deposit",
-          "No easy way to share homework or worksheets"
+          "Notes scattered across paper, Notion and email",
+          "Repeating weekly slots that break the moment a client moves a session",
+          "Cancellations inside policy with no automated charge",
+          "Intake forms collected on paper and re-keyed by hand"
         ],
         "capabilities": [
-          "Custom intake forms with e-signature",
-          "Session notes with outcome scores over time",
-          "Calendar with buffer time and block-bookings",
-          "Deposit-or-no-booking rule on high-risk slots",
-          "Recurring session packages with pre-paid credits",
-          "Client portal with private messages + homework",
-          "AI Assistant drafting session reminders",
-          "Export-ready records for referrals"
+          "Recurring weekly slots with smart move + cascade options",
+          "Encrypted session notes with SOAP and free-form templates",
+          "Session packs and sliding-scale pricing per client",
+          "Late-cancel fees auto-charged by policy window",
+          "Portal intake with digital consent and signed waivers",
+          "Between-session homework via Follow-up Tasks",
+          "Role-based access — admins never see clinical notes",
+          "Recurring invoicing for retainer-based engagements"
         ],
         "stack": [
           "Calendar",
           "Medical Records",
-          "Client Portal",
-          "AI Assistant",
+          "Catalogue",
           "Sales & POS",
-          "Campaigns"
+          "Follow-up Tasks",
+          "Clients & CRM",
+          "Client Portal"
         ],
         "stats": [
           {
@@ -1331,45 +1399,60 @@
             "v": "-35%"
           }
         ],
-        "whoFor": "Therapists, counsellors, psychologists, life coaches and career coaches running 1:1 sessions.",
+        "whoFor": "Solo therapists, group practices, coaches and counselors running by-appointment work.",
         "useCases": [
-          "Solo therapist running weekly CBT sessions",
-          "Coaching collective sharing one brand + split earnings",
-          "Couples counsellor tracking joint sessions",
-          "Career coach selling 6-session packages upfront"
+          "Solo therapist with weekly recurring clients on sliding-scale fees",
+          "Group practice sharing rooms across multiple clinicians",
+          "Coach selling 6-session packs and quarterly retainers",
+          "Online-only counselor running portal-only intake and billing"
+        ],
+        "faq": [
+          {
+            "q": "Are session notes private from front-desk staff?",
+            "a": "Yes — clinical notes are role-gated. By default only the assigned clinician (and explicitly granted supervisors) can read them; admin staff see appointment metadata and billing only."
+          },
+          {
+            "q": "How does sliding-scale pricing work?",
+            "a": "Each client can carry a price override per service. The catalogue stores the standard rate; the override is applied at billing and shown on the portal so there's no surprise."
+          },
+          {
+            "q": "Can I run a weekly recurring slot for years?",
+            "a": "Yes. Recurring rules generate the calendar lazily; if a client moves one session you choose whether it's a one-off shift or a permanent move-forward of the recurrence."
+          }
         ]
       },
       "photo": {
         "title": "Photo Studios",
-        "tagline": "Package pricing, deposit-or-no-booking, gallery delivery and prints.",
+        "tagline": "Sessions, deposits, gallery delivery and balance-on-delivery — without losing the upsell.",
         "icon": "i-lucide-camera",
         "accent": "from-fuchsia-500 to-purple-600",
         "dot": "bg-fuchsia-500",
         "category": "Industry",
-        "long": "Photographers lose money on no-shows and chase balances for weeks. Momentfy packages shoots, enforces deposits at booking, manages equipment blocks, and delivers galleries + prints from the same system that took the booking.",
+        "long": "Photo studios live on deposit discipline and post-shoot upsells. Momentfy ships with the Calendar tuned for shoot blocks and golden-hour windows, the Catalogue with package + add-on pricing, deposit-protected booking, gallery delivery via the Client Portal, and POS-driven upsells (prints, frames, retouching) on balance day. Resources covers studios, props and rented gear so nothing double-books.",
         "pains": [
-          "Shoots booked without deposit that ghost on the day",
-          "Equipment clashes across studios",
-          "Edit delivery chased over email",
-          "Print sales outside the invoice flow"
+          "Shoots booked without deposits — gone in a phone-call cancel",
+          "Final balance chased for weeks after delivery",
+          "Add-ons (extra retouch, prints) discussed but never charged",
+          "Gear and studio bookings clashing with no visible calendar"
         ],
         "capabilities": [
-          "Shoot packages with time + deliverables",
-          "Mandatory deposit at booking with remainder schedule",
-          "Equipment + studio resource booking",
-          "Gallery delivery link inside the client portal",
-          "Print products priced and invoiced through POS",
-          "Reviewed + approved frames tracked per shoot",
-          "Per-photographer commission splits",
-          "Contract + e-sign before confirmation"
+          "Deposit-protected booking with auto-refund rules",
+          "Shoot packages with photo count, retouch hours and delivery SLA",
+          "Resource booking for studios, props and rented gear",
+          "Gallery delivery and print-store via the Client Portal",
+          "Balance-on-delivery POS flow with same-day card capture",
+          "Add-on upsell prompts (extra prints, frames, retouch tiers)",
+          "Per-photographer commission and assistant splits",
+          "Client review and referral campaigns post-delivery"
         ],
         "stack": [
           "Calendar",
-          "Sales & POS",
-          "Resources",
-          "Client Portal",
           "Catalogue",
-          "Campaigns"
+          "Resources",
+          "Sales & POS",
+          "Clients & CRM",
+          "Reports",
+          "Client Portal"
         ],
         "stats": [
           {
@@ -1385,46 +1468,60 @@
             "v": "+22%"
           }
         ],
-        "whoFor": "Portrait, wedding, product and studio photographers running package-based shoots.",
+        "whoFor": "Wedding, family, brand and editorial photographers running solo or as a small studio.",
         "useCases": [
-          "Wedding photographer selling 3-tier packages",
-          "Portrait studio shared between two photographers",
-          "Product photography studio invoicing by the hour",
-          "Mobile photographer booking on-location shoots"
+          "Wedding photographer collecting 30% deposit and balance-on-delivery",
+          "Family studio booking 30-minute mini-shoots back-to-back",
+          "Brand-content studio renting props + studio time as a package",
+          "Editorial team sharing rented gear across two crews"
+        ],
+        "faq": [
+          {
+            "q": "Can deposits be partially refundable by date?",
+            "a": "Yes. Each package can carry a refund schedule (e.g. 100% > 14 days, 50% < 14 days, 0% < 48 hours). The system enforces it at cancellation and explains the rule on the portal."
+          },
+          {
+            "q": "How is the gallery delivered?",
+            "a": "Galleries live behind the Client Portal — the client logs in, picks favourites, downloads originals and orders prints. You can gate downloads behind balance payment."
+          },
+          {
+            "q": "Can I track gear that I rent for shoots?",
+            "a": "Yes. The Resources add-on covers cameras, lenses and studio space; each can be booked alongside a shoot and shown as unavailable while the shoot is live."
+          }
         ]
       },
       "nails": {
         "title": "Nail & Lash Bars",
-        "tagline": "Tech-specific menus, deposits, touch-up rebooks and retail add-ons.",
+        "tagline": "Tight slot grids, deposit-on-book, retail attach and one-tap rebook.",
         "icon": "i-lucide-sparkles",
         "accent": "from-rose-400 to-pink-500",
         "dot": "bg-pink-500",
         "category": "Industry",
-        "long": "Nail and lash bars run on short, frequent visits with tight touch-up windows. Momentfy lets each tech publish her own menu, enforces a deposit on every booking, and auto-prompts clients to rebook before their set comes off.",
+        "long": "Nail and lash bars live on tight slot grids, deposit discipline and retail attach. Momentfy ships with the Calendar in 15-minute lanes, deposit-protected booking, the Loyalty Points add-on for repeat-visit rewards, retail Inventory for polish and lash trays, and the Client Portal where guests rebook the same artist in two taps and pre-pay the deposit on the same screen.",
         "pains": [
-          "Every tech needs a different service menu",
-          "Missed touch-ups = lost repeat revenue",
-          "Late-cancels with no deposit to hold",
-          "Retail (polish, aftercare) sold off the books"
+          "Free-with-no-deposit bookings that vanish at noon",
+          "Polish stock running out mid-set with no re-order trigger",
+          "Loyalty cards forgotten in pockets, never punched",
+          "Rebook conversation skipped at checkout because the queue is loud"
         ],
         "capabilities": [
-          "Per-tech service menus + prices",
-          "Deposit enforced at booking (% or fixed)",
-          "Auto-rebook suggestion at set lifespan end",
-          "Retail attach-rate reports per tech",
-          "Loyalty points on visit count not spend",
-          "Instagram gallery linked to service",
-          "Campaigns to lapsed clients with offer",
-          "Tips captured at POS with commission split"
+          "15-minute slot lanes with artist-specific service durations",
+          "Deposit-protected booking with cancellation-window rules",
+          "Loyalty points across nail, lash and retail",
+          "Retail inventory for polish, lash trays and aftercare",
+          "Per-artist commissions with tip-split",
+          "Pre-visit consult forms via the Client Portal",
+          "One-tap rebook to the same artist + service combo",
+          "SMS / WhatsApp aftercare and review-request flow"
         ],
         "stack": [
           "Calendar",
-          "Sales & POS",
-          "Memberships",
-          "Loyalty Points",
-          "Campaigns",
           "Catalogue",
-          "Reports"
+          "Loyalty Points",
+          "Sales & POS",
+          "Inventory",
+          "Clients & CRM",
+          "Client Portal"
         ],
         "stats": [
           {
@@ -1440,45 +1537,60 @@
             "v": "+19%"
           }
         ],
-        "whoFor": "Nail salons, lash studios, brow bars and multi-tech beauty studios.",
+        "whoFor": "Nail salons, lash bars, brow studios and combined beauty concept bars.",
         "useCases": [
-          "Nail bar with 6 techs each setting own prices",
-          "Lash studio running every-3-week touch-up prompt",
-          "Brow + lash combined studio sharing retail",
-          "Home-based tech taking deposits via PWA"
+          "High-volume nail salon with 6 chairs and 15-min slot lanes",
+          "Lash studio selling refill packages alongside one-off sets",
+          "Combined nail + lash bar sharing artists across services",
+          "Boutique brow studio with consult-then-treatment flow"
+        ],
+        "faq": [
+          {
+            "q": "How strict is the deposit policy enforcement?",
+            "a": "You set the rule per service — fixed amount or percentage, refundable inside or outside a window. Online bookings cannot complete without payment if the rule says so."
+          },
+          {
+            "q": "Can each artist have different service durations?",
+            "a": "Yes. The Catalogue stores a default duration and Team & HR overrides per member, so a senior artist's gel-set is 45 mins and a junior's is 60 mins on the same booking page."
+          },
+          {
+            "q": "Do refill clients see only refill slots?",
+            "a": "Yes — service rules can require a prior set within a time window. Returning clients see refill availability; new clients are routed to a full-set slot."
+          }
         ]
       },
       "events": {
         "title": "Events Creation & Management",
-        "tagline": "Event pages, tickets, guest lists, vendors and day-of run-of-show.",
+        "tagline": "Tickets, capacity, waitlists and check-in — for one-off events and recurring programs.",
         "icon": "i-lucide-calendar-heart",
         "accent": "from-fuchsia-500 to-violet-600",
         "dot": "bg-fuchsia-500",
         "category": "Industry",
-        "long": "From pop-up workshops to corporate galas, event businesses juggle tickets, guest lists, vendor schedules and on-the-day logistics. Momentfy gives you a bookable event page per occasion, real-time capacity limits, guest check-in, vendor coordination and post-event feedback — all tied to your CRM and reports.",
+        "long": "Event organizers swing between one-night sell-throughs and recurring multi-week programs. Momentfy uses the Events & Classes add-on for ticket tiers, capacity and waitlists, the Client Attendance add-on for QR-based check-in, the Calendar for venue + room blocks, the Catalogue for early-bird and bundle pricing, and the Client Portal for self-serve registration and ticket download — all on the same client database the rest of the business runs on.",
         "pains": [
-          "Tickets and guest lists live across spreadsheets and DMs",
-          "Overselling seats or forgetting no-show fees",
-          "Vendors and staff miss timing cues on the day",
-          "No clean view of which events actually made money"
+          "Tickets sold on three platforms that never reconcile",
+          "Day-of check-in done with a printed list and a highlighter",
+          "Waitlists kept in a notes app that nobody re-reads",
+          "Refund and resale rules invented per email at 11pm"
         ],
         "capabilities": [
-          "Per-event landing pages with tickets + RSVP",
-          "Tiered pricing: early-bird, member, VIP, group",
-          "Capacity limits with live waitlist",
-          "QR check-in + guest-list scan at the door",
-          "Vendor and staff schedule with role notes",
-          "Deposits, balance-on-arrival and refund rules",
-          "Automated pre-event reminders + post-event thank-you",
-          "Per-event P&L including vendors, staff and ticket sales"
+          "Ticket tiers with early-bird, bundle and code-only access",
+          "Capacity caps with auto-promoting waitlist",
+          "QR check-in with door-list mode for staff phones",
+          "Recurring multi-week programs with per-week capacity",
+          "Refund and resale policy enforced by ticket tier",
+          "Bulk SMS / email blasts to ticket-holders",
+          "Vendor and venue resource booking alongside the event",
+          "Reports on sell-through, churn and ticket-source mix"
         ],
         "stack": [
-          "Events & Classes",
           "Calendar",
+          "Events & Classes",
+          "Client Attendance",
+          "Catalogue",
           "Sales & POS",
           "Clients & CRM",
-          "Campaigns",
-          "Reports"
+          "Client Portal"
         ],
         "stats": [
           {
@@ -1494,46 +1606,61 @@
             "v": "5 min"
           }
         ],
-        "whoFor": "Event planners, workshop hosts, gallery and venue operators, ticketed studios and community organizers.",
+        "whoFor": "Event organizers, workshop producers, conference teams and recurring program operators.",
         "useCases": [
-          "Workshop series with multi-session tickets and attendance",
-          "One-night gala with tiered tickets and guest list",
-          "Recurring open-mic or class with members + drop-ins",
-          "Pop-up activation with limited seating and waitlist"
+          "One-night event with three ticket tiers and a VIP code",
+          "6-week workshop program with per-session capacity",
+          "Conference with sponsor-vendor booth booking",
+          "Multi-city tour with separate ticketing per stop"
+        ],
+        "faq": [
+          {
+            "q": "Can I run early-bird and code-only tiers together?",
+            "a": "Yes. Each tier has its own price, capacity, valid window and access rule (open / code / member-only). The portal automatically shows or hides tiers per visitor context."
+          },
+          {
+            "q": "How does day-of check-in work?",
+            "a": "Door staff scan ticket QRs from a phone. The system marks the ticket attended, prevents re-use, and feeds attendance back to the event report in real time."
+          },
+          {
+            "q": "What happens to the waitlist when capacity opens?",
+            "a": "When a ticket is refunded or released, the next-in-line gets a hold link by SMS / email and a configurable window to claim the seat before it falls to the next person."
+          }
         ]
       },
       "wellness": {
         "title": "Massage & Wellness",
-        "tagline": "Therapist lanes, packages, resource rooms and recovery programs.",
+        "tagline": "Treatment rooms, packages, programs and aftercare — paced for a calm room.",
         "icon": "i-lucide-flower-2",
         "accent": "from-teal-400 to-emerald-600",
         "dot": "bg-teal-500",
         "category": "Industry",
-        "long": "Massage, physio and wellness studios stack short sessions with tight room turnovers. Momentfy books therapist + room together, sells packages with expiry, and nudges clients toward recurring recovery programs.",
+        "long": "Massage and wellness centers run programs, not appointments. Momentfy ships with the Calendar tuned for room + therapist resource booking, the Catalogue for multi-session packages and program journeys, the Memberships system for unlimited or capped plans, Follow-up Tasks for between-visit homework, and the Client Portal for intake forms, session history and at-home program steps — so guests come back not because of a reminder, but because they're mid-program.",
         "pains": [
-          "Room clashes between therapists",
-          "Packages that expire with unused sessions",
-          "One-off visits that never become programs",
-          "Therapist-specific prices hidden in heads"
+          "Programs sold once, never tracked, never resold",
+          "Therapist-room mismatch leading to a free room with a busy therapist",
+          "Aftercare advice lost the moment the guest leaves",
+          "Memberships paused informally and never resumed"
         ],
         "capabilities": [
-          "Therapist + room dual-resource booking",
-          "Multi-session packages with expiry + rollover",
-          "Program templates (e.g. 8-week recovery)",
-          "Intake forms + outcome tracking",
-          "Retail oils/aftercare through POS",
-          "Membership tiers with unlimited access",
-          "Per-therapist commission splits",
-          "Reports: room utilization, program completion"
+          "Program packages with sequenced sessions and progress tracking",
+          "Therapist + room resource booking with conflict prevention",
+          "Memberships with pause / resume and quota burn-down",
+          "Intake forms and consent waivers via the Client Portal",
+          "Aftercare and at-home steps via Follow-up Tasks",
+          "Couples and group bookings on linked rooms",
+          "Loyalty points across treatments, retail and product",
+          "Reports on program completion and resell rate"
         ],
         "stack": [
           "Calendar",
-          "Resources",
+          "Catalogue",
           "Memberships",
-          "Sales & POS",
-          "Medical Records",
-          "Client Portal",
-          "Campaigns"
+          "Resources",
+          "Follow-up Tasks",
+          "Loyalty Points",
+          "Reports",
+          "Client Portal"
         ],
         "stats": [
           {
@@ -1549,45 +1676,60 @@
             "v": "+46%"
           }
         ],
-        "whoFor": "Massage studios, physios, recovery clinics and integrated wellness spaces.",
+        "whoFor": "Massage clinics, day spas, wellness retreats and program-driven recovery centers.",
         "useCases": [
-          "Massage studio with 4 therapists + 3 rooms",
-          "Sports physio running 8-week recovery programs",
-          "Cupping + acupuncture wellness lounge",
-          "Corporate on-site chair-massage bookings"
+          "Day spa with 8 rooms and shared therapist pool",
+          "Recovery center selling 12-session programs with progress markers",
+          "Couples retreat booking paired rooms back-to-back",
+          "Wellness chain with city-wide program portability"
+        ],
+        "faq": [
+          {
+            "q": "Can a guest pause a membership?",
+            "a": "Yes. Members can pause from the portal within policy (e.g. up to 30 days a year, no pause inside the first month); the system stops billing and stops quota burn until they resume."
+          },
+          {
+            "q": "How are programs different from packages?",
+            "a": "Packages are buckets of credits; programs are sequenced — session 4 unlocks after sessions 1-3 are completed, with optional aftercare between each. Both live in the Catalogue."
+          },
+          {
+            "q": "Can I link rooms for couples bookings?",
+            "a": "Yes — link two rooms in the Resources add-on and the booking flow blocks both at once, with one therapist per room or a shared pair."
+          }
         ]
       },
       "driving": {
         "title": "Driving Schools",
-        "tagline": "Instructor fleets, vehicle resources, test prep packages and progress.",
+        "tagline": "Vehicles, instructors, lesson packs and license-stage tracking.",
         "icon": "i-lucide-car-front",
         "accent": "from-cyan-500 to-blue-600",
         "dot": "bg-cyan-500",
         "category": "Industry",
-        "long": "Driving schools juggle instructors, cars and student progress toward a test date. Momentfy books instructor + vehicle as one resource, sells test-prep packages, and tracks each student to their pass.",
+        "long": "Driving schools schedule three resources at once — student, instructor and vehicle — and bill against multi-stage license programs. Momentfy ships with the Calendar configured for triple-resource booking via the Resources add-on, the Catalogue for staged lesson packs, the Client Portal for parent visibility and lesson confirmation, and Reports for vehicle utilization and pass-rate by instructor — so the next slot books itself.",
         "pains": [
-          "Vehicles double-booked between instructors",
-          "Students losing track of completed lessons",
-          "Test-prep packages sold but not consumed",
-          "Exam day admin done by memory"
+          "Vehicles double-booked across instructors",
+          "Students paying per-lesson with no view of how far they are in the program",
+          "Test-prep slots filled by students who haven't completed the prerequisites",
+          "Instructor commissions tied to hours that nobody logs accurately"
         ],
         "capabilities": [
-          "Instructor + vehicle combined as one bookable resource",
-          "Student progress toward test date",
-          "Test-prep packages with lesson credits",
-          "Theory module attached to schedule",
-          "Route tracking by lesson skill",
-          "Parent/guardian account for minors",
-          "Automatic reminder + deposit on exam booking",
-          "Instructor commission per lesson type"
+          "Triple-resource booking — student, instructor and vehicle",
+          "Staged license programs with prerequisite enforcement",
+          "Lesson packs with credit burn-down and rollover rules",
+          "Parent / guardian portal access for minor students",
+          "Vehicle utilization and maintenance reminders",
+          "Per-instructor commissions with hour and outcome bonuses",
+          "Pre-test readiness check before booking the test slot",
+          "Pass-rate and retest reports by instructor and vehicle"
         ],
         "stack": [
           "Calendar",
           "Resources",
           "Catalogue",
           "Memberships",
-          "Client Portal",
-          "Reports"
+          "Sales & POS",
+          "Reports",
+          "Client Portal"
         ],
         "stats": [
           {
@@ -1603,45 +1745,60 @@
             "v": "+14%"
           }
         ],
-        "whoFor": "Driving schools with multi-instructor fleets running lesson + test-prep bundles.",
+        "whoFor": "Driving schools, defensive-driving programs, motorcycle and commercial-license trainers.",
         "useCases": [
-          "Driving school with 5 cars + 8 instructors",
-          "Motorcycle training center with multi-day courses",
-          "Corporate driver training contracts",
-          "Specialist truck/bus licensing school"
+          "License school with 12 vehicles and 30 instructors",
+          "Refresher-only school selling 3-lesson packs",
+          "Commercial truck-license program with stage-gated lessons",
+          "Multi-branch group with city-wide instructor mobility"
+        ],
+        "faq": [
+          {
+            "q": "How do I prevent students from booking the test before they're ready?",
+            "a": "Each test slot can require completion of named prerequisites (e.g. 12 lessons, 1 highway session, 1 night session). The portal hides the slot until they're met."
+          },
+          {
+            "q": "Can a vehicle be assigned a maintenance day?",
+            "a": "Yes. Vehicles are resources with their own blocked-time rules; you can schedule maintenance windows that stop bookings system-wide."
+          },
+          {
+            "q": "Can parents see their child's progress?",
+            "a": "Yes. The portal supports a guardian role with read access to scheduled lessons, attended count and remaining package credits."
+          }
         ]
       },
-      "tutoring": {
-        "title": "Tutoring Centers",
-        "tagline": "Tutor schedules, group classes, term packages and parent portal.",
+      "education": {
+        "title": "Education & Training",
+        "tagline": "Cohorts, 1-on-1 sessions, term packs, attendance and a parent-role portal — for tutoring centers, language schools, training academies and exam-prep operators.",
         "icon": "i-lucide-graduation-cap",
         "accent": "from-orange-500 to-amber-600",
         "dot": "bg-orange-500",
         "category": "Industry",
-        "long": "Tutoring centers run 1:1 and group sessions across subjects, tutors and terms. Momentfy schedules tutor + room, sells term-long packages, and gives parents a portal to track their child across subjects.",
+        "long": "Education and training providers run cohorts, private sessions and recurring programs under one roof. Momentfy ships with the Events & Classes add-on for cohort capacity and waitlists, the Calendar for instructor + room booking, the Client Attendance add-on for sign-in, Follow-up Tasks for homework and reading lists, the Client Portal with a parent-role view, and Catalogue-driven term packs with rollover and sibling-discount tiers — so the front desk runs term enrolment from the same screen the teacher takes attendance on.",
         "pains": [
-          "Parents unsure which sessions their child attended",
-          "Tutor availability changing every term",
-          "Group classes filling unevenly",
-          "Progress reports emailed manually"
+          "Cohorts running below capacity while a waitlist exists for the next term",
+          "Homework given verbally and forgotten by Wednesday",
+          "Parents asking for last week's attendance via SMS at 9pm",
+          "Sibling discounts applied inconsistently between months"
         ],
         "capabilities": [
-          "1:1 + group class scheduling in one calendar",
-          "Term-long packages with pro-rata for late starts",
-          "Parent portal with child attendance + progress",
-          "Tutor availability templates by term",
-          "Outcome tracking per subject",
-          "Waitlists for popular group classes",
-          "Campaigns for new-term enrolment",
-          "Per-tutor commission and per-subject profitability"
+          "Cohort + 1-on-1 scheduling with tutor and room booking",
+          "Term packs with rollover, sibling and pre-pay discounts",
+          "Homework and reading via Follow-up Tasks tied to the student",
+          "Parent portal with attendance, progress and balance",
+          "Per-tutor commissions on hours and outcomes",
+          "Auto check-in via QR with parent notification",
+          "Mock-test scoring and progress reports",
+          "SMS / WhatsApp nudges for missed homework"
         ],
         "stack": [
+          "Calendar",
           "Events & Classes",
           "Client Attendance",
-          "Memberships",
-          "Client Portal",
-          "Campaigns",
-          "Reports"
+          "Catalogue",
+          "Follow-up Tasks",
+          "Sales & POS",
+          "Client Portal"
         ],
         "stats": [
           {
@@ -1657,43 +1814,59 @@
             "v": "+24%"
           }
         ],
-        "whoFor": "After-school tutoring centers, language schools and exam-prep academies.",
+        "whoFor": "After-school tutoring centers, language schools, music academies and exam-prep operators.",
         "useCases": [
-          "After-school center running weekly math + english",
-          "Language school selling 12-week term courses",
-          "SAT/IELTS prep academy with group + 1:1 mix",
-          "Music school with instrument-specific tutors"
+          "After-school center running 5-student cohorts plus 1-on-1s",
+          "Language school selling term packs with sibling discount",
+          "Music academy booking instrument-specific rooms",
+          "Exam-prep program with mock-test progress tracking"
+        ],
+        "faq": [
+          {
+            "q": "Do parents get their own login?",
+            "a": "Yes. The Client Portal supports a parent role linked to one or more student records; parents see attendance, balances, homework and can reschedule within policy."
+          },
+          {
+            "q": "Can I run cohorts and 1-on-1 lessons in the same calendar?",
+            "a": "Yes. The Calendar shows cohort blocks and 1-on-1 slots side-by-side; tutors can be assigned to both and the system prevents overlapping commitments."
+          },
+          {
+            "q": "How do sibling discounts apply?",
+            "a": "Discount rules in the Catalogue can be tied to \"household\" — when two students share a parent record, the discount auto-applies to the second and subsequent enrollments."
+          }
         ]
       },
       "professional": {
         "title": "Professional Services",
-        "tagline": "Hourly billing, estimates, retainers and recurring invoices for advisory teams.",
+        "tagline": "Estimates, retainers, time entries and AR — without buying a separate billing tool.",
         "icon": "i-lucide-briefcase",
         "accent": "from-slate-500 to-gray-700",
         "dot": "bg-slate-500",
         "category": "Industry",
-        "long": "Consultancies, legal and accounting practices, agencies and boutique advisory shops bill by time, engagement or retainer. Momentfy schedules consults, issues estimates, converts approved work into invoices — including recurring monthly retainers — and tracks profitability per team member.",
+        "long": "Professional services firms — agencies, consultants, accountants, law practices — bill against estimates, retainers and time. Momentfy ships with the Sales & POS module configured for estimates → invoices, recurring retainers via Memberships, time entries against client engagements, the Calendar for client + member meetings, and Reports for AR aging and billable capture by member — all without buying a separate billing tool on top.",
         "pains": [
-          "Timesheets and billables living in separate tools",
-          "Estimates that never turn into signed invoices",
-          "Retainer fees forgotten mid-month",
-          "No real margin view per advisor or engagement"
+          "Estimates approved by email and never invoiced",
+          "Retainer clients tracked in a spreadsheet that drifts every month",
+          "Billable hours forgotten by the time they need to be billed",
+          "AR aging only visible at month-end when it's already too late"
         ],
         "capabilities": [
-          "Per-member hourly rate stored on the team profile",
-          "Estimates that convert to invoices in one click",
-          "Recurring invoices for monthly retainers",
-          "Consult scheduling with client reminders",
-          "Partial payments, credit notes and VAT-ready invoices",
-          "Client Portal for documents and invoice history",
-          "Campaign + segment follow-up to dormant clients",
-          "P&L per member and per client engagement"
+          "Estimates with version history and one-click conversion to invoice",
+          "Recurring retainers with credit burn-down and rollover",
+          "Time entries against engagements, billable + non-billable",
+          "Engagement-level P&L by client and by member",
+          "AR aging by client and aging bucket with reminders",
+          "Branded client portal with quote / invoice / payment",
+          "Per-member commissions on billable revenue",
+          "Audit log for estimate / invoice changes"
         ],
         "stack": [
           "Calendar",
           "Sales & POS",
-          "Clients & CRM",
           "Catalogue",
+          "Memberships",
+          "Clients & CRM",
+          "Accounting",
           "Reports",
           "Client Portal"
         ],
@@ -1711,46 +1884,61 @@
             "v": "-18%"
           }
         ],
-        "whoFor": "Consultancies, law firms, accounting practices, agencies and boutique advisory shops.",
+        "whoFor": "Agencies, consultants, accountants, law practices and B2B service teams running 2–50 members.",
         "useCases": [
-          "Boutique agency with monthly retainers + ad-hoc work",
-          "Law firm billing by the hour across partners",
-          "Accounting practice with bookkeeping retainers",
-          "Independent consultant scoping via estimate first"
+          "Agency on retainers + project work, billing monthly",
+          "Consulting firm tracking hours per engagement",
+          "Accounting practice with recurring monthly clients",
+          "Law office running matter-based time entry and billing"
+        ],
+        "faq": [
+          {
+            "q": "Can estimates auto-become invoices?",
+            "a": "Yes. Once a client approves the estimate (digitally, from the portal) it converts to an invoice with the same line items; you can configure auto-send or hold for review."
+          },
+          {
+            "q": "How do retainers handle rollover?",
+            "a": "Each retainer plan stores a credit pool and a rollover policy (none / capped / unlimited). Burn-down happens at time-entry approval; the portal shows the client their remaining credit."
+          },
+          {
+            "q": "Does Momentfy track non-billable time too?",
+            "a": "Yes. Members log time as billable or non-billable against an engagement. The Reports module shows utilization and effective rate per member."
+          }
         ]
       },
       "auto": {
         "title": "Auto Service & Maintenance",
-        "tagline": "Service bays as bookable resources, estimates, parts from inventory and recurring checkups.",
+        "tagline": "Bays, parts, multi-stage jobs and service recall — for shops that bill on the same day.",
         "icon": "i-lucide-car",
         "accent": "from-orange-500 to-red-600",
         "dot": "bg-orange-500",
         "category": "Industry",
-        "long": "Garages, detail shops and maintenance centers juggle bays, parts and mechanics while turning quotes into paid jobs. Momentfy books bays as resources, issues estimates that pull parts from inventory, and re-engages customers when their next service is due.",
+        "long": "Auto-service shops bill against vehicles, parts and multi-stage jobs. Momentfy ships with the Calendar configured for bay + technician resource booking via Resources, multi-stage job tickets in Sales & POS, parts-and-labor invoicing with stock movements through Inventory, vehicle profiles in the client record, and Follow-up Tasks for next-service recall — so a returning customer is greeted by name and by VIN.",
         "pains": [
-          "Double-booked bays and idle mechanics",
-          "Parts consumed on jobs never billed back",
-          "Estimates approved over the phone, never invoiced",
-          "Customers never contacted for the next service"
+          "Parts billed on a paper ticket and forgotten on the invoice",
+          "Bays sitting empty between drop-off and write-up",
+          "Service intervals tracked in the customer's head, not yours",
+          "Insurance claims and warranty work treated like cash jobs"
         ],
         "capabilities": [
-          "Bays modelled as bookable resources with mechanic assignment",
-          "Estimates that pull labour + parts from catalogue and stock",
-          "Parts deducted from inventory when the job closes",
-          "Convert approved estimates to invoices with one tap",
-          "Recurring service reminders via campaigns",
-          "Supplier orders + supplier payments for parts",
-          "Per-mechanic performance and commission reports",
-          "Gift cards and prepaid packages for service bundles"
+          "Multi-stage job tickets (drop-off, diagnosis, repair, QC, pickup)",
+          "Bay + technician resource booking via the Resources add-on",
+          "Parts inventory with VIN-linked usage and supplier reorder",
+          "Vehicle profiles per customer with service history",
+          "Service-interval recalls via Follow-up Tasks",
+          "Insurance / warranty job flow with payer-vs-customer split",
+          "Per-tech commission on labor and per-service add-on",
+          "Reports on bay utilization, parts margin and rebook rate"
         ],
         "stack": [
           "Calendar",
           "Resources",
           "Sales & POS",
-          "Catalogue",
           "Inventory",
-          "Campaigns",
-          "Reports"
+          "Catalogue",
+          "Follow-up Tasks",
+          "Reports",
+          "Client Portal"
         ],
         "stats": [
           {
@@ -1766,46 +1954,61 @@
             "v": "+33%"
           }
         ],
-        "whoFor": "Independent garages, mechanical workshops, tire shops and maintenance centers with 2+ bays.",
+        "whoFor": "Independent garages, multi-bay shops, tire centers and specialty service chains.",
         "useCases": [
-          "4-bay garage dispatching mechanics across lifts",
-          "Oil-change express shop with recurring checkups",
-          "Tire shop pulling rubber + balancing labour from inventory",
-          "Detail-plus-mechanical shop sharing bays"
+          "4-bay shop with mechanical + bodywork",
+          "Tire / wheel chain with seasonal swap-over recalls",
+          "Specialist EV / hybrid shop with parts pre-ordering",
+          "Multi-branch group consolidating parts and labor margins"
+        ],
+        "faq": [
+          {
+            "q": "How are vehicles linked to a customer?",
+            "a": "Each customer can carry multiple vehicles (VIN, plate, year, mileage). Job tickets are scoped to a vehicle so service history and recall rules attach to the right car, not just the owner."
+          },
+          {
+            "q": "Can I run an insurance job and a cash job on the same invoice?",
+            "a": "Yes. Lines can be split between payer (insurer / warranty / customer); the invoice shows totals per payer and AR aging tracks them separately."
+          },
+          {
+            "q": "Do bays show occupancy in real time?",
+            "a": "Yes. The Resources add-on renders bays as bookable resources; the calendar shows who's in which bay, what stage they're at, and what's queued next."
+          }
         ]
       },
       "optical": {
         "title": "Optical & Eyewear",
-        "tagline": "Exam slots, frame retail from inventory, memberships and renewal reminders.",
+        "tagline": "Eye exams, frames, prescriptions and renewals — for shops that sell time and stock.",
         "icon": "i-lucide-glasses",
         "accent": "from-emerald-500 to-teal-600",
         "dot": "bg-emerald-500",
         "category": "Industry",
-        "long": "Optical shops straddle healthcare and retail: booked exams, prescription-based advice, and a wall of frames to sell. Momentfy schedules the optometrist, sells frames and lenses through POS with full inventory, and nudges clients to rebook before their prescription expires.",
+        "long": "Optical shops blend a clinical workflow (exam, prescription) with a retail one (frames, lenses, contacts). Momentfy ships with the Calendar for optometrist booking, the Medical Records add-on for exam history, the Prescriptions add-on with portal download, the Catalogue + Inventory pairing for frames and lens combinations, and Follow-up Tasks for annual exam recalls — so frame attach happens at the chair, not later.",
         "pains": [
-          "Exam calendar and frame stock on different tools",
-          "Frames sold off the books with no stock tracking",
-          "Clients forgotten for annual renewal",
-          "No visibility on margin per brand or frame"
+          "Frame stockouts in the colour the customer just tried on",
+          "Annual exam reminders happening 3 months late",
+          "Prescriptions printed on paper and re-keyed at the lens lab",
+          "Frame-only sales with no optometrist time captured"
         ],
         "capabilities": [
-          "Optometrist calendar with per-exam duration templates",
-          "Frames and lenses as products with stock + variants",
-          "Sales & POS with retail receipts and tipping off",
-          "Memberships for annual exam + lens credit bundles",
-          "Renewal campaigns fired by last-exam date",
-          "Supplier orders to restock top-selling frames",
-          "Gift cards for frame purchases",
-          "Margin report per brand and per product"
+          "Exam booking with optometrist + room resources",
+          "Prescription history with portal-side download",
+          "Frame inventory with colour / size variants",
+          "Lens-build catalogue (single-vision, progressive, coatings)",
+          "Annual exam recalls via Follow-up Tasks",
+          "Insurance vision-care class rules at booking",
+          "Frame + lens bundle pricing with attach prompts",
+          "Reports on attach rate, renewal and stock turnover"
         ],
         "stack": [
           "Calendar",
-          "Sales & POS",
+          "Medical Records",
+          "Prescriptions",
           "Catalogue",
           "Inventory",
-          "Memberships",
-          "Campaigns",
-          "Reports"
+          "Insurance Classes",
+          "Sales & POS",
+          "Client Portal"
         ],
         "stats": [
           {
@@ -1821,46 +2024,61 @@
             "v": "-64%"
           }
         ],
-        "whoFor": "Independent optical shops, eyewear boutiques and multi-brand optical chains.",
+        "whoFor": "Independent opticians, optical chains and combined optometry + retail clinics.",
         "useCases": [
-          "Single-optometrist shop with a wall of frames",
-          "Two-chair shop splitting exam slots across staff",
-          "Boutique running a designer-frame membership",
-          "Multi-location chain with shared supplier catalogue"
+          "Single-shop optometrist with retail frame wall",
+          "Optical chain consolidating frame stock across branches",
+          "Vision-insurance heavy shop with payer rules at booking",
+          "Subscription contact-lens program with auto-renewal"
+        ],
+        "faq": [
+          {
+            "q": "Can I link a prescription to a sale of frames + lenses?",
+            "a": "Yes. The prescription is stored on the patient timeline; you can attach it to a sale, ship it to a lens lab partner, and update the order status from a single ticket."
+          },
+          {
+            "q": "How do annual recalls actually fire?",
+            "a": "Follow-up Tasks sends an SMS / email a configurable number of months after the last exam. Customers can rebook directly from the link, and the front desk sees overdue customers in a queue."
+          },
+          {
+            "q": "Do you handle frame variants?",
+            "a": "Yes. Frames can be defined with colour and size variants; each variant has its own SKU, stock count and re-order point so the wall always reflects what's actually buyable."
+          }
         ]
       },
       "carwash": {
         "title": "Car Wash & Detailing",
-        "tagline": "Unlimited monthly memberships, detail upsell, bay scheduling and loyalty rewards.",
+        "tagline": "Memberships, lane queues, detail upsell and water-saving reports.",
         "icon": "i-lucide-droplets",
         "accent": "from-blue-500 to-indigo-600",
         "dot": "bg-blue-500",
         "category": "Industry",
-        "long": "Car washes run on volume during peak hours and recurring revenue the rest of the month. Momentfy sells unlimited monthly memberships, books detail bays as resources, and turns a quick exterior wash into a full detail through on-screen POS upsells.",
+        "long": "Car wash and detailing operators live on memberships and same-day upsells. Momentfy ships with the Calendar tuned for lane queues, the Memberships system for unlimited-wash plans with vehicle-binding, the Catalogue with detail-tier upsells, the Client Portal where members manage their plan and rebook detail, and Sales & POS for lane-side checkout — with Reports tracking member MRR and detail attach.",
         "pains": [
-          "Peak-hour queues with no booking option",
-          "Detail bays idle while wash bays are backed up",
-          "Memberships tracked on clipboards or punch cards",
-          "Walk-ins never become repeat customers"
+          "Members sharing one membership across five vehicles",
+          "Detail upsells skipped because the queue was loud",
+          "Lanes idle while a queue formed at the entrance",
+          "Auto-renew failures hidden until the next visit"
         ],
         "capabilities": [
-          "Unlimited monthly memberships billed recurring",
-          "Detail bays as bookable resources with staff lanes",
-          "POS upsells from basic wash to full detail",
-          "Loyalty points that convert to free washes",
-          "Gift cards and prepaid wash packages",
-          "Campaigns to lapsed members with a win-back offer",
-          "Supplier orders for chemicals and consumables",
-          "Per-bay and per-member profitability reports"
+          "Unlimited-wash memberships bound to a license plate",
+          "Plate-recognition or QR check-in at lane entry",
+          "Lane queue board with detail-tier upsell prompts",
+          "Tip-split between washer and detailer",
+          "Auto-renew with retry logic and pause / cancel from portal",
+          "Detail booking with bay + technician resource booking",
+          "Loyalty points across one-off washes and retail",
+          "Reports on member MRR, detail attach and churn"
         ],
         "stack": [
           "Calendar",
-          "Resources",
-          "Sales & POS",
           "Memberships",
-          "Loyalty Points",
-          "Campaigns",
-          "Reports"
+          "Resources",
+          "Catalogue",
+          "Sales & POS",
+          "Client Attendance",
+          "Reports",
+          "Client Portal"
         ],
         "stats": [
           {
@@ -1876,47 +2094,61 @@
             "v": "-52%"
           }
         ],
-        "whoFor": "Drive-through washes, hand-wash bays and full-service detail shops.",
+        "whoFor": "Car-wash operators, mobile detailers, multi-bay shops and subscription wash brands.",
         "useCases": [
-          "Drive-through with unlimited monthly plan",
-          "Hand-wash shop booking detail bays in advance",
-          "Detail-only studio with ceramic-coat add-ons",
-          "Mixed wash + detail running across shared bays"
+          "Tunnel wash with unlimited-plan members and pay-per-wash visitors",
+          "Mobile detailing service with route-based booking",
+          "Multi-bay detail shop offering 4-tier packages",
+          "Multi-branch subscription brand with city-wide access"
+        ],
+        "faq": [
+          {
+            "q": "How do plate-bound memberships prevent sharing?",
+            "a": "Each membership is bound to one or more declared license plates. Visits without a registered plate prompt a confirmation step; second-vehicle add-ons are charged at the configured price."
+          },
+          {
+            "q": "Can I run lane queues without staff phones?",
+            "a": "Yes. A wall-mounted board can show lane status; staff at the lane use a tablet with a lane-side checkout view that closes the ticket and prints / texts a receipt."
+          },
+          {
+            "q": "What happens when auto-renew fails?",
+            "a": "The system retries on a configurable schedule, notifies the member by SMS / email, and shows the failed status in the lane app so the front desk can collect at the next visit."
+          }
         ]
       },
       "coworking": {
         "title": "Co-working Spaces",
-        "tagline": "Tiered memberships, meeting rooms as resources, day-pass retail and café POS.",
+        "tagline": "Memberships, meeting rooms, day passes and self-serve check-in.",
         "icon": "i-lucide-building-2",
         "accent": "from-yellow-500 to-orange-600",
         "dot": "bg-yellow-500",
         "category": "Industry",
-        "long": "Co-working spaces sell access in layers — drop-ins, hot-desk, dedicated, private office — plus meeting rooms, events and a café counter. Momentfy runs all of it from one system: tiered memberships, room bookings, event tickets and POS, with a client portal for members to self-serve.",
+        "long": "Co-working operators sell time and space — desks, rooms and event slots. Momentfy ships with the Resources add-on for room and desk booking, the Memberships catalogue for monthly plans with credits, the Client Portal where members book rooms and pay for overage, the Client Attendance add-on for QR-based entry, and Reports for utilization, member churn and add-on revenue — running the whole space on the modules you already have.",
         "pains": [
-          "Meeting-room double bookings and manual approvals",
-          "Membership tiers tracked in spreadsheets",
-          "Day passes and café sales off the books",
-          "No consolidated view of space and F&B revenue"
+          "Meeting rooms double-booked between members and walk-ins",
+          "Day passes sold informally and never billed properly",
+          "Member overage on rooms forgiven at month-end because the math is messy",
+          "No view of which members are quietly disengaging before they churn"
         ],
         "capabilities": [
-          "Tiered memberships (day pass, hot-desk, dedicated, private)",
-          "Meeting rooms and phone booths as bookable resources",
-          "Member self-service via Client Portal (PWA)",
-          "Events and workshops with tickets and waitlists",
-          "Café POS with loyalty + tipping off",
-          "Gift cards for day passes and event tickets",
-          "Campaigns for member renewals and community events",
-          "Revenue split across memberships, rooms and F&B"
+          "Desk + room booking with credit burn-down by membership tier",
+          "Day-pass sales with QR entry via the Client Attendance add-on",
+          "Member portal with overage billing and balance top-ups",
+          "Event-space booking and after-hours rules",
+          "Auto-renew memberships with pause and tier-swap",
+          "Per-tenant white-label for franchise / managed locations",
+          "Mailroom / package log against member profiles",
+          "Reports on utilization, churn and add-on revenue"
         ],
         "stack": [
           "Calendar",
           "Resources",
           "Memberships",
+          "Client Attendance",
+          "Catalogue",
           "Sales & POS",
-          "Client Portal",
-          "Events & Classes",
-          "Campaigns",
-          "Reports"
+          "Reports",
+          "Client Portal"
         ],
         "stats": [
           {
@@ -1932,12 +2164,26 @@
             "v": "85%"
           }
         ],
-        "whoFor": "Independent co-working operators, shared-office networks and community maker-spaces.",
+        "whoFor": "Co-working spaces, member clubs, hot-desk operators and shared-studio brands.",
         "useCases": [
-          "Single-floor co-working with 4 meeting rooms",
-          "Shared-office network across two locations",
-          "Maker-space running paid workshops alongside memberships",
-          "Hybrid café + hot-desk with shared POS"
+          "Single-floor co-working with 4 meeting rooms and 30 desks",
+          "Member club selling tiered access (lounge / desk / office)",
+          "Shared studio space booking by the hour",
+          "Multi-city brand with city-wide member portability"
+        ],
+        "faq": [
+          {
+            "q": "How is meeting-room time deducted from a membership?",
+            "a": "Each plan can include monthly room credits. Bookings burn down credits in real time; overage rolls onto a portal-side invoice with auto-charge or pay-on-checkout settings."
+          },
+          {
+            "q": "Can guests buy a one-day pass without becoming members?",
+            "a": "Yes. Day passes are catalogue items with QR entry valid for the day; the Client Attendance add-on enforces single-use and start / end windows."
+          },
+          {
+            "q": "Can I run a multi-city brand?",
+            "a": "Yes — the multi-tenant deployment lets each location have its own pricing and rooms while sharing the member directory; members move between cities without re-signing."
+          }
         ]
       },
       "multi-tenant": {
@@ -1947,28 +2193,32 @@
         "accent": "from-slate-500 to-gray-700",
         "dot": "bg-slate-500",
         "category": "Business shape",
-        "long": "Chains and franchise operators need central oversight without taking away local speed. Momentfy runs one deployment that serves unlimited tenants — each with its own branding, pricing, staff and reports — rolled up into a central super-admin view.",
+        "long": "Chains and franchise operators need central oversight without giving up local speed. Momentfy runs one deployment that serves unlimited tenants — each with its own branding, locale, pricing, staff and reports — rolled up into a central super-admin view with cross-tenant Reports, stock transfers between branches, and brand-level campaigns that branches opt into. Every module — Calendar, Sales, Inventory, HR, Accounting — works tenant-aware out of the box.",
         "pains": [
-          "Each branch on its own spreadsheet",
-          "Consolidated P&L a month late",
-          "Brand pricing drift between locations",
-          "No SKU sharing across branches"
+          "Each branch on its own spreadsheet, with HQ chasing P&L by email",
+          "Consolidated reports a month late and reconciled by hand",
+          "Brand pricing drifting between locations without anyone noticing",
+          "No way to share stock across branches when one runs out"
         ],
         "capabilities": [
           "Unlimited tenants on one deployment",
-          "Per-tenant branding, locale, and add-ons",
+          "Per-tenant branding, locale, pricing and add-ons",
           "Shared catalogue with per-branch price overrides",
           "Central super-admin with cross-tenant reports",
-          "Stock transfers between branches",
-          "Role-based access (HQ, regional, branch)",
-          "Consolidated accounting + inter-branch entries",
+          "Stock transfers between branches with audit trail",
+          "Role-based access (HQ, regional, branch, member)",
+          "Consolidated accounting with inter-branch journal entries",
           "Brand-level campaigns with branch opt-in"
         ],
         "stack": [
-          "All nine core modules",
-          "Super-Admin panel",
-          "Multi-tenant mode",
-          "Central reporting"
+          "Super-Admin",
+          "Multi-tenant runtime",
+          "Reports",
+          "Inventory",
+          "Accounting",
+          "Catalogue",
+          "Clients & CRM",
+          "All nine core modules"
         ],
         "stats": [
           {
@@ -1989,40 +2239,56 @@
           "Salon group with 12 branches under one brand",
           "Clinic network with specialty + GP branches",
           "Franchise with HQ + independently-owned stores",
-          "Regional gym chain with central membership"
+          "Regional gym chain with central membership and city-wide check-in"
+        ],
+        "faq": [
+          {
+            "q": "Is each branch its own database or one shared one?",
+            "a": "One shared deployment with logical tenant isolation — every record carries a tenant scope. You get the operational speed of one system with the data isolation of separate ones."
+          },
+          {
+            "q": "Can branches sell at different prices?",
+            "a": "Yes. The Catalogue stores brand-level prices; each branch can override on the items it wants and inherit the rest, so brand strategy and local pricing co-exist."
+          },
+          {
+            "q": "How do I onboard a new branch?",
+            "a": "Provision a tenant from super-admin (under a day, typically), import or fork the catalogue, set local branding and pricing, invite staff. Reports start rolling up the moment the first sale lands."
+          }
         ]
       },
       "mobile": {
         "title": "Mobile & on-site teams",
-        "tagline": "Route-optimized day plans, on-the-way ETAs and at-the-door invoicing — installed on every team phone.",
+        "tagline": "On-site routes, mobile invoices, instant payment — for teams that bill from the van.",
         "icon": "i-lucide-truck",
         "accent": "from-blue-500 to-indigo-600",
         "dot": "bg-blue-500",
         "category": "Business shape",
-        "long": "Field teams — mobile beauty, home physio, on-site IT, at-home grooming — need one tool that plans the day and closes the invoice at the customer's door. Momentfy runs in the browser on any phone, routes jobs by address, captures signatures on the device, and turns each visit into a sent invoice before the van leaves the address.",
+        "long": "Mobile and on-site teams bill at the kerb, not at a counter. Momentfy ships with the Calendar tuned for route-based scheduling, mobile-first Sales & POS for invoices on the spot, Stripe / Lemon Squeezy or cash collection at the door, the Client Portal for repeat bookings and invoice download, and Inventory + Resources tracking the parts and gear loaded onto each van — so the team that arrives knows the customer, the address and the last service.",
         "pains": [
-          "Calendar out of sync with dispatcher",
-          "Invoices sent hours after the job ends",
-          "Routes planned by guesswork",
-          "No paper trail for on-site signatures"
+          "Jobs invoiced \"back at the office\" — half of them never get sent",
+          "Routes built in a notebook with no view of utilization",
+          "Stock loaded into the van that nobody can audit at end-of-day",
+          "Customer asking for a receipt at the door with nothing to give them"
         ],
         "capabilities": [
-          "Mobile-first web app — every team member carries the same tool",
-          "Route-optimised day plan per team member",
-          "On-the-way ETA sent by SMS automatically",
-          "In-van POS that invoices and takes card at the door",
-          "Mileage + travel-time rules billed automatically",
-          "Client signature capture on device",
-          "Inventory consumed per on-site visit",
-          "Geofence arrival + departure logging"
+          "Route-based scheduling with map view and ETA",
+          "Mobile invoicing on a phone with card / cash / link payment",
+          "Per-van stock tracking with end-of-day reconciliation",
+          "Customer signature capture and photo evidence on tickets",
+          "Recurring service contracts (cleaning, lawn, maintenance)",
+          "Per-tech commissions tied to route revenue",
+          "Offline mode that syncs when the van is back online",
+          "Client portal for rebook, history and invoice download"
         ],
         "stack": [
           "Calendar",
           "Sales & POS",
-          "Client Portal",
-          "Campaigns",
           "Inventory",
-          "Reports"
+          "Resources",
+          "Memberships",
+          "Clients & CRM",
+          "Reports",
+          "Client Portal"
         ],
         "stats": [
           {
@@ -2038,45 +2304,60 @@
             "v": "-98%"
           }
         ],
-        "whoFor": "Mobile beauty, home healthcare, field service and at-home premium brands.",
+        "whoFor": "Cleaning, plumbing, HVAC, lawn care, mobile detailing, on-site repair and inspection teams.",
         "useCases": [
-          "Mobile hair + makeup visiting weddings",
-          "Home physio covering a metro area",
-          "Mobile pet grooming van running routes",
-          "On-site IT repair billed at the door"
+          "Cleaning company billing per visit with photo-evidence",
+          "Plumber dispatching emergency calls with stock-on-van tracking",
+          "Lawn-care contractor on a recurring schedule",
+          "Mobile vet running route-based home visits"
+        ],
+        "faq": [
+          {
+            "q": "Does the mobile app work offline?",
+            "a": "Yes. Tickets, invoices and stock movements are captured offline and sync when the device is back online; the office sees them appear in real time after sync."
+          },
+          {
+            "q": "How do I collect payment at the door?",
+            "a": "You can charge a stored card, send a one-tap payment link by SMS / WhatsApp, or take cash and reconcile at end-of-day. Stripe and Lemon Squeezy connectors handle card-on-file and tap-to-pay where available."
+          },
+          {
+            "q": "Can I track which parts left the warehouse on which van?",
+            "a": "Yes. Inventory + Resources lets each vehicle act as a stock location; transfers in and out are logged, and the end-of-day reconciliation report flags shortfalls."
+          }
         ]
       },
       "memberships": {
         "title": "Membership businesses",
-        "tagline": "Recurring plans, credits, auto-renew, freeze & retention analytics.",
+        "tagline": "Tiers, auto-renew, dunning, portal self-serve — for any business that bills on a cycle.",
         "icon": "i-lucide-infinity",
         "accent": "from-purple-500 to-fuchsia-600",
         "dot": "bg-purple-500",
         "category": "Business shape",
-        "long": "If your business runs on recurring revenue — gyms, salons, wellness subscriptions, unlimited classes — Momentfy ships the full membership lifecycle: plans, credits, auto-renew, pause, freeze, cancel and retention analytics.",
+        "long": "Membership businesses live on monthly recurring revenue, auto-renew success and churn discipline. Momentfy ships with a full Memberships system — tiers, quotas, auto-renew with smart retries, pause / swap / cancel from the Client Portal, dunning emails and SMS, gift and referral codes, plus the Reports module surfacing churn cohorts and upgrade opportunities. The Loyalty Points add-on layers retention rewards on top of the plan itself.",
         "pains": [
-          "Members silently lapsing without notice",
-          "Credits that never get spent",
-          "Freezes handled by email",
-          "No insight into who is about to churn"
+          "Failed renewals discovered weeks after the card actually declined",
+          "Churn invisible until the end of the quarter",
+          "Tier upgrades made by email and never updated in billing",
+          "Members ghosting without a chance to pause and stay"
         ],
         "capabilities": [
-          "Plan library with tier + credit rules",
-          "Auto-renew via Stripe / Lemon Squeezy card-on-file",
-          "Self-service pause/freeze/cancel from portal",
-          "Retention dashboards (cohort, churn risk)",
-          "Upgrade/downgrade with proration",
-          "Usage tracking per plan allowance",
-          "Dunning flow on failed payments",
-          "Referral credits and rewards"
+          "Tiered plans with quotas, credits and entitlements",
+          "Auto-renew with smart retry, dunning emails and SMS",
+          "Portal self-serve pause, swap, cancel and reactivate",
+          "Gift and referral codes with attribution to the inviter",
+          "Annual / monthly toggle with proration on tier change",
+          "Member-only catalogue and pricing rules",
+          "Loyalty points layered on top of recurring revenue",
+          "Cohort reports on retention, upgrade and downgrade"
         ],
         "stack": [
           "Memberships",
           "Sales & POS",
-          "Client Portal",
-          "Campaigns",
+          "Catalogue",
+          "Loyalty Points",
+          "Clients & CRM",
           "Reports",
-          "Loyalty Points"
+          "Client Portal"
         ],
         "stats": [
           {
@@ -2092,12 +2373,26 @@
             "v": "+18%"
           }
         ],
-        "whoFor": "Any business whose revenue is majority-recurring: gyms, salons, wellness, class packs, subscriptions.",
+        "whoFor": "Subscription gyms, salons, spas, car-wash brands, clubs and any business with recurring revenue.",
         "useCases": [
-          "Gym running unlimited + limited-access tiers",
-          "Salon selling monthly beauty subscriptions",
-          "Wellness studio with pause-on-holiday feature",
-          "Class studio offering 4 / 8 / 12 pack credits"
+          "Gym chain with city-wide unlimited and tiered plans",
+          "Spa selling monthly facial memberships with rollover",
+          "Car-wash brand with plate-bound unlimited plans",
+          "Member club running quarterly tier reviews"
+        ],
+        "faq": [
+          {
+            "q": "How does smart-retry handle failed renewals?",
+            "a": "Failed charges retry on a configurable schedule (e.g. 1d, 3d, 7d) with member SMS / email notifications between attempts; the front desk also sees a \"needs attention\" queue so they can collect on the next visit."
+          },
+          {
+            "q": "Can members pause without losing their plan?",
+            "a": "Yes. Pause rules are tier-defined (allowed window, max days per year). The plan keeps its renewal date but billing and quota burn pause until the member resumes."
+          },
+          {
+            "q": "Can I run gift and referral codes alongside tiers?",
+            "a": "Yes. Codes can grant a fixed discount, a credit-on-account, or a tier upgrade for a window. Referral attribution rolls into the inviter's loyalty wallet at activation."
+          }
         ]
       }
     },
@@ -2135,16 +2430,49 @@
       "nextAppt": "Next appointment"
     },
     "pricing": {
-      "includedAllLabel": "What you get (identical in every plan)",
+      "includedAllLabel": "Same in every plan — no upsells, no usage caps, no surprise tiers",
+      "includedAllSub": "Both plans ship the entire product. The only difference is who turns the key.",
       "includedAll": [
-        "Full source code",
-        "Unlimited tenants",
-        "All 9 core modules",
-        "All 15 add-ons",
-        "ZATCA + ETA compliance",
-        "Bilingual AR + EN",
-        "Self-host anywhere",
-        "Lifetime license + lifetime updates"
+        {
+          "label": "Full source code",
+          "hint": "Every TypeScript file, every query, every pixel — yours to read, fork and modify.",
+          "icon": "i-lucide-code"
+        },
+        {
+          "label": "Unlimited tenants & users",
+          "hint": "One license covers every brand, branch and team member you'll ever run.",
+          "icon": "i-lucide-infinity"
+        },
+        {
+          "label": "All 10 core modules",
+          "hint": "Calendar, POS, CRM, catalogue, inventory, HR, accounting, reports, portal, settings.",
+          "icon": "i-lucide-layers"
+        },
+        {
+          "label": "All 15 add-ons",
+          "hint": "ZATCA, ETA, AI assistant, dental chart, EMR, labs, Rx, loyalty — toggle per tenant.",
+          "icon": "i-lucide-puzzle"
+        },
+        {
+          "label": "ZATCA + ETA compliance",
+          "hint": "Saudi Phase 2 clearance and Egypt e-invoicing wired into every receipt.",
+          "icon": "i-lucide-shield-check"
+        },
+        {
+          "label": "Bilingual AR + EN",
+          "hint": "Native RTL across every screen, invoice and email — no translation paste-on.",
+          "icon": "i-lucide-languages"
+        },
+        {
+          "label": "Self-host anywhere",
+          "hint": "Any VPS, your bucket, your domain. No telemetry, no phone-home, no vendor lock.",
+          "icon": "i-lucide-server"
+        },
+        {
+          "label": "Lifetime license + updates",
+          "hint": "One payment. Every future release shipped to your private repo, forever.",
+          "icon": "i-lucide-sparkles"
+        }
       ],
       "windowLabel": "Pick your install path",
       "durationAxisStart": "You install",
@@ -2422,8 +2750,8 @@
               "to": "/portal/solutions/driving"
             },
             {
-              "label": "Tutoring Centers",
-              "to": "/portal/solutions/tutoring"
+              "label": "Education & Training",
+              "to": "/portal/solutions/education"
             },
             {
               "label": "Professional Services",
@@ -2627,7 +2955,7 @@
       "explorerPaused": "paused · hover to resume",
       "explorerAutoPrefix": "auto · ",
       "readMore": "Read more",
-      "allSixteenShip": "All fifteen ship with every copy of the source",
+      "allFifteenShip": "All fifteen ship with every copy of the source",
       "secureCheckout": "Secure checkout",
       "lifetimeLicense": "Lifetime license",
       "lifetimeUpdates": "Lifetime updates",
@@ -5194,7 +5522,7 @@
       "eyebrow": "Legal",
       "h1": "The small print, in plain English.",
       "sub": "License, Terms of Service and Privacy — all on one page, so you can read them in under ten minutes.",
-      "lastUpdated": "Last updated 2026-04-18",
+      "lastUpdated": "Last updated 2026-05-01",
       "sections": [
         {
           "id": "license",
@@ -5322,35 +5650,14 @@
           "body": "Momentfy is developed and maintained by an independent team. We do not take outside investment and we are accountable to operators, not shareholders.",
           "items": [
             {
-              "k": "Entity",
-              "v": "Momentfy Software FZ-LLC (placeholder — update with your actual legal entity name)"
-            },
-            {
-              "k": "Address",
-              "v": "Placeholder — update with your registered address"
-            },
-            {
-              "k": "Tax ID",
-              "v": "Placeholder — update with your VAT / tax registration"
-            },
-            {
               "k": "Contact",
-              "v": "support@momentfy.com"
-            },
-            {
-              "k": "Support",
-              "v": "support@momentfy.com"
-            },
-            {
-              "k": "Press",
-              "v": "press@momentfy.com"
+              "v": "support@momentfy.com — sales, billing, support, press, legal and data-rights requests all land in the same inbox."
             }
           ]
         }
       ],
       "companyLabel": "Contact",
       "companyLines": [
-        "support@momentfy.com",
         "support@momentfy.com"
       ]
     }

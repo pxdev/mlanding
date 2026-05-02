@@ -23,7 +23,7 @@ export default defineEventHandler(async (event) => {
     })
   } catch (e: any) {
     if (e.code === 'P2002') {
-      throw createError({ statusCode: 409, statusMessage: 'An account with this email already exists' })
+      throw createError({ statusCode: 409, statusMessage: 'An account with this email already exists', data: { code: 'EMAIL_TAKEN' } })
     }
     throw e
   }

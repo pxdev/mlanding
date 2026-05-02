@@ -221,7 +221,7 @@ const totalIndex = computed(() => String(modules.value.length).padStart(2, '0'))
         <span aria-hidden="true" class="hidden sm:inline-block h-8 w-px bg-black/10 dark:bg-white/10 mx-1" />
 
         <NuxtLink
-          :to="activeTab === 'core' ? '/portal/features' : '/portal/addons'"
+          :to="localePath(activeTab === 'core' ? '/portal/features' : '/portal/addons')"
           class="group inline-flex items-center gap-3 text-sm font-bold"
         >
           <span class="size-10 rounded-full bg-primary text-white dark:bg-white dark:text-primary flex items-center justify-center transition-transform group-hover:scale-110">
@@ -528,7 +528,7 @@ const totalIndex = computed(() => String(modules.value.length).padStart(2, '0'))
         <!-- Closing tagline -->
         <p class="mt-16 flex items-center justify-center gap-2 text-xs text-gray-500 uppercase tracking-[0.25em]">
           <span class="size-1.5 rounded-full bg-emerald-500" />
-          {{ copy.ui.allSixteenShip }}
+          {{ copy.ui.allFifteenShip }}
         </p>
       </div>
     </div>

@@ -25,12 +25,16 @@ onBeforeUnmount(() => {
 })
 
 function moduleTo(id: string, status: 'ready' | 'soon') {
-  return status === 'ready' ? `/portal/manual/${id}` : undefined
+  return status === 'ready' ? localePath(`/portal/manual/${id}`) : undefined
 }
 function isActive(id: string) {
-  return route.path === `/portal/manual/${id}` || route.path.startsWith(`/portal/manual/${id}/`)
+  const target = localePath(`/portal/manual/${id}`)
+  return route.path === target || route.path.startsWith(target + '/')
 }
-const isHomeActive = computed(() => route.path === '/portal/manual' || route.path === '/portal/manual/')
+const isHomeActive = computed(() => {
+  const home = localePath('/portal/manual')
+  return route.path === home || route.path === home + '/'
+})
 const addons = computed(() => manual.value.addons || [])
 </script>
 

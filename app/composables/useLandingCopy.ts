@@ -76,7 +76,8 @@ export type LandingCopy = {
     eyebrow: string; heading: string; sub: string; plans: Plan[]; footer: string
     billing: { onetime: string; updates: string; save: string }
     includedAllLabel: string
-    includedAll: string[]
+    includedAllSub?: string
+    includedAll: Array<{ label: string; hint: string; icon: string }>
     windowLabel: string
     durationAxisStart: string
     durationAxisEndForever: string

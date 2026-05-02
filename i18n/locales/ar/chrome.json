@@ -519,6 +519,36 @@
       }
     },
     "auth": {
+      "brandPanel": {
+        "headline": "نظام التشغيل لأعمال الحجوزات.",
+        "tagline": "امتلك الكود. وسّع بلا حدود. ادفع مرة واحدة، واستخدمه للأبد."
+      },
+      "validation": {
+        "invalidEmail": "أدخل بريداً إلكترونياً صحيحاً",
+        "passwordRequired": "كلمة المرور مطلوبة",
+        "firstNameRequired": "الاسم الأول مطلوب",
+        "lastNameRequired": "اسم العائلة مطلوب",
+        "passwordMin8": "٨ أحرف على الأقل",
+        "githubFormat": "حروف وأرقام وشرطات فقط",
+        "passwordsDontMatch": "كلمتا المرور غير متطابقتين"
+      },
+      "errors": {
+        "EMAIL_TAKEN": "يوجد حساب بهذا البريد الإلكتروني بالفعل",
+        "INVALID_CREDENTIALS": "البريد الإلكتروني أو كلمة المرور غير صحيحة",
+        "ACCOUNT_DEACTIVATED": "تم تعطيل حسابك. تواصل مع الدعم لإعادة تفعيله.",
+        "INVALID_RESET_LINK": "رابط إعادة التعيين غير صالح أو انتهت صلاحيته. اطلب رابطاً جديداً.",
+        "CURRENT_PASSWORD_INCORRECT": "كلمة المرور الحالية غير صحيحة",
+        "RATE_LIMITED": "محاولات كثيرة — انتظر قليلاً ثم حاول مجدداً",
+        "GENERIC": "حدث خطأ ما. حاول مرة أخرى."
+      },
+      "successToasts": {
+        "accountCreatedTitle": "تم إنشاء الحساب",
+        "accountCreatedDesc": "مرحباً بك في Momentfy. اشترِ ترخيصك متى كنت جاهزاً.",
+        "passwordUpdatedTitle": "تم تحديث كلمة المرور",
+        "passwordUpdatedDesc": "سجّل دخولك بكلمة المرور الجديدة للمتابعة.",
+        "resetEmailSentTitle": "افحص بريدك",
+        "resetEmailSentDesc": "إن كان هناك حساب بهذا البريد، فرابط الاستعادة في طريقه إليك الآن."
+      },
       "signIn": {
         "docTitle": "تسجيل الدخول — Momentfy",
         "title": "أهلاً بعودتك",
@@ -527,6 +557,7 @@
         "emailPlaceholder": "you@company.com",
         "password": "كلمة المرور",
         "passwordPlaceholder": "••••••••",
+        "rememberMe": "تذكّرني",
         "forgotPassword": "نسيت كلمة المرور؟",
         "submit": "تسجيل الدخول",
         "newHerePrompt": "جديد هنا؟",

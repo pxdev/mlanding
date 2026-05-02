@@ -51,7 +51,8 @@ useLandingSeo({
         description: 'One-time pricing for self-hosted source code with unlimited tenants and lifetime updates. The only difference is whether you install it yourself or we install it for you.'
     }
 });
-const includedIcons = ['i-lucide-code', 'i-lucide-globe', 'i-lucide-infinity', 'i-lucide-server', 'i-lucide-shield-check', 'i-lucide-smartphone', 'i-lucide-sparkles', 'i-lucide-book-open'];
+// Each item now ships its own icon via copy.pricing.includedAll[i].icon — no
+// parallel array needed. Keeping the constant removed deliberately.
 </script>
 
 <template>
@@ -98,20 +99,55 @@ const includedIcons = ['i-lucide-code', 'i-lucide-globe', 'i-lucide-infinity', '
     </div>
   </section>
 
-  <!-- ═══ B) What every plan includes — moved below the plan picker so checkout sits above the fold ═══ -->
-  <section class="py-16 sm:py-20 border-t border-black/10 dark:border-white/10">
+  <!-- ═══ B) What every plan includes ═══ -->
+  <!-- Each item ships an icon + headline + one-line value-prop hint. Two-column
+       grid on desktop so the hint stays readable instead of orphan-line wrapping
+       on tighter four-column shelves. No "INCLUDED IN EVERY PLAN" subtitle —
+       the section header already says it. -->
+  <section class="py-16 sm:py-20 border-t border-black/10 dark:border-white/10 bg-gray-50 dark:bg-white/[0.02]">
     <div class="max-w-7xl mx-auto px-5 sm:px-8">
-      <div class="flex items-baseline gap-3 mb-10 pb-4 border-b border-black/10 dark:border-white/10">
-        <span class="text-[11px] tabular-nums text-gray-400">B</span>
-        <p class="text-[11px] uppercase tracking-[0.25em] text-gray-400">{{ copy.pricing.includedAllLabel }}</p>
+      <!-- Section header: index marker + sharper headline + supporting line -->
+      <div class="mb-12 pb-6 border-b border-black/10 dark:border-white/10 flex flex-col sm:flex-row sm:items-end gap-4">
+        <span class="text-[11px] tabular-nums text-gray-400 font-bold">B</span>
+        <div class="flex-1">
+          <p class="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight text-gray-900 dark:text-white max-w-3xl leading-tight">
+            {{ copy.pricing.includedAllLabel }}
+          </p>
+          <p v-if="copy.pricing.includedAllSub" class="mt-2 text-sm text-gray-500 dark:text-gray-400 max-w-2xl">
+            {{ copy.pricing.includedAllSub }}
+          </p>
+        </div>
+        <span class="text-[10px] tabular-nums text-gray-400 font-semibold whitespace-nowrap">
+          {{ String(copy.pricing.includedAll.length).padStart(2, '0') }} included
+        </span>
       </div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-8 gap-x-8">
-        <div v-for="(label, i) in copy.pricing.includedAll" :key="label" class="flex items-start gap-3">
-          <UIcon :name="includedIcons[i]" class="size-5 shrink-0 mt-0.5 text-secondary-500" />
-          <div>
-            <p class="text-sm sm:text-base font-bold">{{ label }}</p>
-            <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5 uppercase tracking-wider">{{ copy.ui.includedInEveryPlan }}</p>
+
+      <!-- Two-column grid: each row is icon + label + value-prop hint -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-2 lg:gap-y-3">
+        <div
+          v-for="(item, i) in copy.pricing.includedAll"
+          :key="item.label"
+          class="group flex items-start gap-4 py-4 border-b border-black/[0.06] dark:border-white/[0.06]"
+        >
+          <!-- Numbered + iconed tile: visual anchor that ties the row to a position in the list -->
+          <div class="flex flex-col items-center gap-1 shrink-0">
+            <span class="inline-flex items-center justify-center size-10 rounded-xl bg-secondary-500/10 text-secondary-600 dark:text-secondary-400 ring-1 ring-secondary-500/20 transition-colors group-hover:bg-secondary-500 group-hover:text-white">
+              <UIcon :name="item.icon" class="size-5" />
+            </span>
+            <span class="text-[10px] tabular-nums text-gray-400 font-bold">
+              {{ String(i + 1).padStart(2, '0') }}
+            </span>
           </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-base sm:text-lg font-bold tracking-tight text-gray-900 dark:text-white leading-snug">
+              {{ item.label }}
+            </p>
+            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+              {{ item.hint }}
+            </p>
+          </div>
+          <!-- Trailing checkmark — quietly reinforces "yes, this ships" -->
+          <UIcon name="i-lucide-check-circle-2" class="size-4 text-emerald-500 shrink-0 mt-1.5 opacity-60 group-hover:opacity-100 transition-opacity" aria-hidden="true" />
         </div>
       </div>
     </div>

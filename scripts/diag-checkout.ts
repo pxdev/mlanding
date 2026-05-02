@@ -50,7 +50,7 @@ async function tryCheckout(variantId: string) {
       type: 'checkouts',
       attributes: {
         checkout_data: {
-          email: 'diag@momentfy.com',
+          email: 'support@momentfy.com',
           custom: { account_id: 'diag-run' }
         },
         checkout_options: { button_color: '#7047EB' },
@@ -162,7 +162,7 @@ async function main() {
     const domain = store?.attributes?.domain
     if (domain) {
       const params = new URLSearchParams()
-      params.set('checkout[email]', 'diag@momentfy.com')
+      params.set('checkout[email]', 'support@momentfy.com')
       params.set('checkout[custom][account_id]', 'diag-run')
       const directUrl = `https://${domain}/buy/${p.lsVariantId}?${params.toString()}`
       console.log(`   direct-buy URL (what the portal now returns):`)
