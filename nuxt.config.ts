@@ -13,6 +13,15 @@ export default defineNuxtConfig({
   // session-gated and don't benefit from SSR.
   ssr: true,
 
+  // Build-memory reductions so the Nitro server-bundle phase fits the app
+  // server's RAM (it OOMs otherwise once the main app is also running).
+  // Sourcemaps aren't needed in prod; server minification isn't shipped to
+  // browsers so unminified output has no runtime cost.
+  sourcemap: false,
+  nitro: {
+    minify: false
+  },
+
   // The payload cache conflicts when sibling routes share a path prefix
   // (e.g. /portal/addons is a page AND /portal/addons/:key is its children —
   // Nuxt tries to use `.../payload/portal/addons` as both a file and a
