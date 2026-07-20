@@ -95,11 +95,12 @@ COPY --from=build --chown=nuxt:nuxt /app/.output ./.output
 #   - prisma/schema.prisma + prisma/migrations/  → migration source of truth
 #   - node_modules/prisma                        → the CLI we invoke
 #   - node_modules/@prisma/*                     → engines + adapter-pg
-#   - node_modules/.prisma + ./generated         → the generated client
+#   - ./generated                                → the generated client (custom
+#     output path; with a custom `output` Prisma does NOT populate the default
+#     node_modules/.prisma, so we must not COPY that — it doesn't exist).
 COPY --from=build --chown=nuxt:nuxt /app/prisma                 ./prisma
 COPY --from=build --chown=nuxt:nuxt /app/node_modules/prisma    ./node_modules/prisma
 COPY --from=build --chown=nuxt:nuxt /app/node_modules/@prisma   ./node_modules/@prisma
-COPY --from=build --chown=nuxt:nuxt /app/node_modules/.prisma   ./node_modules/.prisma
 COPY --from=build --chown=nuxt:nuxt /app/generated              ./generated
 
 # Persistent uploads live here. Coolify mounts a host volume at this
