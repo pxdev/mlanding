@@ -38,8 +38,11 @@ COPY prisma ./prisma
 # --ignore-scripts skips both `nuxt prepare` and `prisma generate` from
 # the package's postinstall hook. We do them explicitly in the build
 # stage where the full source tree is available.
+# --include=dev forces devDependencies even when NODE_ENV=production is passed
+# in as a build arg by the platform — nuxt build loads dev-time modules
+# (@nuxt/eslint et al.) that would otherwise be pruned, failing the build.
 RUN --mount=type=cache,target=/root/.npm \
-    npm ci --ignore-scripts
+    npm ci --ignore-scripts --include=dev
 
 # ─── 2. build ───────────────────────────────────────────────────────
 FROM node:22-bookworm-slim AS build
