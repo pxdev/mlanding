@@ -129,6 +129,8 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 \
   CMD node -e "fetch('http://127.0.0.1:'+process.env.PORT+'/api/health').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"
 
 ENTRYPOINT ["/usr/bin/tini", "--"]
-# Apply pending migrations, then start Nitro. If migrations fail the
-# container exits non-zero and Coolify rolls back to the previous image.
-CMD ["sh", "-c", "node ./node_modules/prisma/build/index.js migrate deploy && node .output/server/index.mjs"]
+# Apply pending migrations, seed the catalog (plans/features/promo codes —
+# idempotent upserts, so safe on every boot), then start Nitro. Seeding is
+# fail-soft (|| true) so a seed hiccup never blocks the app from starting;
+# migrate failures still exit non-zero and roll back to the previous image.
+CMD ["sh", "-c", "node ./node_modules/prisma/build/index.js migrate deploy && (./node_modules/.bin/tsx prisma/seed.ts || echo '[seed] failed, continuing') && node .output/server/index.mjs"]
