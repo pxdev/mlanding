@@ -126,4 +126,6 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 \
 ENTRYPOINT ["/usr/bin/tini", "--"]
 # Apply pending migrations, then start Nitro. If migrations fail the
 # container exits non-zero and Coolify rolls back to the previous image.
-CMD ["sh", "-c", "node ./node_modules/prisma/build/index.js migrate deploy && node .output/server/index.mjs"]
+# The boot line prints whether DATABASE_URL reached the runtime env (value
+# masked) to disambiguate "env not injected" from "prisma config" failures.
+CMD ["sh", "-c", "echo \"[boot] DATABASE_URL=${DATABASE_URL:+PRESENT}${DATABASE_URL:-MISSING}\"; node ./node_modules/prisma/build/index.js migrate deploy && node .output/server/index.mjs"]
