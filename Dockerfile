@@ -91,16 +91,19 @@ ENV NODE_ENV=production \
 # only needs the Prisma CLI + engines + generated client for migrations.
 COPY --from=build --chown=nuxt:nuxt /app/.output ./.output
 
-# Prisma assets needed at boot:
+# Prisma assets needed at boot (the app runs `prisma migrate deploy` on start):
 #   - prisma/schema.prisma + prisma/migrations/  → migration source of truth
-#   - node_modules/prisma                        → the CLI we invoke
-#   - node_modules/@prisma/*                     → engines + adapter-pg
 #   - ./generated                                → the generated client (custom
 #     output path; with a custom `output` Prisma does NOT populate the default
 #     node_modules/.prisma, so we must not COPY that — it doesn't exist).
+#   - node_modules (FULL)                        → the prisma CLI (a devDep) and
+#     its complete transitive closure. Prisma 7 loads prisma.config.ts via
+#     @prisma/config, which pulls in top-level deps (effect, c12, deepmerge-ts,
+#     empathic, …) that a selective prisma/@prisma copy misses → boot crashes
+#     with "Cannot find module 'effect'". Nuxt's .output is self-contained, so
+#     this tree is used only by the migrate step.
 COPY --from=build --chown=nuxt:nuxt /app/prisma                 ./prisma
-COPY --from=build --chown=nuxt:nuxt /app/node_modules/prisma    ./node_modules/prisma
-COPY --from=build --chown=nuxt:nuxt /app/node_modules/@prisma   ./node_modules/@prisma
+COPY --from=build --chown=nuxt:nuxt /app/node_modules          ./node_modules
 COPY --from=build --chown=nuxt:nuxt /app/generated              ./generated
 
 # Persistent uploads live here. Coolify mounts a host volume at this
